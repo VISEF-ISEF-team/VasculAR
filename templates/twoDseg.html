@@ -46,4 +46,35 @@
         </div>
     </div>
 </body>
+<script>
+    // Get the two papaya containers
+    var papaya1 = document.getElementsByClassName("papaya")[0];
+    var papaya2 = document.getElementsByClassName("papaya")[1];
+
+    // Get the two papaya viewers
+    var viewer1 = papaya1.viewer;
+    var viewer2 = papaya2.viewer;
+
+    // Define a function to synchronize the events
+    function syncEvents(event) {
+        // Get the event type and target
+        var type = event.type;
+        var target = event.target;
+
+        // Check which viewer is the source of the event
+        if (target === viewer1.canvas) {
+            // If viewer1 is the source, trigger the same event on viewer2
+            viewer2.canvas.dispatchEvent(new Event(type));
+        } else if (target === viewer2.canvas) {
+            // If viewer2 is the source, trigger the same event on viewer1
+            viewer1.canvas.dispatchEvent(new Event(type));
+        }
+    }
+
+    // Add event listeners for scrolling and mouse moving events on both viewers
+    viewer1.canvas.addEventListener("wheel", syncEvents);
+    viewer1.canvas.addEventListener("mousemove", syncEvents);
+    viewer2.canvas.addEventListener("wheel", syncEvents);
+    viewer2.canvas.addEventListener("mousemove", syncEvents);
+</script>
 </html>
