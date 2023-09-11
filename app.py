@@ -31,6 +31,7 @@ class Organizations(db.Model, UserMixin):
     phone = db.Column(db.String(120), nullable=False)
     administrator = db.Column(db.String(120), nullable=False)
     administrator_contact = db.Column(db.String(120), nullable=False)
+    verify_code = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(200))
     
     @property
@@ -77,7 +78,7 @@ def registration():
 
 
 @app.route("/login")
-def home():
+def login():
     return render_template("login.html")
 
 
