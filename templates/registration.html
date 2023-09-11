@@ -1,0 +1,39 @@
+<!-- nav bar -->
+{% include 'navbar.html' %}
+
+<h1>Registration</h1>
+
+<!-- registration form -->
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3 row">
+
+        <!-- left column -->
+        <div class="text-left col-sm-4 col-form-label">
+            {{ form.name.label(class = 'form-label') }} 
+            {{ form.email.label(class = 'form-label mt-4') }}
+            {{ form.phone.label(class = 'form-label mt-4') }}
+            {{ form.administrator.label(class = 'form-label mt-4') }}
+            {{ form.administrator_contact.label(class = 'form-label mt-4') }}
+            {{ form.password_hash.label(class = 'form-label mt-4') }}
+            {{ form.password_hash2.label(class = 'form-label mt-4') }}
+        </div>
+        
+        <!-- right column -->
+        <div class="col-sm-8">
+            {{ form.name(class = 'form-control') }}                     
+            {{ form.email(class = 'form-control') }}
+            {{ form.phone(class = 'form-control') }}    
+            {{ form.administrator(class = 'form-control') }}      
+            {{ form.administrator_contact(class = 'form-control') }}      
+            {{ form.password_hash(class = 'form-control') }}
+            {{ form.password_hash2(class = 'form-control') }}
+        </div>
+        
+        <!-- button and link -->
+        <div class="d-grid gap-2 mt-3">
+            {{ form.submit(class = 'btn btn-primary') }}
+            <p class="mt-3">Already have an account? <a href="{{ url_for('login')}}">Login now <i class="bi bi-arrow-right"></a></i></p>
+        </div>
+    </div>
+</form>

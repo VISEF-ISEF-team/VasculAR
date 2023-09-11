@@ -1,0 +1,35 @@
+User flow: 2D MRI Seg => Raw 3D structure => refined 3D structure => Verification from experts => Careful planning + treatment => Patient Tracking
+
+Website structure of functions + planning
+* Navbar:
+    - Logo: VasculAI
+    - New 
+    - MRI Seg
+    - MRI 3D
+    - Verification
+    - Database
+
+* Sidebar: 
+    - System status
+    - Download packages
+    - Model selection
+    - Guildance
+    - About
+
+* New case:
+    Flow chart: 
+    - Doctor info (Login information)
+    - Patient info (Form input): name/age/idcard/previous diseases/field/....
+    - DateCase
+
+* Doctor/Center Registration Account
+    - related info input form -> database -> login
+
+* Verification
+    - Show experts + related info
+    - Send --> package of patients/file MRI files/additional note
+    
+* Database
+    - Patient of that organization -> personal info/files/postoperative treatment (drugs,...) 
+
+* Registration
