@@ -4,22 +4,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='papaya.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='papaya.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/papaya.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='js/papaya.js') }}"></script>
     <title>Papaya Viewer</title>
 </head>
 <body>
-    <!-- Create a div element with the class "papaya" -->
-    <div class="papaya" data-params="params"></div>
-    <!-- Define the parameters for the papaya viewer -->
-    <script type="text/javascript">
-        var params = [];
-        // Load an MRI image in NIFTI format
-        params["images"] = ["._la_029.nii.gz"];
-        // Set the background color to black
-        params["background"] = "black";
-        // Set the orientation to axial
-        params["orientation"] = "axial";
-    </script>
+    <div class="mt-4">
+        <div class="row">
+            <div class="col">
+                <!-- Create a div element with the class "papaya" -->
+                <div class="papaya" data-params="params"></div>
+                <!-- Define the parameters for the papaya viewer -->
+                <script type="text/javascript">
+                    var params = [];
+                    // Load an MRI image in NIFTI format
+                    params["images"] = ["._la_029.nii.gz"];
+                    // Set the background color to black
+                    params["background"] = "black";
+                    // Set the orientation to axial
+                    params["orientation"] = "axial";
+                </script>
+            </div>
+            <div class="col">
+    
+            </div>
+        </div>
+    </div>
 </body>
 </html>

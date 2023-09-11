@@ -1,8 +1,12 @@
+:root{
+    --dark-primary: #343a40;
+}
+
 .papaya {
     width: 90%;
     height: 90%;
     margin: 25px auto;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     font-family: sans-serif
 }
 
@@ -88,7 +92,7 @@
     width: 25px;
     text-align: center;
     font-family: "Courier New", Courier, monospace;
-    background-color: lightgray;
+    background-color: rgb(255, 0, 0);
     vertical-align: middle;
     padding: 0;
     margin-left: auto;
@@ -106,7 +110,7 @@
     width: 25px;
     text-align: center;
     font-family: "Courier New", Courier, monospace;
-    background-color: lightgray;
+    background-color: rgb(92, 60, 174);
     vertical-align: middle;
     padding: 0;
     margin-left: auto;
@@ -172,11 +176,13 @@
 
 .papaya-menu {
     width: 220px;
-    background: #222;
+    background: black;
+    color: white;
     z-index: 100;
     position: absolute;
     border: solid 2px darkgray;
     padding: 4px;
+    border-radius: 5px;
     margin: 0
 }
 
@@ -216,7 +222,7 @@
 }
 
 .papaya-menu-hovering {
-    background-color: #444
+    background-color: #002fff;
 }
 
 .papaya-menu-spacer {
@@ -224,6 +230,7 @@
 }
 
 .papaya-menu-unselectable {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -234,7 +241,9 @@
 }
 
 .papaya-menu-button-hovering {
-    background-color: #DDD
+    background-color: black;
+    color: white;
+    border-radius: 5px;
 }
 
 .papaya-menu-filechooser {
