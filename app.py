@@ -81,6 +81,10 @@ def registration():
 def login():
     return render_template("login.html")
 
+@app.route("/twoDseg")
+def twoDseg():
+    return render_template("twoDseg.html")
+
 
 # Invalid URL
 @app.errorhandler(404)
