@@ -11,6 +11,7 @@
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
+                <br>
                 <h1 class="mt-4">Registration & Verification</h1>
                 <br><br>
 
@@ -23,17 +24,84 @@
                         {{ form.phone.label(class = 'form-label mt-4') }}
                         {{ form.phone(class = 'form-control') }}    
                         {{ form.verify_code.label(class = 'form-label mt-4') }}
-                        {{ form.verify_code(class = 'form-control') }}    
+                        {{ form.verify_code(class = 'form-control') }}   
+                        {{ form.administrator.label(class = 'form-label mt-4') }}
+                        {{ form.administrator(class = 'form-control') }}      
+
+                        <div class="input-group mb-3 mt-5">
+                            <label class="input-group-text" for="inputGroupSelect01">Choose Sector</label>
+                            <select class="form-select" id="inputGroupSelect01">
+                                <option selected>Choose...</option>
+                                <option value="1">Hosptial</option>
+                                <option value="2">Private Practice</option>
+                                <option value="3">Veterinary Hospital</option>
+                                <option value="4">Outpatient Clinic</option>
+                                <option value="5">Legal Services</option>
+                                <option value="6">Insurance</option>
+                                <option value="7">Education</option>
+                            </select>
+                        </div>
+                          
                     </div>
                     <div class="col">
-                        {{ form.administrator.label(class = 'form-label') }}
-                        {{ form.administrator(class = 'form-control') }}      
-                        {{ form.administrator_contact.label(class = 'form-label mt-4') }}
+                         
+                        {{ form.administrator_contact.label(class = 'form-label') }}
                         {{ form.administrator_contact(class = 'form-control') }}      
                         {{ form.password_hash.label(class = 'form-label mt-4') }}
                         {{ form.password_hash(class = 'form-control') }}
                         {{ form.password_hash2.label(class = 'form-label mt-4') }}              
                         {{ form.password_hash2(class = 'form-control') }}
+
+                        <div class="mt-5">What are your primary concerns?</div>
+                        <br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Generating referrals or enabling new business
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Using automation and patient self-service to reduce overhead costs
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                The ability to access medical images from anywhere and on any device
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Sharing medical records to patients and colleagues from the cloud
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Ability to create and send professional reports to patients and colleagues
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Using an FDA approved viewer for diagnosis
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Having secure backup in the cloud (disaster recovery)
+                            </label>
+                        </div>
                     </div>
                 </div>
                 
@@ -45,9 +113,5 @@
             </div>
             <div class="col-1"></div>
         </div>
-            
-
-        
-        
     </div>
 </form>

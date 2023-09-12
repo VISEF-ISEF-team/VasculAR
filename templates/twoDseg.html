@@ -22,10 +22,10 @@
       color: white;
     }
     #myBar2 {
-        width: 0%;
-        height: 30px;
-        text-align: center;
-        color: white;
+      width: 0%;
+      height: 30px;
+      text-align: center;
+      color: white;
     }
   </style>
 
@@ -48,7 +48,6 @@
             params['background'] = 'black'
             // Set the orientation to axial
             params['orientation'] = 'axial'
-            params['kioskMode'] = true
           </script>
         </div>
         <div class="col">
@@ -82,6 +81,7 @@
           <div class="card shadow" style="margin-top:5px;">
             <div class="card-body">
               <button type="button" class="btn btn-outline-danger" onclick="move2()">Start 3D Reconstruction</button>
+              <button id="open" type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#detailed_table" style="visibility: hidden;">Open view</button>
               <div id="myProgress2" class="progress mt-3" role="progressbar">
                 <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
               </div>
@@ -121,6 +121,28 @@
     </div>
 
     <br /><br /><br />
+
+    <div class="modal fade" id="detailed_table" tabindex="-1" aria-labelledby="detailed_table" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">3D Reconstruction</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body" style="padding:0px;">
+            <div class="sketchfab-embed-wrapper">
+              <div class="sketchfab-embed-wrapper">
+                <iframe title="2018002-01 Tetralogy of Fallot" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="1138" height="630" src="https://sketchfab.com/models/10d22e2e5d934d5eb5a2b728fdd9488f/embed?autostart=1&camera=0"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 
@@ -130,6 +152,7 @@
     if (i == 0) {
       i = 1
       var elem = document.getElementById('myBar')
+  
       var width = 10
       var id = setInterval(frame, 100)
       function frame() {
@@ -148,12 +171,15 @@
     if (i == 0) {
       i = 1
       var elem = document.getElementById('myBar2')
+      var open = document.getElementById('open')
+  
       var width = 10
-      var id = setInterval(frame, 300)
+      var id = setInterval(frame, 50)
       function frame() {
         if (width >= 100) {
           clearInterval(id)
           i = 0
+          open.style.visibility = 'visible'
         } else {
           width++
           elem.style.width = width + '%'

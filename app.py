@@ -14,7 +14,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from datetime import datetime
 
 # From backup
-from form_backup import Registration
+from form_backup import Registration, Login
 
 # ----------- Keys and Global Variables -----------
 app = Flask(__name__)
@@ -22,6 +22,10 @@ app.config["SECRET_KEY"] = "isef"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 # ----------- Database -----------
 class Organizations(db.Model, UserMixin):
@@ -33,6 +37,7 @@ class Organizations(db.Model, UserMixin):
     administrator_contact = db.Column(db.String(120), nullable=False)
     verify_code = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(200))
+    patients = db.relationship('Patients', backref='org')
     
     @property
     def password():
@@ -47,6 +52,16 @@ class Organizations(db.Model, UserMixin):
     def __repr__(self):
         return '<Name %r>' % self.name
 
+class Patients(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(255), nullable=False)
+    age = db.Column(db.String(255), nullable=False)
+    pre_disease = db.Column(db.String(255), nullable=False)
+    note = db.Column(db.String(255))
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    org_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
+
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -59,7 +74,7 @@ def registration():
         org = Organizations.query.filter_by(email=form.email.data).first()
         if org is None: 
             hased_pw = generate_password_hash(form.password_hash.data, "sha256")
-            org = Organizations(name=form.name.data, email=form.email.data, phone=form.phone.data, administrator=form.administrator.data, administrator_contact=form.administrator_contact.data, password_hash=hased_pw)
+            org = Organizations(name=form.name.data, email=form.email.data, phone=form.phone.data, verify_code=form.verify_code.data, administrator=form.administrator.data, administrator_contact=form.administrator_contact.data, password_hash=hased_pw)
             db.session.add(org)
             db.session.commit()
 
@@ -75,11 +90,24 @@ def registration():
     all_orgs = Organizations.query.order_by(Organizations.date_added)
     return render_template("registration.html", form=form, name=name, all_orgs=all_orgs)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Organizations.query.get(int(user_id))
 
-
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    form = Login()
+    if form.validate_on_submit():
+        org = Organizations.query.filter_by(email=form.email.data).first()
+        if org:
+            if check_password_hash(org.password_hash, form.password_hash.data):
+                login_user(org)
+                return redirect(url_for('home', id=current_user.id))
+            else:
+                flash('Wrong password. Please try again')
+        else:
+            flash('User does not exist. Please sign up to create an account')
+    return render_template("login.html", form=form)
 
 @app.route("/twoDseg")
 def twoDseg():

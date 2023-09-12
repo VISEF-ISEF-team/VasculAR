@@ -14,3 +14,9 @@ class Registration(FlaskForm):
     password_hash = PasswordField("Enter password", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
     password_hash2 = PasswordField("Confirm password", validators=[DataRequired()])
     submit = SubmitField("Register now")
+    
+    
+class Login(FlaskForm):
+    email = StringField("Email address", validators=[DataRequired()])
+    password_hash = PasswordField("Enter password", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
+    submit = SubmitField("Register now")
