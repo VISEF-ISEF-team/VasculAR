@@ -582,13 +582,13 @@ li .papaya-menu-slider {
     background: #222;
     position: absolute;
     z-index: 100;
-    border: solid 2px darkgray;
     padding: 6px;
     font-size: 14px;
-    font-family: sans-serif;
-    color: #b5cbd3;
+    color: white;
     box-sizing: content-box;
-    line-height: 1.45
+    border-radius: 5px;
+    line-height: 1.45;
+    padding: 10px;
 }
 
 .papaya-dialog-content {
@@ -634,13 +634,17 @@ li .papaya-menu-slider {
 .papaya-dialog-button {
     text-align: right;
     box-sizing: content-box;
-    height: 22px
+    border: none;
 }
 
 .papaya-dialog-button button {
     box-sizing: content-box;
     color: black;
-    font-size: 11px
+    font-size: 12px;
+    border-radius: 10px;
+    border: none;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .papaya-dialog-background {

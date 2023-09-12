@@ -22,11 +22,12 @@
                 <script type="text/javascript">
                     var params = [];
                     // Load an MRI image in NIFTI format
-                    params["images"] = ["._la_029.nii.gz"];
+            
                     // Set the background color to black
                     params["background"] = "black";
                     // Set the orientation to axial
                     params["orientation"] = "axial";
+                    params["kioskMode"] = true;
                 </script>
             </div>
             <div class="col">
@@ -36,7 +37,7 @@
                 <script type="text/javascript">
                     var params = [];
                     // Load an MRI image in NIFTI format
-                    params["images"] = ["._la_029.nii.gz"];
+      
                     // Set the background color to black
                     params["background"] = "black";
                     // Set the orientation to axial
@@ -44,7 +45,65 @@
                 </script>
             </div>
         </div>
+
+        
     </div>
+
+    <div class="container mt-5">
+        
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-outline-primary">Start segmentation</button>
+                        <div class="progress mt-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow" style="margin-top:5px;">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-outline-danger">Start 3D Reconstruction</button>
+                        <div class="progress mt-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-outline-primary">Download Packages</button>
+                        <form action="/download" class="mt-4">
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">MRI images</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">Segmented MRI</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">3D viz</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">patient info</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>    
 </body>
 <script>
     // Get the two papaya containers
@@ -78,3 +137,5 @@
     viewer2.canvas.addEventListener("mousemove", syncEvents);
 </script>
 </html>
+
+
