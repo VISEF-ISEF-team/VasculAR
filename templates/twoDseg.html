@@ -3,139 +3,163 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/papaya.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='js/papaya.js') }}"></script>
+  <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/papaya.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/papaya.js') }}"></script>
     <title>Papaya Viewer</title>
-</head>
-<body>
+  </head>
+
+  <style>
+    #myProgress {
+      width: 100%;
+      background-color: #ddd;
+    }
+    
+    #myBar {
+      width: 0%;
+      height: 30px;
+      text-align: center;
+      color: white;
+    }
+    #myBar2 {
+        width: 0%;
+        height: 30px;
+        text-align: center;
+        color: white;
+    }
+  </style>
+
+  <body>
     <div class="mt-4">
-        <h2 class="text-center">Volumetric Segmentation & Tumor Detection</h2>
-        
-        <br><br>
+      <h2 class="text-center">Volumetric Segmentation & Tumor Detection</h2>
 
-        <div class="row">
-            <div class="col">
-                <!-- Create a div element with the class "papaya" -->
-                <div class="papaya" data-params="params"></div>
-                <!-- Define the parameters for the papaya viewer -->
-                <script type="text/javascript">
-                    var params = [];
-                    // Load an MRI image in NIFTI format
+      <br /><br />
+
+      <div class="row">
+        <div class="col">
+          <!-- Create a div element with the class "papaya" -->
+          <div class="papaya" data-params="params"></div>
+          <!-- Define the parameters for the papaya viewer -->
+          <script type="text/javascript">
+            var params = []
+            // Load an MRI image in NIFTI format
             
-                    // Set the background color to black
-                    params["background"] = "black";
-                    // Set the orientation to axial
-                    params["orientation"] = "axial";
-                    params["kioskMode"] = true;
-                </script>
-            </div>
-            <div class="col">
-                <!-- Create a div element with the class "papaya" -->
-                <div class="papaya" data-params="params"></div>
-                <!-- Define the parameters for the papaya viewer -->
-                <script type="text/javascript">
-                    var params = [];
-                    // Load an MRI image in NIFTI format
-      
-                    // Set the background color to black
-                    params["background"] = "black";
-                    // Set the orientation to axial
-                    params["orientation"] = "axial";
-                </script>
-            </div>
+            // Set the background color to black
+            params['background'] = 'black'
+            // Set the orientation to axial
+            params['orientation'] = 'axial'
+            params['kioskMode'] = true
+          </script>
         </div>
-
-        
+        <div class="col">
+          <!-- Create a div element with the class "papaya" -->
+          <div class="papaya" data-params="params"></div>
+          <!-- Define the parameters for the papaya viewer -->
+          <script type="text/javascript">
+            var params = []
+            // Load an MRI image in NIFTI format
+            
+            // Set the background color to black
+            params['background'] = 'black'
+            // Set the orientation to axial
+            params['orientation'] = 'axial'
+          </script>
+        </div>
+      </div>
     </div>
 
     <div class="container mt-5">
-        
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <button type="button" class="btn btn-outline-primary">Start segmentation</button>
-                        <div class="progress mt-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow" style="margin-top:5px;">
-                    <div class="card-body">
-                        <button type="button" class="btn btn-outline-danger">Start 3D Reconstruction</button>
-                        <div class="progress mt-3" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-primary" onclick="move()">Start Segmentation</button>
+              <div id="myProgress" class="progress mt-3" role="progressbar">
+                <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
+              </div>
             </div>
-
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <button type="button" class="btn btn-outline-primary">Download Packages</button>
-                        <form action="/download" class="mt-4">
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">MRI images</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">Segmented MRI</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">3D viz</label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">patient info</label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+          </div>
+          <div class="card shadow" style="margin-top:5px;">
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-danger" onclick="move2()">Start 3D Reconstruction</button>
+              <div id="myProgress2" class="progress mt-3" role="progressbar">
+                <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-primary">Download Packages</button>
+              <form action="/download" class="mt-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">MRI images</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">Segmented MRI</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">3D viz</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">patient info</label>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <br><br><br>    
-</body>
-<script>
-    // Get the two papaya containers
-    var papaya1 = document.getElementsByClassName("papaya")[0];
-    var papaya2 = document.getElementsByClassName("papaya")[1];
-
-    // Get the two papaya viewers
-    var viewer1 = papaya1.viewer;
-    var viewer2 = papaya2.viewer;
-
-    // Define a function to synchronize the events
-    function syncEvents(event) {
-        // Get the event type and target
-        var type = event.type;
-        var target = event.target;
-
-        // Check which viewer is the source of the event
-        if (target === viewer1.canvas) {
-            // If viewer1 is the source, trigger the same event on viewer2
-            viewer2.canvas.dispatchEvent(new Event(type));
-        } else if (target === viewer2.canvas) {
-            // If viewer2 is the source, trigger the same event on viewer1
-            viewer1.canvas.dispatchEvent(new Event(type));
-        }
-    }
-
-    // Add event listeners for scrolling and mouse moving events on both viewers
-    viewer1.canvas.addEventListener("wheel", syncEvents);
-    viewer1.canvas.addEventListener("mousemove", syncEvents);
-    viewer2.canvas.addEventListener("wheel", syncEvents);
-    viewer2.canvas.addEventListener("mousemove", syncEvents);
-</script>
+    <br /><br /><br />
+  </body>
 </html>
 
-
+<script>
+  var i = 0
+  function move() {
+    if (i == 0) {
+      i = 1
+      var elem = document.getElementById('myBar')
+      var width = 10
+      var id = setInterval(frame, 100)
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id)
+          i = 0
+        } else {
+          width++
+          elem.style.width = width + '%'
+          elem.innerHTML = width + '%'
+        }
+      }
+    }
+  }
+  function move2() {
+    if (i == 0) {
+      i = 1
+      var elem = document.getElementById('myBar2')
+      var width = 10
+      var id = setInterval(frame, 300)
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id)
+          i = 0
+        } else {
+          width++
+          elem.style.width = width + '%'
+          elem.innerHTML = width + '%'
+        }
+      }
+    }
+  }
+</script>
