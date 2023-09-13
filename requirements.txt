@@ -1,6 +1,3 @@
-tensorflow
-numpy
-pandas
 flask
 flask-wtf
 flask_sqlalchemy

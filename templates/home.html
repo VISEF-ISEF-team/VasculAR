@@ -11,6 +11,8 @@
     {% include 'navbar.html' %}
 
     <h1>Home</h1>
-    <!-- <div class="sketchfab-embed-wrapper"> <iframe title="2018023 Ascending Aortic Aneurysm" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share width="700" height="480" src="https://sketchfab.com/models/618d2971024a446fb9bfe6af1eb48945/embed?autostart=1&camera=0"> </iframe> </div>-->
+    {% for org  in all_orgs  %}
+        <div>{{org.email}}</div>
+    {% endfor %}
 </body>
 </html>

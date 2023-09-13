@@ -1,6 +1,3 @@
-# Machine Learning libs
-import tensorflow as tf
-
 # Flask Backend Framework
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, flash, send_from_directory, current_app
 from flask_wtf import FlaskForm
@@ -64,7 +61,8 @@ class Patients(db.Model):
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    all_orgs = Organizations.query.order_by(Organizations.date_added)
+    return render_template("home.html", all_orgs=all_orgs)
 
 @app.route("/registration", methods=["GET", "POST"]) 
 def registration():
@@ -96,13 +94,15 @@ def load_user(user_id):
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print('in the form submit')
     form = Login()
     if form.validate_on_submit():
+        
         org = Organizations.query.filter_by(email=form.email.data).first()
         if org:
             if check_password_hash(org.password_hash, form.password_hash.data):
                 login_user(org)
-                return redirect(url_for('home', id=current_user.id))
+                return redirect(url_for('home'))
             else:
                 flash('Wrong password. Please try again')
         else:
