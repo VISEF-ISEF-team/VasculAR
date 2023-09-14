@@ -31,7 +31,7 @@
 
   <body>
     <div class="mt-4">
-      <h2 class="text-center">Volumetric Segmentation & Tumor Detection</h2>
+      <h2 class="text-center">Phân đoạn hình ảnh cắt lớp và tái tạo 3D</h2>
 
       <br /><br />
 
@@ -72,7 +72,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-body">
-              <button type="button" class="btn btn-outline-primary" onclick="move()">Start Segmentation</button>
+              <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
               <div id="myProgress" class="progress mt-3" role="progressbar">
                 <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
               </div>
@@ -80,7 +80,7 @@
           </div>
           <div class="card shadow" style="margin-top:5px;">
             <div class="card-body">
-              <button type="button" class="btn btn-outline-danger" onclick="move2()">Start 3D Reconstruction</button>
+              <button type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</button>
               <button id="open" type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#detailed_table" style="visibility: hidden;">Open view</button>
               <div id="myProgress2" class="progress mt-3" role="progressbar">
                 <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
@@ -92,7 +92,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-body">
-              <button type="button" class="btn btn-outline-primary">Download Packages</button>
+              <button type="button" class="btn btn-outline-primary">Đóng gói và tải xuống</button>
               <form action="/download" class="mt-4">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
@@ -101,17 +101,17 @@
 
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">Segmented MRI</label>
+                  <label class="form-check-label" for="flexCheckDefault">MRI được phân khu</label>
                 </div>
 
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">3D viz</label>
+                  <label class="form-check-label" for="flexCheckDefault">mô hình 3D</label>
                 </div>
 
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">patient info</label>
+                  <label class="form-check-label" for="flexCheckDefault">Hồ sơ bệnh án</label>
                 </div>
               </form>
             </div>
@@ -126,7 +126,7 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">3D Reconstruction</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Tái tạo 3D</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 

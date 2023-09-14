@@ -12,7 +12,7 @@
             <div class="col-1"></div>
             <div class="col-10">
                 <br>
-                <h1 class="mt-4">Registration & Verification</h1>
+                <h1 class="mt-4">Đăng ký & Xác thực</h1>
                 <br><br>
 
                 <div class="row">
@@ -29,16 +29,14 @@
                         {{ form.administrator(class = 'form-control') }}      
 
                         <div class="input-group mb-3 mt-5">
-                            <label class="input-group-text" for="inputGroupSelect01">Choose Sector</label>
+                            <label class="input-group-text" for="inputGroupSelect01">Chọn lĩnh vực</label>
                             <select class="form-select" id="inputGroupSelect01">
-                                <option selected>Choose...</option>
-                                <option value="1">Hosptial</option>
-                                <option value="2">Private Practice</option>
-                                <option value="3">Veterinary Hospital</option>
-                                <option value="4">Outpatient Clinic</option>
-                                <option value="5">Legal Services</option>
-                                <option value="6">Insurance</option>
-                                <option value="7">Education</option>
+                                <option value="1">Bệnh viện</option>
+                                <option value="2">Cơ sở tư nhân</option>s
+                                <option value="4">Phòng khám ngoại trú</option>
+                                <option value="5">Dịch vụ pháp lý</option>
+                                <option value="6">Bảo hiểm</option>
+                                <option value="7">Giáo dục</option>
                             </select>
                         </div>
                           
@@ -52,7 +50,7 @@
                         {{ form.password_hash2.label(class = 'form-label mt-4') }}              
                         {{ form.password_hash2(class = 'form-control') }}
 
-                        <div class="mt-5">What are your primary concerns?</div>
+                        <div class="mt-5">Lý do bạn chọn sử dụng giải pháp của chúng tôi?</div>
                         <br>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -64,51 +62,52 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                Using automation and patient self-service to reduce overhead costs
+                                Sử dụng công nghệ tự động hóa giảm chi phí chung
                             </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                The ability to access medical images from anywhere and on any device
+                                Khả năng truy cập hình ảnh y tế từ mọi nơi và trên mọi thiết bị
                             </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                Sharing medical records to patients and colleagues from the cloud
+                                Sự đơn giản dễ dùng trong giao diện website
                             </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                Ability to create and send professional reports to patients and colleagues
+                                Khả năng tạo và gửi báo cáo chuyên môn cho bệnh nhân và đồng nghiệp
                             </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                Using an FDA approved viewer for diagnosis
+                                Các chức năng hữu ích đem lại lợi ích cho công tác điều trị
                             </label>
                         </div>
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
-                                Having secure backup in the cloud (disaster recovery)
+                                Có các chuyên gia đảm bảo xác minh tính an toàn và chính xác của dự án
                             </label>
                         </div>
+
                     </div>
                 </div>
                 
                 <!-- button and link -->
                 <div class="d-grid gap-2 mt-5">
                     {{ form.submit(class = 'btn btn-dark') }}
-                    <p class="mt-3">Already have an account? <a href="{{ url_for('login')}}">Login now <i class="bi bi-arrow-right"></a></i></p>
+                    <p class="mt-3">Đã có tài khoản? <a href="{{ url_for('login')}}">Đăng nhập <i class="bi bi-arrow-right"></a></i></p>
                 </div>
             </div>
             <div class="col-1"></div>

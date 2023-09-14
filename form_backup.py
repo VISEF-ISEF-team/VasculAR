@@ -5,18 +5,18 @@ from wtforms.validators import DataRequired, EqualTo, Length
 
 
 class Registration(FlaskForm):
-    name = StringField("Organization name", validators=[DataRequired()])
-    email = StringField("Email address", validators=[DataRequired()])
-    phone = StringField("Phone number", validators=[DataRequired()])
-    verify_code = StringField("Verify code", validators=[DataRequired()])
-    administrator = StringField("Administrator name", validators=[DataRequired()])
-    administrator_contact = StringField("Administrator phone", validators=[DataRequired()])
-    password_hash = PasswordField("Enter password", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
-    password_hash2 = PasswordField("Confirm password", validators=[DataRequired()])
-    submit = SubmitField("Register now")
+    name = StringField("Tên cơ sở đăng ký sử dụng phần mềm", validators=[DataRequired()])
+    email = StringField("Địa chỉ email", validators=[DataRequired()])
+    phone = StringField("Số điện thoại", validators=[DataRequired()])
+    verify_code = StringField("Mã xác thực", validators=[DataRequired()])
+    administrator = StringField("Tên người chịu trách nhiệm", validators=[DataRequired()])
+    administrator_contact = StringField("Số điện thoại liên lạc", validators=[DataRequired()])
+    password_hash = PasswordField("Nhập mật khẩu", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
+    password_hash2 = PasswordField("Nhập lại mật khẩu", validators=[DataRequired()])
+    submit = SubmitField("Đăng ký ngay")
     
     
 class Login(FlaskForm):
-    email = StringField("Email address", validators=[DataRequired()])
-    password_hash = PasswordField("Enter password", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
-    submit = SubmitField("Login now")
+    email = StringField("Địa chỉ email", validators=[DataRequired()])
+    password_hash = PasswordField("Nhập mật khẩu", validators=[DataRequired(), EqualTo('password_hash2', message='Password Must Match')])
+    submit = SubmitField("Đăng nhập ngay")

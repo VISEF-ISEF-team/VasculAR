@@ -10,23 +10,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{url_for('home')}}">Trang chủ</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">New case</a>
+            <a class="nav-link" href="#">Bắt đầu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('twoDseg')}}">Application</a>
+            <a class="nav-link" href="{{ url_for('twoDseg')}}">Ứng dụng</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Verification</a>
+            <a class="nav-link" href="#">Chuyên gia</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Database</a>
+            <a class="nav-link" href="#">Dữ liệu</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Organization
+              Tổ Chức
             </a>
             {% if current_user.is_authenticated %}
               <ul class="dropdown-menu">
@@ -34,18 +34,15 @@
               </ul>
             {% else %}
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ url_for('registration')}}">Signup</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('login')}}">Login</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('registration')}}">Đăng ký</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('login')}}">Đăng nhập</a></li>
               </ul>
             {% endif %}
             
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2" type="search" placeholder="tìm kiếm" aria-label="Search">
           <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
       </div>
