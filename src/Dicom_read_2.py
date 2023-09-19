@@ -39,9 +39,16 @@ plt.title("Axial")
 plt.imshow(volume_3d[:,:,img_shape[2]//2])
 axial.set_aspect(axial_aspect_ratio)
 
-sagital = plt.subplot(2,2,3)
+sagital=plt.subplot(2,2,2)
 plt.title("Sagital")
 plt.imshow(volume_3d[:,img_shape[1]//2,:])
-axial.set_aspect(sagital_aspect_ratio)
-plt.imshow()
+sagital.set_aspect(sagital_aspect_ratio)
+
+
+coronal = plt.subplot(2,2,3)
+plt.title("Coronal")
+plt.imshow(volume_3d[img_shape[0]//2,:,:].T)
+coronal.set_aspect(coronal_aspect_ratio)
+
+plt.show()
 
