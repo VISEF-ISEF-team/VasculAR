@@ -93,13 +93,13 @@ def show_mesh():
         
 
     # Load the meshes from the files and assign different colors
-    mesh1 = load_mesh("res_recon_full_seg/cardiac_class_1.stl", "red")
-    mesh2 = load_mesh("res_recon_full_seg/cardiac_class_2.stl", "green")
-    mesh3 = load_mesh("res_recon_full_seg/cardiac_class_3.stl", "blue")
-    mesh4 = load_mesh("res_recon_full_seg/cardiac_class_4.stl", "yellow")
-    mesh5 = load_mesh("res_recon_full_seg/cardiac_class_5.stl", "magenta")
-    mesh6 = load_mesh("res_recon_full_seg/cardiac_class_6.stl", "cyan")
-    mesh7 = load_mesh("res_recon_full_seg/cardiac_class_7.stl", "white")    
+    mesh1 = load_mesh("res_recon_full_seg/cardiac_class_1.stl", "#800000")
+    mesh2 = load_mesh("res_recon_full_seg/cardiac_class_2.stl", "#FF8080")
+    mesh3 = load_mesh("res_recon_full_seg/cardiac_class_3.stl", "#FFA500")
+    mesh4 = load_mesh("res_recon_full_seg/cardiac_class_4.stl", "#800080")
+    mesh5 = load_mesh("res_recon_full_seg/cardiac_class_5.stl", "#FF0000")
+    mesh6 = load_mesh("res_recon_full_seg/cardiac_class_6.stl", "#FFC0CB")
+    mesh7 = load_mesh("res_recon_full_seg/cardiac_class_7.stl", "#0000FF")    
 
     # Create an instance of the Plotter class with axes style-11 enabled
     plt = Plotter()
@@ -107,8 +107,8 @@ def show_mesh():
     # Add a button to the plotter with buttonfunc as the callback function
     bu1 = plt.add_button(
         buttonfunc1,
-        pos=(0.2, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh1 off", "Mesh1 on"],  # text for each state
+        pos=(0.1, 0.05),  # x,y fraction from bottom left corner
+        states=["Tam that phai", "Tam that phai"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -120,8 +120,8 @@ def show_mesh():
 
     bu2 = plt.add_button(
         buttonfunc2,
-        pos=(0.3, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh2 off", "Mesh2 on"],  # text for each state
+        pos=(0.23, 0.05),  # x,y fraction from bottom left corner
+        states=["Tam nhi trai", "Tam nhi trai"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -134,8 +134,8 @@ def show_mesh():
 
     bu3 = plt.add_button(
         buttonfunc3,
-        pos=(0.4, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh3 off", "Mesh3 on"],  # text for each state
+        pos=(0.37, 0.05),  # x,y fraction from bottom left corner
+        states=["Co tam that trai", "Co tam that trai"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -148,8 +148,8 @@ def show_mesh():
 
     bu4 = plt.add_button(
         buttonfunc4,
-        pos=(0.5, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh4 off", "Mesh4 on"],  # text for each state
+        pos=(0.51, 0.05),  # x,y fraction from bottom left corner
+        states=["Tam nhi phai", "Tam nhi phai"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -162,8 +162,8 @@ def show_mesh():
 
     bu5 = plt.add_button(
         buttonfunc5,
-        pos=(0.6, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh5 off", "Mesh5 on"],  # text for each state
+        pos=(0.64, 0.05),  # x,y fraction from bottom left corner
+        states=["Tam that trai", "Tam that trai"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -176,8 +176,8 @@ def show_mesh():
 
     bu6 = plt.add_button(
         buttonfunc6,
-        pos=(0.7, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh6 off", "Mesh6 on"],  # text for each state
+        pos=(0.77, 0.05),  # x,y fraction from bottom left corner
+        states=["Dong mach chu", "Dong mach chu"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
@@ -189,8 +189,8 @@ def show_mesh():
 
     bu7 = plt.add_button(
         buttonfunc7,
-        pos=(0.8, 0.05),  # x,y fraction from bottom left corner
-        states=["Mesh7 off", "Mesh7 on"],  # text for each state
+        pos=(0.9, 0.05),  # x,y fraction from bottom left corner
+        states=["Dong mach phoi", "Dong mach phoi"],  # text for each state
         c=["w", "w"],     # font color for each state
         bc=["#0d6efd", "dv"],  # background color for each state
         font="courier",   # font type
