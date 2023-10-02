@@ -7,6 +7,15 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/papaya.css') }}" />
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/papaya.js') }}"></script>
     <title>Papaya Viewer</title>
+
+    <script type="text/javascript">
+      var params = [];
+      params['images'] = [
+          "{{ url_for('static', filename = 'data/input.nii.gz') }}",
+          "{{ url_for('static', filename = 'data/output.nii.gz') }}"
+      ];
+      papaya.Container.syncViewers = true;
+    </script>
   </head>
 
   <style>
@@ -32,95 +41,83 @@
   <body>
     <div class="mt-4">
       <h2 class="text-center">Phân đoạn hình ảnh cắt lớp và tái tạo 3D</h2>
-
-      <br /><br />
-
-      <div class="row">
+      <div class="d-flex justify-content-center">
+          <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+              Chức năng
+          </button>
+      </div>
+      
+      <div class="row mt-4">
         <div class="col">
-          <!-- Create a div element with the class "papaya" -->
           <div class="papaya" data-params="params"></div>
-          <!-- Define the parameters for the papaya viewer -->
-          <script type="text/javascript">
-            var params = []
-            // Load an MRI image in NIFTI format
-            
-            // Set the background color to black
-            params['background'] = 'black'
-            // Set the orientation to axial
-            params['orientation'] = 'axial'
-          </script>
         </div>
         <div class="col">
-          <!-- Create a div element with the class "papaya" -->
           <div class="papaya" data-params="params"></div>
-          <!-- Define the parameters for the papaya viewer -->
-          <script type="text/javascript">
-            var params = []
-            // Load an MRI image in NIFTI format
-            
-            // Set the background color to black
-            params['background'] = 'black'
-            // Set the orientation to axial
-            params['orientation'] = 'axial'
-          </script>
-        </div>
       </div>
     </div>
 
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-body">
-              <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
-              <div id="myProgress" class="progress mt-3" role="progressbar">
-                <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
+    
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chức năng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="container mt-5">
+       
+      
+              <div class="card shadow mt-3">
+                <div class="card-body">
+                  <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
+                  <div id="myProgress" class="progress mt-3" role="progressbar">
+                    <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="card shadow" style="margin-top:5px;">
-            <div class="card-body">
-              <button type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</button>
-              <button id="open" type="button" class="btn btn-outline-warning" style="visibility: hidden;">Open view</button>
-              <div id="myProgress2" class="progress mt-3" role="progressbar">
-                <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
+              <div class="card shadow" style="margin-top:5px;">
+                <div class="card-body">
+                  <button type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</button>
+                  <button id="open" type="button" class="btn btn-outline-warning" style="visibility: hidden;">Open view</button>
+                  <div id="myProgress2" class="progress mt-3" role="progressbar">
+                    <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-body">
-              <button type="button" class="btn btn-outline-primary">Đóng gói và tải xuống</button>
-              <form action="/download" class="mt-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">MRI images</label>
+       
+    
+            
+              <div class="card shadow mt-3">
+                <div class="card-body">
+                  <button type="button" class="btn btn-outline-primary">Đóng gói và tải xuống</button>
+                  <form action="/download" class="mt-4">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                      <label class="form-check-label" for="flexCheckDefault">MRI images</label>
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                      <label class="form-check-label" for="flexCheckDefault">MRI được phân khu</label>
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                      <label class="form-check-label" for="flexCheckDefault">mô hình 3D</label>
+                    </div>
+    
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                      <label class="form-check-label" for="flexCheckDefault">Hồ sơ bệnh án</label>
+                    </div>
+                  </form>
                 </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">MRI được phân khu</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">mô hình 3D</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                  <label class="form-check-label" for="flexCheckDefault">Hồ sơ bệnh án</label>
-                </div>
-              </form>
-            </div>
-          </div>
+              </div>
+          
+       
         </div>
       </div>
     </div>
-
-    <br /><br /><br />
 
     <div class="modal fade" id="detailed_table" tabindex="-1" aria-labelledby="detailed_table" aria-hidden="true">
       <div class="modal-dialog modal-xl">

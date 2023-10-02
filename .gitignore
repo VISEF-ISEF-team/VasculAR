@@ -1,4 +1,7 @@
 .venv/
+.env
+.env/
 __pycache__
 dicom
 MM_WHS
+data

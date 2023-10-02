@@ -64,8 +64,6 @@ def load_mesh(filename, color):
     mesh.smooth(niter=100)
     # Return the mesh object
     return mesh
-
-
     
 def show_mesh():
     # Define a function that toggles the transparency of a mesh and changes the button state

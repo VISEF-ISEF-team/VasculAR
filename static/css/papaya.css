@@ -385,6 +385,7 @@
     --bs-btn-disabled-border-color: #0d6efd
 
     display: inline-block;
+    margin-right: 20px;
     padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
     font-family: var(--bs-btn-font-family);
     font-size: 12px;
@@ -437,6 +438,7 @@
     --bs-btn-disabled-border-color: #ffc107
 
     display: inline-block;
+    margin-left: 10px;
     padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
     font-family: var(--bs-btn-font-family);
     font-size: 12px;
