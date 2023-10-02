@@ -66,8 +66,26 @@
       <div class="offcanvas-body">
         <div class="container mt-5">
        
-      
-              <div class="card shadow mt-3">
+
+              <form id="upload-form"  action="/upload" method="post" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-9">
+                      <input class="form-control" type="file" name="imagefile" id="imagefile" />
+                  </div>
+                  <div class="col-3">
+                      <input class="btn btn-primary" type="submit" value="Tải tệp" />
+                  </div>
+              </div>
+              
+           
+                {% if not_file == True %}
+                  <div class="alert alert-warning mt-3" role="alert">
+                      Bạn chưa chọn tệp. Hãy chọn một tệp để hoàn tất quá trình tải dữ liệu.
+                  </div>
+                {% endif %}
+
+
+              <div class="card shadow mt-4">
                 <div class="card-body">
                   <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
                   <div id="myProgress" class="progress mt-3" role="progressbar">

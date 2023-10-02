@@ -6,9 +6,11 @@ from flask_migrate import Migrate
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
 from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, EqualTo, Length
+from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash 
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from datetime import datetime
+import os
 
 # From backup
 from form_backup import Registration, Login
@@ -17,12 +19,14 @@ from form_backup import Registration, Login
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "isef" 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['UPLOAD_FOLDER'] =  'static/data'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
 
 # ----------- Database -----------
 class Organizations(db.Model, UserMixin):
@@ -63,6 +67,26 @@ class Patients(db.Model):
 def home():
     all_orgs = Organizations.query.order_by(Organizations.date_added)
     return render_template("home.html", all_orgs=all_orgs)
+
+
+# A function to check if the file extension is allowed
+ALLOWED_EXTENSIONS = set(['nii.gz', 'dcm', 'vtk', 'nii'])
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    
+@app.route("/upload", methods=["POST"]) 
+def uploader(): 
+    imagefile = request.files['imagefile'] 
+    if imagefile.filename == '': 
+        return render_template('twoDseg.html', progress_bar_animated=False, not_file=True)
+    if imagefile: 
+        filename = secure_filename(imagefile.filename) 
+        image_path = "static/data/" + imagefile.filename 
+        imagefile.save(os.path.join(app.config['UPLOAD_FOLDER'], 'input.nii.gz')) 
+        session['image_path'] = image_path 
+        return redirect(url_for('twoDseg', image_path=image_path, progress_bar=True)) 
+    else: 
+        return "File not allowed"
 
 @app.route("/registration", methods=["GET", "POST"]) 
 def registration():
@@ -111,7 +135,9 @@ def login():
 
 @app.route("/twoDseg")
 def twoDseg():
-    return render_template("twoDseg.html")
+    image_path = False
+    progress_bar_animated = False
+    return render_template("twoDseg.html", image_path=image_path, progress_bar_animated=progress_bar_animated)
 
 
 # Invalid URL
