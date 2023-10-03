@@ -1,15 +1,19 @@
-# ------ UNET ARCHITECTURE -----
+"""
+Standard Unet
+Model not compiled here, instead will be done externally to make it
+easy to test various loss functions and optimizers. 
+"""
 from keras.models import Model
 from keras.layers import Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate, Conv2DTranspose, BatchNormalization, Dropout, Lambda
 
-# ------ BUILD THE MODEL -----
-def simple_unet_model(IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS):
+# ----- BULDING UNET ARCHITECTURE -----
+def multi_unet_model(n_classes=4, IMG_HEIGHT=256, IMG_WIDTH=256, IMG_CHANNELS=1):
 
     inputs = Input((IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS))
-    # s = Lambda(lambda x: x / 255)(inputs)  
+    # s = Lambda(lambda x: x / 255)(inputs)   
     s = inputs
 
-    # ------ Contraction Path / Encoder ------
+    # ------ Contraction Path / Encoder -----
     c1 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(s)
     c1 = Dropout(0.1)(c1)
     c1 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c1)
@@ -34,7 +38,7 @@ def simple_unet_model(IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS):
     c5 = Dropout(0.3)(c5)
     c5 = Conv2D(256, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c5)
     
-    # ------ Expansive Path / Decoder ------
+    # ------ Expansive Path / Decoder -----
     u6 = Conv2DTranspose(128, (2, 2), strides=(2, 2), padding='same')(c5)
     u6 = concatenate([u6, c4])
     c6 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u6)
@@ -59,10 +63,11 @@ def simple_unet_model(IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS):
     c9 = Dropout(0.1)(c9)
     c9 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c9)
      
-    outputs = Conv2D(1, (1, 1), activation='sigmoid')(c9)
-     
+    outputs = Conv2D(n_classes, (1, 1), activation='softmax')(c9)
+    
     model = Model(inputs=[inputs], outputs=[outputs])
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.summary()
+    # note: Compile the model in the main program to make it easy to test with various loss functions
+    # model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    # model.summary()
     return model
  
