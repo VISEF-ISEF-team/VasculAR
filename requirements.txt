@@ -1,5 +1,5 @@
 tensorflow
-flask
+flask<=2.3
 flask-wtf
 flask_sqlalchemy
 flask_login
