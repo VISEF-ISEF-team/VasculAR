@@ -12,8 +12,11 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from datetime import datetime
 import os
 
-# From backup
+#  ----------- Form Backup -----------
 from form_backup import Registration, Login
+
+#  ----------- 3D rendering -----------
+from render_3D import rendering
 
 # ----------- Keys and Global Variables -----------
 app = Flask(__name__)
@@ -84,9 +87,17 @@ def uploader():
         image_path = "static/data/" + imagefile.filename 
         imagefile.save(os.path.join(app.config['UPLOAD_FOLDER'], 'input.nii.gz')) 
         session['image_path'] = image_path 
-        return redirect(url_for('twoDseg', image_path=image_path, progress_bar=True)) 
+        return redirect(url_for('twoDseg')) 
     else: 
         return "File not allowed"
+    
+    
+@app.route("/rendering", methods=["GET", "POST"]) 
+def render():
+    render_obj = rendering("static/data/output.nii.gz")
+    # render_obj.show_mesh()
+    render_obj.segmented_reconstruction()
+    return redirect(url_for('twoDseg'))
 
 @app.route("/registration", methods=["GET", "POST"]) 
 def registration():
@@ -135,9 +146,7 @@ def login():
 
 @app.route("/twoDseg")
 def twoDseg():
-    image_path = False
-    progress_bar_animated = False
-    return render_template("twoDseg.html", image_path=image_path, progress_bar_animated=progress_bar_animated)
+    return render_template("twoDseg.html")
 
 
 # Invalid URL

@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/papaya.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/papaya.js') }}"></script>
-    <title>Papaya Viewer</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/vasculAR.css') }}" />
+    <title>Phân đoạn và tái tạo</title>
 
     <script type="text/javascript">
       var params = [];
@@ -17,26 +17,6 @@
       papaya.Container.syncViewers = true;
     </script>
   </head>
-
-  <style>
-    #myProgress {
-      width: 100%;
-      background-color: #ddd;
-    }
-    
-    #myBar {
-      width: 0%;
-      height: 30px;
-      text-align: center;
-      color: white;
-    }
-    #myBar2 {
-      width: 0%;
-      height: 30px;
-      text-align: center;
-      color: white;
-    }
-  </style>
 
   <body>
     <div class="mt-4">
@@ -57,7 +37,6 @@
     </div>
 
     
-
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chức năng</h5>
@@ -95,8 +74,7 @@
               </div>
               <div class="card shadow" style="margin-top:5px;">
                 <div class="card-body">
-                  <button type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</button>
-                  <button id="open" type="button" class="btn btn-outline-warning" style="visibility: hidden;">Open view</button>
+                  <a href="{{ url_for('render') }}" type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</a>
                   <div id="myProgress2" class="progress mt-3" role="progressbar">
                     <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
                   </div>
@@ -137,66 +115,10 @@
       </div>
     </div>
 
-    <div class="modal fade" id="detailed_table" tabindex="-1" aria-labelledby="detailed_table" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tái tạo 3D</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body" style="padding:0px;">
-            
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </body>
 </html>
 
-<script>
-  var i = 0
-  function move() {
-    if (i == 0) {
-      i = 1
-      var elem = document.getElementById('myBar')
-  
-      var width = 10
-      var id = setInterval(frame, 100)
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id)
-          i = 0
-        } else {
-          width++
-          elem.style.width = width + '%'
-          elem.innerHTML = width + '%'
-        }
-      }
-    }
-  }
-  function move2() {
-    if (i == 0) {
-      i = 1
-      var elem = document.getElementById('myBar2')
-      var open = document.getElementById('open')
-  
-      var width = 10
-      var id = setInterval(frame, 50)
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id)
-          i = 0
-          open.style.visibility = 'visible'
-        } else {
-          width++
-          elem.style.width = width + '%'
-          elem.innerHTML = width + '%'
-        }
-      }
-    }
-  }
-</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/papaya.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/vasculAR.js') }}"></script>

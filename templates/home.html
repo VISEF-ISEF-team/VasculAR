@@ -10,9 +10,9 @@
     <!-- nav bar -->
     {% include 'navbar.html' %}
 
-    <h1>Home</h1>
-    {% for org  in all_orgs  %}
-        <div>{{org.email}}</div>
-    {% endfor %}
+    <h1 class="text-center mt-3">Báo cáo khoa học</h1>
+    <object class="mt-4" data="static/BCKH.pdf" type="application/pdf" width="100%" height="600px">
+        <p> Unable to display PDF file. <a href="BCKH.pdf"> Download </a> instead. </p>
+    </object>
 </body>
 </html>

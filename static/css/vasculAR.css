@@ -1,0 +1,18 @@
+#myProgress {
+    width: 100%;
+    background-color: #ddd;
+}
+
+#myBar {
+    width: 0%;
+    height: 30px;
+    text-align: center;
+    color: white;
+}
+
+#myBar2 {
+    width: 0%;
+    height: 30px;
+    text-align: center;
+    color: white;
+}
