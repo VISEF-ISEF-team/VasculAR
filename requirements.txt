@@ -14,13 +14,12 @@ Pillow
 scipy
 ipykernel
 ipywidgets
-matplotlib
 opencv-python
 jupyter
 notebook
 antspyx
 SimpleITK
 antspynet
-numpy-stl 
+numpy-stl
 vedo
 patchify
