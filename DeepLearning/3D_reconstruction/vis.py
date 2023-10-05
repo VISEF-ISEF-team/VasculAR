@@ -233,7 +233,7 @@ def segmented_reconstruction(file_path):
         obj_3d.save(f'res_recon_full_seg/cardiac_class_{i}.stl')
         
     # Load mesh and display reconstructed 3D with different colors
-    show_mesh()
+    # show_mesh()
     
     
 # segmented_reconstruction("loss_function/ct_train_1001_label.nii.gz")
