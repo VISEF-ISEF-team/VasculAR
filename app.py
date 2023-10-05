@@ -8,7 +8,7 @@ from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, EqualTo, Length
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash 
-# from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from datetime import datetime
 import os
 
