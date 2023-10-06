@@ -12,20 +12,22 @@
 
 3. Van tim:
 
-    1. Van 2 lá (buồng tim trái)
-    2. Van động mạch chủ (từ thất trái tới động mạch chủ)
-    3. Van 3 lá (nối nhỉ phải với thất phải)
+    1. Van 2 lá (buồng tim trái) -- mitral valve
+    2. Van động mạch chủ (từ thất trái tới động mạch chủ) -- aortic valve
+    3. Van 3 lá (nối nhỉ phải với thất phải) -- tricuspid valve
     4. Van động mạch phổi (từ thất phải đi ra)
 
-4. Dây chằng của van tim
+4. Màng tim - có lớp dịch sinh lý để tim co bóp (có thể bị tràn) -- pericardium
 
-5. Màng tim - có lớp dịch sinh lý để tim co bóp (có thể bị tràn)
+5. Cung động mạch chủ - arch of aeorta
 
-6. Khoang màng tim
+6. động mạch chủ
 
-7. Cung động mạch chủ - gốc
+7. SVC
 
-8. động mạch chủ
+8. IVC
+
+9. Gốc động mạch phổi - pulmonary trunk
 
 ### Cửa sổ CT
 
@@ -63,3 +65,6 @@ TODO:
 -   kiếm bác sĩ về chẩn đoán hình ảnh
 -   lấy fb từ bác sĩ
 -   VR simulation (1 hướng)
+-   Liên kết với các trường đại học + giảng viên để sử dụng thử
+-   Làm đơn khảo sát
+-   Pulmonary: Phổi
