@@ -18,40 +18,51 @@ def load_mesh(filename, color):
     mesh.smooth(niter=100)
     # Return the mesh object
     return mesh
-    
+
+
 def show_mesh():
     # Define a function that toggles the transparency of a mesh and changes the button state
     # def buttonfunc1():
-    #     mesh1.alpha(1 - mesh1.alpha())  
-    #     bu1.switch()                  
+    #     mesh1.alpha(1 - mesh1.alpha())
+    #     bu1.switch()
     # def buttonfunc2():
-    #     mesh2.alpha(1 - mesh2.alpha())  
+    #     mesh2.alpha(1 - mesh2.alpha())
     #     bu2.switch()
     # def buttonfunc3():
-    #     mesh3.alpha(1 - mesh3.alpha())  
+    #     mesh3.alpha(1 - mesh3.alpha())
     #     bu3.switch()
     # def buttonfunc4():
-    #     mesh4.alpha(1 - mesh4.alpha())  
+    #     mesh4.alpha(1 - mesh4.alpha())
     #     bu4.switch()
     # def buttonfunc5():
-    #     mesh5.alpha(1 - mesh5.alpha())  
+    #     mesh5.alpha(1 - mesh5.alpha())
     #     bu5.switch()
-        
 
     # Load the meshes from the files and assign different colors
-    mesh1 = load_mesh("new_recon/PAT016/cardiac_class_1.stl", "#f1d691")
-    mesh2 = load_mesh("new_recon/PAT016/cardiac_class_2.stl", "#b17a65")
-    mesh3 = load_mesh("new_recon/PAT016/cardiac_class_3.stl", "#6fb8d2")
-    mesh4 = load_mesh("new_recon/PAT016/cardiac_class_4.stl", "#d8654f")
-    mesh5 = load_mesh("new_recon/PAT016/cardiac_class_5.stl", "#dd8265")
-    mesh6 = load_mesh("new_recon/PAT016/cardiac_class_6.stl", "#90ee90")
-    mesh7 = load_mesh("new_recon/PAT016/cardiac_class_7.stl", "#dcf514")
-    mesh8 = load_mesh("new_recon/PAT016/cardiac_class_8.stl", "#dcf514")
-    mesh9 = load_mesh("new_recon/PAT016/cardiac_class_9.stl", "#0d05ff")
-    mesh10 = load_mesh("new_recon/PAT016/cardiac_class_10.stl", "#e6dc46")
-    mesh11 = load_mesh("new_recon/PAT016/cardiac_class_11.stl", "#c8c8eb")
-    mesh12 = load_mesh("new_recon/PAT016/cardiac_class_12.stl", "#fa0101")
-    
+    mesh1 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_aeorta.stl", "#f1d691")
+    mesh2 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_aeortic arch.stl", "#b17a65")
+    mesh3 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_bicuspid valve.stl", "#6fb8d2")
+    mesh4 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_IVC.stl", "#d8654f")
+    mesh5 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_left atrium.stl", "#dd8265")
+    mesh6 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_left ventricle.stl", "#90ee90")
+    mesh7 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_pericardium.stl", "#dcf514")
+    mesh8 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_pulmonary artery.stl", "#dcf514")
+    mesh9 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_right atrium.stl", "#0d05ff")
+    mesh10 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_right ventricle.stl", "#e6dc46")
+    mesh11 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_SVC.stl", "#c8c8eb")
+    mesh12 = load_mesh(
+        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_tricuspid valve.stl", "#fa0101")
 
     # # Create an instance of the Plotter class with axes style-11 enabled
     # plt = Plotter()
@@ -83,7 +94,6 @@ def show_mesh():
     #     angle=0.3,
     # )
 
-
     # bu3 = plt.add_button(
     #     buttonfunc3,
     #     pos=(0.37, 0.05),  # x,y fraction from bottom left corner
@@ -96,7 +106,6 @@ def show_mesh():
     #     italic=False,     # non-italic font style
     #     angle=0.3,
     # )
-
 
     # bu4 = plt.add_button(
     #     buttonfunc4,
@@ -111,7 +120,6 @@ def show_mesh():
     #     angle=0.3,
     # )
 
-
     # bu5 = plt.add_button(
     #     buttonfunc5,
     #     pos=(0.64, 0.05),  # x,y fraction from bottom left corner
@@ -125,10 +133,9 @@ def show_mesh():
     #     angle=0.3,
     # )
 
-
-
     # Show the mesh, docstring, and button in the plot
-    show(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7, mesh8, mesh9, mesh10, mesh11, mesh12, bg='black')
-    
-    
+    show(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7,
+         mesh8, mesh9, mesh10, mesh11, mesh12, bg='black')
+
+
 show_mesh()
