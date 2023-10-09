@@ -11,8 +11,12 @@ Segmentation.nii
 train_images
 mask_images
 <<<<<<< HEAD
+<<<<<<< HEAD
 models
 Segmentation_Result
+=======
+models
+>>>>>>> 49d71451585b1ccf1a15baa19e5bd8d17684944d
 =======
 models
 >>>>>>> 49d71451585b1ccf1a15baa19e5bd8d17684944d
