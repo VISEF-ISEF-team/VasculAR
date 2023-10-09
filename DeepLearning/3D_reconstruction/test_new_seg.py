@@ -39,47 +39,48 @@ def show_mesh():
     #     bu5.switch()
 
     # Load the meshes from the files and assign different colors
-    mesh1 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_aeorta.stl", "#f1d691")
-    mesh2 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_aeortic arch.stl", "#b17a65")
-    mesh3 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_bicuspid valve.stl", "#6fb8d2")
-    mesh4 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_IVC.stl", "#d8654f")
-    mesh5 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_left atrium.stl", "#dd8265")
-    mesh6 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_left ventricle.stl", "#90ee90")
-    mesh7 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_pericardium.stl", "#dcf514")
-    mesh8 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_pulmonary artery.stl", "#dcf514")
-    mesh9 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_right atrium.stl", "#0d05ff")
-    mesh10 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_right ventricle.stl", "#e6dc46")
-    mesh11 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_SVC.stl", "#c8c8eb")
-    mesh12 = load_mesh(
-        "E:\MM-PATIENT\SEGMENT RESULT\PAT15\SEGMENTATION RESULT\Segmentation_1_tricuspid valve.stl", "#fa0101")
+    mesh1 = load_mesh("new_recon/PAT016/cardiac_class_1.stl", "#f1d691")
+    mesh2 = load_mesh("new_recon/PAT016/cardiac_class_2.stl", "#b17a65")
+    mesh3 = load_mesh("new_recon/PAT016/cardiac_class_3.stl", "#6fb8d2")
+    mesh4 = load_mesh("new_recon/PAT016/cardiac_class_4.stl", "#d8654f")
+    mesh5 = load_mesh("new_recon/PAT016/cardiac_class_5.stl", "#dd8265")
+    mesh6 = load_mesh("new_recon/PAT016/cardiac_class_6.stl", "#90ee90")
+    mesh7 = load_mesh("new_recon/PAT016/cardiac_class_7.stl", "#dcf514")
+    mesh8 = load_mesh("new_recon/PAT016/cardiac_class_8.stl", "#dcf514")
+    mesh9 = load_mesh("new_recon/PAT016/cardiac_class_9.stl", "#0d05ff")
+    mesh10 = load_mesh("new_recon/PAT016/cardiac_class_10.stl", "#e6dc46")
+    mesh11 = load_mesh("new_recon/PAT016/cardiac_class_11.stl", "#c8c8eb")
+    mesh12 = load_mesh("new_recon/PAT016/cardiac_class_12.stl", "#fa0101")
 
-    # # Create an instance of the Plotter class with axes style-11 enabled
-    # plt = Plotter()
+    # Create an instance of the Plotter class with axes style-11 enabled
+    plt = Plotter()
 
-    # # Add a button to the plotter with buttonfunc as the callback function
-    # bu1 = plt.add_button(
-    #     buttonfunc1,
-    #     pos=(0.1, 0.05),  # x,y fraction from bottom left corner
-    #     states=["Tam that phai", "Tam that phai"],  # text for each state
-    #     c=["w", "w"],     # font color for each state
-    #     bc=["#0d6efd", "dv"],  # background color for each state
-    #     font="courier",   # font type
-    #     size=10,          # font size
-    #     bold=True,        # bold font
-    #     italic=False,     # non-italic font style
-    #     angle=0.3,
-    # )
+    # Add a button to the plotter with buttonfunc as the callback function
+    bu1 = plt.add_button(
+        buttonfunc1,
+        pos=(0.1, 0.05),  # x,y fraction from bottom left corner
+        states=["1", "1"],  # text for each state
+        c=["w", "w"],     # font color for each state
+        bc=["#0d6efd", "dv"],  # background color for each state
+        font="courier",   # font type
+        size=10,          # font size
+        bold=True,        # bold font
+        italic=False,     # non-italic font style
+        angle=0.3,
+    )
+
+    bu2 = plt.add_button(
+        buttonfunc2,
+        pos=(0.23, 0.05),  # x,y fraction from bottom left corner
+        states=["2", "2"],  # text for each state
+        c=["w", "w"],     # font color for each state
+        bc=["#0d6efd", "dv"],  # background color for each state
+        font="courier",   # font type
+        size=10,          # font size
+        bold=True,        # bold font
+        italic=False,     # non-italic font style
+        angle=0.3,
+    )
 
     # bu2 = plt.add_button(
     #     buttonfunc2,

@@ -43,6 +43,21 @@
 12. Aeortic arch: #fa0101
 13. Pulmonary artery: #f4d631
 
+
+1 left_atrium 128 174 128 255
+2 left_ventricle 241 214 145 255
+3 right_atrium 111 184 210 255
+4 right_ventricle 216 101 79 255
+5 bicuspid_valve 216 101 79 255
+6 tricuspid_valve 144 238 144 255
+7 pericardium 220 245 20 255
+8 aeorta 252 129 132 255
+9 SVC 13 5 255 255
+10 IVC 230 220 70 255
+11 background 0 0 0 255
+12 aeortic_arch 250 1 1 255
+13 pulmonary_artery 244 214 49 255
+
 ### III. Các góc nhìn trong chụp CT
 
 1. Axial: Chụp từ trên xuống (góc nhìn từ đầu bệnh nhân nhìn xuống). Hình ảnh là hình chiếu bằng của vật. Mặt phẳng cắt là một mặt phẳng nằm ngang, vuông góc với bệnh nhân.
