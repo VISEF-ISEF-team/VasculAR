@@ -8,4 +8,6 @@ mmwhs
 dataset
 new_recon
 Segmentation.nii
-binary_tensor.h5
+train_images
+mask_images
+models
