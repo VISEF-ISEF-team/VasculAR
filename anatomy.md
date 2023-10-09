@@ -25,8 +25,8 @@
 
 ### COLOR MAPPING:
 
-1. Left atrium: #f1d691
-2. Left ventricle: #b17a65
+1. Left atrium: #80ae80
+2. Left ventricle: #f1d691
 3. Right atrium: #6fb8d2
 4. Right ventricle: #d8654f
 5. Mitral (bicuspid) valve: #dd8265
@@ -35,6 +35,6 @@
 8. Aeorta: #fc8184
 9. SVC: #0d05ff
 10. IVC: #e6dc46
-11. Background: #c8c8eb -- chuyển thành 0
+11. Background: # 0
 12. Aeortic arch: #fa0101
 13. Pulmonary artery: #f4d631
