@@ -1,2 +1,3 @@
 python -m venv .venv
 .\.venv\Scripts\activate
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted

@@ -1,70 +1,65 @@
-### Các góc nhìn trong chụp CT
+# Segmentation Speculations
+## I. Các vùng cần phân khu và các lưu ý kèm theo
+
+1. Tâm nhĩ trái (Left Atrium): ở dưới động mạch phổi, nhận máu giàu oxi từ động mạch phổi
+
+2. Tâm nhĩ phải (Right Atrium): gần tĩnh mạch chủ trên, tĩnh mạch chủ trên (Superiror Vena Cava) sẽ đổ máu thiếu oxi (deoxygenated blood) vào tâm thất phải (Right Ventricle)
+
+3. Tâm thất trái (Left Ventricle): dưới nhĩ trái, ngăn bởi van 2 lá (Mitral Valve)
+
+4. Tâm thất phải (Right Ventricle): dưới nhĩ phải, ngăn bởi van 3 lá (Tricuspid Valve)
+
+5. Van tim:
+
+    5.1. Van 2 lá (Mitral Valve): nằm ở buồng tim trái, một đường cơ đậm nối giữa nhĩ trái và thất trái.
+    
+    5.2. Van 3 lá (Tricuspid Valve), nối giữa nhĩ phải và nhĩ trái một đường cơ không đậm bằng van 3 lá, nối giữa nhỉ phải và thất phải.
+
+6. Màng tim (Pericardium): có lớp dịch sinh lý để tim co bóp (có thể bị tràn), màng mỏng bao bọc quanh
+
+7. Cung động mạch chủ (Arch of Aeorta): có hình vòng cung
+
+8. Động mạch chủ (Aorta): sẽ chia làm 2 phần ở cung động mạch chủ
+
+9. Tĩnh mạch chủ trên (Superior Vena Ceva) 
+
+10. Tĩnh mạch chủ dưới (Inferior Vena Ceva) 
+
+11. Động mạch phổi (Pulmonary artery): hình ống, dài, khi nhìn từ trên xuống thì sẽ nằm trên nhĩ trái.
+
+### II. Color mapping:
+
+1. Left atrium: #f1d691
+2. Left ventricle: #b17a65
+3. Right atrium: #6fb8d2
+4. Right ventricle: #d8654f
+5. Mitral (bicuspid) valve: #dd8265
+6. Tricuspid valve: #90ee90
+7. Pericardium: #dcf514
+8. Aeorta: #fc8184
+9. Superior Vena Ceva: #0d05ff
+10. Inferior Vena Ceva: #e6dc46
+11. Background: #c8c8eb -> không hiển thị khi xuất file .nii.gz
+12. Aeortic arch: #fa0101
+13. Pulmonary artery: #f4d631
+
+### III. Các góc nhìn trong chụp CT
 
 1. Axial: Chụp từ trên xuống (góc nhìn từ đầu bệnh nhân nhìn xuống). Hình ảnh là hình chiếu bằng của vật. Mặt phẳng cắt là một mặt phẳng nằm ngang, vuông góc với bệnh nhân.
-2. Saggital: Chụp từ 1 bên (trái / phải) về bên còn lại. Hình ảnh là hình chiếu cạnh của vật. Mặt phẳng cắt là mặt phẳng dọc, vuông góc với bệnh nhân và vuông góc với mặt axial.
+
+2. Sagital: Chụp từ 1 bên (trái / phải) về bên còn lại. Hình ảnh là hình chiếu cạnh của vật. Mặt phẳng cắt là mặt phẳng dọc, vuông góc với bệnh nhân và vuông góc với mặt axial.
+
 3. Coronal: Chụp từ 1 phía (trước / sau) về phía còn lại. Hình ảnh là hình chiếu đứng của vật. Mặt phẳng cắt là mặt phẳng dọc, song song với bệnh nhân.
 
-### Các cấu trúc để phân khu
 
-1. Động mạch vành
+### IV. Cửa sổ CT
+* Threshold + Window Width for HounsField Filtering
+    -   Các phần mềm được sử dụng thực tế ở bệnh viện nó đang như nào ?
+    -   Nếu được cải tiến thì sẽ cải tiến điểm gì ?
+    -   Có thật sự hữu ích hay không ?
+    -   Các hướng phát triển thêm
+    -   Hỏi cách dựng mô hình 3D
+    -   Hỏi các vùng NÊN được highlight và chú ý nhiều đến
+    -   Hỏi cách đọc và segment CT
+    -   Xin dataset
 
-2. Buồng tim phải buồng tim trái (nhĩ trái, thất trái, nhĩ phải, thất phải)
-
-3. Van tim:
-
-    1. Van 2 lá (buồng tim trái) -- mitral valve
-    2. Van động mạch chủ (từ thất trái tới động mạch chủ) -- aortic valve
-    3. Van 3 lá (nối nhỉ phải với thất phải) -- tricuspid valve
-    4. Van động mạch phổi (từ thất phải đi ra)
-
-4. Màng tim - có lớp dịch sinh lý để tim co bóp (có thể bị tràn) -- pericardium
-
-5. Cung động mạch chủ - arch of aeorta
-
-6. động mạch chủ
-
-7. SVC
-
-8. IVC
-
-9. Gốc động mạch phổi - pulmonary trunk
-
-### Cửa sổ CT
-
-1. Động mạch chủ: Threshold range: 35, 400.
-
-Show:
-
--   Khả năng của model + từng class + quá trình nghiên cứu
--   Xài thử web
-
-Hỏi:
-
--   Các phần mềm được sử dụng thực tế ở bệnh viện nó đang như nào ?
--   Nếu được cải tiến thì sẽ cải tiến điểm gì ?
--   Có thật sự hữu ích hay không ?
--   Các hướng phát triển thêm
--   Hỏi cách dựng mô hình 3D
--   Hỏi các vùng NÊN được highlight và chú ý nhiều đến
--   Hỏi cách đọc và segment CT
--   Xin dataset
-
-## search kỹ thuật khảo sát tim với phương pháp CT / CT có kết hợp / MRI / phương pháp mới
-
-## coi người ta đã làm được gì xong cải tiến trên cái đó
-
-## cải tiến kỹ thuật hiện tại
-
-## đọc cái miêu tả từ chuyên viên kỹ thuật ghi lại chứ bác sĩ nội không có đọc trực tiếp từ hình (có thể tự động hóa)
-
-bác sĩ chuyên khoa hình ảnh có vẻ bận => chú trọng vào việc tự động hóa bước đầu, sau đó có thể để bác sĩ chuyên khoa hình ảnh chỉnh lại để tiết kiệm thời gian
-
-TODO:
-
--   xem lại cơ sở lý thuyết
--   kiếm bác sĩ về chẩn đoán hình ảnh
--   lấy fb từ bác sĩ
--   VR simulation (1 hướng)
--   Liên kết với các trường đại học + giảng viên để sử dụng thử
--   Làm đơn khảo sát
--   Pulmonary: Phổi

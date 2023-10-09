@@ -35,6 +35,6 @@
 8. Aeorta: #fc8184
 9. SVC: #0d05ff
 10. IVC: #e6dc46
-11. Background: # 0
+11. Background: #0
 12. Aeortic arch: #fa0101
 13. Pulmonary artery: #f4d631
