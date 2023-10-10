@@ -6,6 +6,7 @@ dicom
 MM_WHS
 mmwhs
 dataset
+data
 new_recon
 Segmentation.nii
 train_images
