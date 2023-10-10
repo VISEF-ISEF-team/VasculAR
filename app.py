@@ -8,7 +8,7 @@ from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, EqualTo, Length
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash 
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+# from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from datetime import datetime
 import os
 
@@ -26,13 +26,13 @@ app.config['UPLOAD_FOLDER'] =  'static/data'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# login_manager.login_view = 'login'
 
 
 # ----------- Database -----------
-class Organizations(db.Model, UserMixin):
+class Organizations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     email =  db.Column(db.String(120), nullable=False, unique=True)
@@ -94,9 +94,9 @@ def uploader():
     
 @app.route("/rendering", methods=["GET", "POST"]) 
 def render():
-    render_obj = rendering("static/data/output.nii.gz")
-    # render_obj.show_mesh()
-    render_obj.segmented_reconstruction()
+    render_obj = rendering("")
+    render_obj.show_mesh_12()
+    # render_obj.segmented_reconstruction()
     return redirect(url_for('twoDseg'))
 
 @app.route("/registration", methods=["GET", "POST"]) 
@@ -123,7 +123,7 @@ def registration():
     all_orgs = Organizations.query.order_by(Organizations.date_added)
     return render_template("registration.html", form=form, name=name, all_orgs=all_orgs)
 
-@login_manager.user_loader
+# @login_manager.user_loader
 def load_user(user_id):
     return Organizations.query.get(int(user_id))
 
@@ -136,7 +136,7 @@ def login():
         org = Organizations.query.filter_by(email=form.email.data).first()
         if org:
             if check_password_hash(org.password_hash, form.password_hash.data):
-                login_user(org)
+                # login_user(org)
                 return redirect(url_for('home'))
             else:
                 flash('Wrong password. Please try again')

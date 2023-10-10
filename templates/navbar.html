@@ -28,16 +28,16 @@
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Tổ Chức
             </a>
-            {% if current_user.is_authenticated %}
+            
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item">{{current_user.name}}</a></li>
+                <li><a class="dropdown-item"></a></li>
               </ul>
-            {% else %}
+            
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ url_for('registration')}}">Đăng ký</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('login')}}">Đăng nhập</a></li>
               </ul>
-            {% endif %}
+          
             
           </li>
         </ul>
