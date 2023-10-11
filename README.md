@@ -1,5 +1,5 @@
 # VAS - Phần mềm tích hợp học sâu để phân vùng và tái tạo cấu trúc tim 3 chiều cho ứng dụng thực hành y khoa.
-# Poster và sơ đồ khối
+## Poster & sơ đồ khối
 ![](Poster.png)
 
 ## Lời cảm ơn
@@ -32,9 +32,9 @@ Theo Tổ chức Y tế Thế giới, bệnh tim mạch là nguyên nhân gây t
 - Nghiên cứu thuật toán hình học không gian tái tạo cấu trúc tim 3 chiều.
 - Nghiên cứu môi trường thực tế ảo (VR) cách liên kết với ứng dụng.
 ## Câu hỏi nghiên cứu
-C1: Làm sao để huấn luyện mô hình học sâu đạt kết quả tốt nhất.
-C2: Làm sao để xây dựng một website tự động hóa đầy đủ các tính năng, công cụ. 
-C3: Làm sao để xây dựng một cơ sở dữ liệu an toàn, bảo mật, lưu trữ xử lý dữ liệu lớn.
+- C1: Làm sao để huấn luyện mô hình học sâu đạt kết quả tốt nhất.
+- C2: Làm sao để xây dựng một website tự động hóa đầy đủ các tính năng, công cụ. 
+- C3: Làm sao để xây dựng một cơ sở dữ liệu an toàn, bảo mật, lưu trữ xử lý dữ liệu lớn.
 ## Phương pháp nghiên cứu
 - Phương pháp quan sát và điều tra khảo sát.
 - Phương pháp thống kê số liệu và đặt giả thuyết.
