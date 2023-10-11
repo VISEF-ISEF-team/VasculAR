@@ -78,3 +78,29 @@
     -   Hỏi cách đọc và segment CT
     -   Xin dataset
 
+### V. Nghiên cứu chuyên sâu các vùng
+CT pulmonary angiogram protocol (CTPA): injection di chuyển từ động mạch phổi (pulmonary arteries) vào phổi (lungs) trở về tĩnh machhj phổi (pulmonary veins) vào tim trái và vào trong động mạch chủ (aorta) và những động mạch khác. Việc này được dùng để đánh giá mạch máu (vasculature). Còn có những protocols khác như low-dose CT lồng ngực và high-resolution CT lồng ngực.
+
+- Thoracic cavity: khoang ngực được bao quanh bởi vách ngực (chest walls) bao gồm xương và cơ.
+    - Thoracic inlet: phần đầu từ trên xuống, có lỗ nhỏ màu đen bao quan bởi xương sườn (ribs)
+    - Thoracic outlet: đóng bởi cơ hoành (diaphragm) và xương ức (sternum)
+    - Mediastinum: phân chia trung thất bằng dùng fibrous perdicardium (màng bao tim) làm mốc (landmark) 
+    - Trachea: khí quản + esophagus: thực quản (ở Thoracic inlet)
+
+- Anterior mediastinum: trước màng tim, chứa thyroid, hạch bạch huyết (lymph nodes), thyroid
+    - Thymic lesions / Thymoma: tổn thương tuyến ức, u tuyến ức
+- Superior / Inferior Vena Cava: Tĩnh mạch chủ trên / tĩnh mạch chủ dưới
+- Right atrial appendage
+- Right Ventricle: tâm thất phải pumps máu vào trong động mạch phổi (pulmonary arteries) sau đó vào pulmonary trunk và hai cuốn phổi trái phải. Sau đó máu từ cuốn phổi ra phổi ròi lại trở ngược vào tĩnh mạch phổi
+- Moderator band: from the interventricular septum
+- Left atrium + left atrial appendage --> common position cho blood clots (khối máu, cục máu) hình thành. Tâm nhĩ trái thường <= 4 centimeters trong AP dimensions
+- Left ventricle: thicker wall comparted to the right ventricle. Tâm thất trái pumps máu vào trong động mạch chủ (aorta) --> aortic valve --> ascending aorta
+- Ascending aorta + Descending aorta = Aortic arch
+
+- Coronary arteries (động mạch vành):
+    - Left
+    - Circumflex
+    - right
+- Brachiocephalic veins x 2 --> Superior Vena Cava --> Right atrium
+- Azygous arch: join the superior vena cava
+- Coronary Sinus: Xoang Vành - the largest cardiac vein (tĩnh mạch tim lớn nhất) --> rains into right atrium (chạy vào tâm nhĩ phải như là SVC)
