@@ -9,39 +9,37 @@
     <title>Phân đoạn và tái tạo</title>
 
     <script type="text/javascript">
-      var params = [];
-      params['images'] = [
-          "{{ url_for('static', filename = 'data/input.nii.gz') }}",
-          "{{ url_for('static', filename = 'data/output.nii.gz') }}"
-      ];
       papaya.Container.syncViewers = true;
+      var params = []
+      params['images'] = ["{{ url_for('static', filename = 'data/input.nii.gz') }}", "{{ url_for('static', filename = 'data/output.nii.gz') }}"]
+      params['syncOverlaySeries'] = true; 
     </script>
   </head>
 
   <body>
     <div class="mt-4">
+      <!-- Largest heading -->
       <h2 class="text-center">Phân đoạn hình ảnh cắt lớp và tái tạo 3D</h2>
+
+      <!-- Buttons -->
       <div class="d-flex justify-content-center">
-          <button style="margin-right:10px" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-              Chức năng
-          </button>
-          <button class="btn btn-warning" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Ghi chú
-        </button>
+        <button style="margin-right:10px" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Chức năng</button>
+        <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Ghi chú</button>
       </div>
-      
+
+      <!-- Canvas -->
       <div class="row mt-4">
         <div class="col">
           <div class="papaya" data-params="params"></div>
         </div>
         <div class="col">
           <div class="papaya" data-params="params"></div>
+        </div>
       </div>
     </div>
 
-
     <!-- Ghi chu modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -54,7 +52,7 @@
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="mosdal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             <button type="button" class="btn btn-primary">Lưu lại</button>
           </div>
@@ -62,90 +60,88 @@
       </div>
     </div>
 
-    
+    <!-- Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <!-- Sidebar header -->
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chức năng</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
+
+      <!-- Sidebar body -->
       <div class="offcanvas-body">
         <div class="container mt-5">
-       
+          <!-- Uploader section -->
+          <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="row">
+              <!-- Uploader -->
+              <div class="col-9">
+                <input class="form-control" type="file" name="imagefile" id="imagefile" />
+              </div>
+              <div class="col-3">
+                <input class="btn btn-primary" type="submit" value="Tải tệp" />
+              </div>
+            </div>
+          </form>
 
-              <form id="upload-form"  action="/upload" method="post" enctype="multipart/form-data">
-                <div class="row">
-                  <div class="col-9">
-                      <input class="form-control" type="file" name="imagefile" id="imagefile" />
-                  </div>
-                  <div class="col-3">
-                      <input class="btn btn-primary" type="submit" value="Tải tệp" />
-                  </div>
-              </div>
-              
-           
-                {% if not_file == True %}
-                  <div class="alert alert-warning mt-3" role="alert">
-                      Bạn chưa chọn tệp. Hãy chọn một tệp để hoàn tất quá trình tải dữ liệu.
-                  </div>
-                {% endif %}
+          <!-- Uploader checking section -->
+          {% if not_file == True %}
+            <div class="alert alert-warning mt-3" role="alert">Bạn chưa chọn tệp. Hãy chọn một tệp để hoàn tất quá trình tải dữ liệu.</div>
+          {% endif %}
 
+          <!-- Segmemtation section -->
+          <div class="card shadow mt-4">
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
+              <div id="myProgress" class="progress mt-3" role="progressbar">
+                <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
+              </div>
+            </div>
+          </div>
 
-              <div class="card shadow mt-4">
-                <div class="card-body">
-                  <button type="button" class="btn btn-outline-primary" onclick="move()">Bắt đầu phân khu</button>
-                  <div id="myProgress" class="progress mt-3" role="progressbar">
-                    <div class="progress-bar-striped progress-bar-animated bg-primary" id="myBar">0%</div>
-                  </div>
-                </div>
+          <!-- Reconstruction section -->
+          <div class="card shadow" style="margin-top:5px;">
+            <div class="card-body">
+              <a href="{{ url_for('render') }}" type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</a>
+              <div id="myProgress2" class="progress mt-3" role="progressbar">
+                <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
               </div>
-              <div class="card shadow" style="margin-top:5px;">
-                <div class="card-body">
-                  <a href="{{ url_for('render') }}" type="button" class="btn btn-outline-danger" onclick="move2()">Bắt đầu tái tạo 3D</a>
-                  <div id="myProgress2" class="progress mt-3" role="progressbar">
-                    <div class="progress-bar-striped progress-bar-animated bg-primary bg-danger" id="myBar2">0%</div>
-                  </div>
+            </div>
+          </div>
+
+          <!-- Downlaod section -->
+          <div class="card shadow mt-3">
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-primary">Đóng gói và tải xuống</button>
+              <br />
+              <form action="/download" class="mt-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">Ảnh sau khi xử lý</label>
                 </div>
-              </div>
-       
-    
-            
-              <div class="card shadow mt-3">
-                <div class="card-body">
-                  <button type="button" class="btn btn-outline-primary">Đóng gói và tải xuống</button>
-                  <br>
-                  <form action="/download" class="mt-4">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                      <label class="form-check-label" for="flexCheckDefault">Ảnh sau khi xử lý</label>
-                    </div>
-    
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                      <label class="form-check-label" for="flexCheckDefault">Kết quả quân khu</label>
-                    </div>
-    
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                      <label class="form-check-label" for="flexCheckDefault">Mô hình 3D STL</label>
-                    </div>
-    
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                      <label class="form-check-label" for="flexCheckDefault">Ghi chú phân tích</label>
-                    </div>
-                  </form>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">Kết quả quân khu</label>
                 </div>
-              </div>
-          
-       
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">Mô hình 3D STL</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                  <label class="form-check-label" for="flexCheckDefault">Ghi chú phân tích</label>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    
   </body>
 </html>
-
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'js/papaya.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename = 'js/vasculAR.js') }}"></script>

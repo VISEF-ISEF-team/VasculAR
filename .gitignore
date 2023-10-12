@@ -8,7 +8,6 @@ mmwhs
 dataset
 data
 new_recon
-Segmentation.nii
 train_images
 mask_images
 <<<<<<< HEAD
@@ -22,3 +21,6 @@ models
 models
 >>>>>>> 49d71451585b1ccf1a15baa19e5bd8d17684944d
 predicted_res
+*.stl
+*nii
+*nii.gz
