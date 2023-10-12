@@ -1,4 +1,9 @@
 # VAS - Phần mềm tích hợp học sâu để phân vùng và tái tạo cấu trúc tim 3 chiều cho ứng dụng thực hành y khoa.
+[![> Survey Video](https://img.shields.io/badge/Survey%20Video-blue)](https://www.youtube.com/watch?v=pJzWQ4DopQY)
+[![> First Demo](https://img.shields.io/badge/First%20Demo-red)](https://youtu.be/r-55GCIwjAo)
+[![> Updated Demo](https://img.shields.io/badge/Updated%Demo-yellow)](https://youtu.be/ZpJxx1FOrW8)
+[![> Research Report](https://img.shields.io/badge/Research%Report-black)](https://github.com/VISEF-ISEF-team/VascuIAR/blob/main/static/BCKH.pdf)
+
 ## Poster & sơ đồ khối
 ![](Poster.png)
 

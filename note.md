@@ -104,3 +104,8 @@ CT pulmonary angiogram protocol (CTPA): injection di chuyển từ động mạc
 - Brachiocephalic veins x 2 --> Superior Vena Cava --> Right atrium
 - Azygous arch: join the superior vena cava
 - Coronary Sinus: Xoang Vành - the largest cardiac vein (tĩnh mạch tim lớn nhất) --> rains into right atrium (chạy vào tâm nhĩ phải như là SVC)
+
+### Cardiovascular Diseases Reseearch
+- MRI (protons) có thể phân biệt thiếu màu (ischemic) và không thiếu máu (non-ischemic) của rối loạn chức năng tâm thất(ventricular dysfunction)
+- CT (X-rays): non-invasively delinieate coronary anatomy (Giải phẫu mạch vành không xâm lấn)
+- Imaging modalities available to assess coronary artery diseases (CAD) includes echocardiography and nuclear cardiac imaging --> MRI and CT becomes an option.
