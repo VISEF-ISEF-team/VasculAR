@@ -16,11 +16,10 @@ def load_mesh(filename, color):
     mesh.smooth(niter=100)
     return mesh
 
-def show_mesh():
+def show_mesh(path):
     
     meshes = []
     colors = ['#f1d691', '#b17a65', '#6fb8d2', '#d8654f', '#dd8265', '#90ee90', '#90ee90',  '#fc8184', '#0d05ff', '#e6dc46', '#fa0101', '#f4d631']
-    path = 'MM05/'
     files = os.listdir(path)
     buttons = []
     plt = Plotter()
@@ -56,4 +55,4 @@ def show_mesh():
     plt = show(meshes, bg='black')
     plt.show()
     
-show_mesh()
+show_mesh('MM05/')
