@@ -17,28 +17,31 @@ def load_mesh(filename, color):
     return mesh
 
 def show_mesh():
-    mesh1 = load_mesh("MM05/Segmentation_ascending aorta.stl", "#fc8184")
-    mesh2 = load_mesh("MM05/Segmentation_left atrium.stl", "#fa0101")
-    mesh3 = load_mesh("MM05/Segmentation_descending aorta.stl", "#dd8265")
-    mesh4 = load_mesh("MM05/Segmentation_coronary.stl", "#e6dc46")
-    mesh5 = load_mesh("MM05/Segmentation_left ventricle.stl", "#f1d691")
-    mesh6 = load_mesh("MM05/Segmentation_pulmonary.stl", "#b17a65")
-    mesh7 = load_mesh("MM05/Segmentation_right atrium.stl", "#dcf514")
-    mesh8 = load_mesh("MM05/Segmentation_right ventricle.stl", "#d8654f")
-    mesh9 = load_mesh("MM05/Segmentation_Inferior Vena Cava.stl", "#d8654f")
-    mesh10 = load_mesh("MM05/Segmentation_Superior Vena Cava.stl", "#90ee90")
-    mesh12 = load_mesh("MM05/Segmentation_Segment_1.stl", "#d8654f")
     
+    meshes = []
+    colors = ['#f1d691', '#b17a65', '#6fb8d2', '#d8654f', '#dd8265', '#90ee90', '#90ee90',  '#fc8184', '#0d05ff', '#e6dc46', '#fa0101', '#f4d631']
+    path = 'MM05/'
+    files = os.listdir(path)
+    buttons = []
     plt = Plotter()
 
-    def buttonfunc12():
-        mesh12.alpha(1 - mesh12.alpha())  
-        bu12.switch()  
-        
-    bu12 = plt.add_button(
-            buttonfunc12,
-            pos=(0.03, 0.24),  # x,y fraction from bottom left corner
-            states=["12", "12"],  # text for each state
+    for i in range(len(files)):
+        print(path + files[i])
+        mesh = load_mesh(path + files[i], colors[i])
+        meshes.append(mesh)
+
+        # Define a function to toggle the alpha of a given mesh
+        def toggle_alpha(mesh, i):
+            def buttonfunc():
+                mesh.alpha(1 - mesh.alpha())  
+                buttons[i].switch()  
+            return buttonfunc
+
+        # Add a button for each mesh in meshes
+        button = plt.add_button(
+            toggle_alpha(mesh, i),
+            pos=(0.03, 0.24 - i * 0.02),  # x,y fraction from bottom left corner
+            states=[str(i+1), str(i+1)],  # text for each state
             c=["w", "w"],     # font color for each state
             bc=["#0d6efd", "dv"],  # background color for each state
             font="courier",   # font type
@@ -47,9 +50,10 @@ def show_mesh():
             italic=False,     # non-italic font style
             angle=0.3,
         )
-
-
-    plt = show(mesh1, mesh2, mesh3, mesh4, mesh5, mesh6, mesh7, mesh8, mesh9, mesh10, bg='black')
+        
+        buttons.append(button)
+        
+    plt = show(meshes, bg='black')
     plt.show()
     
 show_mesh()
