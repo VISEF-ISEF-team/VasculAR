@@ -60,7 +60,7 @@ def show_mesh():
         bu12.switch()  
 
         # Load the meshes from the files and assign different colors
-    mesh1 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_aeorta.stl", "#fc8184")
+    mesh1 = load("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_aeorta.stl").color("#fc8184").smooth(niter=100).texture('textures/cardiac_texture_1.jpg')
     mesh2 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_aeortic arch.stl", "#fa0101")
     mesh3 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_bicuspid valve.stl", "#dd8265")
     mesh4 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_IVC.stl", "#e6dc46")
@@ -69,7 +69,7 @@ def show_mesh():
     mesh7 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_pericardium.stl", "#dcf514")
     mesh8 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_pulmonary artery.stl", "#f4d631")
     mesh9 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_right atrium.stl", "#6fb8d2")
-    mesh10 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_right ventricle.stl", "#d8654f")
+    mesh10 = load("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_right ventricle.stl").color("#d8654f").smooth(niter=100).texture('textures/cardiac_texture_1.jpg')
     mesh11 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_SVC.stl", "#0d05ff")
     mesh12 = load_mesh("../data/PatientsDCM/Segmentation_Result/PAT015/3D_res_3/Segmentation_1_tricuspid valve.stl", "#90ee90")
 
