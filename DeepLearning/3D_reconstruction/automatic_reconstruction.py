@@ -14,45 +14,47 @@ def load_mesh(filename, color):
     mesh = load(filename)
     mesh.color(color)
     mesh.smooth(niter=100)
+    mesh.texture('textures/cardiac_texture_2.jpeg')
     return mesh
 
 def show_mesh(path):
     
     meshes = []
-    colors = ['#f1d691', '#b17a65', '#6fb8d2', '#d8654f', '#dd8265', '#90ee90', '#90ee90',  '#fc8184', '#0d05ff', '#e6dc46', '#fa0101', '#f4d631']
-    files = os.listdir(path)
+    colors = ['#f1d691', '#b17a65', '#6fb8d2', '#d8654f', '#b17a65', '#b17a65', '#b17a65',  '#fc8184', '#0d05ff', '#e6dc46', '#fa0101', '#f4d631', '#fc8184', '#90ee90', '#0d05ff']
+    files = [f for f in os.listdir(path) if f.endswith('.stl')]
     buttons = []
     plt = Plotter()
 
     for i in range(len(files)):
-        print(path + files[i])
-        mesh = load_mesh(path + files[i], colors[i])
-        meshes.append(mesh)
+        if files[i].endswith('.stl'):
+            print(path + files[i])
+            mesh = load_mesh(path + files[i], colors[i])
+            meshes.append(mesh)
 
-        # Define a function to toggle the alpha of a given mesh
-        def toggle_alpha(mesh, i):
-            def buttonfunc():
-                mesh.alpha(1 - mesh.alpha())  
-                buttons[i].switch()  
-            return buttonfunc
+            # Define a function to toggle the alpha of a given mesh
+            def toggle_alpha(mesh, i):
+                def buttonfunc():
+                    mesh.alpha(1 - mesh.alpha())  
+                    buttons[i].switch()  
+                return buttonfunc
 
-        # Add a button for each mesh in meshes
-        button = plt.add_button(
-            toggle_alpha(mesh, i),
-            pos=(0.03, 0.24 - i * 0.02),  # x,y fraction from bottom left corner
-            states=[str(i+1), str(i+1)],  # text for each state
-            c=["w", "w"],     # font color for each state
-            bc=["#0d6efd", "dv"],  # background color for each state
-            font="courier",   # font type
-            size=10,          # font size
-            bold=True,        # bold font
-            italic=False,     # non-italic font style
-            angle=0.3,
-        )
-        
-        buttons.append(button)
+            # Add a button for each mesh in meshes
+            button = plt.add_button(
+                toggle_alpha(mesh, i),
+                pos=(0.03, 0.24 - i * 0.02),  # x,y fraction from bottom left corner
+                states=[str(i+1), str(i+1)],  # text for each state
+                c=["w", "w"],     # font color for each state
+                bc=["#0d6efd", "dv"],  # background color for each state
+                font="courier",   # font type
+                size=10,          # font size
+                bold=True,        # bold font
+                italic=False,     # non-italic font style
+                angle=0.3,
+            )
+            
+            buttons.append(button)
         
     plt = show(meshes, bg='black')
     plt.show()
     
-show_mesh('MM05/')
+show_mesh('../data/MM_WHS/seg_res/1006/')

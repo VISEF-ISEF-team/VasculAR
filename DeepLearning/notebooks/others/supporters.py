@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-
 from ipywidgets import interact
 import numpy as np
 import SimpleITK as sitk
@@ -21,6 +20,33 @@ def explore_3D_array(arr: np.ndarray, cmap: str = 'gray'):
     plt.imshow(arr[SLICE, :, :], cmap=cmap)
 
   interact(fn, SLICE=(0, arr.shape[0]-1))
+  
+
+def explore_3D_array_axis(arr: np.ndarray, aspect: str = 'axial', cmap: str = 'gray'):
+  '''
+  Given a 3D array with shape (Z,X,Y) This function will create an interactive
+  widget to check out all the 2D arrays with shape (X,Y) inside the 3D array. 
+  The purpose of this function to visual inspect the 2D arrays in the image. 
+
+  Args:
+    arr : 3D array with shape (Z,X,Y) that represents the volume of a MRI image
+    aspect : Which aspect to view: sagittal, axial, or coronal
+    cmap : Which color map use to plot the slices in matplotlib.pyplot
+  '''
+
+  def fn(SLICE):
+    plt.figure(figsize=(7,7))
+    if aspect == 'sagittal':
+      plt.imshow(arr[:, SLICE, :], cmap=cmap)
+    elif aspect == 'axial':
+      plt.imshow(arr[SLICE, :, :], cmap=cmap)
+    elif aspect == 'coronal':
+      plt.imshow(arr[:, :, SLICE], cmap=cmap)
+    else:
+      print('Invalid aspect')
+
+  interact(fn, SLICE=(0, arr.shape[0]-1))
+
 
 
 def explore_3D_array_comparison(arr_before: np.ndarray, arr_after: np.ndarray, cmap: str = 'gray'):
