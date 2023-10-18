@@ -24,8 +24,6 @@ def slider_volume_show(value):
     text_show_volume.configure(text=index_slice)
     slice_control(index_slice)
 
-def change_colormap(choice):
-    output_label.configure(text=choice)
     
 # Tab view    
 tabview = customtkinter.CTkTabview(master=app, width=500, height=500) # add command argument here
@@ -46,13 +44,10 @@ text_show_volume = customtkinter.CTkLabel(app, text="")
 text_show_volume.pack()
 
 # Colormap choose 
-colors = ["Spectrum", "Fire", "Hot-and-cold", "Gold", "Overlay", "Red Overlay", "Green overlay", "Blue overlay"]
-default_combox = customtkinter.StringVar(value="Select colormap")
-colors_selection = customtkinter.CTkComboBox(app, values=colors, command=change_colormap, variable=default_combox)
-colors_selection.pack()
-
-output_label = customtkinter.CTkLabel(app, text="")
-output_label.pack()
+colors = ["gray", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
+color_picker_default = customtkinter.StringVar(value="Grayscale")
+color_picker = customtkinter.CTkComboBox(app, values=colors, variable=color_picker_default)
+color_picker.pack()
 
 # Slice display
 # axial view
@@ -69,30 +64,30 @@ image_label_coronal.pack()
 
 def slice_control(index_slice):
     view_axis = tabview.get()
+    color_choice = color_picker.get()
     if view_axis == "axial":
-        img_colorized = cv2.applyColorMap(img[int(index_slice), :, :].astype(np.uint8), cmapy.cmap('viridis'))
-        image_display = Image.fromarray(img_colorized)
-        
-        plt.title("Virdis color display")
-        plt.imshow(img[int(index_slice), :, :], cmap='viridis')
-        plt.show()
-        
+        plt.imsave('temp.jpg', img[int(index_slice), :, :], cmap=color_choice)
+        image_gray = cv2.imread('temp.jpg')
+        image_display = Image.fromarray(image_gray)
         my_image = customtkinter.CTkImage(dark_image=image_display, size=(400, 400))
         image_label_axial.configure(image=my_image)  
         image_label_axial.image = my_image  
         
     elif view_axis == "sagittal":
-        img_colorized = cv2.applyColorMap(img[:, int(index_slice), :].astype(np.uint8), cmapy.cmap('Pastel1'))
-        image_display = Image.fromarray(img_colorized)
+        plt.imsave('temp.jpg', img[:, int(index_slice), :], cmap=color_choice)
+        image_gray = cv2.imread('temp.jpg')
+        image_display = Image.fromarray(image_gray)
         my_image = customtkinter.CTkImage(dark_image=image_display, size=(400, 400))
         image_label_sagittal.configure(image=my_image)  
         image_label_sagittal.image = my_image  
         
     else:
-        img_colorized = cv2.applyColorMap(img[:, :, int(index_slice)].astype(np.uint8), cmapy.cmap('Pastel2'))
-        image_display = Image.fromarray(img_colorized)
+        plt.imsave('temp.jpg', img[:, :, int(index_slice)], cmap=color_choice)
+        image_gray = cv2.imread('temp.jpg')
+        image_display = Image.fromarray(image_gray)
         my_image = customtkinter.CTkImage(dark_image=image_display, size=(400, 400))
         image_label_coronal.configure(image=my_image)  
         image_label_coronal.image = my_image  
+        
     
 app.mainloop()
