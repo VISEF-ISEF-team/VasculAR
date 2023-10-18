@@ -79,7 +79,7 @@ if file_path.get() != "File path here":
 # Main canvas      
 # Tab view    
 tabview = customtkinter.CTkTabview(master=app) # add command argument here
-tabview.grid(column=2, row=1, columnspan=8, rowspan=8, sticky="nsew", padx=5, pady=5)
+tabview.grid(column=2, row=1, columnspan=8, rowspan=8, sticky="nsew", pady=5)
 tab_1 = tabview.add("axial")
 tab_2 = tabview.add("sagittal")
 tab_3 = tabview.add("coronal")
@@ -129,34 +129,43 @@ draw_control = customtkinter.CTkFrame(app)
 draw_control.grid(column=6, row=0, columnspan=2, rowspan=1, sticky='nsew')
 draw_control.grid_rowconfigure((0, 1), weight=1)
 draw_control.grid_columnconfigure(0, weight=2)
-draw_control.grid_columnconfigure(1, weight=1)
+
+# Show distance control
+distance_control = customtkinter.CTkFrame(tab_1, fg_color='#242424')
+distance_control.place(anchor="nw")
+distance_control.grid_rowconfigure((0, 1), weight=1)
+distance_control.grid_columnconfigure(0, weight=1)
+
 
 # axial view
 my_canvas_axial = Canvas(tab_1, width=700, height=700, bg='#2b2b2b', border=0)
 my_canvas_axial.place(relx=0.5, rely=0.5, anchor="center")
 
 radio_var = tkinter.IntVar(value=1)
-line_distance = customtkinter.CTkLabel(tab_1, text="")
-coordinate_label = customtkinter.CTkLabel(tab_1, text="")
+line_distance = customtkinter.CTkLabel(distance_control, text="")
+coordinate_label = customtkinter.CTkLabel(distance_control, text="")
+header_calculation = customtkinter.CTkLabel(distance_control, text="Calculation", fg_color="#3b3b3b", corner_radius=5)
 draw_canvas_axial = draw_canvas(my_canvas_axial, radio_var, line_distance, coordinate_label)
 
 # bind the functions to the mouse events on the canvas
-my_canvas_axial.bind("<Button-1>", draw_canvas.on_press)
-my_canvas_axial.bind("<ButtonRelease-1>", draw_canvas.on_release)
+my_canvas_axial.bind("<Button-1>", draw_canvas_axial.on_press)
+my_canvas_axial.bind("<ButtonRelease-1>", draw_canvas_axial.on_release)
+my_canvas_axial.bind("<Motion>", draw_canvas_axial.show_coords)
 
-clear_button = customtkinter.CTkButton(draw_control, text="Clear", command=draw_canvas.clear)
+# button to redo and clear
+clear_button = customtkinter.CTkButton(draw_control, text="Clear", command=draw_canvas_axial.clear)
 clear_button.grid(column=0, row=1, padx=5)
-redo_button = customtkinter.CTkButton(draw_control, text="Redo", command=draw_canvas.redo)
+redo_button = customtkinter.CTkButton(draw_control, text="Redo", command=draw_canvas_axial.redo)
 redo_button.grid(column=1, row=1, padx=5)
-line_distance.pack()
-coordinate_label.pack()
 
-
-Rectangle = customtkinter.CTkRadioButton(draw_control, text="Rectangle", command=draw_canvas.radiobutton_event, variable=radio_var, value=1)
-line = customtkinter.CTkRadioButton(draw_control, text="Line", command=draw_canvas.radiobutton_event, variable=radio_var, value=2)
+Rectangle = customtkinter.CTkRadioButton(draw_control, text="Rectangle", command=draw_canvas_axial.radiobutton_event, variable=radio_var, value=1)
+line = customtkinter.CTkRadioButton(draw_control, text="Line", command=draw_canvas_axial.radiobutton_event, variable=radio_var, value=2)
 Rectangle.grid(column=0, row=0)
 line.grid(column=1, row=0)
 
+line_distance.grid(row=1, column=0, padx=10, sticky='w')
+coordinate_label.grid(row=2, column=0, padx=10, sticky='w')
+header_calculation.grid(row=0, column=0, padx=10, sticky='nsew', pady=5)
 
 # sagittal view
 my_canvas_sagittal = Canvas(tab_2, width=700, height=700, bg='#2b2b2b', border=0)
