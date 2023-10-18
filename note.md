@@ -151,3 +151,18 @@ Source:
 (8) CT coronary angiogram - Mayo Clinic. https://www.mayoclinic.org/tests-procedures/ct-coronary-angiogram/about/pac-20385117.
 (9) ImageCAS-A-Large-Scale-Dataset-and-Benchmark-for-Coronary-Artery .... https://github.com/XiaoweiXu/ImageCAS-A-Large-Scale-Dataset-and-Benchmark-for-Coronary-Artery-Segmentation-based-on-CT.
 (10) undefined. https://doi.org/10.3389/fcvm.2020.00025.
+
+
+# Functions
+1. Show image info
+2. Slider for slice
+3. Processing functions:
+    - Denoise
+    - Morphological operations
+    - Shrink
+    - Cropping
+    - Padding
+    - Blurring
+    - Thresholding
+    - Statistics
+
