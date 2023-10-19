@@ -4,10 +4,10 @@ from PIL import Image, ImageTk
 import tkinter
 
 class draw_canvas:
-    def __init__(self, canvas, radio_var, line_distance, coordinate_label):
+    def __init__(self, canvas, radio_var, line_distance, coordinate_label, res_list):
         self.canvas = canvas
         self.radio_var = radio_var
-        self.rec_list = []
+        self.rec_list = res_list
         self.line_distance = line_distance
         self.coordinate_label = coordinate_label
     
