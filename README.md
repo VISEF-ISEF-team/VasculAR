@@ -4,6 +4,24 @@
 [![> Updated Demo](https://img.shields.io/badge/Updated%20Demo-yellow)](https://youtu.be/_2katMerd64)
 [![> Research Report](https://img.shields.io/badge/Research%20Report-black)](https://github.com/VISEF-ISEF-team/VascuIAR/blob/main/static/BCKH.pdf)
 
+## Nâng cấp mới cho vòng thành phố
+### Giao diện app mới với nhiều tính năng hỗ trợ
+- Lý do: Qua quá trình nghiên cứu, khảo sát, xin phản hồi từ người dùng, nền tảng Web có nhược điểm sau:
+    - Không đầy đủ công cụ cần thiết
+    - Không đủ bảo mật vì hệ cơ sở dữ liệu dùng chung và xử lý dữ liệu không trên máy chủ
+    - Không thân thiện với người dùng (2/3 bác sĩ, sinh viên thấy không quen khi thao tác trên web)
+    - Website Js sử dụng thư viện papaya không thể nâng cấp và tích hợp thêm các tính năng khác như AI assistant hay khoanh vùng tổn thương tự động.
+
+Và App giải quyết được các vấn đề trên:
+Giao diện app được xây dựng bằng Python thuận lợi tích hợp Deep Learning.
+![](imgs/GUIapp1.png)
+![](imgs/GUIapp2.png)
+![](imgs/GUIapp3.png)
+
+### Nâng cấp thuật toán tái tạo cấu trúc tim 3D
+![](imgs/GUIapp4.png)
+[Link Video](https://youtu.be/_2katMerd64?si=ygL-vjjW1J7cRJSX)
+
 ## Poster & sơ đồ khối
 ![](Poster.png)
 
