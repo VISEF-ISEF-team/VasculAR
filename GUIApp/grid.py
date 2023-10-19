@@ -49,28 +49,48 @@ choose_button = customtkinter.CTkButton(uploader_frame, text="Choose File", comm
 choose_button.grid(column=0, row=2, sticky="ew", padx=10)
 
 
+
 # ====== 3. IMAGE INFO SECTION ======
-# 3.1 Image info frame
+# 3.1 Read Image
+img_raw = sitk.ReadImage('../DeepLearning/data/MM_WHS/train_images/ct_train_1001_image.nii.gz', sitk.sitkFloat32)
+img = sitk.GetArrayFromImage(img_raw)
+
+# 3.2 Image info frame
 info_frame = customtkinter.CTkScrollableFrame(app, orientation='horizontal', label_text='Image info')
 info_frame.grid(column=0, row=2, columnspan=2, rowspan=4, sticky='nsew', pady=5, padx=5)
 info_frame.grid_columnconfigure(0, weight=1)
 info_frame.grid_columnconfigure(1, weight=2)
 info_frame.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
-if file_path.get() != "File path here":
-    # Read image
+# 3.3 Show info
+info = show_sitk_img_info(img_raw)
+for i, (k, v) in enumerate(info.items()):
+    label1 = customtkinter.CTkLabel(info_frame, text=k)
+    label1.grid(column=0, row=i, sticky="w", padx=5)
+            
+    label2 = customtkinter.CTkLabel(info_frame, text=v)
+    label2.grid(column=1, row=i, sticky="w", padx=5)
+
+# 3.3 When choosed -> change img_raw, img
+def supporting_functions_callback(choice):
+    global img
     img_raw = sitk.ReadImage('../DeepLearning/data/MM_WHS/train_images/ct_train_1001_image.nii.gz', sitk.sitkFloat32)
+    if choice == 'Denoise':
+        img_raw = sitk.CurvatureFlow(img_raw)
+    elif choice == 'Blurring':
+        img_raw = sitk.DiscreteGaussian(img_raw)
+    elif choice == 'GrayscaleErode':
+        img_raw = sitk.GrayscaleErode(img_raw)
+    elif choice == 'OtsuThreshold':
+        img_raw = sitk.OtsuThreshold(img_raw, 0, 1)
+    elif choice == 'LiThreshold':
+        img_raw = sitk.LiThreshold(img_raw, 0, 1)
+    elif choice == 'MomentsThreshold':
+        img_raw = sitk.LiThreshold(img_raw, 0, 1)
+        
     img = sitk.GetArrayFromImage(img_raw)
-    # Show info
-    info = show_sitk_img_info(img_raw)
-    for i, (k, v) in enumerate(info.items()):
-        label1 = customtkinter.CTkLabel(info_frame, text=k)
-        label1.grid(column=0, row=i, sticky="w", padx=5)
-        
-        label2 = customtkinter.CTkLabel(info_frame, text=v)
-        label2.grid(column=1, row=i, sticky="w", padx=5)
-        
-        
+
+ 
 # ====== 4. MAIN CANVAS ======      
 # 4.1 Tab View    
 tabview = customtkinter.CTkTabview(master=app) # add command argument here
@@ -135,9 +155,9 @@ radio_var = tkinter.IntVar(value=1)
 line_distance = customtkinter.CTkLabel(distance_control, text="")
 coordinate_label = customtkinter.CTkLabel(distance_control, text="")
 header_calculation = customtkinter.CTkLabel(distance_control, text="Calculation", fg_color="#3b3b3b", corner_radius=5)
+header_calculation.grid(row=0, column=0, padx=10, sticky='nsew', pady=5)
 line_distance.grid(row=1, column=0, padx=10, sticky='w')
 coordinate_label.grid(row=2, column=0, padx=10, sticky='w')
-header_calculation.grid(row=0, column=0, padx=10, sticky='nsew', pady=5)
 res_list = []
 
 # ======= 5. AXIAL VIEW =======
@@ -396,15 +416,32 @@ seg_btn = customtkinter.CTkButton(deep_frame, text="Start 3D reconstruction", co
 seg_btn.grid(column=0, row=3, sticky='nw', padx=10)
 
 
-# ======= 13. AI ASSISTANT =======
-# 13.1 Asistant Frame
+# ======= 14. AI ASSISTANT =======
+# 14.1 Asistant Frame
 assitant_frame = customtkinter.CTkFrame(app)
 assitant_frame.grid(column=6, row=9, columnspan=4, rowspan=3, sticky='nsew', pady=10, padx=(5, 0))
 assitant_frame.grid_columnconfigure((0,1,2,3), weight=1)
 assitant_frame.grid_rowconfigure((0,1,2,3), weight=1)
 
-# 13.3 Segmentation Content
+# 14.3 Segmentation Content
 header_assitant = customtkinter.CTkButton(assitant_frame, text='AI assistant', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
 header_assitant.grid(column=0, row=0, columnspan=4, sticky='new')
+
+# ======= 15. Supporting Functions =======
+support_function_control = customtkinter.CTkFrame(app)
+support_function_control.grid(column=8, row=2, columnspan=2, rowspan=2, pady=5)
+support_function_control.grid_rowconfigure((0, 1), weight=1)
+support_function_control.grid_columnconfigure(0, weight=1)
+
+support_function_header = customtkinter.CTkButton(support_function_control, text='support functions', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
+support_function_header.grid(column=0, row=0, sticky='new', padx=10, pady=5)
+
+
+support_options_values = ["None", 'Denoise', 'Blurring' 'GrayscaleErode','OtsuThreshold', 'LiThreshold', 'MomentsThreshold']
+support_options_default = customtkinter.StringVar(value="None")
+support_options = customtkinter.CTkComboBox(support_function_control, values=support_options_values, variable=support_options_default, command=supporting_functions_callback)
+support_options.grid(column=0, row=1, padx=10, pady=15)
+
+
 
 app.mainloop()
