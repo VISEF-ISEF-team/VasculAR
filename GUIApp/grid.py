@@ -8,7 +8,7 @@ import numpy as np
 from tkinter import filedialog, Canvas
 from helpers import *
 from draw import draw_canvas
-from ColorPicker import ctk_color_picker
+from color_picker_customized import Colorpicker
 
 # ====== 1. WINDOW CONFIGURATION SECTION ======
 # 1.1 Window Theme
@@ -74,7 +74,7 @@ if file_path.get() != "File path here":
 # ====== 4. MAIN CANVAS ======      
 # 4.1 Tab View    
 tabview = customtkinter.CTkTabview(master=app) # add command argument here
-tabview.grid(column=2, row=1, columnspan=8, rowspan=8, sticky="nsew")
+tabview.grid(column=2, row=1, columnspan=8, rowspan=8, sticky="nsew", pady=(5, 0))
 tab_1 = tabview.add("axial")
 tab_2 = tabview.add("sagittal")
 tab_3 = tabview.add("coronal")
@@ -297,7 +297,7 @@ detector_switch_var_3 = customtkinter.StringVar(value="on")
 detector_switch_3 = customtkinter.CTkSwitch(detector_frame, text="Ventricular septal defect", command=switch_event, variable=detector_switch_var_3, onvalue="on", offvalue="off")
 detector_switch_3.grid(column=0, row=3, stick='we', padx=15)
 
-# ======= 11. SAVE FILES SECTION =======
+# ======= 11. Save Files Section =======
 # 11.1 Save File Frame
 save_frame = customtkinter.CTkFrame(app)
 save_frame.grid(column=0, row=6, columnspan=2, rowspan=3, sticky='nsew', padx=5)
@@ -335,7 +335,7 @@ check_var_4 = customtkinter.StringVar(value=".stl")
 checkbox_4 = customtkinter.CTkCheckBox(save_frame, text="3D.stl", variable=check_var_1, onvalue=".stl", offvalue=".stl off")
 checkbox_4.grid(column=1, row=3, padx=10)
 
-# ======= 12.   COLOR PICKER =======
+# ======= 12. COLOR PICKER =======
 # 12.1 Color Picker Frame
 color_frame = customtkinter.CTkFrame(app)
 color_frame.grid(column=8, row=0, columnspan=2, rowspan=1, sticky='nsew', padx=5)
@@ -343,16 +343,68 @@ color_frame.grid_columnconfigure((0), weight=1)
 color_frame.grid_rowconfigure((0, 1), weight=1)
 
 # 12.2 Color Picker Frame
-def open_color_picker():
-    root = customtkinter.CTk()
-    customtkinter.set_appearance_mode("dark")
-    customtkinter.set_default_color_theme("blue")
-    ctk_color_picker.Colorpicker(root) 
-    root.mainloop()
+def open_color_picker(): 
+    # create a new root window for the color picker 
+    color_root = customtkinter.CTk() 
+    customtkinter.set_appearance_mode("dark") 
+    customtkinter.set_default_color_theme("blue") 
+    Colorpicker(color_root) 
+    color_root.mainloop()
     
 # 11.3 Save File Content
 header_color = customtkinter.CTkButton(color_frame, text='Color picker', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
 header_color.grid(column=0, row=0, sticky="new", padx=10, pady=5)
 btn_color_picker = customtkinter.CTkButton(color_frame, text='Choose color', command=open_color_picker)
 btn_color_picker.grid(column=0, row=1, sticky="ew", padx=10, pady=5)
+
+
+# ======= 13. SEGMENTATION =======
+# 13.1 Segmentation Frame
+deep_frame = customtkinter.CTkFrame(app)
+deep_frame.grid(column=2, row=9, columnspan=4, rowspan=3, sticky='nsew', pady=10, padx=(0, 5))
+deep_frame.grid_columnconfigure((0,1,2,3), weight=1)
+deep_frame.grid_rowconfigure((0,1,2,3), weight=1)
+
+# 13.2 Segmentation Functions
+def start_segmentation():
+    segmentation_progress_bar.start()
+
+def start_reeconstruction():
+    reconstruction_progress_bar.start()
+    
+# 13.3 Segmentation Content
+header_seg = customtkinter.CTkButton(deep_frame, text='Automate Segmentation & 3D Reconstruction', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
+header_seg.grid(column=0, row=0, columnspan=4, sticky='new')
+
+models = ["Unet", "Unet Attention", "U-Resnet"]
+model_picker_default = customtkinter.StringVar(value="Unet")
+model_picker = customtkinter.CTkComboBox(deep_frame, values=models, variable=model_picker_default)
+model_picker.grid(column=0, row=1, columnspan=1, sticky='ew', padx=10, pady=10)
+
+segmentation_progress_bar = customtkinter.CTkProgressBar(deep_frame, orientation="horizontal")
+segmentation_progress_bar.set(0)
+segmentation_progress_bar.grid(column=1, row=2, sticky='ew', pady=5)
+
+seg_btn = customtkinter.CTkButton(deep_frame, text="Start segmentation", command=start_segmentation)
+seg_btn.grid(column=0, row=2, sticky='nw', padx=10, pady=10)
+
+reconstruction_progress_bar = customtkinter.CTkProgressBar(deep_frame, orientation="horizontal")
+reconstruction_progress_bar.set(0)
+reconstruction_progress_bar.grid(column=1, row=3, sticky='ew', pady=5)
+
+seg_btn = customtkinter.CTkButton(deep_frame, text="Start 3D reconstruction", command=start_reeconstruction)
+seg_btn.grid(column=0, row=3, sticky='nw', padx=10)
+
+
+# ======= 13. AI ASSISTANT =======
+# 13.1 Asistant Frame
+assitant_frame = customtkinter.CTkFrame(app)
+assitant_frame.grid(column=6, row=9, columnspan=4, rowspan=3, sticky='nsew', pady=10, padx=(5, 0))
+assitant_frame.grid_columnconfigure((0,1,2,3), weight=1)
+assitant_frame.grid_rowconfigure((0,1,2,3), weight=1)
+
+# 13.3 Segmentation Content
+header_assitant = customtkinter.CTkButton(assitant_frame, text='AI assistant', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
+header_assitant.grid(column=0, row=0, columnspan=4, sticky='new')
+
 app.mainloop()
