@@ -1,0 +1,271 @@
+Dataset.file_meta -------------------------------
+(0002, 0000) File Meta Information Group Length  UL: 208
+(0002, 0001) File Meta Information Version       OB: b'\x00\x01'
+(0002, 0002) Media Storage SOP Class UID         UI: CT Image Storage
+(0002, 0003) Media Storage SOP Instance UID      UI: 1.3.6.1.4.1.9590.100.1.2.5331506912231574009137053520150588438       
+(0002, 0010) Transfer Syntax UID                 UI: Explicit VR Little Endian
+(0002, 0012) Implementation Class UID            UI: 1.3.6.1.4.1.9590.100.1.3.100.9.4
+(0002, 0013) Implementation Version Name         SH: 'MATLAB IPT 9.4'
+
+Dataset.file_meta -------------------------------
+(0002, 0000) File Meta Information Group Length  UL: 212
+(0002, 0001) File Meta Information Version       OB: b'\x00\x01'
+(0002, 0002) Media Storage SOP Class UID         UI: CT Image Storage
+(0002, 0003) Media Storage SOP Instance UID      UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.417965
+(0002, 0010) Transfer Syntax UID                 UI: Implicit VR Little Endian
+(0002, 0012) Implementation Class UID            UI: 1.2.410.200010.99.3.5
+(0002, 0013) Implementation Version Name         SH: 'INF_4.5'
+(0002, 0016) Source Application Entity Title     AE: 'TM_CT_CMW_V3.00'
+
+
+-------------------------------------------------
+(0008, 0005) Specific Character Set              CS: 'ISO_IR 100'
+(0008, 0008) Image Type                          CS: ['ORIGINAL', 'PRIMARY', 'AXIAL', 'HELICAL']
+(0008, 0012) Instance Creation Date              DA: '0'
+(0008, 0013) Instance Creation Time              TM: '174444.875'
+(0008, 0016) SOP Class UID                       UI: CT Image Storage
+(0008, 0018) SOP Instance UID                    UI: 1.3.6.1.4.1.9590.100.1.2.5331506912231574009137053520150588438       
+(0008, 0020) Study Date                          DA: '0'
+(0008, 0022) Acquisition Date                    DA: '0'
+(0008, 0023) Content Date                        DA: '0'
+(0008, 0030) Study Time                          TM: '0'
+(0008, 0032) Acquisition Time                    TM: '0'
+(0008, 0033) Content Time                        TM: '0'
+(0008, 0050) Accession Number                    SH: '0'
+(0008, 0060) Modality                            CS: 'CT'
+(0008, 0070) Manufacturer                        LO: '0'
+(0008, 0080) Institution Name                    LO: '0'
+(0008, 0090) Referring Physician's Name          PN: ''
+(0008, 1030) Study Description                   LO: '0'
+(0008, 103e) Series Description                  LO: ''
+(0008, 1070) Operators' Name                     PN: ''
+(0008, 1090) Manufacturer's Model Name           LO: 'NeuViz 16'
+(0010, 0010) Patient's Name                      PN: 'Anonymous'
+
+
+-----------------------------------------------------------------------------------------------------------
+(0008, 0000) Group Length                        UL: 440
+(0008, 0005) Specific Character Set              CS: 'ISO_IR 6'
+(0008, 0008) Image Type                          CS: ['ORIGINAL', 'PRIMARY', 'AXIAL']
+(0008, 0016) SOP Class UID                       UI: CT Image Storage
+(0008, 0018) SOP Instance UID                    UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.417965
+(0008, 0020) Study Date                          DA: '20231019'
+(0008, 0021) Series Date                         DA: '20231019'
+(0008, 0022) Acquisition Date                    DA: '20231019'
+(0008, 0023) Content Date                        DA: '20231019'
+(0008, 0030) Study Time                          TM: '074533.000'
+(0008, 0031) Series Time                         TM: '074639.173'
+(0008, 0032) Acquisition Time                    TM: '074649.800'
+(0008, 0033) Content Time                        TM: '074650.215'
+(0008, 0050) Accession Number                    SH: '783'
+(0008, 0060) Modality                            CS: 'CT'
+(0008, 0070) Manufacturer                        LO: 'TOSHIBA'
+(0008, 0080) Institution Name                    LO: 'CRH - IUHW, HECI'
+(0008, 0081) Institution Address                 ST: 'TOSHIBA_MEC'
+(0008, 0090) Referring Physician's Name          PN: ''
+(0008, 1010) Station Name                        SH: 'ID_STATION'
+(0008, 103e) Series Description                  LO: ' Body 5.0'
+(0008, 1040) Institutional Department Name       LO: 'CT'
+(0008, 1090) Manufacturer's Model Name           LO: 'Aquilion ONE'
+(0010, 0000) Group Length                        UL: 78
+(0010, 0010) Patient's Name                      PN: 'Ton That Hung'
+
+
+(0010, 0020) Patient ID                          LO: ''
+(0010, 0030) Patient's Birth Date                DA: ''
+(0010, 0040) Patient's Sex                       CS: 'M'
+(0010, 1010) Patient's Age                       AS: '032Y'
+(0010, 1020) Patient's Size                      DS: '0.0'
+(0010, 1030) Patient's Weight                    DS: '0.0'
+(0010, 4000) Patient Comments                    LT: ''
+(0018, 0010) Contrast/Bolus Agent                LO: 'C+'
+(0018, 0022) Scan Options                        CS: 'HELICAL'
+(0018, 0050) Slice Thickness                     DS: '1.0'
+(0018, 0060) KVP                                 DS: '120.0'
+(0018, 0090) Data Collection Diameter            DS: '500.0'
+(0018, 1020) Software Versions                   LO: 'NeuViz 16 1.1'
+(0018, 1030) Protocol Name                       LO: 'PE Test Bolus'
+(0018, 1050) Spatial Resolution                  DS: '0.35'
+(0018, 1100) Reconstruction Diameter             DS: '317.0'
+(0018, 1110) Distance Source to Detector         DS: '1040.0'
+(0018, 1111) Distance Source to Patient          DS: '570.0'
+(0018, 1120) Gantry/Detector Tilt                DS: '0.0'
+(0018, 1130) Table Height                        DS: '350.2'
+(0018, 1140) Rotation Direction                  CS: 'CW'
+(0018, 1150) Exposure Time                       IS: '13990'
+(0018, 1151) X-Ray Tube Current                  IS: '222'
+(0018, 1152) Exposure                            IS: '166'
+(0018, 1160) Filter Type                         SH: 'SA'
+(0018, 1210) Convolution Kernel                  SH: 'SA'
+(0018, 5100) Patient Position                    CS: 'HFS'
+(0020, 000d) Study Instance UID                  UI: 0
+(0020, 000e) Series Instance UID                 UI: 0
+(0020, 0010) Study ID                            SH: '0'
+(0020, 0011) Series Number                       IS: '5'
+(0020, 0012) Acquisition Number                  IS: '4'
+(0020, 0013) Instance Number                     IS: '1'
+(0020, 0032) Image Position (Patient)            DS: [-120.799999, -158.5, -935.5]
+(0020, 0037) Image Orientation (Patient)         DS: [1, 0, 0, 0, 1, 0]
+(0020, 0052) Frame of Reference UID              UI: 1.2.156.14702.1.1000.16.3.164.20150813174042671
+(0020, 1040) Position Reference Indicator        LO: ''
+(0020, 1041) Slice Location                      DS: '933.5'
+(0028, 0002) Samples per Pixel                   US: 1
+(0028, 0004) Photometric Interpretation          CS: 'MONOCHROME2'
+(0028, 0010) Rows                                US: 512
+(0028, 0011) Columns                             US: 512
+(0028, 0030) Pixel Spacing                       DS: [0.619141, 0.619141]
+(0028, 0100) Bits Allocated                      US: 16
+(0028, 0101) Bits Stored                         US: 16
+(0028, 0102) High Bit                            US: 15
+(0028, 0103) Pixel Representation                US: 0
+(0028, 0106) Smallest Image Pixel Value          US: 0
+(0028, 0107) Largest Image Pixel Value           US: 2244
+(0028, 1050) Window Center                       DS: '90.0'
+(0028, 1051) Window Width                        DS: '500.0'
+(0028, 1052) Rescale Intercept                   DS: '-1024.0'
+(0028, 1053) Rescale Slope                       DS: '1.0'
+(7fe0, 0010) Pixel Data                          OW: Array of 524288 elements
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Dataset.file_meta -------------------------------
+(0002, 0000) File Meta Information Group Length  UL: 212
+(0002, 0001) File Meta Information Version       OB: b'\x00\x01'
+(0002, 0002) Media Storage SOP Class UID         UI: CT Image Storage
+(0002, 0003) Media Storage SOP Instance UID      UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.417965
+(0002, 0010) Transfer Syntax UID                 UI: Implicit VR Little Endian
+(0002, 0012) Implementation Class UID            UI: 1.2.410.200010.99.3.5
+(0002, 0013) Implementation Version Name         SH: 'INF_4.5'
+(0002, 0016) Source Application Entity Title     AE: 'TM_CT_CMW_V3.00'
+-------------------------------------------------
+(0008, 0000) Group Length                        UL: 440
+(0008, 0005) Specific Character Set              CS: 'ISO_IR 6'
+(0008, 0008) Image Type                          CS: ['ORIGINAL', 'PRIMARY', 'AXIAL']
+(0008, 0016) SOP Class UID                       UI: CT Image Storage
+(0008, 0018) SOP Instance UID                    UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.417965
+(0008, 0020) Study Date                          DA: '20231019'
+(0008, 0021) Series Date                         DA: '20231019'
+(0008, 0022) Acquisition Date                    DA: '20231019'
+(0008, 0023) Content Date                        DA: '20231019'
+(0008, 0030) Study Time                          TM: '074533.000'
+(0008, 0031) Series Time                         TM: '074639.173'
+(0008, 0032) Acquisition Time                    TM: '074649.800'
+(0008, 0033) Content Time                        TM: '074650.215'
+(0008, 0050) Accession Number                    SH: '783'
+(0008, 0060) Modality                            CS: 'CT'
+(0008, 0070) Manufacturer                        LO: 'TOSHIBA'
+(0008, 0080) Institution Name                    LO: 'CRH - IUHW, HECI'
+(0008, 0081) Institution Address                 ST: 'TOSHIBA_MEC'
+(0008, 0090) Referring Physician's Name          PN: ''
+(0008, 1010) Station Name                        SH: 'ID_STATION'
+(0008, 103e) Series Description                  LO: ' Body 5.0'
+(0008, 1040) Institutional Department Name       LO: 'CT'
+(0008, 1090) Manufacturer's Model Name           LO: 'Aquilion ONE'
+(0010, 0000) Group Length                        UL: 78
+(0010, 0010) Patient's Name                      PN: 'Ton That Hung'
+(0010, 0020) Patient ID                          LO: '0000097031'
+(0010, 0030) Patient's Birth Date                DA: '19960727'
+(0010, 0040) Patient's Sex                       CS: 'M'
+(0010, 1010) Patient's Age                       AS: '027Y'
+(0018, 0000) Group Length                        UL: 496
+(0018, 0015) Body Part Examined                  CS: 'CHEST_TO_PELVIS'
+(0018, 0022) Scan Options                        CS: 'HELICAL_CT'
+(0018, 0050) Slice Thickness                     DS: '5.0'
+(0018, 0060) KVP                                 DS: '120.0'
+(0018, 0090) Data Collection Diameter            DS: '500.0'
+(0018, 1000) Device Serial Number                LO: '7CY17Y2078'
+(0018, 1020) Software Versions                   LO: 'V8.32ER903'
+(0018, 1030) Protocol Name                       LO: 'HECI Premium (5mm)HEAD in'
+(0018, 1100) Reconstruction Diameter             DS: '439.453'
+(0018, 1120) Gantry/Detector Tilt                DS: '0.0'
+(0018, 1130) Table Height                        DS: '144.0'
+(0018, 1140) Rotation Direction                  CS: 'CW'
+(0018, 1150) Exposure Time                       IS: '500'
+(0018, 1151) X-Ray Tube Current                  IS: '100'
+(0018, 1152) Exposure                            IS: '50'
+(0018, 1160) Filter Type                         SH: 'LARGE'
+(0018, 1170) Generator Power                     IS: '12'
+(0018, 1190) Focal Spot(s)                       DS: [1.6, 1.5]
+(0018, 1210) Convolution Kernel                  SH: 'FC03'
+(0018, 5100) Patient Position                    CS: 'HFS'
+(0018, 9302) Acquisition Type                    CS: 'SPIRAL'
+(0018, 9305) Revolution Time                     FD: 0.5
+(0018, 9306) Single Collimation Width            FD: 0.5
+(0018, 9307) Total Collimation Width             FD: 40.0
+(0018, 9310) Table Feed per Rotation             FD: -32.5
+(0018, 9311) Spiral Pitch Factor                 FD: 0.813
+(0018, 9318) Reconstruction Target Center (Patie FD: [0.0, 0.0, -657.0]
+(0018, 9323) Exposure Modulation Type            CS: '3D'
+(0018, 9324) Estimated Dose Saving               FD: 34.32
+(0018, 9327) Table Position                      FD: 0.0
+(0018, 9334) Fluoroscopy Flag                    CS: 'NO'
+(0018, 9345) CTDIvol                             FD: 8.8
+(0020, 0000) Group Length                        UL: 368
+(0020, 000d) Study Instance UID                  UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669133.47243
+(0020, 000e) Series Instance UID                 UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.416974
+(0020, 0010) Study ID                            SH: '780'
+(0020, 0011) Series Number                       IS: '3'
+(0020, 0012) Acquisition Number                  IS: '2'
+(0020, 0013) Instance Number                     IS: '1'
+(0020, 0020) Patient Orientation                 CS: ['L', 'P']
+(0020, 0032) Image Position (Patient)            DS: [-205.625, -219.2974, -657.00]
+(0020, 0037) Image Orientation (Patient)         DS: [1.00000, 0.00000, 0.00000, 0.00000, 1.00000, 0.00000]
+(0020, 0052) Frame of Reference UID              UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669136.278979
+(0020, 1040) Position Reference Indicator        LO: ''
+(0020, 1041) Slice Location                      DS: '0.0'
+(0028, 0000) Group Length                        UL: 162
+(0028, 0002) Samples per Pixel                   US: 1
+(0028, 0004) Photometric Interpretation          CS: 'MONOCHROME2'
+(0028, 0010) Rows                                US: 512
+(0028, 0011) Columns                             US: 512
+(0028, 0030) Pixel Spacing                       DS: [0.858, 0.858]
+(0028, 0100) Bits Allocated                      US: 16
+(0028, 0101) Bits Stored                         US: 16
+(0028, 0102) High Bit                            US: 15
+(0028, 0103) Pixel Representation                US: 1
+(0028, 1050) Window Center                       DS: '30.0'
+(0028, 1051) Window Width                        DS: '300.0'
+(0028, 1052) Rescale Intercept                   DS: '0.0'
+(0028, 1053) Rescale Slope                       DS: '1.0'
+(0028, 2110) Lossy Image Compression             CS: '00'
+(0038, 0000) Group Length                        UL: 18
+(0038, 0016) Route of Admissions                 LO: 'emergency'
+(0040, 0000) Group Length                        UL: 116
+(0040, 0002) Scheduled Procedure Step Start Date DA: '20231019'
+(0040, 0003) Scheduled Procedure Step Start Time TM: '074400.000'
+(0040, 0004) Scheduled Procedure Step End Date   DA: '20231019'
+(0040, 0005) Scheduled Procedure Step End Time   TM: '081400.000'
+(0040, 0244) Performed Procedure Step Start Date DA: '20231019'
+(0040, 0245) Performed Procedure Step Start Time TM: '074533.000'
+(0040, 0253) Performed Procedure Step ID         SH: '15706'
+(7005, 0000) Private Creator                     UN: b'\xc2\x01\x00\x00'
+(7005, 0010) Private tag data                    LO: 'TOSHIBA_MEC_CT3'
+(7005, 1007) [Reconstruction Center]             DS: [270, 256]
+(7005, 1008) [Detector Slice Thickness in mm]    DS: '0.5'
+(7005, 100a) [Table Speed in mm/rot]             DS: '-32.5'
+(7005, 100b) [Filter]                            SH: 'AIDR 3D MILD'
+(7005, 100d) [Organ]                             CS: 'CHEST_TO_PELVIS'
+(7005, 100e) [File Type Remarks]                 SH: 'IMG'
+(7005, 100f) [Direction]                         SH: 'HF'
+(7005, 1012) [Position]                          SH: 'SU'
+(7005, 1013) [Expert Plan No.]                   US: 1
+(7005, 1016) [Volume UID]                        UI: 1.2.392.200036.9116.2.6.1.3268.2054920244.1697669231.417965
+(7005, 1017) [Total Frame Count in the Volume]   US: 1
+(7005, 1018) [Frame No.]                         US: 1
+(7005, 1019) [Frame Sort Key]                    UL: 1642763
+(7005, 101a) [Frame Sort Order]                  US: 0
+(7005, 101b) [Convolution Kernel]                SH: 'FC03'
+(7005, 101d) [Reconstruction Number]             UL: 1
+(7005, 101e) [Raw Data Number]                   UL: 0
+(7005, 101f) [Volume Number]                     LO: '00'
+(7005, 1020) [Local Series Number]               UL: 4
+(7005, 1022) [Reconstruction Interval]           DS: '5.0'
+(7005, 1023) [Pitch Factor]                      DS: '0.813'
+(7005, 1024) [The Acquisition Date of NRA]       DA: '20230811'
+(7005, 1030) [Main Modality in Study]            CS: 'CT'
+(7005, 1040) [DLP Dose Length Product]           FD: 758.5
+(7005, 1041) [Raw Slice Information]             SH: '0.5x80'
+(7005, 1043) [Volume Vector]                     DS: [0.00000, 0.00000, 1.00000]
+(7005, 1063) Private tag data                    UN: b'\xcd\xcc\xcc\xcc\xcc\xcc*@'
+(7fe0, 0010) Pixel Data                          OW: Array of 524288 elements
