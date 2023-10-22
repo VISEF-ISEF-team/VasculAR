@@ -9,6 +9,9 @@ from tkinter import filedialog, Canvas
 from helpers import *
 from draw import draw_canvas
 from color_picker_customized import Colorpicker
+import os
+from readdcm import ReadDCM
+from CTkRangeSlider import *
 
 # ====== 1. WINDOW CONFIGURATION SECTION ======
 # 1.1 Window Theme
@@ -16,12 +19,13 @@ customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue") 
 app = customtkinter.CTk()
 app.title('VasculAR software')
-app.geometry("1600x850")
+app.geometry("1600x900")
 app.iconbitmap('imgs/logo.ico')
 
 img = None
 img_raw = None
 img_info = False
+dict_info = {}
 
 # 1.2 Window Grid
 for i in range(12): 
@@ -35,12 +39,21 @@ for i in range(12):
         
 # ====== 2. FILE UPLOADER SECTION ======
 def choose_file():
-    global img, img_raw, img_info
+    global img, img_raw, img_info, dict_info
     img_info = True
-    filename = filedialog.askopenfilename()
-    file_path.configure(placeholder_text=filename)
-    img_raw = sitk.ReadImage(filename, sitk.sitkFloat32)
-    img = sitk.GetArrayFromImage(img_raw)
+    path = filedialog.askopenfilename()
+    
+    if path.endswith('.nii.gz'):
+        file_path.configure(placeholder_text=path)
+        img_raw = sitk.ReadImage(path, sitk.sitkFloat32)
+        img = sitk.GetArrayFromImage(img_raw)
+    
+    elif path.endswith('.dcm'):
+        parent_dir = os.path.dirname(path)
+        instance = ReadDCM(parent_dir)
+        img_raw, img, dict_info = instance.convert_dcm_nii()
+        print(dict_info)
+    
     app.event_generate("<<UpdateApp>>")
    
 # 2.1 Uploader Frame
@@ -58,8 +71,9 @@ choose_button = customtkinter.CTkButton(uploader_frame, text="Choose File", comm
 choose_button.grid(column=0, row=2, sticky="ew", padx=10)
     
 def update_app(event):
-    global img, img_info, img_raw
+    global img, img_info, img_raw, dict_info
     print(img.shape)
+    
     # ====== 3. IMAGE INFO SECTION ======
     # 3.1 Image info frame
     info_frame = customtkinter.CTkScrollableFrame(app, orientation='horizontal', label_text='Image info')
@@ -69,7 +83,6 @@ def update_app(event):
     info_frame.grid_rowconfigure((0, 1, 2, 3), weight=1)
 
     # 3.2 Show info
-      
     info = show_sitk_img_info(img_raw)
     for i, (k, v) in enumerate(info.items()):
         label1 = customtkinter.CTkLabel(info_frame, text=k)
@@ -98,13 +111,13 @@ def update_app(event):
             img_raw_supported = sitk.MomentsThreshold(img_raw, 0, 1)
             
         img = sitk.GetArrayFromImage(img_raw_supported)
-
+    
     
     # ====== 4. MAIN CANVAS ======      
     # 4.1 Tab View    
     tabview = customtkinter.CTkTabview(master=app) # add command argument here
     tabview.grid(column=2, row=1, columnspan=8, rowspan=8, sticky="nsew", pady=(5, 0))
-    tab_1 = tabview.add("axial")
+    tab_1 = tabview.add("axial")    
     tab_2 = tabview.add("sagittal")
     tab_3 = tabview.add("coronal")
     tabview.set("axial") 
@@ -155,7 +168,7 @@ def update_app(event):
 
     # 4.4.2 Show Distance Control Frame
     distance_control = customtkinter.CTkFrame(app, fg_color='#242424')
-    distance_control.grid(column=2, row=2, columnspan=2, rowspan=2)
+    distance_control.grid(column=8, row=1, columnspan=2, rowspan=3, pady=35)
     distance_control.grid_rowconfigure((0, 1), weight=1)
     distance_control.grid_columnconfigure(0, weight=1)
 
@@ -171,7 +184,7 @@ def update_app(event):
 
     # ======= 5. AXIAL VIEW =======
     # 5.1 Axial Canvas
-    my_canvas_axial = Canvas(tab_1, width=750, height=750, bg='#2b2b2b', border=0)
+    my_canvas_axial = Canvas(tab_1, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_axial.place(relx=0.5, rely=0.5, anchor="center")
     draw_canvas_axial = draw_canvas(my_canvas_axial, radio_var, line_distance, coordinate_label, res_list)
 
@@ -194,7 +207,7 @@ def update_app(event):
 
 
     # ======= 6. SAGITTAL VIEW =======
-    my_canvas_sagittal = Canvas(tab_2, width=750, height=750, bg='#2b2b2b', border=0)
+    my_canvas_sagittal = Canvas(tab_2, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_sagittal.place(relx=0.5, rely=0.5, anchor="center")
     draw_canvas_sagittal = draw_canvas(my_canvas_sagittal, radio_var, line_distance, coordinate_label, res_list)
 
@@ -216,7 +229,7 @@ def update_app(event):
     line_sagittal.grid(column=1, row=0)
 
     # ======= 7. CORONAL VIEW =======
-    my_canvas_coronal = Canvas(tab_3, width=750, height=750, bg='#2b2b2b', border=0)
+    my_canvas_coronal = Canvas(tab_3, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_coronal.place(relx=0.5, rely=0.5, anchor="center")
     draw_canvas_coronal = draw_canvas(my_canvas_coronal, radio_var, line_distance, coordinate_label, res_list)
 
@@ -238,15 +251,20 @@ def update_app(event):
     line_coronal.grid(column=1, row=0)
     
     # ======= BRIGHTNESS & CONTRAST CONTROL =======
-    alpha_text = customtkinter.StringVar(value="1.5")
-    alpha_control = customtkinter.CTkEntry(app, placeholder_text="1.5", textvariable=alpha_text)
-    alpha_control.grid(row=6, column=9)
+    alpha_text = customtkinter.StringVar(value="1")
+    alpha_control = customtkinter.CTkEntry(app, placeholder_text="1", textvariable=alpha_text)
+    alpha_control.grid(row=5, column=8, sticky='ew')
 
 
     # ======= 8. MAIN DISPLAY CONTROL =======
     def slice_control(index_slice):
         view_axis = tabview.get()
-        color_choice = color_picker.get()
+        color_choice = plt.cm.bone if color_picker.get() == 'gray' else  color_picker.get()
+        x, y = int(round(range_slider.get()[0],0)), int(round(range_slider.get()[1], 0))
+        print(x, y)
+        print(round(range_slider.get()[0],0))
+        print(range_slider.get()[0])
+        print(range_slider.get()[1])
         if view_axis == "axial":
             plt.imsave("temp.jpg", img[int(index_slice), :, :], cmap=color_choice)
             image_display = cv2.imread("temp.jpg")
@@ -254,22 +272,33 @@ def update_app(event):
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg").resize((750, 750))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_axial.create_image(0, 0, image=my_image, anchor="nw")  
+            my_canvas_axial.create_image(375, 375, image=my_image, anchor="center")  
             my_canvas_axial.image = my_image
+            my_canvas_axial.configure(bg='black')
             
         elif view_axis == "sagittal":
-            plt.imsave("temp.jpg ", img[:, int(index_slice), :], cmap=color_choice)
-            image_display = Image.open("temp.jpg").resize((750, 750))
+            plt.imsave("temp.jpg", img[:,int(index_slice), :], cmap=color_choice)
+            image_display = cv2.imread("temp.jpg")
+            brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
+            cv2.imwrite("temp.jpg", brightness_image)
+            image_display = Image.open("temp.jpg")
+            image_display = image_display.resize((image_display.size[0] * 750 // image_display.size[1], 750))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_sagittal.create_image(0, 0, image=my_image, anchor="nw")  
+            my_canvas_sagittal.create_image(375, 375, image=my_image, anchor="center")  
             my_canvas_sagittal.image = my_image
+            my_canvas_sagittal.configure(bg='black')
             
         else:
             plt.imsave("temp.jpg", img[:, :, int(index_slice)], cmap=color_choice)
-            image_display = Image.open("temp.jpg").resize((750, 750))
+            image_display = cv2.imread("temp.jpg")
+            brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
+            cv2.imwrite("temp.jpg", brightness_image)
+            image_display = Image.open("temp.jpg")
+            image_display = image_display.resize((image_display.size[0] * 750 // image_display.size[1], 750))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_coronal.create_image(0, 0, image=my_image, anchor="nw")  
+            my_canvas_coronal.create_image(375, 375, image=my_image, anchor="center")  
             my_canvas_coronal.image = my_image
+            my_canvas_coronal.configure(bg='black')
 
 
     # ======= 9. ANALYSIS TAKENOTE =======
@@ -445,9 +474,9 @@ def update_app(event):
     header_assitant = customtkinter.CTkButton(assitant_frame, text='AI assistant', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
     header_assitant.grid(column=0, row=0, columnspan=4, sticky='new')
 
-    # ======= 15. Supporting Functions =======
+    # ======= 15. SUPPORTING FUNCTIONS =======
     support_function_control = customtkinter.CTkFrame(app)
-    support_function_control.grid(column=8, row=2, columnspan=2, rowspan=2, pady=5)
+    support_function_control.grid(column=8, row=3, columnspan=2, rowspan=2, pady=5)
     support_function_control.grid_rowconfigure((0, 1), weight=1)
     support_function_control.grid_columnconfigure(0, weight=1)
 
@@ -460,6 +489,21 @@ def update_app(event):
     support_options = customtkinter.CTkComboBox(support_function_control, values=support_options_values, variable=support_options_default, command=supporting_functions_callback)
     support_options.grid(column=0, row=1, padx=10, pady=15)
 
+    # # ======= 16. DCM INFO =======
+    info_dcm_frame = customtkinter.CTkFrame(app, fg_color="#2b2b2b")
+    info_dcm_frame.grid(column=0, row=1, sticky='nsew', padx=5, pady=50)
+    info_dcm_frame.grid_columnconfigure(0, weight=1)
+    
+    for i, (k, v) in enumerate(dict_info.items()):
+        info_dcm = customtkinter.CTkLabel(tab_1, text=str(k) + ': ' + str(v), fg_color="transparent", font=("",12))
+        info_dcm.grid(column=0, row=i, sticky="w")
+    
+    
+    # ======= 17. SlIDER PIXEL FILTERING =======
+    range_slider = CTkRangeSlider(app, fg_color='#2b2b2b')
+    range_slider.grid(column=2, row=8, sticky='ew')
+    print(np.max(img), np.min(img))
+    range_slider.set([np.max(img), np.min(img)])
 
 app.bind("<<UpdateApp>>", update_app)
 app.mainloop()
