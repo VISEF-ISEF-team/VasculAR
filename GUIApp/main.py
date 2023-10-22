@@ -19,7 +19,7 @@ customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue") 
 app = customtkinter.CTk()
 app.title('VasculAR software')
-app.geometry("1600x900")
+app.geometry("1650x900")
 app.iconbitmap('imgs/logo.ico')
 
 img = None
@@ -261,24 +261,58 @@ def update_app(event):
     alpha_control.grid(row=0, column=0, padx=5)
 
     def update_range_slider(value):
-        btn_increase_entry.configure(placeholder_text=value[0])
-        btn_decrease_entry.configure(placeholder_text=value[1])
+        btn_left_entry.configure(state='normal')
+        btn_right_entry.configure(state='normal')
+        btn_left_entry.configure(placeholder_text=value[0])
+        btn_right_entry.configure(placeholder_text=value[1])
+        btn_left_entry.configure(state='disabled')
+        btn_right_entry.configure(state='disabled')
         slice_control(img.shape[0] / 2)
         
-    def increase_hounsfield_unit():
+    def left_increase_hf():
         hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
-        hf1 += 100
+        hf1 += 50
         range_slider.set([hf1, hf2])
-        btn_increase_entry.configure(placeholder_text=hf1)
-        btn_decrease_entry.configure(placeholder_text=hf2)
+        btn_left_entry.configure(state='normal')
+        btn_right_entry.configure(state='normal')
+        btn_left_entry.configure(placeholder_text=hf1)
+        btn_right_entry.configure(placeholder_text=hf2)
+        btn_left_entry.configure(state='disabled')
+        btn_right_entry.configure(state='disabled')
+        
+    def left_decrease_hf():
+        hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
+        hf1 -= 50
+        range_slider.set([hf1, hf2])
+        btn_left_entry.configure(state='normal')
+        btn_right_entry.configure(state='normal')
+        btn_left_entry.configure(placeholder_text=hf1)
+        btn_right_entry.configure(placeholder_text=hf2)
+        btn_left_entry.configure(state='disabled')
+        btn_right_entry.configure(state='disabled')
     
-    def decrease_hounsfield_unit():
+    def right_increase_hf():
         hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
-        hf2 -= 100
+        hf2 += 50
         range_slider.set([hf1, hf2])
-        btn_increase_entry.configure(placeholder_text=hf1)
-        btn_decrease_entry.configure(placeholder_text=hf2)
-
+        btn_left_entry.configure(state='normal')
+        btn_right_entry.configure(state='normal')
+        btn_left_entry.configure(placeholder_text=hf1)
+        btn_right_entry.configure(placeholder_text=hf2)
+        btn_left_entry.configure(state='disabled')
+        btn_right_entry.configure(state='disabled')
+        
+    def right_decrease_hf():
+        hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
+        hf2 -= 50
+        range_slider.set([hf1, hf2])
+        btn_left_entry.configure(state='normal')
+        btn_right_entry.configure(state='normal')
+        btn_left_entry.configure(placeholder_text=hf1)
+        btn_right_entry.configure(placeholder_text=hf2)
+        btn_left_entry.configure(state='disabled')
+        btn_right_entry.configure(state='disabled')
+        
     # ======= 8. MAIN DISPLAY CONTROL =======
     def slice_control(index_slice):
         view_axis = tabview.get()
@@ -515,12 +549,16 @@ def update_app(event):
     support_options.grid(column=0, row=1, padx=10, pady=15)
 
     # # ======= 16. DCM INFO =======
-    info_dcm_frame = customtkinter.CTkFrame(app, fg_color="#2b2b2b")
-    info_dcm_frame.grid(column=0, row=1, sticky='nsew', padx=5, pady=50)
-    info_dcm_frame.grid_columnconfigure(0, weight=1)
-    
     for i, (k, v) in enumerate(dict_info.items()):
         info_dcm = customtkinter.CTkLabel(tab_1, text=str(k) + ': ' + str(v), fg_color="transparent", font=("",12))
+        info_dcm.grid(column=0, row=i, sticky="w")
+        
+    for i, (k, v) in enumerate(dict_info.items()):
+        info_dcm = customtkinter.CTkLabel(tab_2, text=str(k) + ': ' + str(v), fg_color="transparent", font=("",12))
+        info_dcm.grid(column=0, row=i, sticky="w")
+        
+    for i, (k, v) in enumerate(dict_info.items()):
+        info_dcm = customtkinter.CTkLabel(tab_3, text=str(k) + ': ' + str(v), fg_color="transparent", font=("",12))
         info_dcm.grid(column=0, row=i, sticky="w")
     
     
@@ -533,22 +571,30 @@ def update_app(event):
     
     # 17.2 Slider Pixel Filtering Content
     range_slider_header = customtkinter.CTkButton(range_slider_frame, text='HounsField Window', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
-    range_slider_header.grid(column=0, row=0, sticky='new')
+    range_slider_header.grid(column=0, row=0, sticky='new', padx=5)
     
     range_slider = CTkRangeSlider(range_slider_frame, from_=np.min(img), to=np.max(img), border_color='#3b3b3b', command=update_range_slider)
     range_slider.grid(column=0, row=2, columnspan=2, sticky='new', padx=5)
     
-    btn_left_increase = customtkinter.CTkButton(range_slider_frame, text="+", width=20, command=increase_hounsfield_unit)
-    btn_left_increase.grid(column=0, row=1, sticky='nw', padx=(5,0))
+    btn_left_increase = customtkinter.CTkButton(range_slider_frame, text="+", width=20, command=left_increase_hf)
+    btn_left_increase.grid(column=0, row=1, sticky='nw', padx=(30,0))
     
-    btn_left_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[0], width=50)
-    btn_left_entry.grid(column=0, row=1, sticky='nw', padx=30)
+    btn_left_decrease = customtkinter.CTkButton(range_slider_frame, text="-", width=20, command=left_decrease_hf)
+    btn_left_decrease.grid(column=0, row=1, sticky='nw', padx=(5,0))
     
-    btn_right_decrease = customtkinter.CTkButton(range_slider_frame, text="-", width=20, command=decrease_hounsfield_unit)
-    btn_right_decrease.grid(column=0, row=1, sticky='ne', padx=(0,5))
+    btn_left_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[0], width=50, state='normal')
+    btn_left_entry.configure(state='disabled')
+    btn_left_entry.grid(column=0, row=1, sticky='nw', padx=(60,0))
     
-    btn_right_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[1], width=50)
-    btn_right_entry.grid(column=0, row=1, sticky='ne', padx=30)
+    btn_right_increase = customtkinter.CTkButton(range_slider_frame, text="+", width=20, command=right_increase_hf)
+    btn_right_increase.grid(column=0, row=1, sticky='ne', padx=(0,5))
+    
+    btn_right_decrease = customtkinter.CTkButton(range_slider_frame, text="-", width=20, command=right_decrease_hf)
+    btn_right_decrease.grid(column=0, row=1, sticky='ne', padx=(0,30))
+    
+    btn_right_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[1], width=50, state='normal')
+    btn_right_entry.configure('normal')
+    btn_right_entry.grid(column=0, row=1, sticky='ne', padx=(0,60))
     
 
 app.bind("<<UpdateApp>>", update_app)
