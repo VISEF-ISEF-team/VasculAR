@@ -251,52 +251,77 @@ def update_app(event):
     line_coronal.grid(column=1, row=0)
     
     # ======= BRIGHTNESS & CONTRAST CONTROL =======
+    alpha_frame = customtkinter.CTkFrame(app)
+    alpha_frame.grid(column=8, row=5, columnspan=2, rowspan=2, pady=5)
+    # alpha_frame.grid_rowconfigure((0, 1), weight=1)
+    # alpha_frame.grid_columnconfigure(0, weight=1)
+    
     alpha_text = customtkinter.StringVar(value="1")
-    alpha_control = customtkinter.CTkEntry(app, placeholder_text="1", textvariable=alpha_text)
-    alpha_control.grid(row=5, column=8, sticky='ew')
+    alpha_control = customtkinter.CTkEntry(alpha_frame, placeholder_text="1", textvariable=alpha_text)
+    alpha_control.grid(row=0, column=0, padx=5)
 
+    def update_range_slider(value):
+        btn_increase_entry.configure(placeholder_text=value[0])
+        btn_decrease_entry.configure(placeholder_text=value[1])
+        slice_control(img.shape[0] / 2)
+        
+    def increase_hounsfield_unit():
+        hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
+        hf1 += 100
+        range_slider.set([hf1, hf2])
+        btn_increase_entry.configure(placeholder_text=hf1)
+        btn_decrease_entry.configure(placeholder_text=hf2)
+    
+    def decrease_hounsfield_unit():
+        hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
+        hf2 -= 100
+        range_slider.set([hf1, hf2])
+        btn_increase_entry.configure(placeholder_text=hf1)
+        btn_decrease_entry.configure(placeholder_text=hf2)
 
     # ======= 8. MAIN DISPLAY CONTROL =======
     def slice_control(index_slice):
         view_axis = tabview.get()
         color_choice = plt.cm.bone if color_picker.get() == 'gray' else  color_picker.get()
-        x, y = int(round(range_slider.get()[0],0)), int(round(range_slider.get()[1], 0))
-        print(x, y)
-        print(round(range_slider.get()[0],0))
-        print(range_slider.get()[0])
-        print(range_slider.get()[1])
+        hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
         if view_axis == "axial":
-            plt.imsave("temp.jpg", img[int(index_slice), :, :], cmap=color_choice)
+            image = img[int(index_slice), :, :]
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            plt.imsave("temp.jpg", image, cmap=color_choice)
             image_display = cv2.imread("temp.jpg")
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
-            image_display = Image.open("temp.jpg").resize((750, 750))
+            image_display = Image.open("temp.jpg").resize((800, 800))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_axial.create_image(375, 375, image=my_image, anchor="center")  
+            my_canvas_axial.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_axial.image = my_image
             my_canvas_axial.configure(bg='black')
             
         elif view_axis == "sagittal":
-            plt.imsave("temp.jpg", img[:,int(index_slice), :], cmap=color_choice)
+            image = img[:,int(index_slice), :]
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            plt.imsave("temp.jpg", image, cmap=color_choice)
             image_display = cv2.imread("temp.jpg")
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg")
-            image_display = image_display.resize((image_display.size[0] * 750 // image_display.size[1], 750))
+            image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_sagittal.create_image(375, 375, image=my_image, anchor="center")  
+            my_canvas_sagittal.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_sagittal.image = my_image
             my_canvas_sagittal.configure(bg='black')
             
         else:
-            plt.imsave("temp.jpg", img[:, :, int(index_slice)], cmap=color_choice)
+            image = img[:, :, int(index_slice)]
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            plt.imsave("temp.jpg", image, cmap=color_choice)
             image_display = cv2.imread("temp.jpg")
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg")
-            image_display = image_display.resize((image_display.size[0] * 750 // image_display.size[1], 750))
+            image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
             my_image = ImageTk.PhotoImage(image_display)
-            my_canvas_coronal.create_image(375, 375, image=my_image, anchor="center")  
+            my_canvas_coronal.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_coronal.image = my_image
             my_canvas_coronal.configure(bg='black')
 
@@ -466,7 +491,7 @@ def update_app(event):
     # ======= 14. AI ASSISTANT =======
     # 14.1 Asistant Frame
     assitant_frame = customtkinter.CTkFrame(app)
-    assitant_frame.grid(column=6, row=9, columnspan=4, rowspan=3, sticky='nsew', pady=10, padx=(5, 0))
+    assitant_frame.grid(column=6, row=9, columnspan=4, rowspan=3, sticky='nsew', pady=10, padx=(5,0))
     assitant_frame.grid_columnconfigure((0,1,2,3), weight=1)
     assitant_frame.grid_rowconfigure((0,1,2,3), weight=1)
 
@@ -500,10 +525,31 @@ def update_app(event):
     
     
     # ======= 17. SlIDER PIXEL FILTERING =======
-    range_slider = CTkRangeSlider(app, fg_color='#2b2b2b')
-    range_slider.grid(column=2, row=8, sticky='ew')
-    print(np.max(img), np.min(img))
-    range_slider.set([np.max(img), np.min(img)])
+    # 17.1 Slider Pixel Filtering Frame
+    range_slider_frame = customtkinter.CTkFrame(app, fg_color='#2b2b2b')
+    range_slider_frame.grid(column=2, row=7, columnspan=2, rowspan=2, padx=5, sticky='nsew')
+    range_slider_frame.grid_columnconfigure(0, weight=1)
+    range_slider_frame.grid_rowconfigure((0, 1, 2), weight=1)
+    
+    # 17.2 Slider Pixel Filtering Content
+    range_slider_header = customtkinter.CTkButton(range_slider_frame, text='HounsField Window', state='disabled', fg_color='#3b3b3b', text_color_disabled='#dce4e2')
+    range_slider_header.grid(column=0, row=0, sticky='new')
+    
+    range_slider = CTkRangeSlider(range_slider_frame, from_=np.min(img), to=np.max(img), border_color='#3b3b3b', command=update_range_slider)
+    range_slider.grid(column=0, row=2, columnspan=2, sticky='new', padx=5)
+    
+    btn_left_increase = customtkinter.CTkButton(range_slider_frame, text="+", width=20, command=increase_hounsfield_unit)
+    btn_left_increase.grid(column=0, row=1, sticky='nw', padx=(5,0))
+    
+    btn_left_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[0], width=50)
+    btn_left_entry.grid(column=0, row=1, sticky='nw', padx=30)
+    
+    btn_right_decrease = customtkinter.CTkButton(range_slider_frame, text="-", width=20, command=decrease_hounsfield_unit)
+    btn_right_decrease.grid(column=0, row=1, sticky='ne', padx=(0,5))
+    
+    btn_right_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[1], width=50)
+    btn_right_entry.grid(column=0, row=1, sticky='ne', padx=30)
+    
 
 app.bind("<<UpdateApp>>", update_app)
 app.mainloop()
