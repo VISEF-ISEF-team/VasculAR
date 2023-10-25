@@ -5,6 +5,8 @@
 [![> Research Report](https://img.shields.io/badge/Research%20Report-black)](https://github.com/VISEF-ISEF-team/VascuIAR/blob/main/static/BCKH.pdf)
 
 ## Nâng cấp mới cho vòng thành phố
+
+[Video demo mới nhất](https://youtu.be/ssdXmd1ua2c?si=EiynVL32P7t3Hdm3)
 ### Giao diện app mới với nhiều tính năng hỗ trợ
 - Lý do: Qua quá trình nghiên cứu, khảo sát, xin phản hồi từ người dùng, nền tảng Web có nhược điểm sau:
     - Không đầy đủ công cụ cần thiết
