@@ -177,3 +177,28 @@ Source:
     - Blurring
     - Thresholding
     - Statistics
+    
+# Work need done
+Database cho patients management and notes
+Rotation and zoom 
+different views
+
+Sơ đồ cấu trúc hệ thống
+1. Khu 1 
+Bộ thu ảnh, bộ nhận tín hiệu (Receptor)
+2. Khu 2
+- Hệ thống quản lý ảnh (Image Management System)
+- Bộ xử lý ảnh (Image Processor)
+- Bộ hiển thị ảnh (Display Control)
+3. Khu 3
+- Hệ thống thông tin bệnh nhân (Patient Information System)
+- Kho lưu trữ dữ liệu (Storage)
+- Mạng thông tin (Communication Networks)
+
+
+
+# Sổ tay khoa học cần có
+1. Các thông số kỹ thuật liên quan chẩn đoán hình ảnh và phương pháp chụp
+2. Các bệnh liên quan về tim
+3. Các thuật toán học sâu
+4. Các câu hỏi có thể hỏi
