@@ -110,3 +110,4 @@ def CreateVnet(x, y, z):
     ]
 
     # results = model.fit(X_train, Y_train, validation_split=0.1, batch_size=16, epochs=25, callbacks=callbacks)
+    return model 
