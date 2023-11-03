@@ -41,33 +41,37 @@ app.iconbitmap('imgs/logo.ico')
 
 canvas = customtkinter.CTkFrame(app, width=700, height=700)
 canvas.pack()
-frame = customtkinter.CTkFrame(master=canvas, width=200, height=200)
-frame.grid_columnconfigure(0, weight=1)
-frame.grid_rowconfigure((0,1,2), weight=1)
-option1 = customtkinter.CTkButton(frame, text='rotation', fg_color='transparent')
-option2 = customtkinter.CTkButton(frame, text='highlight', fg_color='transparent')
 
-def tool_popups(e):
-    label.configure(text=e.x)
-    label2.configure(text=e.y)
-    pos_x = e.x
-    if e.x > 500 and e.x < 700:
-        pos_x -= 100
-    frame.place(x=pos_x-100, y=e.y-120, anchor="nw")
-    option1.grid(column=0, row=0, padx=5, pady=5)
-    option2.grid(column=0, row=1, padx=5, pady=5)
-    
-
-def hide_tool_popups(e):
-    frame.place_forget()
+def on_mousewheel (event):
+    label.configure(text = f"{event.delta / 120} units")
 
 label = customtkinter.CTkLabel(app, text='')
 label.pack()
-label2 = customtkinter.CTkLabel(app, text='')
-label2.pack()
+# bind the mouse wheel event to the canvas
+canvas.bind("<MouseWheel>", on_mousewheel)
 
-canvas.bind("<Button-3>", tool_popups)
-canvas.bind("<Button-1>", hide_tool_popups)
+
+# def tool_popups(e):
+#     label.configure(text=e.x)
+#     label2.configure(text=e.y)
+#     pos_x = e.x
+#     if e.x > 500 and e.x < 700:
+#         pos_x -= 100
+#     frame.place(x=pos_x-100, y=e.y-120, anchor="nw")
+#     option1.grid(column=0, row=0, padx=5, pady=5)
+#     option2.grid(column=0, row=1, padx=5, pady=5)
+    
+
+# def hide_tool_popups(e):
+#     frame.place_forget()
+
+# label = customtkinter.CTkLabel(app, text='')
+# label.pack()
+# label2 = customtkinter.CTkLabel(app, text='')
+# label2.pack()
+
+# canvas.bind("<Button-3>", tool_popups)
+# canvas.bind("<Button-1>", hide_tool_popups)
 
 app.mainloop()
 
@@ -101,3 +105,5 @@ app.mainloop()
 #     label2.grid(column=3, row=3)
 #     tab_1.bind("<Button-3>", tool_popups)
 #     tab_1.bind("<Button-1>", hide_tool_popups)
+
+

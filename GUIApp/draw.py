@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import tkinter
 
 class draw_canvas:
-    def __init__(self, canvas, radio_var, line_distance, coordinate_label, res_list):
+    def __init__(self, canvas, radio_var, line_distance, coordinate_label, res_list, pixel_spacing):
         self.canvas = canvas
         self.radio_var = radio_var
         self.rec_list = res_list
@@ -12,6 +12,7 @@ class draw_canvas:
         self.coordinate_label = coordinate_label
         self.start_x = 0
         self.start_y = 0
+        self.pixel_spacing = pixel_spacing
     
     # define a function to handle mouse press event
     def on_press(self, event):
@@ -72,4 +73,5 @@ class draw_canvas:
         
     def show_distance(self, start_x, start_y, end_x, end_y):
         euclidean_distance = ((end_x - start_x)**2 + (end_y - start_y)**2)**(1/2)
-        self.line_distance.configure(text=f'Distance: {round(euclidean_distance,3)}')
+        mm_distance = euclidean_distance * self.pixel_spacing
+        self.line_distance.configure(text=f'Distance: {round(mm_distance,3)} mm')

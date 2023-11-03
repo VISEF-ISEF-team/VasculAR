@@ -26,6 +26,7 @@ img = None
 img_raw = None
 img_info = False
 dict_info = {}
+pixel_spacing = 0.858
 
 # 1.2 Window Grid
 for i in range(12): 
@@ -51,7 +52,7 @@ def choose_file():
     elif path.endswith('.dcm'):
         parent_dir = os.path.dirname(path)
         instance = ReadDCM(parent_dir)
-        img_raw, img, dict_info = instance.convert_dcm_nii()
+        img_raw, img, dict_info, pixel_spacing = instance.read_file_dcm()
         print(dict_info)
     
     app.event_generate("<<UpdateApp>>")
@@ -186,7 +187,7 @@ def update_app(event):
     # 5.1 Axial Canvas
     my_canvas_axial = Canvas(tab_1, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_axial.place(relx=0.5, rely=0.5, anchor="center")
-    draw_canvas_axial = draw_canvas(my_canvas_axial, radio_var, line_distance, coordinate_label, res_list)
+    draw_canvas_axial = draw_canvas(my_canvas_axial, radio_var, line_distance, coordinate_label, res_list, pixel_spacing)
 
     # 5.2 Mouse Bind Function Axial
     my_canvas_axial.bind("<Button-1>", draw_canvas_axial.on_press)
@@ -209,7 +210,7 @@ def update_app(event):
     # ======= 6. SAGITTAL VIEW =======
     my_canvas_sagittal = Canvas(tab_2, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_sagittal.place(relx=0.5, rely=0.5, anchor="center")
-    draw_canvas_sagittal = draw_canvas(my_canvas_sagittal, radio_var, line_distance, coordinate_label, res_list)
+    draw_canvas_sagittal = draw_canvas(my_canvas_sagittal, radio_var, line_distance, coordinate_label, res_list, pixel_spacing)
 
     # 6.2 Mouse Bind Function Sagittal
     my_canvas_sagittal.bind("<Button-1>", draw_canvas_sagittal.on_press)
@@ -231,7 +232,7 @@ def update_app(event):
     # ======= 7. CORONAL VIEW =======
     my_canvas_coronal = Canvas(tab_3, width=800, height=800, bg='#2b2b2b', border=0)
     my_canvas_coronal.place(relx=0.5, rely=0.5, anchor="center")
-    draw_canvas_coronal = draw_canvas(my_canvas_coronal, radio_var, line_distance, coordinate_label, res_list)
+    draw_canvas_coronal = draw_canvas(my_canvas_coronal, radio_var, line_distance, coordinate_label, res_list, pixel_spacing)
 
     # 7.2 Mouse Bind Function Coronal
     my_canvas_coronal.bind("<Button-1>", draw_canvas_coronal.on_press)
@@ -264,7 +265,7 @@ def update_app(event):
         btn_right_entry.configure(placeholder_text=value[1])
         btn_left_entry.configure(state='disabled')
         btn_right_entry.configure(state='disabled')
-        slice_control(img.shape[0] / 2)
+        slice_control(slider_volume.get(), flip=flip_text_option.cget("text"))
         
     def left_increase_hf():
         hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
@@ -384,11 +385,35 @@ def update_app(event):
     my_canvas_coronal.bind("<Double-Button-1>", hide_tool_popups_3)
     
     
+    # ======= ZOOMING =======
+    def zoom_axial(event):
+        current_value = label_zoom.cget("text")
+        new_value = int(current_value) + (event.delta/120)*6
+        label_zoom.configure(text=new_value)
+        slice_control(slider_volume.get(), flip=flip_text_option.cget("text"))
+        
+        
+    label_zoom = customtkinter.CTkLabel(app, text="800")
+    my_canvas_axial.bind("<MouseWheel>", zoom_axial)
+    
+    # ======= MOVING =======
+    # def move(event):
+    #     my_canvas_axial.moveto(my_image_temp,event.x-50,event.y-50)
+    
+    # img_temp = Image.open("D:/Documents/GitHub/VascuIAR/imgs/image.png")
+    # resized_image = img_temp.resize((500,500))
+    # image_temp = ImageTk.PhotoImage(resized_image)
+    
+    # my_image_temp = my_canvas_axial.create_image(0, 0, image=image_temp, anchor="nw")
+    # my_canvas_axial.tag_bind(my_image_temp,"<Button1-Motion>", move, add="+")
+    # my_canvas_axial.configure(scrollregion=my_canvas_axial.bbox(my_image_temp))
+    
     # ======= 8. MAIN DISPLAY CONTROL =======
     def slice_control(index_slice, flip=None):
         view_axis = tabview.get()
         color_choice = plt.cm.bone if color_picker.get() == 'gray' else  color_picker.get()
         hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
+        height = int(label_zoom.cget("text"))
         if view_axis == "axial":
             image = img[int(index_slice), :, :]
             image = np.where((image >= hf1) & (image <= hf2), image, 0)
@@ -396,7 +421,7 @@ def update_app(event):
             image_display = cv2.imread("temp.jpg")
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
-            image_display = Image.open("temp.jpg").resize((800, 800))
+            image_display = Image.open("temp.jpg").resize((height, height))
             
             if flip == 'vertical':
                 image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
@@ -406,6 +431,8 @@ def update_app(event):
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_axial.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_axial.image = my_image
+        
+            
             my_canvas_axial.configure(bg='black')
             
         elif view_axis == "sagittal":
@@ -422,7 +449,7 @@ def update_app(event):
             elif flip == 'horizontal':
                 image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
             
-            image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
+            image_display = image_display.resize((image_display.size[0] * height // image_display.size[1], height))
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_sagittal.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_sagittal.image = my_image
@@ -442,7 +469,7 @@ def update_app(event):
             elif flip == 'horizontal':
                 image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
                 
-            image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
+            image_display = image_display.resize((image_display.size[0] * height // image_display.size[1], height))
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_coronal.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_coronal.image = my_image
@@ -684,6 +711,9 @@ def update_app(event):
     btn_right_entry = customtkinter.CTkEntry(range_slider_frame, placeholder_text=range_slider.get()[1], width=50, state='normal')
     btn_right_entry.configure('normal')
     btn_right_entry.grid(column=0, row=1, sticky='ne', padx=(0,60))
+    
+    
+
     
 
 app.bind("<<UpdateApp>>", update_app)

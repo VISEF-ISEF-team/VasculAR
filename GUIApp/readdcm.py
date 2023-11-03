@@ -44,13 +44,15 @@ class ReadDCM:
         return np.array(image, dtype=np.int16)
 
     
-    def convert_dcm_nii(self):
+    def read_file_dcm(self):
         # Read Volumn
         img = self.load_scan()
         img = self.get_pixels_hu(img)
         
         file = os.listdir(self.path)
         dict_info = {}
+        
+        pixel_spacing = dcmread(self.path + '/' + file[0]).PixelSpacing
     
         # Read information
         input = dcmread(self.path + '/' + file[0])
@@ -67,7 +69,7 @@ class ReadDCM:
         nib.save(nifti_file, self.path + '/patient.nii.gz')
         img_raw = sitk.ReadImage(self.path + '/patient.nii.gz', sitk.sitkFloat32)
         img = sitk.GetArrayFromImage(img_raw)
-        return img_raw, img, dict_info
+        return img_raw, img, dict_info, pixel_spacing
         
     def save_nii(self, path_to_save, nifti_file):
         nib.save(nifti_file, path_to_save + '/patient.nii.gz')
