@@ -127,8 +127,8 @@ def update_app(event):
     def slider_volume_show(value):
         index_slice = round(value, 0)
         text_show_volume.configure(text=int(index_slice))
-        slice_control(index_slice)
-        
+        slice_control(index_slice, flip=flip_text_option.cget("text"))
+
     # 4.2.2 Slider Control Frame
     slider_control = customtkinter.CTkFrame(app)
     slider_control.grid(column=2, row=0, columnspan=2, rowspan=1, sticky='nsew')
@@ -173,7 +173,7 @@ def update_app(event):
     distance_control.grid_columnconfigure(0, weight=1)
 
     # 4.4.3 General Setup
-    radio_var = tkinter.IntVar(value=1)
+    radio_var = tkinter.IntVar(value=0)
     line_distance = customtkinter.CTkLabel(distance_control, text="")
     coordinate_label = customtkinter.CTkLabel(distance_control, text="")
     header_calculation = customtkinter.CTkLabel(distance_control, text="Calculation", fg_color="#3b3b3b", corner_radius=5)
@@ -252,10 +252,7 @@ def update_app(event):
     
     # ======= BRIGHTNESS & CONTRAST CONTROL =======
     alpha_frame = customtkinter.CTkFrame(app)
-    alpha_frame.grid(column=8, row=5, columnspan=2, rowspan=2, pady=5)
-    # alpha_frame.grid_rowconfigure((0, 1), weight=1)
-    # alpha_frame.grid_columnconfigure(0, weight=1)
-    
+    alpha_frame.grid(column=8, row=5, columnspan=2, rowspan=2, pady=5)    
     alpha_text = customtkinter.StringVar(value="1")
     alpha_control = customtkinter.CTkEntry(alpha_frame, placeholder_text="1", textvariable=alpha_text)
     alpha_control.grid(row=0, column=0, padx=5)
@@ -313,8 +310,82 @@ def update_app(event):
         btn_left_entry.configure(state='disabled')
         btn_right_entry.configure(state='disabled')
         
+        
+    # ======= POPUPS RIGHT CLICK =======
+    # ======= Axial =======
+    def flip_horizontal():
+        flip_text_option.configure(text="horizontal")
+        frame_right_click.place_forget()
+        frame_right_click_2.place_forget()
+        frame_right_click_3.place_forget()
+        
+    def flip_vertical():
+        flip_text_option.configure(text="vertical")
+        frame_right_click.place_forget()
+        frame_right_click_2.place_forget()
+        frame_right_click_3.place_forget()
+        
+        
+    flip_text_option = customtkinter.CTkLabel(app, text="")
+    frame_right_click = customtkinter.CTkFrame(master=my_canvas_axial, width=200, height=200, fg_color='transparent')
+    flip_horizontal_option = customtkinter.CTkButton(frame_right_click, text='flip horizontal', fg_color='transparent', command=flip_horizontal)
+    flip_vertical_option = customtkinter.CTkButton(frame_right_click, text='flip vertical', fg_color='transparent', command=flip_vertical)
+
+    def tool_popups(e):
+        pos_x = e.x
+        if e.x > 500 and e.x < 700:
+            pos_x -= 100
+        frame_right_click.place(x=e.x-100, y=e.y-120, anchor="nw")
+        flip_horizontal_option.grid(column=0, row=0, padx=5, pady=5)
+        flip_vertical_option.grid(column=0, row=1, padx=5, pady=5)
+    
+    def hide_tool_popups(e):
+        frame_right_click.place_forget()
+    
+    my_canvas_axial.bind("<Button-3>", tool_popups)
+    my_canvas_axial.bind("<Double-Button-1>", hide_tool_popups)
+    
+    # ======= Sagittal =======
+    frame_right_click_2 = customtkinter.CTkFrame(master=my_canvas_sagittal, width=200, height=200, fg_color='transparent')
+    flip_horizontal_option_2 = customtkinter.CTkButton(frame_right_click_2, text='flip horizontal', fg_color='transparent', command=flip_horizontal)
+    flip_vertical_option_2 = customtkinter.CTkButton(frame_right_click_2, text='flip vertical', fg_color='transparent', command=flip_vertical)
+
+    def tool_popups_2(e):
+        pos_x = e.x
+        if e.x > 500 and e.x < 700:
+            pos_x -= 100
+        frame_right_click_2.place(x=e.x-100, y=e.y-120, anchor="nw")
+        flip_horizontal_option_2.grid(column=0, row=0, padx=5, pady=5)
+        flip_vertical_option_2.grid(column=0, row=1, padx=5, pady=5)
+    
+    def hide_tool_popups_2(e):
+        frame_right_click_2.place_forget()
+    
+    my_canvas_sagittal.bind("<Button-3>", tool_popups_2)
+    my_canvas_sagittal.bind("<Double-Button-1>", hide_tool_popups_2)
+    
+    # ======= Coronal =======
+    frame_right_click_3 = customtkinter.CTkFrame(master=my_canvas_coronal, width=200, height=200, fg_color='transparent')
+    flip_horizontal_option_3 = customtkinter.CTkButton(frame_right_click_3, text='flip horizontal', fg_color='transparent', command=flip_horizontal)
+    flip_vertical_option_3 = customtkinter.CTkButton(frame_right_click_3, text='flip vertical', fg_color='transparent', command=flip_vertical)
+
+    def tool_popups_3(e):
+        pos_x = e.x
+        if e.x > 500 and e.x < 700:
+            pos_x -= 100
+        frame_right_click_3.place(x=e.x-100, y=e.y-120, anchor="nw")
+        flip_horizontal_option_3.grid(column=0, row=0, padx=5, pady=5)
+        flip_vertical_option_3.grid(column=0, row=1, padx=5, pady=5)
+    
+    def hide_tool_popups_3(e):
+        frame_right_click_3.place_forget()
+    
+    my_canvas_coronal.bind("<Button-3>", tool_popups_3)
+    my_canvas_coronal.bind("<Double-Button-1>", hide_tool_popups_3)
+    
+    
     # ======= 8. MAIN DISPLAY CONTROL =======
-    def slice_control(index_slice):
+    def slice_control(index_slice, flip=None):
         view_axis = tabview.get()
         color_choice = plt.cm.bone if color_picker.get() == 'gray' else  color_picker.get()
         hf1, hf2 = int(round(range_slider.get()[0], 0)), int(round(range_slider.get()[1], 0))
@@ -326,6 +397,12 @@ def update_app(event):
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg").resize((800, 800))
+            
+            if flip == 'vertical':
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+            elif flip == 'horizontal':
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_axial.create_image(400, 400, image=my_image, anchor="center")  
             my_canvas_axial.image = my_image
@@ -339,6 +416,12 @@ def update_app(event):
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg")
+            
+            if flip == 'vertical':
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+            elif flip == 'horizontal':
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            
             image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_sagittal.create_image(400, 400, image=my_image, anchor="center")  
@@ -353,6 +436,12 @@ def update_app(event):
             brightness_image = cv2.convertScaleAbs(image_display, alpha=float(alpha_control.get()), beta=0)
             cv2.imwrite("temp.jpg", brightness_image)
             image_display = Image.open("temp.jpg")
+            
+            if flip == 'vertical':
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+            elif flip == 'horizontal':
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                
             image_display = image_display.resize((image_display.size[0] * 800 // image_display.size[1], 800))
             my_image = ImageTk.PhotoImage(image_display)
             my_canvas_coronal.create_image(400, 400, image=my_image, anchor="center")  
