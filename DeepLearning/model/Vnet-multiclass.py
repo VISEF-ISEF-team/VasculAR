@@ -93,7 +93,7 @@ def CreateVnet(x, y, z):
     c9 = tf.keras.layers.Conv3D(32, (5, 5, 5), activation='relu',
                                 kernel_initializer='he_normal', padding='same')(c8)
     a9 = tf.keras.layers.Add()[p8, c9]
-    outputs = tf.keras.layers.Conv3D(1, (1, 1, 1), activation='softmax')(c9)
+    outputs = tf.keras.layers.Conv3D(1, (1, 1, 1), activation='softmax')(a9)
 
     model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
     model.compile(optimizer='adam', loss='categorical_crossentropy',
