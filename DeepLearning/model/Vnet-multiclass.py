@@ -39,7 +39,7 @@ def CreateVnet(x, y, z):
     a3 = tf.keras.layers.Add()[c3, p2]
     d3 = tf.keras.layers.Conv3D(
         64, (2, 2, 2), stride=2, activation="relu", kernel_initializer="he_normal")(a3)
-    p3 = tf.keras.layers.PreLU()(d3)
+    p3 = tf.keras.layers.PReLU()(d3)
 
     # Fourth layer
     c4 = tf.keras.layers.Conv3D(128, (5, 5, 5), activation='relu',
@@ -49,7 +49,7 @@ def CreateVnet(x, y, z):
     a4 = tf.keras.layers.Add()[c4, p3]
     d4 = tf.keras.layers.Conv3D(
         128, (2, 2, 2), stride=2, activation="relu", kernel_initializer="he_normal")(a4)
-    p4 = tf.keras.layers.PreLU()(d4)
+    p4 = tf.keras.layers.PReLU()(d4)
 
     # Fifth layer
     c5 = tf.keras.layers.Conv3D(256, (5, 5, 5), activation='relu',
@@ -61,7 +61,7 @@ def CreateVnet(x, y, z):
     # Expansive path (Decoder)
     u5 = tf.keras.layers.Conv3DTranspose(
         256, (2, 2, 2), strides=2, padding='same')(a5)
-    p5 = tf.keras.layers.PreLU()(u5)
+    p5 = tf.keras.layers.PReLU()(u5)
     c6 = tf.keras.layers.concatenate([p5, a4])
     c6 = tf.keras.layers.Conv3D(256, (5, 5, 5), activation='relu',
                                 kernel_initializer='he_normal', padding='same')(c6)
@@ -69,7 +69,7 @@ def CreateVnet(x, y, z):
                                 kernel_initializer='he_normal', padding='same')(c6)
     a6 = tf.keras.layers.Add()[p5, c6]
     u6 = tf.keras.layers.Conv3DTranspose(256, (2, 2, 2), strides=2, padding="same")(a6)
-    p6 = tf.keras.layers.PreLU()(u6)
+    p6 = tf.keras.layers.PReLU()(u6)
 
     c7 = tf.keras.layers.concatenate([p6, a3])
     c7 = tf.keras.layers.Conv3D(128, (5, 5, 5), activation='relu',
@@ -78,7 +78,7 @@ def CreateVnet(x, y, z):
                             kernel_initializer='he_normal', padding='same')(c7)
     a7 = tf.keras.layers.Add()[p6, c7]
     u7 = tf.keras.layers.Conv3DTranspose(128, (2, 2, 2), strides=2, padding="same")(a7)
-    p7 = tf.keras.layers.PreLU()(u7)
+    p7 = tf.keras.layers.PReLU()(u7)
 
     c8 = tf.keras.layers.concatenate([p7, a2])
     c8 = tf.keras.layers.Conv3D(64, (5, 5, 5), activation='relu',
@@ -87,7 +87,7 @@ def CreateVnet(x, y, z):
                                 kernel_initializer='he_normal', padding='same')(c8)
     a8 = tf.keras.layers.Add()[p7, c8]
     u8 = tf.keras.layers.Conv3DTranspose(64, (2, 2, 2), strides=2, padding="same")(a8)
-    p8 = tf.keras.layers.PreLU()(u8)
+    p8 = tf.keras.layers.PReLU()(u8)
 
     c9 = tf.keras.layers.concatenate([p8, a1])
     c9 = tf.keras.layers.Conv3D(32, (5, 5, 5), activation='relu',
