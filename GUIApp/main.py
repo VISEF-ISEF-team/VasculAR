@@ -44,7 +44,7 @@ def choose_file():
     img_info = True
     path = filedialog.askopenfilename()
     
-    if path.endswith('.nii.gz'):
+    if path.endswith('.nii.gz') or path.endswith('.nii'):
         file_path.configure(placeholder_text=path)
         img_raw = sitk.ReadImage(path, sitk.sitkFloat32)
         img = sitk.GetArrayFromImage(img_raw)
