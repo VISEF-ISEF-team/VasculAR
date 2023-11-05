@@ -5,20 +5,20 @@ import numpy as np
 def CreateVnet():
 
     # Build the model
-    inputs = tf.keras.layers.Input(shape=(512, 512, 364, 1))
+    inputs = tf.keras.layers.Input(shape=(512, 512, 384, 1))
     # normalize the pixel to floating point
-    s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
+    # s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
 
     # Contraction path (Encoder)
 
     # First layer
     c1 = tf.keras.layers.Conv3D(16,
-                                (5, 5, 5), activation='relu', kernel_initializer='he_normal', padding='same')(s)
-    c1 = tf.keras.layers.Conv3D(16, (5, 5, 5), strides=(1, 1, 1), activation='relu',
+                                (5, 5, 5), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
+    c1 = tf.keras.layers.Conv3D(16, (5, 5, 5), activation='relu',
                                 kernel_initializer='he_normal', padding='same')(c1)
-    a1 = tf.keras.layers.Add()([c1, s])
+    a1 = tf.keras.layers.Add()([c1, inputs])
     d1 = tf.keras.layers.Conv3D(
-        32, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal")(a1)
+        32, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal", padding="same")(a1)
     p1 = tf.keras.layers.PReLU()(d1)
 
     # Second layer
@@ -29,7 +29,7 @@ def CreateVnet():
 
     a2 = tf.keras.layers.Add()([c2, p1])
     d2 = tf.keras.layers.Conv3D(
-        64, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal")(a2)
+        64, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal", padding="same")(a2)
     p2 = tf.keras.layers.PReLU()(d2)
 
     # Third layer
@@ -39,7 +39,7 @@ def CreateVnet():
                                 kernel_initializer='he_normal', padding='same')(c3)
     a3 = tf.keras.layers.Add()([c3, p2])
     d3 = tf.keras.layers.Conv3D(
-        128, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal")(a3)
+        128, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal", padding="same")(a3)
     p3 = tf.keras.layers.PReLU()(d3)
 
     # Fourth layer
@@ -49,7 +49,7 @@ def CreateVnet():
                                 kernel_initializer='he_normal', padding='same')(c4)
     a4 = tf.keras.layers.Add()([c4, p3])
     d4 = tf.keras.layers.Conv3D(
-        256, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal")(a4)
+        256, (2, 2, 2), strides=(2, 2, 2), activation="relu", kernel_initializer="he_normal", padding="same")(a4)
     p4 = tf.keras.layers.PReLU()(d4)
 
     # Fifth layer
@@ -61,7 +61,7 @@ def CreateVnet():
 
     # Expansive path (Decoder)
     u5 = tf.keras.layers.Conv3DTranspose(
-        256, (2, 2, 2), strides=(2, 2, 2))(a5)
+        256, (2, 2, 2), strides=(2, 2, 2), padding="same")(a5)
     p5 = tf.keras.layers.PReLU()(u5)
     c6 = tf.keras.layers.Concatenate()([p5, a4])
     c6 = tf.keras.layers.Conv3D(256, (5, 5, 5), activation='relu',
@@ -70,7 +70,7 @@ def CreateVnet():
                                 kernel_initializer='he_normal', padding='same')(c6)
     a6 = tf.keras.layers.Add()([p5, c6])
     u6 = tf.keras.layers.Conv3DTranspose(
-        256, (2, 2, 2), strides=(2, 2, 2), padding="same")(a6)
+        128, (2, 2, 2), strides=(2, 2, 2), padding="same")(a6)
     p6 = tf.keras.layers.PReLU()(u6)
 
     c7 = tf.keras.layers.Concatenate()([p6, a3])
@@ -80,7 +80,7 @@ def CreateVnet():
                                 kernel_initializer='he_normal', padding='same')(c7)
     a7 = tf.keras.layers.Add()([p6, c7])
     u7 = tf.keras.layers.Conv3DTranspose(
-        128, (2, 2, 2), strides=(2, 2, 2), padding="same")(a7)
+        64, (2, 2, 2), strides=(2, 2, 2), padding="same")(a7)
     p7 = tf.keras.layers.PReLU()(u7)
 
     c8 = tf.keras.layers.Concatenate()([p7, a2])
@@ -90,14 +90,16 @@ def CreateVnet():
                                 kernel_initializer='he_normal', padding='same')(c8)
     a8 = tf.keras.layers.Add()([p7, c8])
     u8 = tf.keras.layers.Conv3DTranspose(
-        64, (2, 2, 2), strides=(2, 2, 2), padding="same")(a8)
+        32, (2, 2, 2), strides=(2, 2, 2), padding="same")(a8)
     p8 = tf.keras.layers.PReLU()(u8)
 
     c9 = tf.keras.layers.Concatenate()([p8, a1])
     c9 = tf.keras.layers.Conv3D(32, (5, 5, 5), activation='relu',
-                                kernel_initializer='he_normal', padding='same')(c8)
+                                kernel_initializer='he_normal', padding='same')(c9)
     a9 = tf.keras.layers.Add()([p8, c9])
-    outputs = tf.keras.layers.Conv3D(1, (1, 1, 1), activation='softmax')(a9)
+
+    outputs = tf.keras.layers.Conv3D(
+        1, (1, 1, 1), activation='softmax', padding="same")(a9)
 
     model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy',
@@ -121,7 +123,8 @@ def FillWithBone(image: np.array, label: np.array, target: int):
         if len(uniqueValue) <= 1 and uniqueValue[0] == 0:
 
             # append zeros to the
-            newLabel = np.append(label, np.zeros((x, y, target - z)), axis=2)
+            newLabel = np.append(label, np.zeros(
+                (x, y, target - z), dtype="uint8"), axis=2)
 
             # copy last slices of image to append to
             newImage = []
@@ -132,10 +135,13 @@ def FillWithBone(image: np.array, label: np.array, target: int):
             return newImage, newLabel
 
         else:
+            # If the last slice does also contain heart, fill both image and label with zero to represent dark background
             newImage = np.append(label, np.zeros((x, y, target - z)), axis=2)
             newLabel = np.append(image, np.zeros((x, y, target - z)), axis=2)
 
             return newImage, newLabel
 
 
-model = CreateVnet()
+if __name__ == "__main__":
+    model = CreateVnet()
+    model.summary()
