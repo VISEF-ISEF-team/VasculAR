@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy as np
+import os
+os.environ["tf_gpu_allocator"] = "cuda_malloc_async"
 
 
 def CreateVnet():
@@ -106,7 +108,7 @@ def CreateVnet():
                   metrics=['accuracy'])
 
     # results = model.fit(X_train, Y_train, validation_split=0.1, batch_size=16, epochs=25, callbacks=callbacks)
-    return model
+    model.save(".\\vnet.keras")
 
 
 def FillWithBone(image: np.array, label: np.array, target: int):
@@ -142,6 +144,3 @@ def FillWithBone(image: np.array, label: np.array, target: int):
             return newImage, newLabel
 
 
-if __name__ == "__main__":
-    model = CreateVnet()
-    model.summary()
