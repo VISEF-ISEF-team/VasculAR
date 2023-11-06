@@ -23,6 +23,7 @@ antspynet
 numpy-stl
 vedo
 patchify
+pyrebase
 customtkinter
 sv_ttk
 CustomTkinterTitlebar

@@ -44,7 +44,7 @@ class App(customtkinter.CTk):
         self.frame.rowconfigure(2, weight=1)
         self.font = customtkinter.ThemeManager.theme["CTkFont"]["family"]
    
-        self.label = customtkinter.CTkLabel(master=self.frame, text="Tkinter Toolkit", font=(self.font,25,"bold"))
+        self.label = customtkinter.CTkLabel(master=self.frame, text="Tkinter Toolkit", font=(self.font, 25, "bold"))
         self.label.grid(row=0, column=0, padx=20, pady=10)
 
         self.entry = customtkinter.CTkEntry(master=self.frame, placeholder_text="search", width=200)
@@ -251,7 +251,7 @@ class App(customtkinter.CTk):
         
         entry_pip = customtkinter.CTkEntry(scrollable_info)
         entry_pip.pack(fill="x", padx=10, pady=(0,10))
-        entry_pip.insert(0,self.data[name]["installation"])
+        entry_pip.insert(0, self.data[name]["installation"])
         entry_pip.configure(state="readonly")
         
     def read_database(self):
