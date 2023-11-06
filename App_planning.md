@@ -47,3 +47,5 @@ Application Structure and organization:
     - Modality
     - Date
     - Note analysis --> pdf
+- Retrieve new database from cloud
+- Update (push new analysis) to json
