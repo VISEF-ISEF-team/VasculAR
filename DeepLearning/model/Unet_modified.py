@@ -85,10 +85,10 @@ def CreateUnetModified():
                                 kernel_initializer='he_normal', padding='same')(c9)
 
     outputs = tf.keras.layers.Conv3D(
-        1, (1, 1, 1), activation='softmax', padding="same")(c9)
+        8, (1, 1, 1), activation='softmax')(c9)
 
     model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy',
+    model.compile(optimizer='adam', loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     # results = model.fit(X_train, Y_train, validation_split=0.1, batch_size=16, epochs=25, callbacks=callbacks)
