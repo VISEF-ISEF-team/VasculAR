@@ -2,21 +2,17 @@ import os
 import tensorflow as tf
 os.environ["tf_gpu_allocator"] = "cuda_malloc_async"
 
-policy = tf.keras.mixed_precision.Policy('mixed_float16')
-tf.keras.mixed_precision.set_global_policy(policy)
 
-
-def CreateUnetModified():
+def CreateUnetModified(num_classes, x, y, z):
     # Build the model
-    inputs = tf.keras.layers.Input(shape=(None, None, None, 1))
-    # normalize the pixel to floating point
-    # s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
+    inputs = tf.keras.layers.Input(shape=(x, y, z, 1))
+    s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
 
     # Contraction path (Encoder)
 
     # First layer
     c1 = tf.keras.layers.Conv3D(16,
-                                (3, 3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
+                                (3, 3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(s)
     # c1 = tf.keras.layers.Conv3D(16, (3, 3, 3), activation='relu',
     #                             kernel_initializer='he_normal', padding='same')(c1)
     d1 = tf.keras.layers.Conv3D(
@@ -85,11 +81,10 @@ def CreateUnetModified():
                                 kernel_initializer='he_normal', padding='same')(c9)
 
     outputs = tf.keras.layers.Conv3D(
-        8, (1, 1, 1), activation='softmax')(c9)
+        num_classes, (1, 1, 1), activation='softmax')(c9)
 
     model = tf.keras.Model(inputs=[inputs], outputs=[outputs])
     model.compile(optimizer='adam', loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
-    # results = model.fit(X_train, Y_train, validation_split=0.1, batch_size=16, epochs=25, callbacks=callbacks)
     return model
