@@ -6,25 +6,10 @@ customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue") 
 
 
-firebaseConfig = {
-    'apiKey': "AIzaSyCoG09bln3Qrmws87pxnNak-dLC58wCeWE",
-    'authDomain': "vascular-68223.firebaseapp.com",
-    'databaseURL': "https://vascular-68223-default-rtdb.asia-southeast1.firebasedatabase.app",
-    'projectId': "vascular-68223",
-    'storageBucket': "vascular-68223.appspot.com",
-    'messagingSenderId': "1068291063816",
-    'appId': "1:1068291063816:web:a1c19e8d2bd465cf7c91bd",
-    'measurementId': "G-27VPL4BB1D"
-}
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-auth = firebase.auth()
-db = firebase.database()
-storage = firebase.storage()
-
 class LoginPage(customtkinter.CTkToplevel):
-    def __init__(self, parent, title):
+    def __init__(self, parent, title, auth):
         super().__init__()
+        self.auth=auth
         self.title(title)
         self.transient(parent)
         self.width = int(self.winfo_screenwidth()/3.5)
@@ -48,7 +33,7 @@ class LoginPage(customtkinter.CTkToplevel):
         org_id = self.org_id.get()
         password = self.password.get()
         try:
-            organization = auth.create_user_with_email_and_password(org_id, password)
+            organization = self.auth.create_user_with_email_and_password(org_id, password)
             messagebox.showinfo("Success", "Successfully account registration")
         except:
             messagebox.showinfo("Failed" ,"Try again")
@@ -57,7 +42,7 @@ class LoginPage(customtkinter.CTkToplevel):
         org_id = self.org_id.get()
         password = self.password.get()
         try:
-            organization = auth.sign_in_with_email_and_password(org_id, password)
+            organization = self.auth.sign_in_with_email_and_password(org_id, password)
             messagebox.showinfo("Success", "Successfully login account")
         except:
             messagebox.showinfo("Failed" ,"Wrong email or password")

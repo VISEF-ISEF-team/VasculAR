@@ -22,31 +22,34 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
     def __init__(self, 
                  widget: customtkinter.CTkBaseClass | _CDMSubmenuButton,
                  master: any = None,
-                 border_width: int = 1,
+                 border_width: int = 0,
                  width: int = 150,
                  height: int = 25,
                  bg_color = None,
-                 corner_radius: int = 10,
+                 corner_radius: int = 5,
                  border_color: str | tuple[str, str] = "grey50",
                  separator_color: str | tuple[str, str] = ["grey80","grey20"],
                  text_color: str | tuple[str, str] = ["black","white"],
                  fg_color: str | tuple[str, str] = "transparent",
                  hover_color: str | tuple[str, str] = ["grey75","grey25"], 
                  font: customtkinter.CTkFont = ("helvetica", 10),
-                 padx: int = 3,
-                 pady: int = 3,
+                 padx: int = 0,
+                 pady: int = 0,
                  **kwargs):
         
         if widget.master.winfo_name().startswith("!ctktitlemenu"):
+            print("ctktitlemenu")
             widget.master.master.bind("<Button-1>", self._checkIfMouseLeft, add="+")
             master = widget.master if master is None else master
             widget.master.menu.append(self)
             
         elif widget.master.winfo_name().startswith("!ctkmenubar"):
+            print("ctkmenubar")
             widget.winfo_toplevel().bind("<Double-Button-1>", self._checkIfMouseLeft, add="+")
             master = widget.master.master if master is None else master
             widget.master.menu.append(self)
         else:
+            print("else")
             widget.winfo_toplevel().bind("<Double-Button-1>", self._checkIfMouseLeft, add="+")
             master = widget.master if master is None else master
             
@@ -153,11 +156,20 @@ class CustomDropdownMenu(customtkinter.CTkFrame):
                 x=self.menu_seed_object.winfo_x() + self.menu_seed_object.winfo_width() + self.padx - 1,
                 y=self.menu_seed_object.winfo_y() - self.pady,
             )
+            # self.place(
+            #     x=100,
+            #     y=30
+            # )
         else:
+            print(self.menu_seed_object.winfo_x())
             self.place(
-                x=self.menu_seed_object.winfo_x() + self.padx ,
+                x=self.menu_seed_object.winfo_x(),
                 y=self.menu_seed_object.winfo_y() + self.menu_seed_object.winfo_height() + self.pady,
             )
+            # self.place(
+            #     x=5,
+            #     y=30,
+            # )
         self.focus()
         
     def _hide(self, *args, **kwargs) -> None:
