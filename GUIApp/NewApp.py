@@ -62,57 +62,46 @@ class MenuBar:
     def __init__(self, master):
         self.master = master
         self.current_menu = None
+        self.current_submenu = None
         self.create_widget()
         self.layout_widget()
         
-    def file_dropdown_options(self, master):
-        self.add_nifti_file_btn = customtkinter.CTkButton(
-            master=master, text="Add Nifti file", fg_color='transparent', hover_color=self.master.second_color)
-        self.add_nifti_file_btn.pack(padx=5, pady=5)
-        self.add_nifti_file_btn.configure(anchor="w")
+    def sub_menu(self):
+        self.hide_all_submenu()
+        x = self.dropdown.winfo_x() + self.theme_setting_btn.cget('width')
+        y = self.dropdown.winfo_y() + self.theme_setting_btn.cget('height') + self.language_setting_btn.cget('height') + 10
+        self.submenu_frame = customtkinter.CTkFrame(master=self.master)
+        self.submenu_frame.place(x=x,y=y)
+        self.current_submenu = self.submenu_frame
+    
+    def dropdown_options(self, master, menu_name):
+        
+        self.dropdown_options_btn = {
+            "File": {
+                'add_nifti_file_btn': 'Add Nifti file',
+                'add_dcm_series_btn': 'Add DCM series',
+                'save_case_btn': 'Save case',
+                'export_analysis_btn': 'Export analysis' 
+            },
+            "Setting": {
+                'theme_setting_btn': 'Theme color',
+                'language_setting_btn': 'Language'
+            },
+            'Help': {
+                'basic_functions_btn': 'Basic Functions',
+                'defect_dectection_btn': 'defect_detection',
+                'reconstruction_btn': '3D reconstruction',
+                'connection_btn': 'VR & AR connection'
+            }
+        }
+        
+        for key, value in self.dropdown_options_btn[menu_name].items():
+            button = customtkinter.CTkButton(master=master, text=value, fg_color='transparent', hover_color=self.master.second_color)
+            button.pack(padx=5, pady=5)
+            button.configure(anchor="w")
+            setattr(self, key, button)
 
-        self.add_dcm_series_btn = customtkinter.CTkButton(
-            master=master, text="Add DCM series",  fg_color='transparent', hover_color=self.master.second_color)
-        self.add_dcm_series_btn.pack(padx=5, pady=5)
-        self.add_dcm_series_btn.configure(anchor="w")
-            
-        self.save_case_btn = customtkinter.CTkButton(
-            master=master, text="Save case",  fg_color='transparent', hover_color=self.master.second_color)
-        self.save_case_btn.pack(padx=5, pady=5)
-        self.save_case_btn.configure(anchor="w")
-            
-        self.export_analysis_btn = customtkinter.CTkButton(
-            master=master, text="Export analysis",  fg_color='transparent', hover_color=self.master.second_color)
-        self.export_analysis_btn.pack(padx=5, pady=5)
-        self.export_analysis_btn.configure(anchor="w")
-
-    def setting_dropdown_options(self, master):
-        self.theme_setting_btn = customtkinter.CTkButton(
-                master=master, text="Theme color", fg_color='transparent', hover_color=self.master.second_color)
-        self.theme_setting_btn.pack(padx=5, pady=5)
-        self.theme_setting_btn.configure(anchor="w")
-
-        self.language_setting_btn = customtkinter.CTkButton(
-                master=master, text="Language",  fg_color='transparent', hover_color=self.master.second_color)
-        self.language_setting_btn.pack(padx=5, pady=5)
-        self.language_setting_btn.configure(anchor="w")
-        
-    def help_dropdown_options(self, master):
-        self.basic_functions_btn = customtkinter.CTkButton(
-                master=master, text="Basic Functions", fg_color='transparent', hover_color=self.master.second_color)
-        self.basic_functions_btn.pack(padx=5, pady=5)
-        self.basic_functions_btn.configure(anchor="w")
-        
-        self.reconstruction_btn = customtkinter.CTkButton(
-                master=master, text="3D reconstruction", fg_color='transparent', hover_color=self.master.second_color)
-        self.reconstruction_btn.pack(padx=5, pady=5)
-        self.reconstruction_btn.configure(anchor="w")
-        
-        self.connection_btn = customtkinter.CTkButton(
-                master=master, text="VR & AR connection", fg_color='transparent', hover_color=self.master.second_color)
-        self.connection_btn.pack(padx=5, pady=5)
-        self.connection_btn.configure(anchor="w")
-        
+    
     def about_dropdown_options(self, master):
         self.about_window = AboutWindow(
             parent=self.master,
@@ -131,11 +120,11 @@ class MenuBar:
             )
             self.current_menu = self.dropdown
             if widget_option.cget("text") == 'File':
-                self.file_dropdown_options(master=self.dropdown)
+                self.dropdown_options(master=self.dropdown, menu_name="File")
             elif widget_option.cget("text") == 'Setting':
-                self.setting_dropdown_options(master=self.dropdown)
+                self.dropdown_options(master=self.dropdown, menu_name="Setting")
             elif widget_option.cget("text") == 'Help':
-                self.help_dropdown_options(master=self.dropdown)
+                self.dropdown_options(master=self.dropdown, menu_name="Help")
 
         
         elif widget_option.cget("text") == 'About':
@@ -147,12 +136,16 @@ class MenuBar:
                 auth=auth
             ) 
         
-
     def hide_all_menu(self):
         if self.current_menu:
             self.current_menu.place_forget()
             self.current_menu = None
-                
+     
+    def hide_all_submenu(self):
+        if self.current_submenu:
+            self.current_submenu.place_forget()
+            self.current_submenu = None
+    
     def create_widget(self):
         self.current_menu = None
         self.menu_frame = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
@@ -200,6 +193,8 @@ class MenuBar:
         )
         
         self.master.bind("<Double-Button-1>", lambda event: self.hide_all_menu())
+        self.master.bind("<Button-3>", lambda event: self.hide_all_submenu())
+        
         
     def layout_widget(self):
         self.file_btn.grid(row=0, column=0, padx=(5, 0), sticky='w')
@@ -207,6 +202,20 @@ class MenuBar:
         self.help_btn.grid(row=0, column=2, padx=(5, 0), sticky='w')
         self.about_btn.grid(row=0, column=3, padx=(5, 0), sticky='w')
         self.account_btn.grid(row=0, column=4, padx=(5, 0), sticky='w') 
+        
+
+class CanvasViews:
+    def __init__(self, master):
+        self.master = master
+        
+        self.frame_axial = customtkinter.CTkFrame(master=self.master)
+        self.frame_axial.grid(row=1, column=0, rowspan=9, columnspan=5, padx=5, sticky='news')
+        
+        self.frame_sagittal = customtkinter.CTkFrame(master=self.master)
+        self.frame_sagittal.grid(row=1, column=5, rowspan=9, columnspan=5, padx=5, sticky='news')
+        
+        self.frame_sagittal = customtkinter.CTkFrame(master=self.master)
+        self.frame_sagittal.grid(row=1, column=10, rowspan=9, columnspan=5, padx=5, sticky='news')
         
 
 class App(customtkinter.CTk):
@@ -228,17 +237,16 @@ class App(customtkinter.CTk):
             self.rowconfigure(i, weight=1, uniform='a')
             self.columnconfigure(i, weight=1, uniform='a')
 
-        for i in range(15):
-            for j in range(15):
-                self.label = customtkinter.CTkFrame(
-                    self, fg_color='transparent')
-                self.label.grid(column=i, row=j, sticky='nsew')
+        # for i in range(15):
+        #     for j in range(15):
+        #         self.label = customtkinter.CTkFrame(self)
+        #         self.label.grid(column=i, row=j, sticky='nsew')
 
         # create menu
         self.menu_bar = MenuBar(self)
         
-
-        
+        # create 3-views canvas
+        # self.canvas_view = CanvasViews(self)
 
         
 
