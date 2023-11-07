@@ -74,34 +74,60 @@ class MenuBar:
         self.submenu_frame.place(x=x,y=y)
         self.current_submenu = self.submenu_frame
     
-    def dropdown_options(self, master, menu_name):
-        
-        self.dropdown_options_btn = {
-            "File": {
-                'add_nifti_file_btn': 'Add Nifti file',
-                'add_dcm_series_btn': 'Add DCM series',
-                'save_case_btn': 'Save case',
-                'export_analysis_btn': 'Export analysis' 
-            },
-            "Setting": {
-                'theme_setting_btn': 'Theme color',
-                'language_setting_btn': 'Language'
-            },
-            'Help': {
-                'basic_functions_btn': 'Basic Functions',
-                'defect_dectection_btn': 'defect_detection',
-                'reconstruction_btn': '3D reconstruction',
-                'connection_btn': 'VR & AR connection'
-            }
-        }
-        
-        for key, value in self.dropdown_options_btn[menu_name].items():
-            button = customtkinter.CTkButton(master=master, text=value, fg_color='transparent', hover_color=self.master.second_color)
-            button.pack(padx=5, pady=5)
-            button.configure(anchor="w")
-            setattr(self, key, button)
+    def file_dropdown_options(self, master):
+        self.add_nifti_file_btn = customtkinter.CTkButton(
+            master=master, text="Add Nifti file", fg_color='transparent', hover_color=self.master.second_color)
+        self.add_nifti_file_btn.pack(padx=5, pady=5)
+        self.add_nifti_file_btn.configure(anchor="w")
 
-    
+        self.add_dcm_series_btn = customtkinter.CTkButton(
+            master=master, text="Add DCM series",  fg_color='transparent', hover_color=self.master.second_color)
+        self.add_dcm_series_btn.pack(padx=5, pady=5)
+        self.add_dcm_series_btn.configure(anchor="w")
+            
+        self.save_case_btn = customtkinter.CTkButton(
+            master=master, text="Save case",  fg_color='transparent', hover_color=self.master.second_color)
+        self.save_case_btn.pack(padx=5, pady=5)
+        self.save_case_btn.configure(anchor="w")
+            
+        self.export_analysis_btn = customtkinter.CTkButton(
+            master=master, text="Export analysis",  fg_color='transparent', hover_color=self.master.second_color)
+        self.export_analysis_btn.pack(padx=5, pady=5)
+        self.export_analysis_btn.configure(anchor="w")
+
+    def setting_dropdown_options(self, master):
+        self.theme_setting_btn = customtkinter.CTkButton(
+                master=master, text="Theme color", fg_color='transparent', hover_color=self.master.second_color, command=self.sub_menu)
+        self.theme_setting_btn.pack(padx=5, pady=5)
+        self.theme_setting_btn.configure(anchor="w")
+
+        self.language_setting_btn = customtkinter.CTkButton(
+                master=master, text="Language",  fg_color='transparent', hover_color=self.master.second_color, command=self.sub_menu)
+        self.language_setting_btn.pack(padx=5, pady=5)
+        self.language_setting_btn.configure(anchor="w")
+        
+    def help_dropdown_options(self, master):
+        self.basic_functions_btn = customtkinter.CTkButton(
+                master=master, text="Basic Functions", fg_color='transparent', hover_color=self.master.second_color)
+        self.basic_functions_btn.pack(padx=5, pady=5)
+        self.basic_functions_btn.configure(anchor="w")
+        
+        
+        self.defect_dectection_btn = customtkinter.CTkButton(
+                master=master, text="defect_detection", fg_color='transparent', hover_color=self.master.second_color)
+        self.defect_dectection_btn.pack(padx=5, pady=5)
+        self.defect_dectection_btn.configure(anchor="w")
+        
+        self.reconstruction_btn = customtkinter.CTkButton(
+                master=master, text="3D reconstruction", fg_color='transparent', hover_color=self.master.second_color)
+        self.reconstruction_btn.pack(padx=5, pady=5)
+        self.reconstruction_btn.configure(anchor="w")
+        
+        self.connection_btn = customtkinter.CTkButton(
+                master=master, text="VR & AR connection", fg_color='transparent', hover_color=self.master.second_color)
+        self.connection_btn.pack(padx=5, pady=5)
+        self.connection_btn.configure(anchor="w")
+        
     def about_dropdown_options(self, master):
         self.about_window = AboutWindow(
             parent=self.master,
@@ -120,11 +146,11 @@ class MenuBar:
             )
             self.current_menu = self.dropdown
             if widget_option.cget("text") == 'File':
-                self.dropdown_options(master=self.dropdown, menu_name="File")
+                self.file_dropdown_options(master=self.dropdown)
             elif widget_option.cget("text") == 'Setting':
-                self.dropdown_options(master=self.dropdown, menu_name="Setting")
+                self.setting_dropdown_options(master=self.dropdown)
             elif widget_option.cget("text") == 'Help':
-                self.dropdown_options(master=self.dropdown, menu_name="Help")
+                self.help_dropdown_options(master=self.dropdown)
 
         
         elif widget_option.cget("text") == 'About':
