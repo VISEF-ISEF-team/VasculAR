@@ -338,7 +338,7 @@ class ROI:
             self.main_app.corners_data['ne']['y'] = event.y
             
             # update_rec
-            self.canvas_view.canvas.coords(self.rect, self.x1, self.main_app.corners_data['ne']['y'], self.main_app.corners_data['ne']['x'], self.y2)
+            self.canvas_view.canvas.coords(self.rect, self.x1, event.y, event.x, self.y2)
             self.main_app.corners_data['rec']['y1'] = event.y
             self.main_app.corners_data['rec']['x2'] = event.x
             
@@ -355,6 +355,16 @@ class ROI:
             self.canvas_view.canvas.moveto(self.nw_circle, event.x-10, event.y-10)
             self.main_app.corners_data['nw']['x'] = event.x
             self.main_app.corners_data['nw']['y'] = event.y
+            
+            self.canvas_view.canvas.coords(self.rect, event.x, event.y, self.x2, self.y2)
+            self.main_app.corners_data['rec']['x1'] = event.x
+            self.main_app.corners_data['rec']['y1'] = event.y
+            
+            self.x1 = event.x
+            self.y1 = event.y
+            
+            self.update()
+            
         
         self.canvas_view.canvas.tag_bind(self.nw_circle, '<Button1-Motion>', move)
         
@@ -363,6 +373,15 @@ class ROI:
             self.canvas_view.canvas.moveto(self.sw_circle, event.x-10, event.y-10)
             self.main_app.corners_data['sw']['x'] = event.x
             self.main_app.corners_data['sw']['y'] = event.y
+            
+            self.canvas_view.canvas.coords(self.rect, event.x, self.y1, self.x2, event.y)
+            self.main_app.corners_data['rec']['x1'] = event.x
+            self.main_app.corners_data['rec']['y2'] = event.y
+            
+            self.x1 = event.x
+            self.y2 = event.y
+            
+            self.update()
         
         self.canvas_view.canvas.tag_bind(self.sw_circle, '<Button1-Motion>', move)
         
@@ -371,6 +390,15 @@ class ROI:
             self.canvas_view.canvas.moveto(self.se_circle, event.x-10, event.y-10)
             self.main_app.corners_data['se']['x'] = event.x
             self.main_app.corners_data['se']['y'] = event.y
+            
+            self.canvas_view.canvas.coords(self.rect, self.x1, self.y1,  event.x, event.y)
+            self.main_app.corners_data['rec']['x2'] = event.x
+            self.main_app.corners_data['rec']['y2'] = event.y
+            
+            self.x2 = event.x
+            self.y2 = event.y
+            
+            self.update()
         
         self.canvas_view.canvas.tag_bind(self.se_circle, '<Button1-Motion>', move)
 
