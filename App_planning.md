@@ -16,7 +16,32 @@ Application Structure and organization:
 ### 1. Basic functions 
 - Color maps
 - Support functions
-- Drawing functions
+- Drawing functions -> (rectangle, circle, line, brush, erase -> size of brush -> color of brush, ROI can be edited)
+
+    rectangle 1 --> data:
+        'rectangle_1': {
+            'cord': 'x1, y1, x2, y2',
+            'slice': 'num_slice',
+            'color': 'color_hex'
+            'note': {
+                'text': 'text'
+                'cord': ''x1, y1'
+            }
+        },
+        'line_1' : {
+            'distance': '2.2mm',
+            'coord' : 'x1, y1, x2, y2',
+            'slice': 'num_slice'
+            'note': {
+                'text': 'text'
+                'cord': ''x1, y1'
+            }
+        }
+        
+    brush --> can be erased
+    ROI --> can be transformed (can be either circle or rectangle with rotated orientation)
+    From the filled-color pixel --> added as brush --> coutour --> added as continuouse edited lined (polygon)
+    
 - HounsField Unit
 - Brightness / Contrast
 - Cropping / Axis with ruler + ROI

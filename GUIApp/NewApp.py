@@ -296,6 +296,84 @@ class MenuBar:
             self.menu_item['main_menu'][instance_name].grid(row=0, column=col, padx=(5, 0), sticky='w')
             col+=1
     
+class ROI:
+    def __init__(self, canvas_view, x1, y1, x2, y2):
+        self.canvas_view = canvas_view
+        self.main_app = self.canvas_view.master
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+        self.rec_width = self.x2 - self.x1
+        self.rec_height = self.y2 - self.y1
+        self.circle_width = 10
+        self.circle_height = 10
+        
+        self.rect = self.canvas_view.canvas.create_rectangle(self.x1, self.y1, self.x2, self.y2, outline='blue', width=5)
+        self.nw_circle = self.canvas_view.canvas.create_oval(self.x1-self.circle_width, self.y1-self.circle_height, self.x1+self.circle_width, self.y1+self.circle_height, fill = "blue")
+        self.ne_circle = self.canvas_view.canvas.create_oval(self.x1-self.circle_width+self.rec_width, self.y1-self.circle_height, self.x1+self.circle_width+self.rec_width, self.y1+self.circle_height, fill = "blue")
+        self.sw_circle = self.canvas_view.canvas.create_oval(self.x1-self.circle_width, self.y1-self.circle_height+self.rec_height, self.x1+self.circle_width, self.y1+self.circle_height+self.rec_height, fill="blue")
+        self.se_circle = self.canvas_view.canvas.create_oval(self.x1-self.circle_width+self.rec_width, self.y1-self.circle_height+self.rec_height, self.x1+self.circle_width+self.rec_width, self.y1+self.circle_height+self.rec_height, fill="blue")
+
+        
+        if self.canvas_view.master.tools.check_ROI.get() == "on":
+            self.move_ne_corner()
+            self.move_nw_corner()
+            self.move_sw_corner()
+            self.move_se_corner()
+            
+        
+    def update(self):
+        self.rec_width = self.x2 - self.x1
+        self.rec_height = self.y2 - self.y1
+        self.canvas_view.canvas.coords(self.nw_circle, self.x1-self.circle_width, self.y1-self.circle_height, self.x1+self.circle_width, self.y1+self.circle_height)
+        self.canvas_view.canvas.coords(self.ne_circle, self.x1-self.circle_width+self.rec_width, self.y1-self.circle_height, self.x1+self.circle_width+self.rec_width, self.y1+self.circle_height)
+        self.canvas_view.canvas.coords(self.sw_circle, self.x1-self.circle_width, self.y1-self.circle_height+self.rec_height, self.x1+self.circle_width, self.y1+self.circle_height+self.rec_height)
+        self.canvas_view.canvas.coords(self.se_circle, self.x1-self.circle_width+self.rec_width, self.y1-self.circle_height+self.rec_height, self.x1+self.circle_width+self.rec_width, self.y1+self.circle_height+self.rec_height)
+    
+    def move_ne_corner(self):
+        def move(event):
+            self.canvas_view.canvas.moveto(self.ne_circle, event.x-10, event.y-10)
+            self.main_app.corners_data['ne']['x'] = event.x
+            self.main_app.corners_data['ne']['y'] = event.y
+            
+            # update_rec
+            self.canvas_view.canvas.coords(self.rect, self.x1, self.main_app.corners_data['ne']['y'], self.main_app.corners_data['ne']['x'], self.y2)
+            self.main_app.corners_data['rec']['y1'] = event.y
+            self.main_app.corners_data['rec']['x2'] = event.x
+            
+            self.y1 = event.y
+            self.x2 = event.x
+            
+            self.update()
+            
+        self.canvas_view.canvas.tag_bind(self.ne_circle, '<Button1-Motion>', move)
+
+        
+    def move_nw_corner(self):
+        def move(event):
+            self.canvas_view.canvas.moveto(self.nw_circle, event.x-10, event.y-10)
+            self.main_app.corners_data['nw']['x'] = event.x
+            self.main_app.corners_data['nw']['y'] = event.y
+        
+        self.canvas_view.canvas.tag_bind(self.nw_circle, '<Button1-Motion>', move)
+        
+    def move_sw_corner(self):
+        def move(event):
+            self.canvas_view.canvas.moveto(self.sw_circle, event.x-10, event.y-10)
+            self.main_app.corners_data['sw']['x'] = event.x
+            self.main_app.corners_data['sw']['y'] = event.y
+        
+        self.canvas_view.canvas.tag_bind(self.sw_circle, '<Button1-Motion>', move)
+        
+    def move_se_corner(self):
+        def move(event):
+            self.canvas_view.canvas.moveto(self.se_circle, event.x-10, event.y-10)
+            self.main_app.corners_data['se']['x'] = event.x
+            self.main_app.corners_data['se']['y'] = event.y
+        
+        self.canvas_view.canvas.tag_bind(self.se_circle, '<Button1-Motion>', move)
+
 
 class CanvasAxial:
     def __init__(self, master):
@@ -352,23 +430,24 @@ class CanvasAxial:
         self.frame.grid(row=1, column=0, rowspan=9, columnspan=6, padx=5, sticky='news')
         
     def create_canvas(self):    
-        def create_crosshair():
-            self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
-            self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
-            
+        def create_crosshair():           
             def move_crosshair(event):
                 x, y = event.x, event.y
                 self.canvas.coords(self.horizontal_line, 0, y, self.canvas.winfo_width(), y)
                 self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
 
             def on_mouse_press(event):
-                self.canvas.bind("<Motion>", move_crosshair)
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.bind("<Motion>", move_crosshair)
 
             def on_mouse_release(event):
-                self.canvas.unbind("<Motion>")
-
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.unbind("<Motion>")
+            
+            self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
+            self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
             self.canvas.bind("<ButtonPress-1>", on_mouse_press)
-            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)          
             
         def image_display(index_slice):
             # get size
@@ -403,6 +482,15 @@ class CanvasAxial:
             
             # display info
             display_info()
+            
+            # ROI
+            self.region_of_interest = ROI(self, 
+                self.master.corners_data['rec']['x1'], 
+                self.master.corners_data['rec']['y1'],
+                self.master.corners_data['rec']['x2'], 
+                self.master.corners_data['rec']['y2']
+            )
+            
             self.canvas.configure(bg='black')
             
             
@@ -771,14 +859,24 @@ class CanvasCoronal:
 class Tools:
     def __init__(self, master):
         self.master = master
-
+        self.TabView1()
+        self.TabView2()
+        
+    def TabView1(self):
+        def DrawingTools():
+            self.check_var = customtkinter.StringVar(value="off")
+            self.check_ROI = customtkinter.CTkCheckBox(master=self.tab_1, text="Edit ROI", variable=self.check_var, onvalue="on", offvalue="off")
+            self.check_ROI.pack()
+            
         self.tabview_1 = customtkinter.CTkTabview(master=self.master)
         self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
         self.tab_1 = self.tabview_1.add("Basic tools")    
         self.tab_2 = self.tabview_1.add("Image processing")
         self.tab_3 = self.tabview_1.add("Defect Detection")
         self.tabview_1.set("Basic tools") 
+        DrawingTools()
         
+    def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
         self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
         self.tab_1 = self.tabview_2.add("Segmentation")    
@@ -814,6 +912,30 @@ class App(customtkinter.CTk):
         }
         self.pixel_spacing = 0.858
         self.path = ''
+        self.corners_data = {
+            'rec': {
+                'x1': 50,
+                'y1': 50,
+                'x2': 500,
+                'y2': 500,
+            },
+            'nw': {
+                'x': 0,
+                'y': 0,
+            },
+            'ne': {
+                'x': 0,
+                'y': 0,
+            },
+            'sw': {
+                'x': 0,
+                'y': 0,
+            },
+            'se': {
+                'x': 0,
+                'y': 0,
+            }
+        }
 
         # column and rows
         for i in range(15):
