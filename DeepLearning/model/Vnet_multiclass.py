@@ -150,7 +150,7 @@ def OneHotEncode(original: np.array, x_: int, y_: int, z_: int, num_classes=8):
 
                 value = original[i][j][k]
 
-                encodeIndex = encodeList[value] = 1
+                encodeIndex = encodeList[value]
 
                 for n in range(8):
                     labelEncode[i_][j_][k_][n] = 0
@@ -231,3 +231,9 @@ def TrainingLoop(model, pathList):
         model.fit(X, Y, epochs=1, verbose=1)
         del X
         del Y
+
+
+if __name__ == "__main__":
+    rootDirPath = "..\\mmwhs\\ct_train"
+    pathList = os.listdir(rootDirPath)
+    GenerateEncodeData(rootDirPath, pathList, 256, 256, 256)
