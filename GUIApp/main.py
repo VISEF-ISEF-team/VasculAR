@@ -406,7 +406,7 @@ def update_app(event):
     
     # my_image_temp = my_canvas_axial.create_image(0, 0, image=image_temp, anchor="nw")
     # my_canvas_axial.tag_bind(my_image_temp,"<Button1-Motion>", move, add="+")
-    # my_canvas_axial.configure(scrollregion=my_canvas_axial.bbox(my_image_temp))
+    # my_canvas_axial.configure(scrollregion=my_canvas_axial.bbox(ta))
     
     # ======= 8. MAIN DISPLAY CONTROL =======
     def slice_control(index_slice, flip=None):

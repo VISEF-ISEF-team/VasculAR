@@ -7,6 +7,7 @@ Competition: Visef & Isef
 
 import customtkinter
 import tkinter
+from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
 from draw import draw_canvas
 from PIL import Image, ImageTk
@@ -62,7 +63,6 @@ class MenuBar:
     def __init__(self, master):
         self.master = master
         self.current_menu = None
-        self.current_submenu = None
         
         self.data = {
             'File': {
@@ -85,7 +85,17 @@ class MenuBar:
                 'sub_menu': {
                     'theme_setting_btn': 'Theme color',
                     'language_setting_btn': 'Language',
-                }
+                },
+                'sub_menu_2': {
+                    'theme_setting_btn': {
+                        'dark_theme_btn': 'Dark theme',
+                        'light_theme_btn': 'Light theme',
+                        },
+                    'language_setting_btn': {
+                        'eng_btn': 'English',
+                        'vn_btn': 'Vietnamese',
+                    }  
+                }         
             },
             'Help': {
                 'main_menu': {
@@ -113,33 +123,102 @@ class MenuBar:
             }
         }
         
-        self.menu_item = {'main_menu':{}, 'sub_menu': {}}
+        self.menu_item = {'main_menu':{}, 'sub_menu': {}, 'sub_menu_2':{}}
         
         self.create_widget()
         self.layout_widget()
         
-    def sub_menu(self):
-        self.hide_all_submenu()
-        x = self.dropdown.winfo_x() + self.theme_setting_btn.cget('width')
-        y = self.dropdown.winfo_y() + self.theme_setting_btn.cget('height') + self.language_setting_btn.cget('height') + 10
-        self.submenu_frame = customtkinter.CTkFrame(master=self.master)
-        self.submenu_frame.place(x=x,y=y)
-        self.current_submenu = self.submenu_frame
-    
-    def dropdown_options(self, instance, master):
-        for instance_name, label_name in self.data[instance]['sub_menu'].items():
-            self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
-                master=master, 
-                text=label_name,
+    def sub_dropdown_frame(self, widget, row):
+        x = self.dropdown.winfo_x() + widget.cget('width')
+        y = self.dropdown.winfo_y() + (widget.cget('height') + 5) * row
+        instance = widget.cget("text")
+        self.menu_item['sub_menu_2'][instance] = customtkinter.CTkFrame(master=self.master)
+        self.menu_item['sub_menu_2'][instance].place(x=x,y=y)
+        self.menu_item['sub_menu_2'][instance].bind('<Leave>', lambda event : self.menu_item['sub_menu_2'][instance].place_forget())
+
+
+        print(instance)
+        if instance == 'Language':
+            self.eng_btn = customtkinter.CTkButton(
+                master=self.menu_item['sub_menu_2'][instance],
+                text=self.data['Setting']['sub_menu_2']['language_setting_btn']['eng_btn'],
                 fg_color='transparent', 
-                hover_color=self.master.second_color
+                hover_color=self.master.second_color,
             )
+            
+            self.eng_btn.pack(padx=5, pady=5)
+            self.eng_btn.configure(anchor="w")
+            
+            self.vn_btn = customtkinter.CTkButton(
+                master=self.menu_item['sub_menu_2'][instance],
+                text=self.data['Setting']['sub_menu_2']['language_setting_btn']['vn_btn'],
+                fg_color='transparent', 
+                hover_color=self.master.second_color,
+            )
+            
+            self.vn_btn.pack(padx=5, pady=5)
+            self.vn_btn.configure(anchor="w")
+            
+        if instance == 'Theme color':
+            self.eng_btn = customtkinter.CTkButton(
+                master=self.menu_item['sub_menu_2'][instance],
+                text=self.data['Setting']['sub_menu_2']['theme_setting_btn']['dark_theme_btn'],
+                fg_color='transparent', 
+                hover_color=self.master.second_color,
+            )
+            
+            self.eng_btn.pack(padx=5, pady=5)
+            self.eng_btn.configure(anchor="w")
+            
+            self.vn_btn = customtkinter.CTkButton(
+                master=self.menu_item['sub_menu_2'][instance],
+                text=self.data['Setting']['sub_menu_2']['theme_setting_btn']['light_theme_btn'],
+                fg_color='transparent', 
+                hover_color=self.master.second_color,
+            )
+            
+            self.vn_btn.pack(padx=5, pady=5)
+            self.vn_btn.configure(anchor="w")
+            
+    def choose_file(self):
+        self.master.path = filedialog.askopenfilename()
+        
+        if self.master.path.endswith('.nii.gz') or self.master.path.endswith('.nii'):
+            self.master.img_raw = sitk.ReadImage(self.master.path, sitk.sitkFloat32)
+            self.master.img = sitk.GetArrayFromImage(self.master.img_raw)
+            print("read niftifile")
+        
+        elif self.master.path.endswith('.dcm'):
+            parent_dir = os.path.dirname(self.master.path)
+            instance = ReadDCM(parent_dir)
+            self.master.img_raw, self.master.img, self.master.dict_info, self.master.pixel_spacing = instance.read_file_dcm()
+            print(self.master.dict_info)
+            
+        self.master.event_generate("<<UpdateApp>>")
+        
+    def dropdown_options(self, instance, master):            
+        for row, (instance_name, label_name) in enumerate(self.data[instance]['sub_menu'].items()):
+            if instance_name == 'add_nifti_file_btn':
+                self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
+                    master=master, 
+                    text=label_name,
+                    fg_color='transparent', 
+                    hover_color=self.master.second_color,
+                    command = lambda: self.choose_file(),
+                )
+            else:
+                self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
+                    master=master, 
+                    text=label_name,
+                    fg_color='transparent', 
+                    hover_color=self.master.second_color,
+                )
             self.menu_item['sub_menu'][instance_name].pack(padx=5, pady=5)
             self.menu_item['sub_menu'][instance_name].configure(anchor="w")
+            
 
     def dropdown_frame(self, widget_option, col):
         self.hide_all_menu()
-   
         if widget_option.cget("text") != 'About' and widget_option.cget("text") != 'Account':
             self.dropdown = customtkinter.CTkFrame(master=self.master)
             x = widget_option.winfo_x() - 10*col
@@ -153,11 +232,15 @@ class MenuBar:
                     instance=widget_option.cget("text"), 
                     master=self.dropdown
                 )
+                
             elif widget_option.cget("text") == 'Setting':
                 self.dropdown_options(
                     instance=widget_option.cget("text"),
                     master=self.dropdown
                 )
+                self.menu_item['sub_menu']['theme_setting_btn'].bind('<Button-1>', lambda event :self.sub_dropdown_frame(widget=self.menu_item['sub_menu']['theme_setting_btn'], row=0))
+                self.menu_item['sub_menu']['language_setting_btn'].bind('<Button-1>', lambda event :self.sub_dropdown_frame(widget=self.menu_item['sub_menu']['language_setting_btn'], row=1))
+
             elif widget_option.cget("text") == 'Help':
                 self.dropdown_options(
                     instance=widget_option.cget("text"),
@@ -178,15 +261,11 @@ class MenuBar:
                 auth=auth
             ) 
         
-    def hide_all_menu(self):
+    def hide_all_menu(self):         
         if self.current_menu:
             self.current_menu.place_forget()
             self.current_menu = None
-     
-    def hide_all_submenu(self):
-        if self.current_submenu:
-            self.current_submenu.place_forget()
-            self.current_submenu = None
+
     
     def create_widget(self):
         self.current_menu = None
@@ -207,7 +286,6 @@ class MenuBar:
             col += 1
         
         self.master.bind("<Double-Button-1>", lambda event: self.hide_all_menu())
-        self.master.bind("<Button-3>", lambda event: self.hide_all_submenu())
         
         
     def layout_widget(self):
@@ -221,17 +299,126 @@ class MenuBar:
 class CanvasViews:
     def __init__(self, master):
         self.master = master
+        self.create_frames()
+        self.create_canvas_axial()
         
-        self.frame_axial = customtkinter.CTkFrame(master=self.master)
-        self.frame_axial.grid(row=1, column=0, rowspan=9, columnspan=5, padx=5, sticky='news')
+    def create_frames(self):
+        self.frame_axial = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame_axial.grid(row=1, column=0, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-        self.frame_sagittal = customtkinter.CTkFrame(master=self.master)
-        self.frame_sagittal.grid(row=1, column=5, rowspan=9, columnspan=5, padx=5, sticky='news')
+        self.frame_sagittal = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame_sagittal.grid(row=1, column=6, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-        self.frame_sagittal = customtkinter.CTkFrame(master=self.master)
-        self.frame_sagittal.grid(row=1, column=10, rowspan=9, columnspan=5, padx=5, sticky='news')
+        self.frame_coronal = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame_coronal.grid(row=1, column=12, rowspan=9, columnspan=6, padx=5, sticky='news')
         
+    def create_canvas_axial(self):    
+        def create_crosshair():
+            self.horizontal_line = self.canvas_axial.create_line(0, self.canvas_axial.winfo_height() // 2, self.canvas_axial.winfo_width(), self.canvas_axial.winfo_height() // 2, fill="red")
+            self.vertical_line = self.canvas_axial.create_line(self.canvas_axial.winfo_width() // 2, 0, self.canvas_axial.winfo_width() // 2, self.canvas_axial.winfo_height(), fill="red")
+            
+            def move_crosshair(event):
+                x, y = event.x, event.y
+                self.canvas_axial.coords(self.horizontal_line, 0, y, self.canvas_axial.winfo_width(), y)
+                self.canvas_axial.coords(self.vertical_line, x, 0, x, self.canvas_axial.winfo_height())
 
+            def on_mouse_press(event):
+                self.canvas_axial.bind("<Motion>", move_crosshair)
+
+            def on_mouse_release(event):
+                self.canvas_axial.unbind("<Motion>")
+
+            self.canvas_axial.bind("<ButtonPress-1>", on_mouse_press)
+            self.canvas_axial.bind("<ButtonRelease-1>", on_mouse_release)                
+            
+        def image_display(index_slice):
+            height = int(self.label_zoom.cget("text"))
+            image = self.master.img[int(index_slice), :, :]
+            plt.imsave("temp.jpg", image, cmap='gray')
+            image_display = Image.open("temp.jpg").resize((height, height))
+            my_image = ImageTk.PhotoImage(image_display)
+            x_cord, y_cord = image_position()
+            self.canvas_item_axial = self.canvas_axial.create_image(x_cord, y_cord, image=my_image, anchor="center")
+            self.canvas_axial.image = my_image
+            
+            create_crosshair()
+            
+            
+        def image_position():
+            try:
+                image_position = self.canvas_axial.coords(self.canvas_item_axial)
+                return image_position[0], image_position[1]
+            except:
+                return 400, 400
+            
+        def movement_binding():
+            self.canvas_axial.focus_set() 
+            self.canvas_axial.bind('<Left>', lambda event: self.canvas_axial.move(self.canvas_item_axial, -10, 0))
+            self.canvas_axial.bind('<Right>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 10, 0))
+            self.canvas_axial.bind('<Up>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 0, -10))
+            self.canvas_axial.bind('<Down>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 0, 10))   
+            
+        def display_info():
+            text = "Patient info"
+            text_item = self.canvas_axial.create_text(50, 10, text=text)
+            self.canvas_axial.itemconfig(text_item,  fill=self.master.white_color) 
+        
+        def zoom(event):
+            current_value = self.label_zoom.cget("text")
+            new_value = int(current_value) + (event.delta/120)*6
+            self.label_zoom.configure(text=new_value)
+            image_display(self.slider_volume.get())   
+            
+        def slider_volume_show(value):
+            index_slice = round(value, 0)
+            self.text_show_volume.configure(text=int(index_slice))
+            image_display(index_slice)
+
+        def slider_widget():        
+            self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=620, command=slider_volume_show)
+            self.slider_volume.grid(column=0, row=0, columnspan=2, rowspan=1, padx=(5,0), pady=(25,0), sticky='ew')
+            self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
+            self.text_show_volume.grid(column=2, row=0, rowspan=1, pady=(25,0), sticky='ew')
+            
+ 
+
+        self.canvas_axial = Canvas(master=self.frame_axial)
+        self.canvas_axial.pack(fill='both', expand=True)
+        
+        self.label_zoom = customtkinter.CTkLabel(master=self.frame_axial, text="800")
+        self.canvas_axial.bind("<MouseWheel>", zoom)
+
+        
+        movement_binding()
+        display_info()
+        slider_widget()
+        
+    def create_canvas_sagittal(self):
+        self.canvas_sagittal = Canvas(master=self.frame_sagittal)
+        self.canvas_sagittal.pack(fill='both', expand=True)
+       
+    def create_canvas_coronal(self): 
+        self.canvas_coronal = Canvas(master=self.frame_coronal)
+        self.canvas_coronal.pack(fill='both', expand=True)
+        
+class Tools:
+    def __init__(self, master):
+        self.master = master
+
+        self.tabview_1 = customtkinter.CTkTabview(master=self.master)
+        self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
+        self.tab_1 = self.tabview_1.add("Basic tools")    
+        self.tab_2 = self.tabview_1.add("Image processing")
+        self.tab_3 = self.tabview_1.add("Defect Detection")
+        self.tabview_1.set("Basic tools") 
+        
+        self.tabview_2 = customtkinter.CTkTabview(master=self.master)
+        self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
+        self.tab_1 = self.tabview_2.add("Segmentation")    
+        self.tab_2 = self.tabview_2.add("3D reconstruction")
+        self.tab_3 = self.tabview_2.add("VR/AR connection")
+        self.tabview_2.set("Segmentation") 
+    
 class App(customtkinter.CTk):
     def __init__(self, title, logo_path):
         super().__init__()
@@ -245,22 +432,38 @@ class App(customtkinter.CTk):
         self.first_color = "#2b2b2b"
         self.second_color = "#3b3b3b"
         self.text_disabled_color = "#dce4e2"
+        self.white_color = 'white'
+        
+        self.img = None
+        self.img_raw = None
+        self.dict_info = {}
+        self.pixel_spacing = 0.858
+        self.path = ''
 
         # column and rows
         for i in range(15):
             self.rowconfigure(i, weight=1, uniform='a')
+            
+        for i in range(18):
             self.columnconfigure(i, weight=1, uniform='a')
+            
+        for i in range(15):
+            for j in range(18):
+                label = customtkinter.CTkFrame(self, fg_color="transparent")
+                label.grid(row=i, column=j, sticky='nsew')
 
         # create menu
         self.menu_bar = MenuBar(self)
+        self.tools = Tools(self)
         
-        # create 3-views canvas
-        # self.canvas_view = CanvasViews(self)
-
-        
+        def update_app(event):
+            self.canvas_view = CanvasViews(self)
+            
+            
+        self.bind("<<UpdateApp>>", update_app)
+        self.mainloop()
 
 app = App(
     title='VasculAR software',
     logo_path='imgs/logo.ico'
 )
-app.mainloop()
