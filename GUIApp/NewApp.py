@@ -301,7 +301,51 @@ class CanvasAxial:
     def __init__(self, master):
         self.master = master
         self.create_frame()
+        self.create_tool_widgets()
         self.create_canvas()     
+        
+    def create_tool_widgets(self):
+        def rotation():
+            def rotation_control():
+                current_val = int(self.rotation_label.cget('text'))
+                if current_val == 360:
+                    current_val = 0
+                self.rotation_label.configure(text=current_val+90)
+            
+            self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+
+        def flip_horizontal():
+            def flip_control():
+                cur_val = self.flip_horizontal_label.cget("text")
+                if cur_val == "":  
+                    self.flip_horizontal_label.configure(text="horizontal")
+                else:
+                    self.flip_horizontal_label.configure(text="")
+                
+            self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
+            self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
+            
+        def flip_vertical():
+            def flip_control():
+                cur_val = self.flip_vertical_label.cget("text")
+                if cur_val == "":
+                    self.flip_vertical_label.configure(text="vertical")
+                else:
+                    self.flip_vertical_label.configure(text="")
+                    
+            self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
+            self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+
+        self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
+        self.frame_tools.grid(column=4, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        rotation()
+        flip_horizontal()
+        flip_vertical()
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
@@ -335,13 +379,28 @@ class CanvasAxial:
             plt.imsave("temp.jpg", image, cmap='gray')
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
-            my_image = ImageTk.PhotoImage(image_display)
+            
+            # rotate
+            rotation_angle = int(self.rotation_label.cget("text"))
+            image_display = image_display.rotate(rotation_angle)
+            
+            # flip
+            horizontal = self.flip_horizontal_label.cget("text")
+            vertical = self.flip_vertical_label.cget("text")
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
             # diplay image
+            my_image = ImageTk.PhotoImage(image_display)
             x_cord, y_cord = image_position()
             self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
             self.canvas.image = my_image
+            
             # create crosshair
             create_crosshair()
+            
             # display info
             display_info()
             self.canvas.configure(bg='black')
@@ -385,7 +444,7 @@ class CanvasAxial:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=2, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -399,9 +458,53 @@ class CanvasSagittal:
         self.master = master
         self.create_frame()
         self.create_canvas()     
+        self.create_tool_widgets()
         
+    def create_tool_widgets(self):
+        def rotation():
+            def rotation_control():
+                current_val = int(self.rotation_label.cget('text'))
+                if current_val == 360:
+                    current_val = 0
+                self.rotation_label.configure(text=current_val+90)
+            
+            self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+
+        def flip_horizontal():
+            def flip_control():
+                cur_val = self.flip_horizontal_label.cget("text")
+                if cur_val == "":  
+                    self.flip_horizontal_label.configure(text="horizontal")
+                else:
+                    self.flip_horizontal_label.configure(text="")
+                
+            self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
+            self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
+            
+        def flip_vertical():
+            def flip_control():
+                cur_val = self.flip_vertical_label.cget("text")
+                if cur_val == "":
+                    self.flip_vertical_label.configure(text="vertical")
+                else:
+                    self.flip_vertical_label.configure(text="")
+                    
+            self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
+            self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+
+        self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
+        self.frame_tools.grid(column=10, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        rotation()
+        flip_horizontal()
+        flip_vertical() 
+
     def create_frame(self):
-        self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
         self.frame.grid(row=1, column=6, rowspan=9, columnspan=6, padx=5, sticky='news')
         
     def create_canvas(self):    
@@ -427,18 +530,34 @@ class CanvasSagittal:
             # get size
             height = int(self.label_zoom.cget("text"))
             # slice index
-            image = self.master.img[:, int(index_slice), :]
+            image = self.master.img[:,int(index_slice),:]
             # color map
             plt.imsave("temp.jpg", image, cmap='gray')
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
-            my_image = ImageTk.PhotoImage(image_display)
+            
+            # rotate
+            rotation_angle = int(self.rotation_label.cget("text"))
+            image_display = image_display.rotate(rotation_angle)
+            
+            # flip
+            horizontal = self.flip_horizontal_label.cget("text")
+            vertical = self.flip_vertical_label.cget("text")
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
             # diplay image
+            my_image = ImageTk.PhotoImage(image_display)
             x_cord, y_cord = image_position()
             self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
             self.canvas.image = my_image
+            
             # create crosshair
             create_crosshair()
+            
+            # display info
             display_info()
             self.canvas.configure(bg='black')
             
@@ -481,7 +600,7 @@ class CanvasSagittal:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=8, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -494,7 +613,51 @@ class CanvasCoronal:
     def __init__(self, master):
         self.master = master
         self.create_frame()
+        self.create_tool_widgets()
         self.create_canvas()     
+
+    def create_tool_widgets(self):
+        def rotation():
+            def rotation_control():
+                current_val = int(self.rotation_label.cget('text'))
+                if current_val == 360:
+                    current_val = 0
+                self.rotation_label.configure(text=current_val+90)
+            
+            self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+
+        def flip_horizontal():
+            def flip_control():
+                cur_val = self.flip_horizontal_label.cget("text")
+                if cur_val == "":  
+                    self.flip_horizontal_label.configure(text="horizontal")
+                else:
+                    self.flip_horizontal_label.configure(text="")
+                
+            self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
+            self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
+            
+        def flip_vertical():
+            def flip_control():
+                cur_val = self.flip_vertical_label.cget("text")
+                if cur_val == "":
+                    self.flip_vertical_label.configure(text="vertical")
+                else:
+                    self.flip_vertical_label.configure(text="")
+                    
+            self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
+            self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+
+        self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
+        self.frame_tools.grid(column=16, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        rotation()
+        flip_horizontal()
+        flip_vertical() 
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
@@ -523,18 +686,34 @@ class CanvasCoronal:
             # get size
             height = int(self.label_zoom.cget("text"))
             # slice index
-            image = self.master.img[:, :, int(index_slice)]
+            image = self.master.img[:,:,int(index_slice)]
             # color map
             plt.imsave("temp.jpg", image, cmap='gray')
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
-            my_image = ImageTk.PhotoImage(image_display)
+            
+            # rotate
+            rotation_angle = int(self.rotation_label.cget("text"))
+            image_display = image_display.rotate(rotation_angle)
+            
+            # flip
+            horizontal = self.flip_horizontal_label.cget("text")
+            vertical = self.flip_vertical_label.cget("text")
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
             # diplay image
+            my_image = ImageTk.PhotoImage(image_display)
             x_cord, y_cord = image_position()
             self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
             self.canvas.image = my_image
+            
             # create crosshair
             create_crosshair()
+            
+            # display info
             display_info()
             self.canvas.configure(bg='black')
             
@@ -578,7 +757,7 @@ class CanvasCoronal:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=14, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -643,10 +822,10 @@ class App(customtkinter.CTk):
         for i in range(18):
             self.columnconfigure(i, weight=1, uniform='a')
             
-        for i in range(15):
-            for j in range(18):
-                label = customtkinter.CTkFrame(self, fg_color="transparent")
-                label.grid(row=i, column=j, sticky='nsew')
+        # for i in range(15):
+        #     for j in range(18):
+        #         label = customtkinter.CTkFrame(self, fg_color="transparent")
+        #         label.grid(row=i, column=j, sticky='nsew')
 
         # create menu
         self.menu_bar = MenuBar(self)
