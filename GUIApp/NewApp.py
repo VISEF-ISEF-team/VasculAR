@@ -194,6 +194,7 @@ class MenuBar:
             self.master.img_raw, self.master.img, self.master.dict_info, self.master.pixel_spacing = instance.read_file_dcm()
             print(self.master.dict_info)
             
+        self.hide_all_menu()
         self.master.event_generate("<<UpdateApp>>")
         
     def dropdown_options(self, instance, master):            
@@ -296,72 +297,75 @@ class MenuBar:
             col+=1
     
 
-class CanvasViews:
+class CanvasAxial:
     def __init__(self, master):
         self.master = master
-        self.create_frames()
-        self.create_canvas_axial()
+        self.create_frame()
+        self.create_canvas()     
         
-    def create_frames(self):
-        self.frame_axial = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
-        self.frame_axial.grid(row=1, column=0, rowspan=9, columnspan=6, padx=5, sticky='news')
+    def create_frame(self):
+        self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame.grid(row=1, column=0, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-        self.frame_sagittal = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
-        self.frame_sagittal.grid(row=1, column=6, rowspan=9, columnspan=6, padx=5, sticky='news')
-        
-        self.frame_coronal = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
-        self.frame_coronal.grid(row=1, column=12, rowspan=9, columnspan=6, padx=5, sticky='news')
-        
-    def create_canvas_axial(self):    
+    def create_canvas(self):    
         def create_crosshair():
-            self.horizontal_line = self.canvas_axial.create_line(0, self.canvas_axial.winfo_height() // 2, self.canvas_axial.winfo_width(), self.canvas_axial.winfo_height() // 2, fill="red")
-            self.vertical_line = self.canvas_axial.create_line(self.canvas_axial.winfo_width() // 2, 0, self.canvas_axial.winfo_width() // 2, self.canvas_axial.winfo_height(), fill="red")
+            self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
+            self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
             
             def move_crosshair(event):
                 x, y = event.x, event.y
-                self.canvas_axial.coords(self.horizontal_line, 0, y, self.canvas_axial.winfo_width(), y)
-                self.canvas_axial.coords(self.vertical_line, x, 0, x, self.canvas_axial.winfo_height())
+                self.canvas.coords(self.horizontal_line, 0, y, self.canvas.winfo_width(), y)
+                self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
 
             def on_mouse_press(event):
-                self.canvas_axial.bind("<Motion>", move_crosshair)
+                self.canvas.bind("<Motion>", move_crosshair)
 
             def on_mouse_release(event):
-                self.canvas_axial.unbind("<Motion>")
+                self.canvas.unbind("<Motion>")
 
-            self.canvas_axial.bind("<ButtonPress-1>", on_mouse_press)
-            self.canvas_axial.bind("<ButtonRelease-1>", on_mouse_release)                
+            self.canvas.bind("<ButtonPress-1>", on_mouse_press)
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
             
         def image_display(index_slice):
+            # get size
             height = int(self.label_zoom.cget("text"))
-            image = self.master.img[int(index_slice), :, :]
+            # slice index
+            image = self.master.img[int(index_slice),:, :]
+            # color map
             plt.imsave("temp.jpg", image, cmap='gray')
+            # resize
             image_display = Image.open("temp.jpg").resize((height, height))
             my_image = ImageTk.PhotoImage(image_display)
+            # diplay image
             x_cord, y_cord = image_position()
-            self.canvas_item_axial = self.canvas_axial.create_image(x_cord, y_cord, image=my_image, anchor="center")
-            self.canvas_axial.image = my_image
-            
+            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+            self.canvas.image = my_image
+            # create crosshair
             create_crosshair()
+            # display info
+            display_info()
+            self.canvas.configure(bg='black')
             
             
         def image_position():
             try:
-                image_position = self.canvas_axial.coords(self.canvas_item_axial)
+                image_position = self.canvas.coords(self.canvas_item)
                 return image_position[0], image_position[1]
             except:
                 return 400, 400
             
         def movement_binding():
-            self.canvas_axial.focus_set() 
-            self.canvas_axial.bind('<Left>', lambda event: self.canvas_axial.move(self.canvas_item_axial, -10, 0))
-            self.canvas_axial.bind('<Right>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 10, 0))
-            self.canvas_axial.bind('<Up>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 0, -10))
-            self.canvas_axial.bind('<Down>', lambda event: self.canvas_axial.move(self.canvas_item_axial, 0, 10))   
+            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
+            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
+            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
+            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
             
         def display_info():
-            text = "Patient info"
-            text_item = self.canvas_axial.create_text(50, 10, text=text)
-            self.canvas_axial.itemconfig(text_item,  fill=self.master.white_color) 
+            text_item = self.canvas.create_text(10, 20, text='AXIAL VIEW', anchor="w", fill=self.master.text_canvas_color)
+            y = 40
+            for k, v in self.master.dict_info.items():
+                text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
+                y += 20
         
         def zoom(event):
             current_value = self.label_zoom.cget("text")
@@ -372,34 +376,218 @@ class CanvasViews:
         def slider_volume_show(value):
             index_slice = round(value, 0)
             self.text_show_volume.configure(text=int(index_slice))
+            self.canvas.focus_set() 
             image_display(index_slice)
 
         def slider_widget():        
-            self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=620, command=slider_volume_show)
+            self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=self.master.img.shape[0]-1, command=slider_volume_show)
             self.slider_volume.grid(column=0, row=0, columnspan=2, rowspan=1, padx=(5,0), pady=(25,0), sticky='ew')
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=2, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
- 
-
-        self.canvas_axial = Canvas(master=self.frame_axial)
-        self.canvas_axial.pack(fill='both', expand=True)
+        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas.pack(fill='both', expand=True)
         
-        self.label_zoom = customtkinter.CTkLabel(master=self.frame_axial, text="800")
-        self.canvas_axial.bind("<MouseWheel>", zoom)
-
+        self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
+        self.canvas.bind("<MouseWheel>", zoom)
         
         movement_binding()
-        display_info()
+        slider_widget()
+
+class CanvasSagittal:
+    def __init__(self, master):
+        self.master = master
+        self.create_frame()
+        self.create_canvas()     
+        
+    def create_frame(self):
+        self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame.grid(row=1, column=6, rowspan=9, columnspan=6, padx=5, sticky='news')
+        
+    def create_canvas(self):    
+        def create_crosshair():
+            self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
+            self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
+            
+            def move_crosshair(event):
+                x, y = event.x, event.y
+                self.canvas.coords(self.horizontal_line, 0, y, self.canvas.winfo_width(), y)
+                self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
+
+            def on_mouse_press(event):
+                self.canvas.bind("<Motion>", move_crosshair)
+
+            def on_mouse_release(event):
+                self.canvas.unbind("<Motion>")
+
+            self.canvas.bind("<ButtonPress-1>", on_mouse_press)
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
+            
+        def image_display(index_slice):
+            # get size
+            height = int(self.label_zoom.cget("text"))
+            # slice index
+            image = self.master.img[:, int(index_slice), :]
+            # color map
+            plt.imsave("temp.jpg", image, cmap='gray')
+            # resize
+            image_display = Image.open("temp.jpg").resize((height, height))
+            my_image = ImageTk.PhotoImage(image_display)
+            # diplay image
+            x_cord, y_cord = image_position()
+            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+            self.canvas.image = my_image
+            # create crosshair
+            create_crosshair()
+            display_info()
+            self.canvas.configure(bg='black')
+            
+            
+        def image_position():
+            try:
+                image_position = self.canvas.coords(self.canvas_item)
+                return image_position[0], image_position[1]
+            except:
+                return 400, 400
+            
+        def movement_binding():
+            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
+            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
+            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
+            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+            
+        def display_info():
+            text_item = self.canvas.create_text(10, 20, text='SAGITTAL VIEW', anchor="w", fill=self.master.text_canvas_color)
+            y = 40
+            for k, v in self.master.dict_info.items():
+                text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
+                y += 20
+        
+        def zoom(event):
+            current_value = self.label_zoom.cget("text")
+            new_value = int(current_value) + (event.delta/120)*6
+            self.label_zoom.configure(text=new_value)
+            image_display(self.slider_volume.get())   
+            
+        def slider_volume_show(value):
+            index_slice = round(value, 0)
+            self.text_show_volume.configure(text=int(index_slice))
+            self.canvas.focus_set() 
+            image_display(index_slice)
+
+        def slider_widget():        
+            self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=self.master.img.shape[1]-1, command=slider_volume_show)
+            self.slider_volume.grid(column=6, row=0, columnspan=2, rowspan=1, padx=(5,0), pady=(25,0), sticky='ew')
+            self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
+            self.text_show_volume.grid(column=8, row=0, rowspan=1, pady=(25,0), sticky='ew')
+            
+        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas.pack(fill='both', expand=True)
+        
+        self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
+        self.canvas.bind("<MouseWheel>", zoom)
+        
+        movement_binding()
         slider_widget()
         
-    def create_canvas_sagittal(self):
-        self.canvas_sagittal = Canvas(master=self.frame_sagittal)
-        self.canvas_sagittal.pack(fill='both', expand=True)
-       
-    def create_canvas_coronal(self): 
-        self.canvas_coronal = Canvas(master=self.frame_coronal)
-        self.canvas_coronal.pack(fill='both', expand=True)
+class CanvasCoronal:
+    def __init__(self, master):
+        self.master = master
+        self.create_frame()
+        self.create_canvas()     
+        
+    def create_frame(self):
+        self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
+        self.frame.grid(row=1, column=12, rowspan=9, columnspan=6, padx=5, sticky='news')
+        
+    def create_canvas(self):    
+        def create_crosshair():
+            self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
+            self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
+            
+            def move_crosshair(event):
+                x, y = event.x, event.y
+                self.canvas.coords(self.horizontal_line, 0, y, self.canvas.winfo_width(), y)
+                self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
+
+            def on_mouse_press(event):
+                self.canvas.bind("<Motion>", move_crosshair)
+
+            def on_mouse_release(event):
+                self.canvas.unbind("<Motion>")
+
+            self.canvas.bind("<ButtonPress-1>", on_mouse_press)
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
+            
+        def image_display(index_slice):
+            # get size
+            height = int(self.label_zoom.cget("text"))
+            # slice index
+            image = self.master.img[:, :, int(index_slice)]
+            # color map
+            plt.imsave("temp.jpg", image, cmap='gray')
+            # resize
+            image_display = Image.open("temp.jpg").resize((height, height))
+            my_image = ImageTk.PhotoImage(image_display)
+            # diplay image
+            x_cord, y_cord = image_position()
+            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+            self.canvas.image = my_image
+            # create crosshair
+            create_crosshair()
+            display_info()
+            self.canvas.configure(bg='black')
+            
+            
+        def image_position():
+            try:
+                image_position = self.canvas.coords(self.canvas_item)
+                return image_position[0], image_position[1]
+            except:
+                return 400, 400
+            
+        def movement_binding():
+            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
+            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
+            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
+            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+            
+        def display_info():
+            text_item = self.canvas.create_text(10, 20, text='CORONAL VIEW', anchor="w", fill=self.master.text_canvas_color)
+            y = 40
+            for k, v in self.master.dict_info.items():
+                text_item = self.canvas.create_text(10, y, text=f'{k}:{v}', anchor="w", fill=self.master.text_canvas_color)
+                y += 20
+        
+        def zoom(event):
+            current_value = self.label_zoom.cget("text")
+            new_value = int(current_value) + (event.delta/120)*6
+            self.label_zoom.configure(text=new_value)
+            image_display(self.slider_volume.get())   
+            
+        def slider_volume_show(value):
+            index_slice = round(value, 0)
+            self.text_show_volume.configure(text=int(index_slice))
+            self.canvas.focus_set() 
+            image_display(index_slice)
+            
+
+        def slider_widget():        
+            self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=self.master.img.shape[2]-1, command=slider_volume_show)
+            self.slider_volume.grid(column=12, row=0, columnspan=2, rowspan=1, padx=(5,0), pady=(25,0), sticky='ew')
+            self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
+            self.text_show_volume.grid(column=14, row=0, rowspan=1, pady=(25,0), sticky='ew')
+            
+        self.canvas = Canvas(master=self.frame, bd=0)
+        self.canvas.pack(fill='both', expand=True)
+        
+        self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
+        self.canvas.bind("<MouseWheel>", zoom)
+        
+        movement_binding()
+        slider_widget()
+        
+    
         
 class Tools:
     def __init__(self, master):
@@ -432,11 +620,19 @@ class App(customtkinter.CTk):
         self.first_color = "#2b2b2b"
         self.second_color = "#3b3b3b"
         self.text_disabled_color = "#dce4e2"
-        self.white_color = 'white'
+        self.text_canvas_color = "yellow"
+        
         
         self.img = None
         self.img_raw = None
-        self.dict_info = {}
+        self.dict_info = {
+            "Organization": "Benh vien Cho Ray",
+            "Patient's name": "Ton That Hung",
+            "Modality": "MRI",
+            "Patient ID": "0000097031",
+            "Body Part Examined": "CHEST_TO_PELVIS",
+            "Acquisition Date": "20231019"
+        }
         self.pixel_spacing = 0.858
         self.path = ''
 
@@ -457,7 +653,9 @@ class App(customtkinter.CTk):
         self.tools = Tools(self)
         
         def update_app(event):
-            self.canvas_view = CanvasViews(self)
+            self.axial = CanvasAxial(self)
+            self.sagittal = CanvasSagittal(self)
+            self.coronal = CanvasCoronal(self)
             
             
         self.bind("<<UpdateApp>>", update_app)
