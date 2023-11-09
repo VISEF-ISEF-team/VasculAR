@@ -297,8 +297,9 @@ class MenuBar:
             col+=1
     
 class ROI:
-    def __init__(self, canvas_view, x1, y1, x2, y2):
+    def __init__(self, canvas_view, canvas_name, x1, y1, x2, y2):
         self.canvas_view = canvas_view
+        self.canvas_name = canvas_name
         self.main_app = self.canvas_view.master
         self.x1 = x1
         self.y1 = y1
@@ -322,8 +323,14 @@ class ROI:
             self.move_sw_corner()
             self.move_se_corner()
             
+    def update_label(self):
+        self.main_app.tools.axial_x1.set(f"x: {self.main_app.ROI_data['axial']['rec']['x1']}")
+        self.main_app.tools.axial_y1.set(f"y: {self.main_app.ROI_data['axial']['rec']['y1']}")
+        self.main_app.tools.axial_width.set(f"width: {self.main_app.ROI_data['axial']['rec']['x2'] - self.main_app.ROI_data['axial']['rec']['x1']}")
+        self.main_app.tools.axial_height.set(f"height: {self.main_app.ROI_data['axial']['rec']['y2'] - self.main_app.ROI_data['axial']['rec']['y1']}")
         
     def update(self):
+        self.update_label()
         self.rec_width = self.x2 - self.x1
         self.rec_height = self.y2 - self.y1
         self.canvas_view.canvas.coords(self.nw_circle, self.x1-self.circle_width, self.y1-self.circle_height, self.x1+self.circle_width, self.y1+self.circle_height)
@@ -334,13 +341,13 @@ class ROI:
     def move_ne_corner(self):
         def move(event):
             self.canvas_view.canvas.moveto(self.ne_circle, event.x-10, event.y-10)
-            self.main_app.corners_data['ne']['x'] = event.x
-            self.main_app.corners_data['ne']['y'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['ne']['x'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['ne']['y'] = event.y
             
             # update_rec
             self.canvas_view.canvas.coords(self.rect, self.x1, event.y, event.x, self.y2)
-            self.main_app.corners_data['rec']['y1'] = event.y
-            self.main_app.corners_data['rec']['x2'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['rec']['y1'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['rec']['x2'] = event.x
             
             self.y1 = event.y
             self.x2 = event.x
@@ -353,12 +360,12 @@ class ROI:
     def move_nw_corner(self):
         def move(event):
             self.canvas_view.canvas.moveto(self.nw_circle, event.x-10, event.y-10)
-            self.main_app.corners_data['nw']['x'] = event.x
-            self.main_app.corners_data['nw']['y'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['nw']['x'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['nw']['y'] = event.y
             
             self.canvas_view.canvas.coords(self.rect, event.x, event.y, self.x2, self.y2)
-            self.main_app.corners_data['rec']['x1'] = event.x
-            self.main_app.corners_data['rec']['y1'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['rec']['x1'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['rec']['y1'] = event.y
             
             self.x1 = event.x
             self.y1 = event.y
@@ -371,12 +378,12 @@ class ROI:
     def move_sw_corner(self):
         def move(event):
             self.canvas_view.canvas.moveto(self.sw_circle, event.x-10, event.y-10)
-            self.main_app.corners_data['sw']['x'] = event.x
-            self.main_app.corners_data['sw']['y'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['sw']['x'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['sw']['y'] = event.y
             
             self.canvas_view.canvas.coords(self.rect, event.x, self.y1, self.x2, event.y)
-            self.main_app.corners_data['rec']['x1'] = event.x
-            self.main_app.corners_data['rec']['y2'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['rec']['x1'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['rec']['y2'] = event.y
             
             self.x1 = event.x
             self.y2 = event.y
@@ -388,12 +395,12 @@ class ROI:
     def move_se_corner(self):
         def move(event):
             self.canvas_view.canvas.moveto(self.se_circle, event.x-10, event.y-10)
-            self.main_app.corners_data['se']['x'] = event.x
-            self.main_app.corners_data['se']['y'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['se']['x'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['se']['y'] = event.y
             
             self.canvas_view.canvas.coords(self.rect, self.x1, self.y1,  event.x, event.y)
-            self.main_app.corners_data['rec']['x2'] = event.x
-            self.main_app.corners_data['rec']['y2'] = event.y
+            self.main_app.ROI_data[self.canvas_name]['rec']['x2'] = event.x
+            self.main_app.ROI_data[self.canvas_name]['rec']['y2'] = event.y
             
             self.x2 = event.x
             self.y2 = event.y
@@ -512,11 +519,11 @@ class CanvasAxial:
             display_info()
             
             # ROI
-            self.region_of_interest = ROI(self, 
-                self.master.corners_data['rec']['x1'], 
-                self.master.corners_data['rec']['y1'],
-                self.master.corners_data['rec']['x2'], 
-                self.master.corners_data['rec']['y2']
+            self.region_of_interest = ROI(self, 'axial',                                   
+                self.master.ROI_data['axial']['rec']['x1'], 
+                self.master.ROI_data['axial']['rec']['y1'],
+                self.master.ROI_data['axial']['rec']['x2'], 
+                self.master.ROI_data['axial']['rec']['y2'],
             )
             
             self.canvas.configure(bg='black')
@@ -634,13 +641,16 @@ class CanvasSagittal:
                 self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
 
             def on_mouse_press(event):
-                self.canvas.bind("<Motion>", move_crosshair)
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.bind("<Motion>", move_crosshair)
 
             def on_mouse_release(event):
-                self.canvas.unbind("<Motion>")
-
-            self.canvas.bind("<ButtonPress-1>", on_mouse_press)
-            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.unbind("<Motion>")
+                    
+            if self.master.tools.check_ROI.get() == "off":
+                self.canvas.bind("<ButtonPress-1>", on_mouse_press)
+                self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
             
         def image_display(index_slice):
             # get size
@@ -675,6 +685,15 @@ class CanvasSagittal:
             
             # display info
             display_info()
+            
+            # ROI
+            self.region_of_interest = ROI(self, 'sagittal',                                   
+                self.master.ROI_data['sagittal']['rec']['x1'], 
+                self.master.ROI_data['sagittal']['rec']['y1'],
+                self.master.ROI_data['sagittal']['rec']['x2'], 
+                self.master.ROI_data['sagittal']['rec']['y2'],
+            )
+            
             self.canvas.configure(bg='black')
             
             
@@ -790,10 +809,12 @@ class CanvasCoronal:
                 self.canvas.coords(self.vertical_line, x, 0, x, self.canvas.winfo_height())
 
             def on_mouse_press(event):
-                self.canvas.bind("<Motion>", move_crosshair)
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.bind("<Motion>", move_crosshair)
 
             def on_mouse_release(event):
-                self.canvas.unbind("<Motion>")
+                if self.master.tools.check_ROI.get() == "off":
+                    self.canvas.unbind("<Motion>")
 
             self.canvas.bind("<ButtonPress-1>", on_mouse_press)
             self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
@@ -831,6 +852,15 @@ class CanvasCoronal:
             
             # display info
             display_info()
+            
+            # ROI
+            self.region_of_interest = ROI(self, 'coronal',                                   
+                self.master.ROI_data['coronal']['rec']['x1'], 
+                self.master.ROI_data['coronal']['rec']['y1'],
+                self.master.ROI_data['coronal']['rec']['x2'], 
+                self.master.ROI_data['coronal']['rec']['y2'],
+            )
+            
             self.canvas.configure(bg='black')
             
             
@@ -890,26 +920,70 @@ class Tools:
         self.TabView1()
         self.TabView2()
         
+    def title_toolbox(self, frame, title):
+        header = customtkinter.CTkButton(master=frame, text=title, state='disabled', fg_color=self.master.second_color, text_color_disabled=self.master.text_disabled_color)
+        header.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky='new')
+        return header
+        
     def TabView1(self):
         def DrawingTools():
-            self.check_var = customtkinter.StringVar(value="off")
-            self.check_ROI = customtkinter.CTkCheckBox(master=self.tab_1, text="Edit ROI", variable=self.check_var, onvalue="on", offvalue="off")
-            self.check_ROI.pack()
+            self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
+            self.check_ROI_frame.grid(column=0, row=0, rowspan=2, pady=(0,5), sticky='news')
+            self.check_ROI_frame.rowconfigure((0,1,2,3,4), weight=1)
+            self.check_ROI_frame.columnconfigure((0,1,2,3), weight=1)
             
-        self.tabview_1 = customtkinter.CTkTabview(master=self.master)
-        self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
-        self.tab_1 = self.tabview_1.add("Basic tools")    
-        self.tab_2 = self.tabview_1.add("Image processing")
-        self.tab_3 = self.tabview_1.add("Defect Detection")
-        self.tabview_1.set("Basic tools") 
+            self.check_ROI_header = self.title_toolbox(frame=self.check_ROI_frame, title='Region of Interest')
+            
+            self.check_var = customtkinter.StringVar(value="off")
+            self.check_ROI = customtkinter.CTkCheckBox(master=self.check_ROI_frame, text="Edit ROI", variable=self.check_var, onvalue="on", offvalue="off")
+            self.check_ROI.grid(row=1, column=0, columnspan=4, sticky='n')
+            
+            self.axial_x1 = customtkinter.StringVar(value=f"x: {self.master.ROI_data['axial']['rec']['x1']}")
+            self.axial_x1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_x1)
+            self.axial_x1_show.grid(row=2, column=0, sticky='w')
+            
+            self.axial_y1 = customtkinter.StringVar(value=f"y: {self.master.ROI_data['axial']['rec']['x1']}")
+            self.axial_y1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_y1)
+            self.axial_y1_show.grid(row=2, column=1, sticky='w')
+            
+            self.axial_width = customtkinter.StringVar(value=f"width: {self.master.ROI_data['axial']['rec']['x2'] - self.master.ROI_data['axial']['rec']['x1']}")
+            self.axial_width_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_width)
+            self.axial_width_show.grid(row=2, column=2, sticky='w')
+            
+            self.axial_height = customtkinter.StringVar(value=f"height: {self.master.ROI_data['axial']['rec']['y2'] - self.master.ROI_data['axial']['rec']['y1']}")
+            self.axial_height_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_height)
+            self.axial_height_show.grid(row=2, column=3, sticky='w')
+            
+        def ImageProcessing():
+            self.image_proc_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
+            self.image_proc_frame.grid(column=0, row=2, rowspan=2, sticky='news')
+            self.image_proc_frame.rowconfigure((0,1), weight=1)
+            self.image_proc_frame.columnconfigure(0, weight=1)
+            
+            self.image_proc_header = self.title_toolbox(frame=self.image_proc_frame, title='Image processing')
+            
+        def create_tabs():
+            self.tabview_1 = customtkinter.CTkTabview(master=self.master)
+            self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
+            # tab 1
+            self.tabview_1_tab_1 = self.tabview_1.add("Basic tools")    
+            self.tabview_1_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5,6), weight=1)
+            
+            self.tabview_1_tab_2 = self.tabview_1.add("Image processing")
+            self.tabview_1_tab_3 = self.tabview_1.add("Defect Detection")
+            self.tabview_1.set("Basic tools") 
+            
+        create_tabs()
         DrawingTools()
+        ImageProcessing()
         
     def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
         self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
-        self.tab_1 = self.tabview_2.add("Segmentation")    
-        self.tab_2 = self.tabview_2.add("3D reconstruction")
-        self.tab_3 = self.tabview_2.add("VR/AR connection")
+        self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
+        self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
+        self.tabview_2_tab_3 = self.tabview_2.add("VR/AR connection")
         self.tabview_2.set("Segmentation") 
     
 class App(customtkinter.CTk):
@@ -940,28 +1014,78 @@ class App(customtkinter.CTk):
         }
         self.pixel_spacing = 0.858
         self.path = ''
-        self.corners_data = {
-            'rec': {
+        self.ROI_data = {
+            'axial': {
+                'rec': {
+                    'x1': 50,
+                    'y1': 50,
+                    'x2': 500,
+                    'y2': 500,
+                },
+                'nw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'ne': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'sw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'se': {
+                    'x': 0,
+                    'y': 0,
+                }
+            },
+            'sagittal': {
+                'rec': {
                 'x1': 50,
                 'y1': 50,
                 'x2': 500,
                 'y2': 500,
+                },
+                'nw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'ne': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'sw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'se': {
+                    'x': 0,
+                    'y': 0,
+                }
             },
-            'nw': {
-                'x': 0,
-                'y': 0,
-            },
-            'ne': {
-                'x': 0,
-                'y': 0,
-            },
-            'sw': {
-                'x': 0,
-                'y': 0,
-            },
-            'se': {
-                'x': 0,
-                'y': 0,
+            'coronal': {
+                'rec': {
+                'x1': 50,
+                'y1': 50,
+                'x2': 500,
+                'y2': 500,
+                },
+                'nw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'ne': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'sw': {
+                    'x': 0,
+                    'y': 0,
+                },
+                'se': {
+                    'x': 0,
+                    'y': 0,
+                }
             }
         }
 
@@ -972,10 +1096,6 @@ class App(customtkinter.CTk):
         for i in range(18):
             self.columnconfigure(i, weight=1, uniform='a')
             
-        # for i in range(15):
-        #     for j in range(18):
-        #         label = customtkinter.CTkFrame(self, fg_color="transparent")
-        #         label.grid(row=i, column=j, sticky='nsew')
 
         # create menu
         self.menu_bar = MenuBar(self)
@@ -989,6 +1109,8 @@ class App(customtkinter.CTk):
             
         self.bind("<<UpdateApp>>", update_app)
         self.mainloop()
+
+        # Save latest data here
 
 app = App(
     title='VasculAR software',

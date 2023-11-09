@@ -44,7 +44,7 @@ Application Structure and organization:
     
 - HounsField Unit
 - Brightness / Contrast
-- Cropping / Axis with ruler + ROI
+- Cropping / Axis with ruler + ROI (finish)
 
 ### 2. Deep learning analysis
 - tools for edit, note, save analysis
