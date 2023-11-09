@@ -9,6 +9,7 @@ import customtkinter
 import tkinter
 from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
+from CTkColorPicker import *
 from draw import draw_canvas
 from PIL import Image, ImageTk
 import SimpleITK as sitk
@@ -427,10 +428,7 @@ class CanvasAxial:
         self.create_frame()
         self.create_canvas()    
         self.create_tool_widgets() 
-        
-    def test(self):
-        print("Test success")
-        
+    
     def create_tool_widgets(self):
         def rotation():
             def rotation_control():
@@ -519,6 +517,11 @@ class CanvasAxial:
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
                 y += 20
+                   
+        def display_drawings():
+            for element, data in self.master.draw_data.items():
+                if element[:-2] == 'rectangle' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
+                        self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
                 
         # get size
         height = int(self.label_zoom.cget("text"))
@@ -569,6 +572,9 @@ class CanvasAxial:
             self.master.ROI_data['axial']['rec']['y2'],
         )
             
+        # display all drawings
+        display_drawings()
+        
         self.canvas.configure(bg='black')
 
     def create_canvas(self):    
@@ -596,7 +602,7 @@ class CanvasAxial:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=2, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color, name='axial')
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -611,8 +617,8 @@ class CanvasSagittal:
         self.create_frame()
         self.create_canvas()     
         self.create_tool_widgets()
-        
-        
+        self.name = 'axial'
+                
     def create_tool_widgets(self):
         def rotation():
             def rotation_control():
@@ -782,7 +788,7 @@ class CanvasSagittal:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=8, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color, name='sagittal')
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -885,7 +891,7 @@ class CanvasCoronal:
             y = 40
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k}:{v}', anchor="w", fill=self.master.text_canvas_color)
-                y += 20    
+                y += 20      
                
         # get size
         height = int(self.label_zoom.cget("text"))
@@ -935,7 +941,7 @@ class CanvasCoronal:
             self.master.ROI_data['coronal']['rec']['x2'], 
             self.master.ROI_data['coronal']['rec']['y2'],
         )
-            
+        
         self.canvas.configure(bg='black')
 
     def create_canvas(self):    
@@ -965,7 +971,7 @@ class CanvasCoronal:
             self.text_show_volume = customtkinter.CTkLabel(self.master, text="")
             self.text_show_volume.grid(column=14, row=0, rowspan=1, pady=(25,0), sticky='ew')
             
-        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color)
+        self.canvas = Canvas(master=self.frame, bd=0, bg=self.master.first_color, name='coronal')
         self.canvas.pack(fill='both', expand=True)
         
         self.label_zoom = customtkinter.CTkLabel(master=self.frame, text="900")
@@ -1147,39 +1153,107 @@ class Tools:
                 self.draw_frame.rowconfigure((0,1), weight=1)
                 self.draw_frame.columnconfigure((0,1,2,3,4,5), weight=1)
                 self.draw_header = self.title_toolbox(frame=self.draw_frame, title="Analysis tools")
+        
+            def create_radio_btn():
+                self.radio_btn_var = tkinter.IntVar(value=0)
+                self.rectangle_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=1)
+                self.circle_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=2)
+                self.ruler_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=3)
+                self.polygon_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=4)
+                self.brush_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=5)
+                self.eraser_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=6)
+                                    
+            def create_tool_btns():     
+                def rec_icon():
+                    def create_rec(element):
+                        if self.canvas_focus == 'axial':
+                            slice = int(round(self.master.axial.slider_volume.get(), 0))
+                        elif self.canvas_focus == 'sagittal':
+                            slice = int(round(self.master.sagittal.slider_volume.get(), 0))
+                        if self.canvas_focus == 'coronal':
+                            slice = int(round(self.master.coronal.slider_volume.get(), 0))
+                            
+                        self.num_element = self.master.draw_data['number_of_elements'] 
+                        temp = {
+                            element + '_' + str(self.num_element): {
+                                'canvas': self.canvas_focus,
+                                'slice': slice,
+                                'color': self.color_choosed,
+                            }
+                        }
+                        self.master.draw_data['number_of_elements'] = self.num_element + 1
+                        self.master.draw_data.update(temp)
+                    
+                    def on_press_rec(event):
+                        create_rec(element='rectangle')
+                        element = 'rectangle_' + str(self.num_element) 
+                        self.master.draw_data[element]['x1'] = event.x
+                        self.master.draw_data[element]['y1'] = event.y
+                        
+                    def on_release_rec(event):
+                        element = 'rectangle_' + str(self.num_element) 
+                        self.master.draw_data[element]['x2'] = event.x
+                        self.master.draw_data[element]['y2'] = event.y
+                        if self.canvas_focus == 'axial':
+                            self.master.axial.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                        elif self.canvas_focus == 'sagittal':
+                            self.master.sagittal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                        elif self.canvas_focus == 'coronal':
+                            self.master.coronal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                        
+                    self.radio_btn_var.set(1)
+                    
+                    self.canvas_focus = self.master.focus_get().winfo_name()  
+                    self.num_element = self.master.draw_data['number_of_elements'] 
+                    if self.canvas_focus ==  'axial':
+                        self.master.axial.canvas.bind('<Button-1>', on_press_rec)
+                        self.master.axial.canvas.bind('<ButtonRelease-1>', on_release_rec)
+                    elif self.canvas_focus == 'sagittal':
+                        self.master.sagittal.canvas.bind('<Button-1>', on_press_rec)
+                        self.master.sagittal.canvas.bind('<ButtonRelease-1>', on_release_rec)
+                    elif self.canvas_focus == 'coronal':
+                        self.master.coronal.canvas.bind('<Button-1>', on_press_rec)
+                        self.master.coronal.canvas.bind('<ButtonRelease-1>', on_release_rec)
                 
-            def create_tool_btns():
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/square.png"),size=(25, 25))
-                self.rec_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.rec_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=rec_icon)
                 self.rec_icon.grid(row=1, column=0, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/circle.png"),size=(25, 25))
-                self.circle_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.circle_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(2))
                 self.circle_icon.grid(row=1, column=1, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/ruler.png"),size=(25, 25))
-                self.ruler_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.ruler_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(3))
                 self.ruler_icon.grid(row=1, column=2, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/polygon.png"),size=(25, 25))
-                self.polygon_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.polygon_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(4))
                 self.polygon_icon.grid(row=1, column=3, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/brush.png"),size=(25, 25))
-                self.brush_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.brush_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(5))
                 self.brush_icon.grid(row=1, column=4, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eraser.png"),size=(25, 25))
-                self.eraser_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.eraser_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(6))
                 self.eraser_icon.grid(row=1, column=5, padx=5, pady=5, sticky='n')
-                
+                  
             def color_picker():
-                self.color_picker = customtkinter.CTkButton(master=self.draw_frame, text="choose color")
-                self.color_picker.grid(row=2, column=0, columnspan=6, padx=5, pady=5, sticky='ew')
+                
+                def ask_color():
+                    self.pick_color = AskColor() 
+                    self.color_choosed = self.pick_color.get()
+                    print(self.color_choosed)
+    
+                self.color_picker_btn = customtkinter.CTkButton(master=self.draw_frame, text="choose color", command=ask_color)
+                self.color_picker_btn.grid(row=2, column=0, columnspan=6, padx=5, pady=5, sticky='ew')
+                
+            
             frame()
             create_tool_btns()
             color_picker()
-
+            create_radio_btn()
 
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
@@ -1308,6 +1382,10 @@ class App(customtkinter.CTk):
                 }
             }
         }
+        self.draw_data = {
+           'number_of_elements': 1, 
+        }
+        
 
         # column and rows
         for i in range(15):
@@ -1333,7 +1411,7 @@ class App(customtkinter.CTk):
                 self.tools.hounsfield_slider.set([np.min(self.img), np.max(self.img)])
                 self.tools.btn_left_entry.configure(placeholder_text=np.min(self.img))
                 self.tools.btn_right_entry.configure(placeholder_text=np.max(self.img))
-            
+    
             self.axial = CanvasAxial(self)
             self.sagittal = CanvasSagittal(self)
             self.coronal = CanvasCoronal(self)
@@ -1341,12 +1419,11 @@ class App(customtkinter.CTk):
             
             
             
-            
-            
         self.bind("<<UpdateApp>>", update_app)
         self.mainloop()
-
+        
         # Save latest data here
+        print(self.draw_data)
 
 app = App(
     title='VasculAR software',
