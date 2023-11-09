@@ -425,8 +425,11 @@ class CanvasAxial:
     def __init__(self, master):
         self.master = master
         self.create_frame()
-        self.create_tool_widgets()
-        self.create_canvas()     
+        self.create_canvas()    
+        self.create_tool_widgets() 
+        
+    def test(self):
+        print("Test success")
         
     def create_tool_widgets(self):
         def rotation():
@@ -463,19 +466,28 @@ class CanvasAxial:
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
             self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
             self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+            
+        def color_map():
+            colors = ["gray", "bone", "nipy_spectral", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
+            self.color_map_default = customtkinter.StringVar(value="gray")
+            self.color_map = customtkinter.CTkComboBox(self.frame_tools, values=colors, variable=self.color_map_default)
+            self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
+            self.image_display(self.slider_volume.get())
 
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=4, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        self.frame_tools.grid(column=4, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
         rotation()
         flip_horizontal()
         flip_vertical()
+        color_map()
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
         self.frame.grid(row=1, column=0, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-    def create_canvas(self):    
+        
+    def image_display(self, index_slice):
         def create_crosshair():           
             def move_crosshair(event):
                 x, y = event.x, event.y
@@ -493,59 +505,7 @@ class CanvasAxial:
             self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
             self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
             self.canvas.bind("<ButtonPress-1>", on_mouse_press)
-            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)          
-            
-        def image_display(index_slice):
-            # get size
-            height = int(self.label_zoom.cget("text"))
-            
-            # slice index
-            image = self.master.img[int(index_slice),:, :]
-            
-            # hounsfield
-            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
-            image = np.where((image >= hf1) & (image <= hf2), image, 0)
-            
-            # color map
-            plt.imsave("temp.jpg", image, cmap='gray')
-            
-            # resize
-            image_display = Image.open("temp.jpg").resize((height, height))
-            
-            # rotate
-            rotation_angle = int(self.rotation_label.cget("text"))
-            image_display = image_display.rotate(rotation_angle)
-            
-            # flip
-            horizontal = self.flip_horizontal_label.cget("text")
-            vertical = self.flip_vertical_label.cget("text")
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-
-            # diplay image
-            my_image = ImageTk.PhotoImage(image_display)
-            x_cord, y_cord = image_position()
-            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-            self.canvas.image = my_image
-            
-            # create crosshair
-            create_crosshair()
-            
-            # display info
-            display_info()
-            
-            # ROI
-            self.region_of_interest = ROI(self, 'axial',                                   
-                self.master.ROI_data['axial']['rec']['x1'], 
-                self.master.ROI_data['axial']['rec']['y1'],
-                self.master.ROI_data['axial']['rec']['x2'], 
-                self.master.ROI_data['axial']['rec']['y2'],
-            )
-            
-            self.canvas.configure(bg='black')
-            
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)       
             
         def image_position():
             try:
@@ -553,31 +513,82 @@ class CanvasAxial:
                 return image_position[0], image_position[1]
             except:
                 return 400, 400
-            
-        def movement_binding():
-            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
-            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
-            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
-            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
-            
         def display_info():
             text_item = self.canvas.create_text(10, 20, text='AXIAL VIEW', anchor="w", fill=self.master.text_canvas_color)
             y = 40
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
                 y += 20
+                
+        # get size
+        height = int(self.label_zoom.cget("text"))
+            
+        # slice index
+        image = self.master.img[int(index_slice),:, :]
+            
+        # hounsfield
+        hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+        image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
+        # color map
+        color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
+        plt.imsave("temp.jpg", image, cmap=color_choice)
+            
+        # resize
+        image_display = Image.open("temp.jpg").resize((height, height))
+            
+        # rotate
+        rotation_angle = int(self.rotation_label.cget("text"))
+        image_display = image_display.rotate(rotation_angle)
+            
+        # flip
+        horizontal = self.flip_horizontal_label.cget("text")
+        vertical = self.flip_vertical_label.cget("text")
+        if horizontal == "horizontal":
+            image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+        if vertical == "vertical":
+            image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
+        # diplay image
+        my_image = ImageTk.PhotoImage(image_display)
+        x_cord, y_cord = image_position()
+        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+        self.canvas.image = my_image
+            
+        # create crosshair
+        create_crosshair()
+            
+        # display info
+        display_info()
+            
+        # ROI
+        self.region_of_interest = ROI(self, 'axial',                                   
+            self.master.ROI_data['axial']['rec']['x1'], 
+            self.master.ROI_data['axial']['rec']['y1'],
+            self.master.ROI_data['axial']['rec']['x2'], 
+            self.master.ROI_data['axial']['rec']['y2'],
+        )
+            
+        self.canvas.configure(bg='black')
+
+    def create_canvas(self):    
+        def movement_binding():
+            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
+            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
+            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
+            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
         
         def zoom(event):
             current_value = self.label_zoom.cget("text")
             new_value = int(current_value) + (event.delta/120)*6
             self.label_zoom.configure(text=new_value)
-            image_display(self.slider_volume.get())   
+            self.image_display(self.slider_volume.get())   
             
         def slider_volume_show(value):
             index_slice = round(value, 0)
             self.text_show_volume.configure(text=int(index_slice))
             self.canvas.focus_set() 
-            image_display(index_slice)
+            self.image_display(index_slice)
 
         def slider_widget():        
             self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=self.master.img.shape[0]-1, command=slider_volume_show)
@@ -601,6 +612,7 @@ class CanvasSagittal:
         self.create_canvas()     
         self.create_tool_widgets()
         
+        
     def create_tool_widgets(self):
         def rotation():
             def rotation_control():
@@ -636,23 +648,32 @@ class CanvasSagittal:
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
             self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
             self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+        
+        def color_map():
+            colors = ["gray", "bone", "nipy_spectral", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
+            self.color_map_default = customtkinter.StringVar(value="gray")
+            self.color_map = customtkinter.CTkComboBox(self.frame_tools, values=colors, variable=self.color_map_default)
+            self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
+            self.image_display(self.slider_volume.get())
 
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=10, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        self.frame_tools.grid(column=10, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
         rotation()
         flip_horizontal()
         flip_vertical() 
+        color_map()
 
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
         self.frame.grid(row=1, column=6, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-    def create_canvas(self):    
+                
+    def image_display(self, index_slice):
         def create_crosshair():
             self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
             self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
-            
+                
             def move_crosshair(event):
                 x, y = event.x, event.y
                 self.canvas.coords(self.horizontal_line, 0, y, self.canvas.winfo_width(), y)
@@ -665,62 +686,10 @@ class CanvasSagittal:
             def on_mouse_release(event):
                 if self.master.tools.check_ROI.get() == "off":
                     self.canvas.unbind("<Motion>")
-                    
+                        
             if self.master.tools.check_ROI.get() == "off":
                 self.canvas.bind("<ButtonPress-1>", on_mouse_press)
-                self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
-            
-        def image_display(index_slice):
-            # get size
-            height = int(self.label_zoom.cget("text"))
-            
-            # slice index
-            image = self.master.img[:,int(index_slice),:]
-            
-            # hounsfield
-            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
-            image = np.where((image >= hf1) & (image <= hf2), image, 0)
-            
-            # color map
-            plt.imsave("temp.jpg", image, cmap='gray')
-            
-            # resize
-            image_display = Image.open("temp.jpg").resize((height, height))
-            
-            # rotate
-            rotation_angle = int(self.rotation_label.cget("text"))
-            image_display = image_display.rotate(rotation_angle)
-            
-            # flip
-            horizontal = self.flip_horizontal_label.cget("text")
-            vertical = self.flip_vertical_label.cget("text")
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-
-            # diplay image
-            my_image = ImageTk.PhotoImage(image_display)
-            x_cord, y_cord = image_position()
-            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-            self.canvas.image = my_image
-            
-            # create crosshair
-            create_crosshair()
-            
-            # display info
-            display_info()
-            
-            # ROI
-            self.region_of_interest = ROI(self, 'sagittal',                                   
-                self.master.ROI_data['sagittal']['rec']['x1'], 
-                self.master.ROI_data['sagittal']['rec']['y1'],
-                self.master.ROI_data['sagittal']['rec']['x2'], 
-                self.master.ROI_data['sagittal']['rec']['y2'],
-            )
-            
-            self.canvas.configure(bg='black')
-            
+                self.canvas.bind("<ButtonRelease-1>", on_mouse_release) 
             
         def image_position():
             try:
@@ -729,30 +698,83 @@ class CanvasSagittal:
             except:
                 return 400, 400
             
-        def movement_binding():
-            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
-            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
-            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
-            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
-            
         def display_info():
             text_item = self.canvas.create_text(10, 20, text='SAGITTAL VIEW', anchor="w", fill=self.master.text_canvas_color)
             y = 40
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
                 y += 20
+            
+        # get size
+        height = int(self.label_zoom.cget("text"))
+            
+        # slice index
+        image = self.master.img[:,int(index_slice),:]
+            
+        # hounsfield
+        hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+        image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
+        # color map
+        color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
+        plt.imsave("temp.jpg", image, cmap=color_choice)
+            
+        # resize
+        image_display = Image.open("temp.jpg").resize((height, height))
+            
+        # rotate
+        rotation_angle = int(self.rotation_label.cget("text"))
+        image_display = image_display.rotate(rotation_angle)
+            
+        # flip
+        horizontal = self.flip_horizontal_label.cget("text")
+        vertical = self.flip_vertical_label.cget("text")
+        if horizontal == "horizontal":
+            image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+        if vertical == "vertical":
+            image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
+        # diplay image
+        my_image = ImageTk.PhotoImage(image_display)
+        x_cord, y_cord = image_position()
+        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+        self.canvas.image = my_image
+            
+        # create crosshair
+        create_crosshair()
+            
+        # display info
+        display_info()
+            
+        # ROI
+        self.region_of_interest = ROI(self, 'sagittal',                                   
+            self.master.ROI_data['sagittal']['rec']['x1'], 
+            self.master.ROI_data['sagittal']['rec']['y1'],
+            self.master.ROI_data['sagittal']['rec']['x2'], 
+            self.master.ROI_data['sagittal']['rec']['y2'],
+        )
+            
+        self.canvas.configure(bg='black')
+        
+    def create_canvas(self):                
+        def movement_binding():
+            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
+            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
+            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
+            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+        
         
         def zoom(event):
             current_value = self.label_zoom.cget("text")
             new_value = int(current_value) + (event.delta/120)*6
             self.label_zoom.configure(text=new_value)
-            image_display(self.slider_volume.get())   
+            self.image_display(self.slider_volume.get())   
             
         def slider_volume_show(value):
             index_slice = round(value, 0)
             self.text_show_volume.configure(text=int(index_slice))
             self.canvas.focus_set() 
-            image_display(index_slice)
+            self.image_display(index_slice)
 
         def slider_widget():        
             self.slider_volume = customtkinter.CTkSlider(self.master, from_=0, to=self.master.img.shape[1]-1, command=slider_volume_show)
@@ -773,8 +795,8 @@ class CanvasCoronal:
     def __init__(self, master):
         self.master = master
         self.create_frame()
-        self.create_tool_widgets()
-        self.create_canvas()     
+        self.create_canvas()   
+        self.create_tool_widgets()  
 
     def create_tool_widgets(self):
         def rotation():
@@ -811,19 +833,27 @@ class CanvasCoronal:
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
             self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
             self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+            
+        def color_map():
+            colors = ["gray", "bone", "nipy_spectral", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
+            self.color_map_default = customtkinter.StringVar(value="gray")
+            self.color_map = customtkinter.CTkComboBox(self.frame_tools, values=colors, variable=self.color_map_default)
+            self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
+            self.image_display(self.slider_volume.get())
 
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=16, row=0, columnspan=1, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2), weight=1)
+        self.frame_tools.grid(column=16, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
         rotation()
         flip_horizontal()
         flip_vertical() 
+        color_map()
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
         self.frame.grid(row=1, column=12, rowspan=9, columnspan=6, padx=5, sticky='news')
         
-    def create_canvas(self):    
+    def image_display(self, index_slice):
         def create_crosshair():
             self.horizontal_line = self.canvas.create_line(0, self.canvas.winfo_height() // 2, self.canvas.winfo_width(), self.canvas.winfo_height() // 2, fill="red")
             self.vertical_line = self.canvas.create_line(self.canvas.winfo_width() // 2, 0, self.canvas.winfo_width() // 2, self.canvas.winfo_height(), fill="red")
@@ -842,59 +872,7 @@ class CanvasCoronal:
                     self.canvas.unbind("<Motion>")
 
             self.canvas.bind("<ButtonPress-1>", on_mouse_press)
-            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)                
-            
-        def image_display(index_slice):
-            # get size
-            height = int(self.label_zoom.cget("text"))
-            
-            # slice index
-            image = self.master.img[:,:,int(index_slice)]
-            
-            # hounsfield
-            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
-            image = np.where((image >= hf1) & (image <= hf2), image, 0)
-            
-            # color map
-            plt.imsave("temp.jpg", image, cmap='gray')
-            
-            # resize
-            image_display = Image.open("temp.jpg").resize((height, height))
-            
-            # rotate
-            rotation_angle = int(self.rotation_label.cget("text"))
-            image_display = image_display.rotate(rotation_angle)
-            
-            # flip
-            horizontal = self.flip_horizontal_label.cget("text")
-            vertical = self.flip_vertical_label.cget("text")
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-
-            # diplay image
-            my_image = ImageTk.PhotoImage(image_display)
-            x_cord, y_cord = image_position()
-            self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-            self.canvas.image = my_image
-            
-            # create crosshair
-            create_crosshair()
-            
-            # display info
-            display_info()
-            
-            # ROI
-            self.region_of_interest = ROI(self, 'coronal',                                   
-                self.master.ROI_data['coronal']['rec']['x1'], 
-                self.master.ROI_data['coronal']['rec']['y1'],
-                self.master.ROI_data['coronal']['rec']['x2'], 
-                self.master.ROI_data['coronal']['rec']['y2'],
-            )
-            
-            self.canvas.configure(bg='black')
-            
+            self.canvas.bind("<ButtonRelease-1>", on_mouse_release)  
             
         def image_position():
             try:
@@ -902,31 +880,83 @@ class CanvasCoronal:
                 return image_position[0], image_position[1]
             except:
                 return 400, 400
+        def display_info():
+            text_item = self.canvas.create_text(10, 20, text='CORONAL VIEW', anchor="w", fill=self.master.text_canvas_color)
+            y = 40
+            for k, v in self.master.dict_info.items():
+                text_item = self.canvas.create_text(10, y, text=f'{k}:{v}', anchor="w", fill=self.master.text_canvas_color)
+                y += 20    
+               
+        # get size
+        height = int(self.label_zoom.cget("text"))
             
+        # slice index
+        image = self.master.img[:,:,int(index_slice)]
+            
+        # hounsfield
+        hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+        image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
+        # color map
+        color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
+        plt.imsave("temp.jpg", image, cmap=color_choice)
+            
+        # resize
+        image_display = Image.open("temp.jpg").resize((height, height))
+            
+        # rotate
+        rotation_angle = int(self.rotation_label.cget("text"))
+        image_display = image_display.rotate(rotation_angle)
+            
+        # flip
+        horizontal = self.flip_horizontal_label.cget("text")
+        vertical = self.flip_vertical_label.cget("text")
+        if horizontal == "horizontal":
+            image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+        if vertical == "vertical":
+            image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+
+        # diplay image
+        my_image = ImageTk.PhotoImage(image_display)
+        x_cord, y_cord = image_position()
+        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
+        self.canvas.image = my_image
+            
+        # create crosshair
+        create_crosshair()
+            
+        # display info
+        display_info()
+            
+        # ROI
+        self.region_of_interest = ROI(self, 'coronal',                                   
+            self.master.ROI_data['coronal']['rec']['x1'], 
+            self.master.ROI_data['coronal']['rec']['y1'],
+            self.master.ROI_data['coronal']['rec']['x2'], 
+            self.master.ROI_data['coronal']['rec']['y2'],
+        )
+            
+        self.canvas.configure(bg='black')
+
+    def create_canvas(self):    
+                
         def movement_binding():
             self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
             self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
             self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
             self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
             
-        def display_info():
-            text_item = self.canvas.create_text(10, 20, text='CORONAL VIEW', anchor="w", fill=self.master.text_canvas_color)
-            y = 40
-            for k, v in self.master.dict_info.items():
-                text_item = self.canvas.create_text(10, y, text=f'{k}:{v}', anchor="w", fill=self.master.text_canvas_color)
-                y += 20
-        
         def zoom(event):
             current_value = self.label_zoom.cget("text")
             new_value = int(current_value) + (event.delta/120)*6
             self.label_zoom.configure(text=new_value)
-            image_display(self.slider_volume.get())   
+            self.image_display(self.slider_volume.get())   
             
         def slider_volume_show(value):
             index_slice = round(value, 0)
             self.text_show_volume.configure(text=int(index_slice))
             self.canvas.focus_set() 
-            image_display(index_slice)
+            self.image_display(index_slice)
             
 
         def slider_widget():        
@@ -954,17 +984,17 @@ class Tools:
         
     def title_toolbox(self, frame, title):
         header = customtkinter.CTkButton(master=frame, text=title, state='disabled', fg_color=self.master.second_color, text_color_disabled=self.master.text_disabled_color)
-        header.grid(row=0, column=0, columnspan=5, padx=5, pady=5, sticky='new')
+        header.grid(row=0, column=0, columnspan=6, padx=7, pady=7, sticky='new')
         return header
       
     def config(self):
         self.hounsfield_slider.configure(from_=2424, to=7878)
         
     def TabView1(self):
-        def DrawingTools():
+        def ROI():
             def frame():
-                self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
-                self.check_ROI_frame.grid(column=0, row=0, rowspan=3, pady=(0,5), sticky='news')
+                self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1)
+                self.check_ROI_frame.grid(column=0, row=0, columnspan=2, rowspan=3, pady=(0,5), sticky='news')
                 self.check_ROI_frame.rowconfigure((0,1,2,3,4), weight=1)
                 self.check_ROI_frame.columnconfigure((0,1,2,3,4), weight=1)
                 
@@ -1033,12 +1063,10 @@ class Tools:
             sagittal()
             coronal()
             
-            
-            
         def HounsField():
             def frame():
-                self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
-                self.hounsfield_frame.grid(column=0, row=3, rowspan=3, sticky='news')
+                self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1)
+                self.hounsfield_frame.grid(column=0, row=3, columnspan=2, rowspan=3, sticky='news')
                 self.hounsfield_frame.rowconfigure((0,1,2), weight=1)
                 self.hounsfield_frame.columnconfigure(0, weight=1)
                 
@@ -1047,7 +1075,10 @@ class Tools:
             def widget():   
                 def update_hounnsfield_slider(value):
                     self.btn_left_entry.configure(placeholder_text=value[0])
-                    self.btn_right_entry.configure(placeholder_text=value[1])
+                    self.btn_right_entry.configure(placeholder_text=value[1])     
+                    self.master.axial.image_display(self.master.axial.slider_volume.get())      
+                    self.master.sagittal.image_display(self.master.sagittal.slider_volume.get())         
+                    self.master.coronal.image_display(self.master.coronal.slider_volume.get())         
                     
                 def left_increase_hf():
                     hf1, hf2 = int(round(self.hounsfield_slider.get()[0], 0)), int(round(self.hounsfield_slider.get()[1], 0))
@@ -1104,8 +1135,52 @@ class Tools:
             frame()
             widget()
 
-            
-            
+
+        def DrawingTools():
+            def frame():
+                self.layer_frame = customtkinter.CTkScrollableFrame(self.tabview_1_tab_1, label_text='Layer elements')
+                self.layer_frame.grid(row=0, column=2, columnspan=1, rowspan=6, padx=(5,0), sticky='news')
+                self.layer_frame.columnconfigure(0, weight=1)
+                
+                self.draw_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
+                self.draw_frame.grid(row=0, column=3, columnspan=3, rowspan=3, padx=(5,0), sticky='news')
+                self.draw_frame.rowconfigure((0,1), weight=1)
+                self.draw_frame.columnconfigure((0,1,2,3,4,5), weight=1)
+                self.draw_header = self.title_toolbox(frame=self.draw_frame, title="Analysis tools")
+                
+            def create_tool_btns():
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/square.png"),size=(25, 25))
+                self.rec_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.rec_icon.grid(row=1, column=0, padx=5, pady=5, sticky='n')
+                
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/circle.png"),size=(25, 25))
+                self.circle_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.circle_icon.grid(row=1, column=1, padx=5, pady=5, sticky='n')
+                
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/ruler.png"),size=(25, 25))
+                self.ruler_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.ruler_icon.grid(row=1, column=2, padx=5, pady=5, sticky='n')
+                
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/polygon.png"),size=(25, 25))
+                self.polygon_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.polygon_icon.grid(row=1, column=3, padx=5, pady=5, sticky='n')
+                
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/brush.png"),size=(25, 25))
+                self.brush_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.brush_icon.grid(row=1, column=4, padx=5, pady=5, sticky='n')
+                
+                icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eraser.png"),size=(25, 25))
+                self.eraser_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40)
+                self.eraser_icon.grid(row=1, column=5, padx=5, pady=5, sticky='n')
+                
+            def color_picker():
+                self.color_picker = customtkinter.CTkButton(master=self.draw_frame, text="choose color")
+                self.color_picker.grid(row=2, column=0, columnspan=6, padx=5, pady=5, sticky='ew')
+            frame()
+            create_tool_btns()
+            color_picker()
+
+
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
             self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
@@ -1119,8 +1194,9 @@ class Tools:
             self.tabview_1.set("Basic tools") 
             
         create_tabs()
-        DrawingTools()
+        ROI()
         HounsField()
+        DrawingTools()
         
     def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
@@ -1240,6 +1316,10 @@ class App(customtkinter.CTk):
         for i in range(18):
             self.columnconfigure(i, weight=1, uniform='a')
             
+        for i in range(15):
+            for j in range(18):
+                label = customtkinter.CTkFrame(self, fg_color="transparent")
+                label.grid(row=i, column=j, sticky='nsew')
 
         # create menu
         self.menu_bar = MenuBar(self)
