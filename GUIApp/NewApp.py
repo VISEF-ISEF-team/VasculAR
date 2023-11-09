@@ -329,6 +329,17 @@ class ROI:
         self.main_app.tools.axial_width.set(f"width: {self.main_app.ROI_data['axial']['rec']['x2'] - self.main_app.ROI_data['axial']['rec']['x1']}")
         self.main_app.tools.axial_height.set(f"height: {self.main_app.ROI_data['axial']['rec']['y2'] - self.main_app.ROI_data['axial']['rec']['y1']}")
         
+        self.main_app.tools.sagittal_x1.set(f"x: {self.main_app.ROI_data['sagittal']['rec']['x1']}")
+        self.main_app.tools.sagittal_y1.set(f"y: {self.main_app.ROI_data['sagittal']['rec']['y1']}")
+        self.main_app.tools.sagittal_width.set(f"width: {self.main_app.ROI_data['sagittal']['rec']['x2'] - self.main_app.ROI_data['sagittal']['rec']['x1']}")
+        self.main_app.tools.sagittal_height.set(f"height: {self.main_app.ROI_data['sagittal']['rec']['y2'] - self.main_app.ROI_data['sagittal']['rec']['y1']}")
+        
+        self.main_app.tools.coronal_x1.set(f"x: {self.main_app.ROI_data['coronal']['rec']['x1']}")
+        self.main_app.tools.coronal_y1.set(f"y: {self.main_app.ROI_data['coronal']['rec']['y1']}")
+        self.main_app.tools.coronal_width.set(f"width: {self.main_app.ROI_data['coronal']['rec']['x2'] - self.main_app.ROI_data['coronal']['rec']['x1']}")
+        self.main_app.tools.coronal_height.set(f"height: {self.main_app.ROI_data['coronal']['rec']['y2'] - self.main_app.ROI_data['coronal']['rec']['y1']}")
+        
+        
     def update(self):
         self.update_label()
         self.rec_width = self.x2 - self.x1
@@ -487,10 +498,17 @@ class CanvasAxial:
         def image_display(index_slice):
             # get size
             height = int(self.label_zoom.cget("text"))
+            
             # slice index
             image = self.master.img[int(index_slice),:, :]
+            
+            # hounsfield
+            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
             # color map
             plt.imsave("temp.jpg", image, cmap='gray')
+            
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -655,10 +673,17 @@ class CanvasSagittal:
         def image_display(index_slice):
             # get size
             height = int(self.label_zoom.cget("text"))
+            
             # slice index
             image = self.master.img[:,int(index_slice),:]
+            
+            # hounsfield
+            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
             # color map
             plt.imsave("temp.jpg", image, cmap='gray')
+            
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -822,10 +847,17 @@ class CanvasCoronal:
         def image_display(index_slice):
             # get size
             height = int(self.label_zoom.cget("text"))
+            
             # slice index
             image = self.master.img[:,:,int(index_slice)]
+            
+            # hounsfield
+            hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
+            image = np.where((image >= hf1) & (image <= hf2), image, 0)
+            
             # color map
             plt.imsave("temp.jpg", image, cmap='gray')
+            
             # resize
             image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -922,45 +954,157 @@ class Tools:
         
     def title_toolbox(self, frame, title):
         header = customtkinter.CTkButton(master=frame, text=title, state='disabled', fg_color=self.master.second_color, text_color_disabled=self.master.text_disabled_color)
-        header.grid(row=0, column=0, columnspan=4, padx=5, pady=5, sticky='new')
+        header.grid(row=0, column=0, columnspan=5, padx=5, pady=5, sticky='new')
         return header
+      
+    def config(self):
+        self.hounsfield_slider.configure(from_=2424, to=7878)
         
     def TabView1(self):
         def DrawingTools():
-            self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
-            self.check_ROI_frame.grid(column=0, row=0, rowspan=2, pady=(0,5), sticky='news')
-            self.check_ROI_frame.rowconfigure((0,1,2,3,4), weight=1)
-            self.check_ROI_frame.columnconfigure((0,1,2,3), weight=1)
+            def frame():
+                self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
+                self.check_ROI_frame.grid(column=0, row=0, rowspan=3, pady=(0,5), sticky='news')
+                self.check_ROI_frame.rowconfigure((0,1,2,3,4), weight=1)
+                self.check_ROI_frame.columnconfigure((0,1,2,3,4), weight=1)
+                
+                self.check_ROI_header = self.title_toolbox(frame=self.check_ROI_frame, title='Region of Interest')
+                
+                self.check_var = customtkinter.StringVar(value="off")
+                self.check_ROI = customtkinter.CTkCheckBox(master=self.check_ROI_frame, text="Edit ROI", variable=self.check_var, onvalue="on", offvalue="off")
+                self.check_ROI.grid(row=1, column=0, columnspan=5, sticky='n')
             
-            self.check_ROI_header = self.title_toolbox(frame=self.check_ROI_frame, title='Region of Interest')
+            def axial():
+                self.axial_label = customtkinter.CTkLabel(master=self.check_ROI_frame, text="Axial").grid(row=2, column=0, padx=(5,0), sticky='w')
+                self.axial_x1 = customtkinter.StringVar(value=f"x: {self.master.ROI_data['axial']['rec']['x1']}")
+                self.axial_x1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_x1)
+                self.axial_x1_show.grid(row=2, column=1, padx=(5,0),  sticky='w')
+                
+                self.axial_y1 = customtkinter.StringVar(value=f"y: {self.master.ROI_data['axial']['rec']['x1']}")
+                self.axial_y1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_y1)
+                self.axial_y1_show.grid(row=2, column=2, padx=(10,0), sticky='w')
+                
+                self.axial_width = customtkinter.StringVar(value=f"width: {self.master.ROI_data['axial']['rec']['x2'] - self.master.ROI_data['axial']['rec']['x1']}")
+                self.axial_width_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_width)
+                self.axial_width_show.grid(row=2, column=3,padx=(10,0),  sticky='w')
+                
+                self.axial_height = customtkinter.StringVar(value=f"height: {self.master.ROI_data['axial']['rec']['y2'] - self.master.ROI_data['axial']['rec']['y1']}")
+                self.axial_height_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_height)
+                self.axial_height_show.grid(row=2, column=4,padx=(10,0),  sticky='w')
+                
+            def sagittal():
+                self.sagittal_label = customtkinter.CTkLabel(master=self.check_ROI_frame, text="Sagittal").grid(row=3, column=0, sticky='w')
+                self.sagittal_x1 = customtkinter.StringVar(value=f"x: {self.master.ROI_data['sagittal']['rec']['x1']}")
+                self.sagittal_x1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.sagittal_x1)
+                self.sagittal_x1_show.grid(row=3, column=1, padx=(10,0), sticky='w')
+                
+                self.sagittal_y1 = customtkinter.StringVar(value=f"y: {self.master.ROI_data['sagittal']['rec']['x1']}")
+                self.sagittal_y1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.sagittal_y1)
+                self.sagittal_y1_show.grid(row=3, column=2, padx=(10,0), sticky='w')
+                
+                self.sagittal_width = customtkinter.StringVar(value=f"width: {self.master.ROI_data['sagittal']['rec']['x2'] - self.master.ROI_data['sagittal']['rec']['x1']}")
+                self.sagittal_width_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.sagittal_width)
+                self.sagittal_width_show.grid(row=3, column=3, padx=(10,0), sticky='w')
+                
+                self.sagittal_height = customtkinter.StringVar(value=f"height: {self.master.ROI_data['sagittal']['rec']['y2'] - self.master.ROI_data['sagittal']['rec']['y1']}")
+                self.sagittal_height_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.sagittal_height)
+                self.sagittal_height_show.grid(row=3, column=4,padx=(10,0), sticky='w')
+                
+            def coronal():
+                self.coronal_label = customtkinter.CTkLabel(master=self.check_ROI_frame, text="Coronal").grid(row=4, column=0, sticky='w')
+                self.coronal_x1 = customtkinter.StringVar(value=f"x: {self.master.ROI_data['coronal']['rec']['x1']}")
+                self.coronal_x1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.coronal_x1)
+                self.coronal_x1_show.grid(row=4, column=1,padx=(10,0),  sticky='w')
+                
+                self.coronal_y1 = customtkinter.StringVar(value=f"y: {self.master.ROI_data['coronal']['rec']['x1']}")
+                self.coronal_y1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.coronal_y1)
+                self.coronal_y1_show.grid(row=4, column=2,padx=(10,0), sticky='w')
+                
+                self.coronal_width = customtkinter.StringVar(value=f"width: {self.master.ROI_data['coronal']['rec']['x2'] - self.master.ROI_data['coronal']['rec']['x1']}")
+                self.coronal_width_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.coronal_width)
+                self.coronal_width_show.grid(row=4, column=3, padx=(10,0), sticky='w')
+                
+                self.coronal_height = customtkinter.StringVar(value=f"height: {self.master.ROI_data['coronal']['rec']['y2'] - self.master.ROI_data['coronal']['rec']['y1']}")
+                self.coronal_height_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.coronal_height)
+                self.coronal_height_show.grid(row=4, column=4, padx=(10,0), sticky='w')
+                
+            frame()
+            axial()
+            sagittal()
+            coronal()
             
-            self.check_var = customtkinter.StringVar(value="off")
-            self.check_ROI = customtkinter.CTkCheckBox(master=self.check_ROI_frame, text="Edit ROI", variable=self.check_var, onvalue="on", offvalue="off")
-            self.check_ROI.grid(row=1, column=0, columnspan=4, sticky='n')
             
-            self.axial_x1 = customtkinter.StringVar(value=f"x: {self.master.ROI_data['axial']['rec']['x1']}")
-            self.axial_x1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_x1)
-            self.axial_x1_show.grid(row=2, column=0, sticky='w')
             
-            self.axial_y1 = customtkinter.StringVar(value=f"y: {self.master.ROI_data['axial']['rec']['x1']}")
-            self.axial_y1_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_y1)
-            self.axial_y1_show.grid(row=2, column=1, sticky='w')
+        def HounsField():
+            def frame():
+                self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
+                self.hounsfield_frame.grid(column=0, row=3, rowspan=3, sticky='news')
+                self.hounsfield_frame.rowconfigure((0,1,2), weight=1)
+                self.hounsfield_frame.columnconfigure(0, weight=1)
+                
+                self.hounsfield_header = self.title_toolbox(frame=self.hounsfield_frame, title='HounsField Unit')
+                
+            def widget():   
+                def update_hounnsfield_slider(value):
+                    self.btn_left_entry.configure(placeholder_text=value[0])
+                    self.btn_right_entry.configure(placeholder_text=value[1])
+                    
+                def left_increase_hf():
+                    hf1, hf2 = int(round(self.hounsfield_slider.get()[0], 0)), int(round(self.hounsfield_slider.get()[1], 0))
+                    hf1 += 50
+                    self.hounsfield_slider.set([hf1, hf2])
+                    self.btn_left_entry.configure(placeholder_text=hf1)
+                    self.btn_right_entry.configure(placeholder_text=hf2)
+                    
+                def left_decrease_hf():
+                    hf1, hf2 = int(round(self.hounsfield_slider.get()[0], 0)), int(round(self.hounsfield_slider.get()[1], 0))
+                    hf1 -= 50
+                    self.hounsfield_slider.set([hf1, hf2])
+                    self.btn_left_entry.configure(placeholder_text=hf1)
+                    self.btn_right_entry.configure(placeholder_text=hf2)
+                
+                def right_increase_hf():
+                    hf1, hf2 = int(round(self.hounsfield_slider.get()[0], 0)), int(round(self.hounsfield_slider.get()[1], 0))
+                    hf2 += 50
+                    self.hounsfield_slider.set([hf1, hf2])
+                    self.btn_left_entry.configure(placeholder_text=hf1)
+                    self.btn_right_entry.configure(placeholder_text=hf2)
+
+                    
+                def right_decrease_hf():
+                    hf1, hf2 = int(round(self.hounsfield_slider.get()[0], 0)), int(round(self.hounsfield_slider.get()[1], 0))
+                    hf2 -= 50
+                    self.hounsfield_slider.set([hf1, hf2])
+                    self.btn_left_entry.configure(placeholder_text=hf1)
+                    self.btn_right_entry.configure(placeholder_text=hf2)
+
+                
+                self.hounsfield_slider = CTkRangeSlider(self.hounsfield_frame, from_=-1000, to=1000, command=update_hounnsfield_slider)
+                self.hounsfield_slider.grid(column=0, row=2, columnspan=2, sticky='new', padx=5)
+                
+                self.btn_left_increase = customtkinter.CTkButton(self.hounsfield_frame, text="+", width=20, command=left_increase_hf)
+                self.btn_left_increase.grid(column=0, row=1, sticky='nw', padx=(30,0))
+                
+                self.btn_left_decrease = customtkinter.CTkButton(self.hounsfield_frame, text="-", width=20, command=left_decrease_hf)
+                self.btn_left_decrease.grid(column=0, row=1, sticky='nw', padx=(5,0))
+                
+                self.btn_left_entry = customtkinter.CTkEntry(self.hounsfield_frame, placeholder_text=self.hounsfield_slider.get()[0], width=70, state='normal')
+                self.btn_left_entry.grid(column=0, row=1, sticky='nw', padx=(60,0))
+                
+                self.btn_right_increase = customtkinter.CTkButton(self.hounsfield_frame, text="+", width=20, command=right_increase_hf)
+                self.btn_right_increase.grid(column=0, row=1, sticky='ne', padx=(0,5))
+                
+                self.btn_right_decrease = customtkinter.CTkButton(self.hounsfield_frame, text="-", width=20, command=right_decrease_hf)
+                self.btn_right_decrease.grid(column=0, row=1, sticky='ne', padx=(0,30))
+                
+                self.btn_right_entry = customtkinter.CTkEntry(self.hounsfield_frame, placeholder_text=self.hounsfield_slider.get()[1], width=70, state='normal')
+                self.btn_right_entry.configure('normal')
+                self.btn_right_entry.grid(column=0, row=1, sticky='ne', padx=(0,60))
+                
+            frame()
+            widget()
+
             
-            self.axial_width = customtkinter.StringVar(value=f"width: {self.master.ROI_data['axial']['rec']['x2'] - self.master.ROI_data['axial']['rec']['x1']}")
-            self.axial_width_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_width)
-            self.axial_width_show.grid(row=2, column=2, sticky='w')
-            
-            self.axial_height = customtkinter.StringVar(value=f"height: {self.master.ROI_data['axial']['rec']['y2'] - self.master.ROI_data['axial']['rec']['y1']}")
-            self.axial_height_show = customtkinter.CTkLabel(master=self.check_ROI_frame, textvariable=self.axial_height)
-            self.axial_height_show.grid(row=2, column=3, sticky='w')
-            
-        def ImageProcessing():
-            self.image_proc_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, width=300, height=200)
-            self.image_proc_frame.grid(column=0, row=2, rowspan=2, sticky='news')
-            self.image_proc_frame.rowconfigure((0,1), weight=1)
-            self.image_proc_frame.columnconfigure(0, weight=1)
-            
-            self.image_proc_header = self.title_toolbox(frame=self.image_proc_frame, title='Image processing')
             
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
@@ -968,7 +1112,7 @@ class Tools:
             # tab 1
             self.tabview_1_tab_1 = self.tabview_1.add("Basic tools")    
             self.tabview_1_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
-            self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5,6), weight=1)
+            self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
             
             self.tabview_1_tab_2 = self.tabview_1.add("Image processing")
             self.tabview_1_tab_3 = self.tabview_1.add("Defect Detection")
@@ -976,7 +1120,7 @@ class Tools:
             
         create_tabs()
         DrawingTools()
-        ImageProcessing()
+        HounsField()
         
     def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
@@ -1102,9 +1246,21 @@ class App(customtkinter.CTk):
         self.tools = Tools(self)
         
         def update_app(event):
+            
+            def update_hounsfield():
+                self.tools.hounsfield_slider.configure(from_=np.min(self.img))
+                self.tools.hounsfield_slider.configure(to=np.max(self.img))
+                self.tools.hounsfield_slider.set([np.min(self.img), np.max(self.img)])
+                self.tools.btn_left_entry.configure(placeholder_text=np.min(self.img))
+                self.tools.btn_right_entry.configure(placeholder_text=np.max(self.img))
+            
             self.axial = CanvasAxial(self)
             self.sagittal = CanvasSagittal(self)
             self.coronal = CanvasCoronal(self)
+            update_hounsfield()
+            
+            
+            
             
             
         self.bind("<<UpdateApp>>", update_app)
