@@ -521,9 +521,17 @@ class CanvasAxial:
                    
         def display_drawings():
             for element, data in self.master.draw_data.items():
-                if element != 'number_of_elements' and data['type'] == 'rectangle' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
-                    self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
-                    self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
+                    if data['type'] == 'rectangle':
+                        self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'circle':
+                        self.canvas.create_oval(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'line':
+                        self.canvas.create_line(data['x1'], data['y1'], data['x2'], data['y2'], fill=data['color'], width=3)
+                        distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
          
         # get size
         height = int(self.label_zoom.cget("text"))
@@ -712,6 +720,20 @@ class CanvasSagittal:
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
                 y += 20
+                
+        def display_drawings():
+            for element, data in self.master.draw_data.items():
+                if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'sagittal':
+                    if data['type'] == 'rectangle':
+                        self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'circle':
+                        self.canvas.create_oval(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'line':
+                        self.canvas.create_line(data['x1'], data['y1'], data['x2'], data['y2'], fill=data['color'], width=3)
+                        distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
             
         # get size
         height = int(self.label_zoom.cget("text"))
@@ -761,6 +783,9 @@ class CanvasSagittal:
             self.master.ROI_data['sagittal']['rec']['x2'], 
             self.master.ROI_data['sagittal']['rec']['y2'],
         )
+        
+        # display drawings
+        display_drawings()
             
         self.canvas.configure(bg='black')
         
@@ -893,7 +918,21 @@ class CanvasCoronal:
             y = 40
             for k, v in self.master.dict_info.items():
                 text_item = self.canvas.create_text(10, y, text=f'{k}:{v}', anchor="w", fill=self.master.text_canvas_color)
-                y += 20      
+                y += 20 
+                
+        def display_drawings():
+            for element, data in self.master.draw_data.items():
+                if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'coronal':
+                    if data['type'] == 'rectangle':
+                        self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'circle':
+                        self.canvas.create_oval(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+                    elif data['type'] == 'line':
+                        self.canvas.create_line(data['x1'], data['y1'], data['x2'], data['y2'], fill=data['color'], width=3)
+                        distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
+                        self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])  
                
         # get size
         height = int(self.label_zoom.cget("text"))
@@ -943,6 +982,9 @@ class CanvasCoronal:
             self.master.ROI_data['coronal']['rec']['x2'], 
             self.master.ROI_data['coronal']['rec']['y2'],
         )
+        
+        # display drawings
+        display_drawings()
         
         self.canvas.configure(bg='black')
 
@@ -1168,8 +1210,8 @@ class Tools:
                 self.eraser_radio_btn = customtkinter.CTkRadioButton(self.draw_frame, variable=self.radio_btn_var, value=6)
                                     
             def create_tool_btns():     
-                def rec_icon():
-                    def create(element):
+                def create_shape(shape):
+                    def create():
                         if self.canvas_focus == 'axial':
                             slice = int(round(self.master.axial.slider_volume.get(), 0))
                         elif self.canvas_focus == 'sagittal':
@@ -1179,11 +1221,11 @@ class Tools:
                             
                         self.num_element = self.master.draw_data['number_of_elements'] 
                         temp = {
-                            element + '_' + str(self.num_element): {
+                            self.shape + '_' + str(self.num_element): {
                                 'canvas': self.canvas_focus,
                                 'slice': slice,
                                 'color': self.color_choosed,
-                                'type': element,
+                                'type': self.shape,
                                 'note': ""
                             }
                         }
@@ -1191,30 +1233,55 @@ class Tools:
                         self.master.draw_data.update(temp)
                     
                     def on_press_rec(event):
-                        create(element='rectangle')
-                        element = 'rectangle_' + str(self.num_element) 
+                        create()
+                        element = self.shape + '_' + str(self.num_element) 
                         self.master.draw_data[element]['x1'] = event.x
                         self.master.draw_data[element]['y1'] = event.y
                         
                     def on_release_rec(event):
-                        element = 'rectangle_' + str(self.num_element) 
+                        element = self.shape + '_' + str(self.num_element) 
                         self.master.draw_data[element]['x2'] = event.x
                         self.master.draw_data[element]['y2'] = event.y
-                        if self.canvas_focus == 'axial':
-                            self.master.axial.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
-                        elif self.canvas_focus == 'sagittal':
-                            self.master.sagittal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
-                        elif self.canvas_focus == 'coronal':
-                            self.master.coronal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
                         
-                        self.master.axial.image_display(self.master.axial.slider_volume.get())
+                        if self.shape=='rectangle':
+                            if self.canvas_focus == 'axial':
+                                self.master.axial.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.axial.image_display(int(round(self.master.axial.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'sagittal':
+                                self.master.sagittal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.sagittal.image_display(int(round (self.master.sagittal.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'coronal':
+                                self.master.coronal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.coronal.image_display(int(round(self.master.coronal.slider_volume.get(),0)))
+                                
+                        elif self.shape=='circle':
+                            if self.canvas_focus == 'axial':
+                                self.master.axial.canvas.create_oval(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.axial.image_display(int(round(self.master.axial.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'sagittal':
+                                self.master.sagittal.canvas.create_oval(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.sagittal.image_display(int(round (self.master.sagittal.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'coronal':
+                                self.master.coronal.canvas.create_oval(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
+                                self.master.coronal.image_display(int(round(self.master.coronal.slider_volume.get(),0)))
+                                
+                        elif self.shape=='line':
+                            if self.canvas_focus == 'axial':
+                                self.master.axial.canvas.create_line(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, fill=self.master.draw_data[element]['color'], width=3)
+                                self.master.axial.image_display(int(round(self.master.axial.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'sagittal':
+                                self.master.sagittal.canvas.create_line(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, fill=self.master.draw_data[element]['color'], width=3)
+                                self.master.sagittal.image_display(int(round (self.master.sagittal.slider_volume.get(),0)))
+                            elif self.canvas_focus == 'coronal':
+                                self.master.coronal.canvas.create_line(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, fill=self.master.draw_data[element]['color'], width=3)
+                                self.master.coronal.image_display(int(round(self.master.coronal.slider_volume.get(),0)))
+                        
                         self.layers_management()
-
-                    self.radio_btn_var.set(1)
                     
                     self.canvas_focus = self.master.focus_get().winfo_name()  
                     self.num_element = self.master.draw_data['number_of_elements'] 
-                    if self.canvas_focus ==  'axial':
+                    self.shape = shape
+                    if self.canvas_focus == 'axial':
                         self.master.axial.canvas.bind('<Button-1>', on_press_rec)
                         self.master.axial.canvas.bind('<ButtonRelease-1>', on_release_rec)
                     elif self.canvas_focus == 'sagittal':
@@ -1223,17 +1290,19 @@ class Tools:
                     elif self.canvas_focus == 'coronal':
                         self.master.coronal.canvas.bind('<Button-1>', on_press_rec)
                         self.master.coronal.canvas.bind('<ButtonRelease-1>', on_release_rec)
+                        
+                
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/square.png"),size=(25, 25))
-                self.rec_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=rec_icon)
+                self.rec_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda shape='rectangle': create_shape(shape))
                 self.rec_icon.grid(row=1, column=0, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/circle.png"),size=(25, 25))
-                self.circle_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(2))
+                self.circle_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda shape='circle': create_shape(shape))
                 self.circle_icon.grid(row=1, column=1, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/ruler.png"),size=(25, 25))
-                self.ruler_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda: self.radio_btn_var.set(3))
+                self.ruler_icon = customtkinter.CTkButton(self.draw_frame, text="", image=icon, width=40, height=40, command=lambda shape='line': create_shape(shape))
                 self.ruler_icon.grid(row=1, column=2, padx=5, pady=5, sticky='n')
                 
                 icon = customtkinter.CTkImage(dark_image=Image.open("imgs/polygon.png"),size=(25, 25))
@@ -1286,15 +1355,15 @@ class Tools:
             
             if self.master.draw_data[element]['canvas'] == 'axial':
                 del(self.master.draw_data[element])
-                self.master.axial.image_display(self.master.axial.slider_volume.get())
+                self.master.axial.image_display(int(round(self.master.axial.slider_volume.get(),0)))
                 
             elif self.master.draw_data[element]['canvas'] == 'sagittal':
                 del(self.master.draw_data[element])
-                self.master.sagittal.image_display(self.master.axial.slider_volume.get())
+                self.master.sagittal.image_display(int(round(self.master.sagittal.slider_volume.get(), 0)))
                 
             elif self.master.draw_data[element]['canvas'] == 'coronal':
                 del(self.master.draw_data[element])
-                self.master.coronal.image_display(self.master.axial.slider_volume.get())
+                self.master.coronal.image_display(int(round(self.master.coronal.slider_volume.get(),0)))
                 
             self.layers_management()
             
@@ -1309,7 +1378,13 @@ class Tools:
                 del(self.master.draw_data[layer_name])
             self.master.draw_data[note.renamed_header]['note'] = note.analysis
             self.layers_management()
-            self.master.axial.image_display(self.master.axial.slider_volume.get())
+            
+            if self.master.draw_data[note.renamed_header]['canvas'] == 'axial':
+                self.master.axial.image_display(int(round(self.master.axial.slider_volume.get(),0)))
+            elif self.master.draw_data[note.renamed_header]['canvas'] == 'sagittal':
+                self.master.sagittal.image_display(int(round(self.master.sagittal.slider_volume.get(), 0)))
+            elif self.master.draw_data[note.renamed_header]['canvas'] == 'coronal':
+                self.master.coronal.image_display(int(round(self.master.coronal.slider_volume.get(),0)))
             
         data = self.master.draw_data
         for widget in self.layer_frame.winfo_children(): 
@@ -1331,8 +1406,6 @@ class Tools:
                 
             row_num += 1
                 
-    
-
     def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
         self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
