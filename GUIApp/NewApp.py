@@ -987,6 +987,7 @@ class Tools:
         self.master = master
         self.TabView1()
         self.TabView2()
+        self.layers_management()          
         
     def title_toolbox(self, frame, title):
         header = customtkinter.CTkButton(master=frame, text=title, state='disabled', fg_color=self.master.second_color, text_color_disabled=self.master.text_disabled_color)
@@ -1146,7 +1147,8 @@ class Tools:
             def frame():
                 self.layer_frame = customtkinter.CTkScrollableFrame(self.tabview_1_tab_1, label_text='Layer elements')
                 self.layer_frame.grid(row=0, column=2, columnspan=1, rowspan=6, padx=(5,0), sticky='news')
-                self.layer_frame.columnconfigure(0, weight=1)
+                self.layer_frame.columnconfigure((0,1,2,3,4,5,6), weight=1)
+                # self.layer_frame.rowconfigure(0, weight=1)
                 
                 self.draw_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
                 self.draw_frame.grid(row=0, column=3, columnspan=3, rowspan=3, padx=(5,0), sticky='news')
@@ -1201,6 +1203,8 @@ class Tools:
                         elif self.canvas_focus == 'coronal':
                             self.master.coronal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
                         
+                        self.layers_management()
+
                     self.radio_btn_var.set(1)
                     
                     self.canvas_focus = self.master.focus_get().winfo_name()  
@@ -1240,16 +1244,15 @@ class Tools:
                 self.eraser_icon.grid(row=1, column=5, padx=5, pady=5, sticky='n')
                   
             def color_picker():
-                
                 def ask_color():
                     self.pick_color = AskColor() 
                     self.color_choosed = self.pick_color.get()
-                    print(self.color_choosed)
     
                 self.color_picker_btn = customtkinter.CTkButton(master=self.draw_frame, text="choose color", command=ask_color)
                 self.color_picker_btn.grid(row=2, column=0, columnspan=6, padx=5, pady=5, sticky='ew')
                 
             
+                
             frame()
             create_tool_btns()
             color_picker()
@@ -1272,6 +1275,29 @@ class Tools:
         HounsField()
         DrawingTools()
         
+    def layers_management(self):
+        data = self.master.draw_data
+        for widget in self.layer_frame.winfo_children(): 
+            widget.destroy()
+            
+        row_num = 0
+        for element, data in data.items():
+            if element != 'number_of_elements':
+                layer = customtkinter.CTkButton(master=self.layer_frame, text=element, fg_color=self.master.second_color)
+                layer.grid(row=row_num, column=0, columnspan=5, pady=5)
+                
+                note_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/note.png"),size=(20, 20))
+                note_icon = customtkinter.CTkButton(self.layer_frame, text="", image=note_icon, width=30, height=30)
+                note_icon.grid(row=row_num, column=5, padx=5, columnspan=1)
+                
+                bin_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/bin.png"),size=(20, 20))
+                bin_icon = customtkinter.CTkButton(self.layer_frame, text="", image=bin_icon, width=30, height=30)
+                bin_icon.grid(row=row_num, column=6, columnspan=1)
+                
+            row_num += 1
+                
+    
+
     def TabView2(self):
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
         self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
@@ -1382,11 +1408,9 @@ class App(customtkinter.CTk):
                 }
             }
         }
-        self.draw_data = {
-           'number_of_elements': 1, 
-        }
+        self.draw_data = {}
         
-
+        
         # column and rows
         for i in range(15):
             self.rowconfigure(i, weight=1, uniform='a')
@@ -1405,6 +1429,19 @@ class App(customtkinter.CTk):
         
         def update_app(event):
             
+            self.draw_data = {
+                'number_of_elements': 1, 
+                'rectangle_0': {
+                    'canvas': 'axial',
+                    'slice': 100,
+                    'x1': 100,
+                    'y1': 100,
+                    'x2': 300,
+                    'y2': 300,
+                    'color': 'red',
+                }
+            }
+            
             def update_hounsfield():
                 self.tools.hounsfield_slider.configure(from_=np.min(self.img))
                 self.tools.hounsfield_slider.configure(to=np.max(self.img))
@@ -1415,6 +1452,7 @@ class App(customtkinter.CTk):
             self.axial = CanvasAxial(self)
             self.sagittal = CanvasSagittal(self)
             self.coronal = CanvasCoronal(self)
+            self.tools = Tools(self)
             update_hounsfield()
             
             
