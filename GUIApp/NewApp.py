@@ -10,6 +10,7 @@ import tkinter
 from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
 from CTkColorPicker import *
+from NoteAnalysis import NoteWindow 
 from draw import draw_canvas
 from PIL import Image, ImageTk
 import SimpleITK as sitk
@@ -520,9 +521,10 @@ class CanvasAxial:
                    
         def display_drawings():
             for element, data in self.master.draw_data.items():
-                if element[:-2] == 'rectangle' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
-                        self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
-                
+                if element != 'number_of_elements' and data['type'] == 'rectangle' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
+                    self.canvas.create_rectangle(data['x1'], data['y1'], data['x2'], data['y2'], outline=data['color'])
+                    self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=element, anchor="center", fill=data['color'])
+         
         # get size
         height = int(self.label_zoom.cget("text"))
             
@@ -1167,7 +1169,7 @@ class Tools:
                                     
             def create_tool_btns():     
                 def rec_icon():
-                    def create_rec(element):
+                    def create(element):
                         if self.canvas_focus == 'axial':
                             slice = int(round(self.master.axial.slider_volume.get(), 0))
                         elif self.canvas_focus == 'sagittal':
@@ -1181,13 +1183,15 @@ class Tools:
                                 'canvas': self.canvas_focus,
                                 'slice': slice,
                                 'color': self.color_choosed,
+                                'type': element,
+                                'note': ""
                             }
                         }
                         self.master.draw_data['number_of_elements'] = self.num_element + 1
                         self.master.draw_data.update(temp)
                     
                     def on_press_rec(event):
-                        create_rec(element='rectangle')
+                        create(element='rectangle')
                         element = 'rectangle_' + str(self.num_element) 
                         self.master.draw_data[element]['x1'] = event.x
                         self.master.draw_data[element]['y1'] = event.y
@@ -1203,6 +1207,7 @@ class Tools:
                         elif self.canvas_focus == 'coronal':
                             self.master.coronal.canvas.create_rectangle(self.master.draw_data[element]['x1'], self.master.draw_data[element]['y1'], event.x, event.y, outline=self.master.draw_data[element]['color'])
                         
+                        self.master.axial.image_display(self.master.axial.slider_volume.get())
                         self.layers_management()
 
                     self.radio_btn_var.set(1)
@@ -1276,6 +1281,36 @@ class Tools:
         DrawingTools()
         
     def layers_management(self):
+        def delete_element(element):
+            self.master.draw_data['number_of_elements'] -= 1
+            
+            if self.master.draw_data[element]['canvas'] == 'axial':
+                del(self.master.draw_data[element])
+                self.master.axial.image_display(self.master.axial.slider_volume.get())
+                
+            elif self.master.draw_data[element]['canvas'] == 'sagittal':
+                del(self.master.draw_data[element])
+                self.master.sagittal.image_display(self.master.axial.slider_volume.get())
+                
+            elif self.master.draw_data[element]['canvas'] == 'coronal':
+                del(self.master.draw_data[element])
+                self.master.coronal.image_display(self.master.axial.slider_volume.get())
+                
+            self.layers_management()
+            
+        def note_analysis(layer_name):
+            note = NoteWindow(
+                layer_name=layer_name,
+                analysis = self.master.draw_data[layer_name]['note'],
+            )
+            note.wait_window()
+            if note.renamed_header != layer_name:
+                self.master.draw_data[note.renamed_header] = self.master.draw_data[layer_name]
+                del(self.master.draw_data[layer_name])
+            self.master.draw_data[note.renamed_header]['note'] = note.analysis
+            self.layers_management()
+            self.master.axial.image_display(self.master.axial.slider_volume.get())
+            
         data = self.master.draw_data
         for widget in self.layer_frame.winfo_children(): 
             widget.destroy()
@@ -1287,11 +1322,11 @@ class Tools:
                 layer.grid(row=row_num, column=0, columnspan=5, pady=5)
                 
                 note_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/note.png"),size=(20, 20))
-                note_icon = customtkinter.CTkButton(self.layer_frame, text="", image=note_icon, width=30, height=30)
+                note_icon = customtkinter.CTkButton(self.layer_frame, text="", image=note_icon, width=30, height=30, command=lambda element=element: note_analysis(element))
                 note_icon.grid(row=row_num, column=5, padx=5, columnspan=1)
                 
                 bin_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/bin.png"),size=(20, 20))
-                bin_icon = customtkinter.CTkButton(self.layer_frame, text="", image=bin_icon, width=30, height=30)
+                bin_icon = customtkinter.CTkButton(self.layer_frame, text="", image=bin_icon, width=30, height=30, command=lambda element=element: delete_element(element))
                 bin_icon.grid(row=row_num, column=6, columnspan=1)
                 
             row_num += 1
@@ -1431,14 +1466,16 @@ class App(customtkinter.CTk):
             
             self.draw_data = {
                 'number_of_elements': 1, 
-                'rectangle_0': {
+                'Bất thường 1': {
                     'canvas': 'axial',
+                    'type': 'rectangle',
                     'slice': 100,
                     'x1': 100,
                     'y1': 100,
                     'x2': 300,
                     'y2': 300,
                     'color': 'red',
+                    'note': "default analysis",
                 }
             }
             
