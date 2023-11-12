@@ -565,8 +565,10 @@ class CanvasAxial:
                             data['y1'] = data['y1'] - (zoom_ratio + 0.85 * 2)
                             data['x2'] = data['x2'] + (zoom_ratio + 0.85)
                             data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
+                        
+    
         # get size
-        height = int(self.label_zoom.cget("text"))
+        height = int(self.label_zoom.cget("text")) 
             
         # slice index
         image = self.master.img[int(index_slice),:, :]
@@ -579,6 +581,11 @@ class CanvasAxial:
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
             
+        # brightness
+        image_display = cv2.imread("temp.jpg")
+        brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        cv2.imwrite("temp.jpg", brightness_image)
+        
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -799,6 +806,11 @@ class CanvasSagittal:
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
             
+        # brightness
+        image_display = cv2.imread("temp.jpg")
+        brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        cv2.imwrite("temp.jpg", brightness_image)
+        
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -1016,6 +1028,11 @@ class CanvasCoronal:
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
             
+        # brightness
+        image_display = cv2.imread("temp.jpg")
+        brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        cv2.imwrite("temp.jpg", brightness_image)    
+         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
             
@@ -1260,7 +1277,6 @@ class Tools:
                 self.layer_frame = customtkinter.CTkScrollableFrame(self.tabview_1_tab_1, label_text='Layer elements')
                 self.layer_frame.grid(row=0, column=2, columnspan=1, rowspan=6, padx=(5,0), sticky='news')
                 self.layer_frame.columnconfigure((0,1,2,3,4,5,6), weight=1)
-                # self.layer_frame.rowconfigure(0, weight=1)
                 
                 self.draw_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
                 self.draw_frame.grid(row=0, column=3, columnspan=3, rowspan=3, padx=(5,0), sticky='news')
@@ -1399,23 +1415,85 @@ class Tools:
             create_tool_btns()
             color_picker()
             create_radio_btn()
+            
+        
+
+        def Thresholding():
+            def frame():                
+                self.thres_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
+                self.thres_frame.grid(row=3, column=3, columnspan=3, rowspan=3, padx=(5,0), pady=(5,0), sticky='news')
+                self.thres_frame.rowconfigure((0,1,2), weight=1)
+                self.thres_frame.columnconfigure((0,1), weight=1)
+                self.draw_header = self.title_toolbox(frame=self.thres_frame, title="Thresholding")
+                
+            def support_frame_callback(choice):
+                if choice == 'None':
+                    img_raw = self.master.img_raw
+                if choice == 'Denoise':
+                    img_raw = sitk.CurvatureFlow(self.master.img_raw)
+                elif choice == 'Blurring':
+                    img_raw = sitk.DiscreteGaussian(self.master.img_raw)
+                elif choice == 'GrayscaleErode':
+                    img_raw = sitk.GrayscaleErode(self.master.img_raw)
+                elif choice == 'OtsuThreshold':
+                    img_raw = sitk.OtsuThreshold(self.master.img_raw, 0, 1)
+                elif choice == 'LiThreshold':
+                    img_raw = sitk.LiThreshold(self.master.img_raw, 0, 1)
+                elif choice == 'MomentsThreshold':
+                    img_raw = sitk.MomentsThreshold(self.master.img_raw, 0, 1)
+                self.master.img = sitk.GetArrayFromImage(img_raw)
+            
+            def support_function():
+                self.support_label = customtkinter.CTkLabel(master=self.thres_frame, text="Thresholding")
+                self.support_label.grid(row=1, column=0, padx=10, sticky='w')
+                
+                support_function_values = ["None", 'Denoise', 'Blurring', 'GrayscaleErode','OtsuThreshold', 'LiThreshold', 'MomentsThreshold']
+                self.support_function_default = customtkinter.StringVar(value="None")
+                self.support_function = customtkinter.CTkComboBox(master=self.thres_frame, values=support_function_values, variable=self.support_function_default, command=support_frame_callback)
+                self.support_function.grid(column=1, row=1, padx=10, pady=15, sticky='we')
+    
+            def brightness():
+                def increase_brightness():
+                    cur_val = float(self.entry_brightness.get())
+                    cur_val += 0.1
+                    self.entry_brightness_value.set(round(cur_val,3))
+                
+                def decrease_brightness():
+                    cur_val = float(self.entry_brightness.get())
+                    cur_val -= 0.1
+                    self.entry_brightness_value.set(round(cur_val,3))
+                
+                self.brightness = customtkinter.CTkLabel(master=self.thres_frame, text="Brightness")
+                self.brightness.grid(row=2, column=0, padx=10, sticky='w')
+                
+                self.btn_left_decrease = customtkinter.CTkButton(master=self.thres_frame, text="-", width=25, height=25, command=decrease_brightness)
+                self.btn_left_decrease.grid(column=1, row=2, sticky='nw', padx=(15,0))
+                self.btn_right_increase = customtkinter.CTkButton(master=self.thres_frame, text="+", width=25, height=25, command=increase_brightness)
+                self.btn_right_increase.grid(column=1, row=2, sticky='ne', padx=(0,15))
+                
+                self.entry_brightness_value = customtkinter.StringVar(value="1")
+                self.entry_brightness = customtkinter.CTkEntry(master=self.thres_frame, placeholder_text="1", textvariable=self.entry_brightness_value)
+                self.entry_brightness.grid(column=1, row=2, padx=(30,30), pady=(0,0))
+                
+            frame()
+            support_function()
+            brightness()
 
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
             self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
             # tab 1
-            self.tabview_1_tab_1 = self.tabview_1.add("Basic tools")    
+            self.tabview_1_tab_1 = self.tabview_1.add("Image Processing")    
             self.tabview_1_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
-            
-            self.tabview_1_tab_2 = self.tabview_1.add("Image processing")
-            self.tabview_1_tab_3 = self.tabview_1.add("Defect Detection")
-            self.tabview_1.set("Basic tools") 
+            self.tabview_1_tab_2 = self.tabview_1.add("Defect Detection")
+            self.tabview_1.set("Image Processing") 
             
         create_tabs()
         ROI()
         HounsField()
         DrawingTools()
+        Thresholding()
         
     def layers_management(self):
         def delete_element(element):
