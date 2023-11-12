@@ -12,7 +12,7 @@ from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from draw import draw_canvas
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
 from readdcm import ReadDCM
 import cv2
@@ -428,7 +428,16 @@ class CanvasAxial:
         self.master = master
         self.create_frame()
         self.create_canvas()    
-        self.create_tool_widgets() 
+        self.create_tool_widgets()
+        self.save_canvas()
+        
+    def save_canvas(self):
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
+        y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
+        x1 = x + self.canvas.winfo_width()*1.255 
+        y1 = y + self.canvas.winfo_height()*1.255  
+        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
+        print('saved')
     
     def create_tool_widgets(self):
         def rotation():
@@ -437,10 +446,11 @@ class CanvasAxial:
                 if current_val == 360:
                     current_val = 0
                 self.rotation_label.configure(text=current_val+90)
-            
+             
             self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
-            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
-            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/rotate.png"), size=(20, 20))
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text="", image=icon, width=25, height=25, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, padx=5, sticky='w') 
 
         def flip_horizontal():
             def flip_control():
@@ -451,8 +461,9 @@ class CanvasAxial:
                     self.flip_horizontal_label.configure(text="")
                 
             self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
-            self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_horizontal.png"), size=(20, 20))
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=flip_control)
+            self.flip_horizontal_btn.grid(column=1, row=0, padx=5, sticky='w')  
             
         def flip_vertical():
             def flip_control():
@@ -463,8 +474,9 @@ class CanvasAxial:
                     self.flip_vertical_label.configure(text="")
                     
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
-            self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_vertical.png"), size=(20, 20))
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=flip_control)
+            self.flip_vertical_btn.grid(column=2, row=0, padx=5, sticky='w')  
             
         def color_map():
             colors = ["gray", "bone", "nipy_spectral", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
@@ -472,14 +484,20 @@ class CanvasAxial:
             self.color_map = customtkinter.CTkComboBox(self.frame_tools, values=colors, variable=self.color_map_default)
             self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
             self.image_display(self.slider_volume.get())
-
+            
+        def save_photo():
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/save.png"), size=(20, 20))
+            self.save_photo_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=self.save_canvas)
+            self.save_photo_btn.grid(row=0, column=4, padx=10, sticky='e')
+            
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=4, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
+        self.frame_tools.grid(column=3, row=0, columnspan=3, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3,4), weight=1)
         rotation()
         flip_horizontal()
         flip_vertical()
         color_map()
+        save_photo()
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
@@ -511,7 +529,7 @@ class CanvasAxial:
                 image_position = self.canvas.coords(self.canvas_item)
                 return image_position[0], image_position[1]
             except:
-                return 400, 400
+                return int(round(673/2,0)), int(round(673/2,0))
         def display_info():
             text_item = self.canvas.create_text(10, 20, text='AXIAL VIEW', anchor="w", fill=self.master.text_canvas_color)
             y = 40
@@ -519,7 +537,7 @@ class CanvasAxial:
                 text_item = self.canvas.create_text(10, y, text=f'{k} : {v}', anchor="w", fill=self.master.text_canvas_color)
                 y += 20
                    
-        def display_drawings():
+        def display_drawings(zoom_ratio=0.1):
             for element, data in self.master.draw_data.items():
                 if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
                     if data['type'] == 'rectangle':
@@ -532,7 +550,21 @@ class CanvasAxial:
                         self.canvas.create_line(data['x1'], data['y1'], data['x2'], data['y2'], fill=data['color'], width=3)
                         distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
-         
+        
+                    if zoom_ratio > 0:
+                        if data['y1'] < 673/2:
+                            ratio = 673/2 - data['y1']
+                            data['x1'] = data['x1'] - (zoom_ratio + 0.85 / ratio)
+                            data['y1'] = data['y1'] - (zoom_ratio + 0.85 * 2)
+                            data['x2'] = data['x2'] + (zoom_ratio + 0.85)
+                            data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
+                            
+                        if data['y1'] > 673/2:
+                            ratio = data['y1'] - 673/2
+                            data['x1'] = data['x1'] - (zoom_ratio + 0.85 / ratio)
+                            data['y1'] = data['y1'] - (zoom_ratio + 0.85 * 2)
+                            data['x2'] = data['x2'] + (zoom_ratio + 0.85)
+                            data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
         # get size
         height = int(self.label_zoom.cget("text"))
             
@@ -583,7 +615,7 @@ class CanvasAxial:
         )
             
         # display all drawings
-        display_drawings()
+        display_drawings(zoom_ratio=(6)/673)
         
         self.canvas.configure(bg='black')
 
@@ -629,6 +661,15 @@ class CanvasSagittal:
         self.create_tool_widgets()
         self.name = 'axial'
                 
+    def save_canvas(self):
+        print(self.canvas.winfo_x())
+        x = self.master.winfo_rootx() + 861
+        y = self.master.winfo_rooty() + 100 
+        x1 = x + self.canvas.winfo_width()*1.255 
+        y1 = y + self.canvas.winfo_height()*1.255  
+        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
+        print('saved')
+        
     def create_tool_widgets(self):
         def rotation():
             def rotation_control():
@@ -638,8 +679,9 @@ class CanvasSagittal:
                 self.rotation_label.configure(text=current_val+90)
             
             self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
-            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
-            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/rotate.png"), size=(20, 20))
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, padx=5, sticky='w') 
 
         def flip_horizontal():
             def flip_control():
@@ -650,8 +692,9 @@ class CanvasSagittal:
                     self.flip_horizontal_label.configure(text="")
                 
             self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
-            self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_horizontal.png"), size=(20, 20))
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon,width=25, height=25, command=flip_control)
+            self.flip_horizontal_btn.grid(column=1, row=0, padx=5, sticky='w')  
             
         def flip_vertical():
             def flip_control():
@@ -662,8 +705,9 @@ class CanvasSagittal:
                     self.flip_vertical_label.configure(text="")
                     
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
-            self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_vertical.png"), size=(20, 20))
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=flip_control)
+            self.flip_vertical_btn.grid(column=2, row=0, padx=5, sticky='w')  
         
         def color_map():
             colors = ["gray", "bone", "nipy_spectral", "viridis", "plasma", "inferno", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "GnBu"]
@@ -671,14 +715,20 @@ class CanvasSagittal:
             self.color_map = customtkinter.CTkComboBox(self.frame_tools, values=colors, variable=self.color_map_default)
             self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
             self.image_display(self.slider_volume.get())
-
+            
+        def save_photo():
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/save.png"), size=(20, 20))
+            self.save_photo_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=self.save_canvas)
+            self.save_photo_btn.grid(row=0, column=4, padx=10, sticky='e')
+            
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=10, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
+        self.frame_tools.grid(column=9, row=0, columnspan=3, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3, 4), weight=1)
         rotation()
         flip_horizontal()
-        flip_vertical() 
+        flip_vertical()
         color_map()
+        save_photo()
 
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
@@ -830,6 +880,15 @@ class CanvasCoronal:
         self.create_frame()
         self.create_canvas()   
         self.create_tool_widgets()  
+        
+    def save_canvas(self):
+        print(self.canvas.winfo_x())
+        x = self.master.winfo_rootx() + 857*2
+        y = self.master.winfo_rooty() + 100 
+        x1 = x + self.canvas.winfo_width()*1.255 
+        y1 = y + self.canvas.winfo_height()*1.255  
+        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
+        print('saved')
 
     def create_tool_widgets(self):
         def rotation():
@@ -840,8 +899,9 @@ class CanvasCoronal:
                 self.rotation_label.configure(text=current_val+90)
             
             self.rotation_label = customtkinter.CTkLabel(master=self.frame, text="0") 
-            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='R', width=30, command=rotation_control)
-            self.rotation_btn.grid(column=0, row=0, sticky='w') 
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/rotate.png"), size=(20, 20))
+            self.rotation_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=rotation_control)
+            self.rotation_btn.grid(column=0, row=0, padx=5, sticky='w') 
 
         def flip_horizontal():
             def flip_control():
@@ -852,7 +912,8 @@ class CanvasCoronal:
                     self.flip_horizontal_label.configure(text="")
                 
             self.flip_horizontal_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='H', width=30, command=flip_control)
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_horizontal.png"), size=(20, 20))
+            self.flip_horizontal_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=flip_control)
             self.flip_horizontal_btn.grid(column=1, row=0, sticky='w')  
             
         def flip_vertical():
@@ -864,7 +925,8 @@ class CanvasCoronal:
                     self.flip_vertical_label.configure(text="")
                     
             self.flip_vertical_label = customtkinter.CTkLabel(master=self.frame, text="") 
-            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='V', width=30, command=flip_control)
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/flip_vertical.png"), size=(20, 20))
+            self.flip_vertical_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=flip_control)
             self.flip_vertical_btn.grid(column=2, row=0, sticky='w')  
             
         def color_map():
@@ -874,13 +936,19 @@ class CanvasCoronal:
             self.color_map.grid(column=3, row=0, sticky='ew', padx=10)
             self.image_display(self.slider_volume.get())
 
+        def save_photo():
+            icon = customtkinter.CTkImage(dark_image=Image.open("imgs/save.png"), size=(20, 20))
+            self.save_photo_btn = customtkinter.CTkButton(master=self.frame_tools, text='', image=icon, width=25, height=25, command=self.save_canvas)
+            self.save_photo_btn.grid(row=0, column=4, padx=10, sticky='e')
+            
         self.frame_tools = customtkinter.CTkFrame(master=self.master, fg_color='transparent')
-        self.frame_tools.grid(column=16, row=0, columnspan=2, rowspan=1, pady=(35, 0), sticky='news')
-        self.frame_tools.columnconfigure((0,1,2,3), weight=1)
+        self.frame_tools.grid(column=15, row=0, columnspan=3, rowspan=1, pady=(35, 0), sticky='news')
+        self.frame_tools.columnconfigure((0,1,2,3, 4), weight=1)
         rotation()
         flip_horizontal()
-        flip_vertical() 
+        flip_vertical()
         color_map()
+        save_photo()
         
     def create_frame(self):
         self.frame = customtkinter.CTkFrame(master=self.master, fg_color=self.master.second_color)
@@ -1517,7 +1585,7 @@ class App(customtkinter.CTk):
             }
         }
         self.draw_data = {}
-        
+        self.analysis_data = {}
         
         # column and rows
         for i in range(15):
@@ -1577,3 +1645,21 @@ app = App(
     title='VasculAR software',
     logo_path='imgs/logo.ico'
 )
+
+
+'''
+        Data saved into .vas:
+            patient_data.json --> dict into
+            draw_data.json --> draw_data
+            ROI_data.json --> ROI_data
+            Photo_data.json --> analysis_data
+                save into pdf (if on that slice there is a analysis box text --> write on the pdf too + 1 page for patient info)
+        Database on firebase:
+            4 files of json + 1 pdf
+            1 for databse management:
+            'patient_name':
+            'date'
+            'modality'
+            'times': 
+            'path_to_file_vas -> clicked --> automate open the zip vas with analysis
+        '''
