@@ -584,6 +584,7 @@ class CanvasAxial:
             
         # slice index
         image = self.master.img[int(index_slice),:, :]
+        seg = self.master.seg[int(index_slice),:, :]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -592,35 +593,38 @@ class CanvasAxial:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
+        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
+        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
         cv2.imwrite("temp.jpg", brightness_image)
+        cv2.imwrite("temp2.jpg", brightness_image_seg)   
         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
+        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-            
+        image_display_seg = image_display_seg.rotate(rotation_angle)
+        
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-
-        # Segmentation loading
-        image = self.master.seg[int(index_slice),:, :]
-        plt.imsave("temp.jpg", image, cmap='gray')
-        image_display_2 = Image.open("temp.jpg").resize((height, height))    
+            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
 
         # diplay images
         x_cord, y_cord = image_position()
-        create_image_alpha(x_cord, y_cord, image_display, image_display_2)
+        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
             
         # create crosshair
         create_crosshair()
@@ -820,11 +824,25 @@ class CanvasSagittal:
                         distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
             
+        self.images = [] 
+        def create_image_alpha(x, y, image, image_seg):
+            alpha_origin = int(225)
+            alpha_seg = int(0.25 * 255)
+            image = image.convert('RGBA')
+            image_seg = image_seg.convert('RGBA')
+            image.putalpha(alpha_origin)
+            image_seg.putalpha(alpha_seg)
+            self.images.append(ImageTk.PhotoImage(image))
+            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+            self.images.append(ImageTk.PhotoImage(image_seg))
+            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
         # get size
         height = int(self.label_zoom.cget("text"))
             
         # slice index
-        image = self.master.img[:,int(index_slice),:]
+        image = self.master.img[:, int(index_slice), :]
+        seg = self.master.seg[:, int(index_slice), :]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -833,32 +851,38 @@ class CanvasSagittal:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
+        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
+        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
         cv2.imwrite("temp.jpg", brightness_image)
+        cv2.imwrite("temp2.jpg", brightness_image_seg)   
         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
+        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-            
+        image_display_seg = image_display_seg.rotate(rotation_angle)
+        
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
 
-        # diplay image
-        my_image = ImageTk.PhotoImage(image_display)
+        # diplay images
         x_cord, y_cord = image_position()
-        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-        self.canvas.image = my_image
+        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)    
             
         # create crosshair
         create_crosshair()
@@ -881,10 +905,24 @@ class CanvasSagittal:
         
     def create_canvas(self):                
         def movement_binding():
-            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
-            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
-            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
-            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+            def left():
+                self.canvas.move(self.canvas_item_1, -10, 0)
+                self.canvas.move(self.canvas_item_2, -10, 0)     
+            def right():
+                self.canvas.move(self.canvas_item_1, 10, 0)
+                self.canvas.move(self.canvas_item_2, 10, 0)
+            def up():
+                self.canvas.move(self.canvas_item_1, 0, -10)
+                self.canvas.move(self.canvas_item_2, 0, -10)
+            def down():
+                self.canvas.move(self.canvas_item_1, 0, 10)
+                self.canvas.move(self.canvas_item_2, 0, 10)
+                
+                
+            self.canvas.bind('<Left>', lambda event: left())
+            self.canvas.bind('<Right>', lambda event: right())
+            self.canvas.bind('<Up>', lambda event: up())
+            self.canvas.bind('<Down>', lambda event: down())  
         
         
         def zoom(event):
@@ -1040,12 +1078,26 @@ class CanvasCoronal:
                         self.canvas.create_line(data['x1'], data['y1'], data['x2'], data['y2'], fill=data['color'], width=3)
                         distance = int(round(((data['x2'] - data['x1'])**2 +  (data['y2'] - data['y1'])**2)**(1/2), 2))
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])  
-               
+          
+        self.images = [] 
+        def create_image_alpha(x, y, image, image_seg):
+            alpha_origin = int(225)
+            alpha_seg = int(0.25 * 255)
+            image = image.convert('RGBA')
+            image_seg = image_seg.convert('RGBA')
+            image.putalpha(alpha_origin)
+            image_seg.putalpha(alpha_seg)
+            self.images.append(ImageTk.PhotoImage(image))
+            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+            self.images.append(ImageTk.PhotoImage(image_seg))
+            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                  
         # get size
         height = int(self.label_zoom.cget("text"))
             
         # slice index
-        image = self.master.img[:,:,int(index_slice)]
+        image = self.master.img[:,:, int(index_slice)]
+        seg = self.master.seg[:,:,int(index_slice)]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -1054,32 +1106,38 @@ class CanvasCoronal:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
+        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
+        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-        cv2.imwrite("temp.jpg", brightness_image)    
-         
+        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+        cv2.imwrite("temp.jpg", brightness_image)
+        cv2.imwrite("temp2.jpg", brightness_image_seg)   
+        
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
+        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-            
+        image_display_seg = image_display_seg.rotate(rotation_angle)
+        
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
 
-        # diplay image
-        my_image = ImageTk.PhotoImage(image_display)
+        # diplay images
         x_cord, y_cord = image_position()
-        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-        self.canvas.image = my_image
+        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)    
             
         # create crosshair
         create_crosshair()
@@ -1101,12 +1159,25 @@ class CanvasCoronal:
         self.canvas.configure(bg='black')
 
     def create_canvas(self):    
-                
         def movement_binding():
-            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
-            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
-            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
-            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+            def left():
+                self.canvas.move(self.canvas_item_1, -10, 0)
+                self.canvas.move(self.canvas_item_2, -10, 0)     
+            def right():
+                self.canvas.move(self.canvas_item_1, 10, 0)
+                self.canvas.move(self.canvas_item_2, 10, 0)
+            def up():
+                self.canvas.move(self.canvas_item_1, 0, -10)
+                self.canvas.move(self.canvas_item_2, 0, -10)
+            def down():
+                self.canvas.move(self.canvas_item_1, 0, 10)
+                self.canvas.move(self.canvas_item_2, 0, 10)
+                
+                
+            self.canvas.bind('<Left>', lambda event: left())
+            self.canvas.bind('<Right>', lambda event: right())
+            self.canvas.bind('<Up>', lambda event: up())
+            self.canvas.bind('<Down>', lambda event: down())  
             
         def zoom(event):
             current_value = self.label_zoom.cget("text")
