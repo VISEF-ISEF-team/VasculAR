@@ -19,7 +19,7 @@ def load_mesh(filename, color, texture):
 def show_mesh(path):
     meshes = []
     colors = ['#f1d691', '#b17a65', '#6fb8d2', '#d8654f', '#b17a65', '#b17a65', '#b17a65',  '#fc8184', '#0d05ff', '#e6dc46', '#fa0101', '#f4d631', '#fc8184', '#90ee90', '#0d05ff']
-    textures = ['cardiac_texture_4.jpg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_3.jpg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg']
+    textures = ['cardiac_texture_4.jpg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_3.jpg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg', 'cardiac_texture_2.jpeg']
     files = [f for f in os.listdir(path) if f.endswith('.stl')]
     buttons = []
     plt = Plotter()
@@ -56,4 +56,4 @@ def show_mesh(path):
     plt = show(meshes, bg='black')
     plt.show()
     
-show_mesh('../data/MM_WHS/seg_res/1006/')
+show_mesh('../data/MM_WHS/seg_res/1020/')

@@ -74,3 +74,22 @@ Application Structure and organization:
     - Note analysis --> pdf
 - Retrieve new database from cloud
 - Update (push new analysis) to json
+
+# III. Segmentation
+Class orders:
+- Động mạch chủ (Aorta)
+- Động mạch phổi (Pulmonary Trunk)
+- Tĩnh mạch phổi (Pulmonary veins)
+- Tâm thất trái (Left Ventricle)
+- Tâm nhĩ trái (Left Atrium)
+- Tâm thất phải (Right Ventricle)
+- Tấm nhĩ phải (Right Atrium)
+- Động mạch vành (Coronary artery)
+- Van 2 lá (Biscupid valve) --> aortic valve
+- Van 3 lá (Triscupid valve) --> aortic valve
+- Gân còn ống động mạch (Ligamentum Arteriosum)
+
+
+Bảng 
+Hình 3D tái tạo từ thuật toán của nhóm | Hình chụp cắt lớp | Quan sát bệnh
++ 1 Hình chụp toàn cảnh

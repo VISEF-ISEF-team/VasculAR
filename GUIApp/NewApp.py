@@ -75,6 +75,7 @@ class MenuBar:
                 'sub_menu': {
                     'add_nifti_file_btn': 'Add Nifti file',
                     'add_dcm_series_btn': 'Add DCM series',
+                    'add_seg_btn ': 'Add Segmentation',
                     'save_case_btn': 'Save case',
                     'export_analysis_btn': 'Export analysis',
                 }
@@ -188,7 +189,6 @@ class MenuBar:
         if self.master.path.endswith('.nii.gz') or self.master.path.endswith('.nii'):
             self.master.img_raw = sitk.ReadImage(self.master.path, sitk.sitkFloat32)
             self.master.img = sitk.GetArrayFromImage(self.master.img_raw)
-            print("read niftifile")
         
         elif self.master.path.endswith('.dcm'):
             parent_dir = os.path.dirname(self.master.path)
@@ -565,8 +565,20 @@ class CanvasAxial:
                             data['y1'] = data['y1'] - (zoom_ratio + 0.85 * 2)
                             data['x2'] = data['x2'] + (zoom_ratio + 0.85)
                             data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
-                        
-    
+                            
+        self.images = [] 
+        def create_image_alpha(x, y, image, image_seg):
+            alpha_origin = int(225)
+            alpha_seg = int(0.25 * 255)
+            image = image.convert('RGBA')
+            image_seg = image_seg.convert('RGBA')
+            image.putalpha(alpha_origin)
+            image_seg.putalpha(alpha_seg)
+            self.images.append(ImageTk.PhotoImage(image))
+            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+            self.images.append(ImageTk.PhotoImage(image_seg))
+            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
         # get size
         height = int(self.label_zoom.cget("text")) 
             
@@ -601,11 +613,14 @@ class CanvasAxial:
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
 
-        # diplay image
-        my_image = ImageTk.PhotoImage(image_display)
+        # Segmentation loading
+        image = self.master.seg[int(index_slice),:, :]
+        plt.imsave("temp.jpg", image, cmap='gray')
+        image_display_2 = Image.open("temp.jpg").resize((height, height))    
+
+        # diplay images
         x_cord, y_cord = image_position()
-        self.canvas_item = self.canvas.create_image(x_cord, y_cord, image=my_image, anchor="center")
-        self.canvas.image = my_image
+        create_image_alpha(x_cord, y_cord, image_display, image_display_2)
             
         # create crosshair
         create_crosshair()
@@ -628,10 +643,24 @@ class CanvasAxial:
 
     def create_canvas(self):    
         def movement_binding():
-            self.canvas.bind('<Left>', lambda event: self.canvas.move(self.canvas_item, -10, 0))
-            self.canvas.bind('<Right>', lambda event: self.canvas.move(self.canvas_item, 10, 0))
-            self.canvas.bind('<Up>', lambda event: self.canvas.move(self.canvas_item, 0, -10))
-            self.canvas.bind('<Down>', lambda event: self.canvas.move(self.canvas_item, 0, 10))   
+            def left():
+                self.canvas.move(self.canvas_item_1, -10, 0)
+                self.canvas.move(self.canvas_item_2, -10, 0)     
+            def right():
+                self.canvas.move(self.canvas_item_1, 10, 0)
+                self.canvas.move(self.canvas_item_2, 10, 0)
+            def up():
+                self.canvas.move(self.canvas_item_1, 0, -10)
+                self.canvas.move(self.canvas_item_2, 0, -10)
+            def down():
+                self.canvas.move(self.canvas_item_1, 0, 10)
+                self.canvas.move(self.canvas_item_2, 0, 10)
+                
+                
+            self.canvas.bind('<Left>', lambda event: left())
+            self.canvas.bind('<Right>', lambda event: right())
+            self.canvas.bind('<Up>', lambda event: up())
+            self.canvas.bind('<Down>', lambda event: down())   
         
         def zoom(event):
             current_value = self.label_zoom.cget("text")
@@ -669,7 +698,6 @@ class CanvasSagittal:
         self.name = 'axial'
                 
     def save_canvas(self):
-        print(self.canvas.winfo_x())
         x = self.master.winfo_rootx() + 861
         y = self.master.winfo_rooty() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
@@ -894,7 +922,6 @@ class CanvasCoronal:
         self.create_tool_widgets()  
         
     def save_canvas(self):
-        print(self.canvas.winfo_x())
         x = self.master.winfo_rootx() + 857*2
         y = self.master.winfo_rooty() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
@@ -1556,6 +1583,9 @@ class Tools:
         self.tabview_2 = customtkinter.CTkTabview(master=self.master)
         self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
         self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
+        
+        
+        
         self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
         self.tabview_2_tab_3 = self.tabview_2.add("VR/AR connection")
         self.tabview_2.set("Segmentation") 
@@ -1586,6 +1616,9 @@ class App(customtkinter.CTk):
             "Body Part Examined": "CHEST_TO_PELVIS",
             "Acquisition Date": "20231019"
         }
+        self.seg_raw = sitk.ReadImage('D:/Documents/GitHub/VascuIAR/DeepLearning/data/MM_WHS/seg_res/1006/Segmentation.nii', sitk.sitkFloat32)
+        self.seg = sitk.GetArrayFromImage(self.seg_raw)
+        print('seg:', self.seg.shape)
         self.pixel_spacing = 0.858
         self.path = ''
         self.ROI_data = {
@@ -1710,7 +1743,6 @@ class App(customtkinter.CTk):
             self.coronal = CanvasCoronal(self)
             self.tools = Tools(self)
             update_hounsfield()
-            
             
             
         self.bind("<<UpdateApp>>", update_app)
