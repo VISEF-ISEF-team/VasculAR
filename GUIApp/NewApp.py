@@ -224,7 +224,7 @@ class MenuBar:
         self.hide_all_menu()
         if widget_option.cget("text") != 'About' and widget_option.cget("text") != 'Account':
             self.dropdown = customtkinter.CTkFrame(master=self.master)
-            x = widget_option.winfo_x() - 10*col
+            x = widget_option.winfo_x() - col
             self.dropdown.place(
                 x=x,
                 y=30
@@ -1651,15 +1651,70 @@ class Tools:
             row_num += 1
                 
     def TabView2(self):
-        self.tabview_2 = customtkinter.CTkTabview(master=self.master)
-        self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
-        self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
+        def create_tabs():
+            self.tabview_2 = customtkinter.CTkTabview(master=self.master)
+            self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
+            self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
+            self.tabview_2_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_2_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
+
+            self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
+            self.tabview_2_tab_3 = self.tabview_2.add("VR/AR connection")
+            self.tabview_2.set("Segmentation") 
         
-        
-        
-        self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
-        self.tabview_2_tab_3 = self.tabview_2.add("VR/AR connection")
-        self.tabview_2.set("Segmentation") 
+        def Segmentation():
+            def start_seg():
+                def frame():
+                    self.start_seg_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.start_seg_frame.grid(row=0, column=0, rowspan=2, columnspan=2, sticky='news')
+                    self.start_seg_frame.columnconfigure(0, weight=1)
+                    self.start_seg_frame.rowconfigure((0, 1), weight=1)
+                    self.start_seg_frame_header = self.title_toolbox(frame=self.start_seg_frame, title="Deep Segmentation")
+                    
+                def widgets():
+                    self.seg_progress_bar = customtkinter.CTkProgressBar(self.start_seg_frame, orientation="horizontal")
+                    self.seg_progress_bar.set(0)
+                    self.seg_progress_bar.grid(column=0, row=1, padx=(0,10), sticky='e')
+
+                    self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start segmentation", command=lambda: self.seg_progress_bar.start())
+                    self.start_seg_btn.grid(column=0, row=1, padx=(10,0), sticky='w')
+                    
+                frame()
+                widgets()
+                
+            def opacity():
+                def frame():
+                    self.opacity_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.opacity_frame.grid(row=2, column=0, rowspan=4, columnspan=2, sticky='news')
+                    self.opacity_frame.columnconfigure(0, weight=1)
+                    self.opacity_frame.rowconfigure((0, 1), weight=1)
+                    self.opacity_frame_header = self.title_toolbox(frame=self.opacity_frame, title="Opacity of Regions")
+                def widgets():
+                    pass
+                
+                frame()
+                widgets()
+                
+            def regions():
+                def frame():
+                    self.regions_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.regions_frame.grid(row=0, column=2, rowspan=6, columnspan=4, padx=(5,0), sticky='news')
+                    self.regions_frame.columnconfigure(0, weight=1)
+                    self.regions_frame.rowconfigure((0, 1), weight=1)
+                    self.regions_frame_header = self.title_toolbox(frame=self.regions_frame, title="Regions Control")
+                    
+                def widgets():
+                    pass
+                
+                frame()
+                widgets()
+            
+            start_seg()
+            opacity()
+            regions()
+            
+        create_tabs()
+        Segmentation()
     
 class App(customtkinter.CTk):
     def __init__(self, title, logo_path):
