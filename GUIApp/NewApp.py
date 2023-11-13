@@ -12,6 +12,7 @@ from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from filtering_segmentation import filtering
+from pdf_save import create_pdf
 from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
@@ -211,6 +212,10 @@ class MenuBar:
             
         self.hide_all_menu()
         self.master.event_generate("<<UpdateApp>>")
+        
+    def export_analysis(self):
+        print(self.master.analysis_data)
+        create_pdf(package=self.master.analysis_data)
     
         
     def dropdown_options(self, instance, master):            
@@ -231,6 +236,15 @@ class MenuBar:
                     fg_color='transparent', 
                     hover_color=self.master.second_color,
                     command = lambda: self.choose_file(),
+                )
+                
+            elif instance_name == 'export_analysis_btn':
+                self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
+                    master=master, 
+                    text=label_name,
+                    fg_color='transparent', 
+                    hover_color=self.master.second_color,
+                    command = lambda: self.export_analysis(),
                 )
             else:
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
@@ -452,15 +466,28 @@ class CanvasAxial:
         self.create_frame()
         self.create_canvas()    
         self.create_tool_widgets()
-        self.save_canvas()
         
     def save_canvas(self):
+        # save into database
+        index = self.master.analysis_data['number']
+        for element, data in self.master.draw_data.items():
+            
+            print('cur_vol', int(round(self.slider_volume.get(), 0)))
+            if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
+                print('data slice', data['slice'])
+                print('equal')
+                if (f'canvas_{index}.png' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}.png'] = {}
+                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+                print(self.master.analysis_data)
+
+        # save file
         x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
         y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
-        ImageGrab.grab().crop((x,y,x1,y1)).save("canvas.png")
-        print('saved')
+        ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
+        self.master.analysis_data['number'] = index + 1
     
     def create_tool_widgets(self):
         def rotation():
@@ -2031,9 +2058,13 @@ class App(customtkinter.CTk):
         self.text_disabled_color = "#dce4e2"
         self.text_canvas_color = "yellow"
         
-        
         self.img = None
         self.img_raw = None
+
+        self.seg = None
+        self.seg_raw = None
+        self.add_seg = False
+        
         self.dict_info = {
             "Organization": "Benh vien Cho Ray",
             "Patient's name": "Ton That Hung",
@@ -2042,10 +2073,11 @@ class App(customtkinter.CTk):
             "Body Part Examined": "CHEST_TO_PELVIS",
             "Acquisition Date": "20231019"
         }
-        self.seg = None
-        self.seg_raw = None
-        self.add_seg = False
+        self.pixel_spacing = 0.858
+        self.path = ''
+        self.path_seg = ''
         
+        # Data
         self.class_data = {
             'class1':{
                 'visible': False,
@@ -2092,9 +2124,7 @@ class App(customtkinter.CTk):
                 'color': '#FFFFFF',
             }
         }
-        self.pixel_spacing = 0.858
-        self.path = ''
-        self.path_seg = ''
+        
         self.ROI_data = {
             'axial': {
                 'rec': {
@@ -2169,8 +2199,11 @@ class App(customtkinter.CTk):
                 }
             }
         }
+        self.analysis_data = {
+            'number': 0,
+        }
         self.draw_data = {}
-        self.analysis_data = {}
+        
         
         # column and rows
         for i in range(15):
@@ -2255,6 +2288,7 @@ class App(customtkinter.CTk):
         print(self.ROI_data)
         print(self.draw_data)
         print(self.class_data)
+        print(self.analysis_data)
 
 app = App(
     title='VasculAR software',

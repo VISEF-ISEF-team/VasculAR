@@ -1,13 +1,12 @@
+from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
-from reportlab.lib.pagesizes import A4
+from reportlab.lib import utils
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib import utils
 
 def create_pdf(package, output_pdf="output.pdf"):
-    
     font_path = "C:/Windows/Fonts/Arial.ttf" 
     pdfmetrics.registerFont(TTFont("ArialUnicode", font_path))
 
@@ -25,40 +24,20 @@ def create_pdf(package, output_pdf="output.pdf"):
 
     pdf_canvas = canvas.Canvas(output_pdf, pagesize=A4)
 
+    for i, (image_path, data) in enumerate(package.items()):
+        if image_path == 'number': 
+            continue
+        if i > 1:
+            pdf_canvas.showPage()  # Start a new page after each iteration
 
-    for i, (image_path, data) in enumerate(package.items()): 
         img = utils.ImageReader(image_path)
-        pdf_canvas.drawImage(img, 10, 450 - 310*i, width=300, height=300)
-        
+        pdf_canvas.drawImage(img, 10, 420, width=300, height=300)
+
         for j, (header, content) in enumerate(data.items()):
             p1 = Paragraph(f'''{header}<BR/>{content}''', my_Style)
             p1.wrapOn(pdf_canvas, 200, 20)
-            p1.drawOn(pdf_canvas, 350, 700 - 100*j)
+            p1.drawOn(pdf_canvas, 350, 650 - 100*j)
 
     pdf_canvas.save()
 
 
-# Example usage
-# package = {
-#     'canvas.png':{
-#         'text_1': 'Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1',
-#         'text_2': 'Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2',
-#         'text_3': 'Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3',
-#     },
-#     'temp.jpg':{
-#         'text_1': 'Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1',
-#         'text_2': 'Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2',
-#         'text_3': 'Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3',
-#     },
-#     'canvas.png':{
-#         'text_1': 'Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1',
-#         'text_2': 'Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2',
-#         'text_3': 'Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3',
-#     },
-#     'temp.jpg':{
-#         'text_1': 'Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1 Đây là nội dung của phân tích 1',
-#         'text_2': 'Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2 Đây là nội dung của phân tích 2',
-#         'text_3': 'Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3 Đây là nội dung của phân tích 3',
-#     }
-# }
-# create_pdf(package=package)
