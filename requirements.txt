@@ -27,3 +27,4 @@ pyrebase
 customtkinter
 sv_ttk
 CustomTkinterTitlebar
+reportlab
