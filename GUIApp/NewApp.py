@@ -11,6 +11,7 @@ from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
+from filtering_segmentation import filtering
 from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
@@ -458,7 +459,7 @@ class CanvasAxial:
         y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
-        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
+        ImageGrab.grab().crop((x,y,x1,y1)).save("canvas.png")
         print('saved')
     
     def create_tool_widgets(self):
@@ -599,7 +600,8 @@ class CanvasAxial:
                 
             else:
                 alpha_origin = int(225)
-                alpha_seg = int(0.25 * 255)
+                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                alpha_seg = int(opacity * 255)
                 image = image.convert('RGBA')
                 image_seg = image_seg.convert('RGBA')
                 image.putalpha(alpha_origin)
@@ -877,7 +879,8 @@ class CanvasSagittal:
                 
             else:
                 alpha_origin = int(225)
-                alpha_seg = int(0.25 * 255)
+                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                alpha_seg = int(opacity * 255)
                 image = image.convert('RGBA')
                 image_seg = image_seg.convert('RGBA')
                 image.putalpha(alpha_origin)
@@ -1152,7 +1155,8 @@ class CanvasCoronal:
                 
             else:
                 alpha_origin = int(225)
-                alpha_seg = int(0.25 * 255)
+                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                alpha_seg = int(opacity * 255)
                 image = image.convert('RGBA')
                 image_seg = image_seg.convert('RGBA')
                 image.putalpha(alpha_origin)
@@ -1198,7 +1202,7 @@ class CanvasCoronal:
             
         # segmentation
         if self.master.add_seg == True:
-            seg = self.master.seg[:, :, int(index_slice)]
+            seg = self.master.tools.label_arrays[2][:, :, int(index_slice)]
             plt.imsave("temp2.jpg", seg, cmap=color_choice)
             image_display_seg = cv2.imread("temp2.jpg")
             brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
@@ -1587,7 +1591,7 @@ class Tools:
                     self.color_choosed = self.pick_color.get()
     
                 self.color_picker_btn = customtkinter.CTkButton(master=self.draw_frame, text="choose color", command=ask_color)
-                self.color_picker_btn.grid(row=2, column=0, columnspan=6, padx=5, pady=5, sticky='ew')
+                self.color_picker_btn.grid(row=2, column=0, columnspan=6, padx=10, pady=5, sticky='ew')
                 
             
                 
@@ -1737,7 +1741,7 @@ class Tools:
             self.tabview_2 = customtkinter.CTkTabview(master=self.master)
             self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
             self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
-            self.tabview_2_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_2_tab_1.rowconfigure((0,1,2,3,4,5,6,7), weight=1)
             self.tabview_2_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
 
             self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
@@ -1748,18 +1752,23 @@ class Tools:
             def start_seg():
                 def frame():
                     self.start_seg_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
-                    self.start_seg_frame.grid(row=0, column=0, rowspan=2, columnspan=2, sticky='news')
+                    self.start_seg_frame.grid(row=0, column=0, rowspan=4, columnspan=2, pady=(0,10), sticky='news')
                     self.start_seg_frame.columnconfigure(0, weight=1)
-                    self.start_seg_frame.rowconfigure((0, 1), weight=1)
+                    self.start_seg_frame.rowconfigure((0, 1, 2), weight=1)
                     self.start_seg_frame_header = self.title_toolbox(frame=self.start_seg_frame, title="Deep Segmentation")
+                    
                     
                 def widgets():
                     self.seg_progress_bar = customtkinter.CTkProgressBar(self.start_seg_frame, orientation="horizontal")
                     self.seg_progress_bar.set(0)
-                    self.seg_progress_bar.grid(column=0, row=1, padx=(0,10), sticky='e')
-
+                    self.seg_progress_bar.grid(column=0, row=2, padx=(0,10), pady=(0,10), sticky='e')
                     self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start segmentation", command=lambda: self.seg_progress_bar.start())
-                    self.start_seg_btn.grid(column=0, row=1, padx=(10,0), sticky='w')
+                    self.start_seg_btn.grid(column=0, row=2, padx=(10,0), pady=(0,10), sticky='w')
+                    
+                    self.models = ["VAS", "Unet Attention", "U-Resnet", "Unet"]
+                    self.model_picker_default = customtkinter.StringVar(value="VAS")
+                    self.model_picker = customtkinter.CTkComboBox(self.start_seg_frame, values=self.models, variable=self.model_picker_default)
+                    self.model_picker.grid(column=0, row=1, sticky='ew', padx=10, pady=10)
                     
                 frame()
                 widgets()
@@ -1767,13 +1776,42 @@ class Tools:
             def opacity():
                 def frame():
                     self.opacity_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
-                    self.opacity_frame.grid(row=2, column=0, rowspan=4, columnspan=2, sticky='news')
+                    self.opacity_frame.grid(row=4, column=0, rowspan=4, columnspan=2, sticky='news')
                     self.opacity_frame.columnconfigure(0, weight=1)
-                    self.opacity_frame.rowconfigure((0, 1), weight=1)
+                    self.opacity_frame.rowconfigure((0, 1, 2), weight=1)
                     self.opacity_frame_header = self.title_toolbox(frame=self.opacity_frame, title="Opacity of Regions")
+                    
+                        
                 def widgets():
-                    pass
-                
+                    def slider_opacity_callback(value):
+                        self.opacity_label_var.set(f"{int(round(self.slider_opacity.get(), 0))}%")
+                        
+                    def increase_opacity_callback():
+                        cur_val = int(round(self.slider_opacity.get(), 0))
+                        cur_val += 2
+                        self.slider_opacity.set(cur_val)
+                        self.opacity_label_var.set(f"{cur_val}%")
+                        
+                    def decrease_oapcity_callback():
+                        cur_val = int(round(self.slider_opacity.get(), 0))
+                        cur_val -= 2
+                        self.slider_opacity.set(cur_val)
+                        self.opacity_label_var.set(f"{cur_val}%")
+                    
+                    self.slider_opacity = customtkinter.CTkSlider(master=self.opacity_frame, from_=0, to=100, command=slider_opacity_callback)
+                    self.slider_opacity.set(25)
+                    self.slider_opacity.grid(row=2, column=0, pady=(0,10), sticky='ew')
+                    
+                    self.opacity_de_btn = customtkinter.CTkButton(master=self.opacity_frame, text='-', width=35, height=35, command=decrease_oapcity_callback)
+                    self.opacity_de_btn.grid(row=1, column=0, pady=(0,10), padx=10, sticky='w')
+                    
+                    self.opacity_in_btn = customtkinter.CTkButton(master=self.opacity_frame, text='+', width=35, height=35, command=increase_opacity_callback)
+                    self.opacity_in_btn.grid(row=1, column=0, pady=(0,10), padx=10, sticky='e')
+                    
+                    self.opacity_label_var = customtkinter.StringVar(value="25%")
+                    self.opacity_label = customtkinter.CTkLabel(master=self.opacity_frame, width=50, textvariable=self.opacity_label_var)
+                    self.opacity_label.grid(row=1, column=0, pady=(0,10), padx=40)
+                    
                 frame()
                 widgets()
                 
@@ -1781,12 +1819,14 @@ class Tools:
                 def frame():
                     self.regions_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
                     self.regions_frame.grid(row=0, column=2, rowspan=6, columnspan=4, padx=(5,0), sticky='news')
-                    self.regions_frame.columnconfigure(0, weight=1)
-                    self.regions_frame.rowconfigure((0, 1), weight=1)
+                    self.regions_frame.columnconfigure((0,1,2), weight=1)
+                    self.regions_frame.rowconfigure((0,1,2,3,4,5), weight=1)
                     self.regions_frame_header = self.title_toolbox(frame=self.regions_frame, title="Regions Control")
                     
                 def widgets():
-                    pass
+                    if self.master.add_seg == True:
+                        filtering_instance = filtering(self.master.seg)
+                        self.label_arrays = filtering_instance.get()
                 
                 frame()
                 widgets()
