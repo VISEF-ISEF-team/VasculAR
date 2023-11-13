@@ -74,8 +74,7 @@ class MenuBar:
                 },
                 'sub_menu': {
                     'add_nifti_file_btn': 'Add Nifti file',
-                    'add_dcm_series_btn': 'Add DCM series',
-                    'add_seg_btn ': 'Add Segmentation',
+                    'add_dcm_series_btn': 'Add Segmentation',
                     'save_case_btn': 'Save case',
                     'export_analysis_btn': 'Export analysis',
                 }
@@ -183,6 +182,19 @@ class MenuBar:
             self.vn_btn.pack(padx=5, pady=5)
             self.vn_btn.configure(anchor="w")
             
+    def choose_file_seg(self):
+        self.master.path_seg = filedialog.askopenfilename()
+        
+        if self.master.path_seg.endswith('.nii.gz') or self.master.path_seg.endswith('.nii'):
+            self.master.seg_raw = sitk.ReadImage(self.master.path_seg, sitk.sitkFloat32)
+            self.master.seg = sitk.GetArrayFromImage(self.master.seg_raw)
+            self.master.add_seg = True
+        else:
+            print("Error for segmentation uploading")
+            
+        self.hide_all_menu()
+        self.master.event_generate("<<UpdateApp2>>")
+            
     def choose_file(self):
         self.master.path = filedialog.askopenfilename()
         
@@ -198,10 +210,20 @@ class MenuBar:
             
         self.hide_all_menu()
         self.master.event_generate("<<UpdateApp>>")
+    
         
     def dropdown_options(self, instance, master):            
         for row, (instance_name, label_name) in enumerate(self.data[instance]['sub_menu'].items()):
-            if instance_name == 'add_nifti_file_btn':
+            if instance_name == 'add_dcm_series_btn':
+                print("seg_btn")
+                self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
+                    master=master, 
+                    text=label_name,
+                    fg_color='transparent', 
+                    hover_color=self.master.second_color,
+                    command = lambda: self.choose_file_seg(),
+                )
+            elif instance_name == 'add_nifti_file_btn': 
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
                     master=master, 
                     text=label_name,
@@ -568,23 +590,30 @@ class CanvasAxial:
                             
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            alpha_origin = int(225)
-            alpha_seg = int(0.25 * 255)
-            image = image.convert('RGBA')
-            image_seg = image_seg.convert('RGBA')
-            image.putalpha(alpha_origin)
-            image_seg.putalpha(alpha_seg)
-            self.images.append(ImageTk.PhotoImage(image))
-            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-            self.images.append(ImageTk.PhotoImage(image_seg))
-            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+            if self.master.add_seg == False:
+                alpha_origin = int(225)
+                image = image.convert('RGBA')
+                image.putalpha(alpha_origin)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                
+            else:
+                alpha_origin = int(225)
+                alpha_seg = int(0.25 * 255)
+                image = image.convert('RGBA')
+                image_seg = image_seg.convert('RGBA')
+                image.putalpha(alpha_origin)
+                image_seg.putalpha(alpha_seg)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                self.images.append(ImageTk.PhotoImage(image_seg))
+                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
 
         # get size
         height = int(self.label_zoom.cget("text")) 
             
         # slice index
         image = self.master.img[int(index_slice),:, :]
-        seg = self.master.seg[int(index_slice),:, :]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -593,38 +622,51 @@ class CanvasAxial:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
-        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
-        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
         cv2.imwrite("temp.jpg", brightness_image)
-        cv2.imwrite("temp2.jpg", brightness_image_seg)   
         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
-        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-        image_display_seg = image_display_seg.rotate(rotation_angle)
         
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+            
+        # segmentation
+        if self.master.add_seg == True:
+            seg = self.master.seg[int(index_slice),:, :]
+            plt.imsave("temp2.jpg", seg, cmap=color_choice)
+            image_display_seg = cv2.imread("temp2.jpg")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite("temp2.jpg", brightness_image_seg)
+            image_display_seg = Image.open("temp2.jpg").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
-        # diplay images
-        x_cord, y_cord = image_position()
-        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
+        else:
+            # diplay images
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_seg=None)
             
         # create crosshair
         create_crosshair()
@@ -826,23 +868,30 @@ class CanvasSagittal:
             
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            alpha_origin = int(225)
-            alpha_seg = int(0.25 * 255)
-            image = image.convert('RGBA')
-            image_seg = image_seg.convert('RGBA')
-            image.putalpha(alpha_origin)
-            image_seg.putalpha(alpha_seg)
-            self.images.append(ImageTk.PhotoImage(image))
-            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-            self.images.append(ImageTk.PhotoImage(image_seg))
-            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+            if self.master.add_seg == False:
+                alpha_origin = int(225)
+                image = image.convert('RGBA')
+                image.putalpha(alpha_origin)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                
+            else:
+                alpha_origin = int(225)
+                alpha_seg = int(0.25 * 255)
+                image = image.convert('RGBA')
+                image_seg = image_seg.convert('RGBA')
+                image.putalpha(alpha_origin)
+                image_seg.putalpha(alpha_seg)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                self.images.append(ImageTk.PhotoImage(image_seg))
+                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
 
         # get size
-        height = int(self.label_zoom.cget("text"))
+        height = int(self.label_zoom.cget("text")) 
             
         # slice index
         image = self.master.img[:, int(index_slice), :]
-        seg = self.master.seg[:, int(index_slice), :]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -851,38 +900,51 @@ class CanvasSagittal:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
-        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
-        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
         cv2.imwrite("temp.jpg", brightness_image)
-        cv2.imwrite("temp2.jpg", brightness_image_seg)   
         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
-        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-        image_display_seg = image_display_seg.rotate(rotation_angle)
         
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+            
+        # segmentation
+        if self.master.add_seg == True:
+            seg = self.master.seg[:, int(index_slice), :]
+            plt.imsave("temp2.jpg", seg, cmap=color_choice)
+            image_display_seg = cv2.imread("temp2.jpg")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite("temp2.jpg", brightness_image_seg)
+            image_display_seg = Image.open("temp2.jpg").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
-        # diplay images
-        x_cord, y_cord = image_position()
-        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)    
+        else:
+            # diplay images
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_seg=None) 
             
         # create crosshair
         create_crosshair()
@@ -1081,23 +1143,30 @@ class CanvasCoronal:
           
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            alpha_origin = int(225)
-            alpha_seg = int(0.25 * 255)
-            image = image.convert('RGBA')
-            image_seg = image_seg.convert('RGBA')
-            image.putalpha(alpha_origin)
-            image_seg.putalpha(alpha_seg)
-            self.images.append(ImageTk.PhotoImage(image))
-            self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-            self.images.append(ImageTk.PhotoImage(image_seg))
-            self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                  
+            if self.master.add_seg == False:
+                alpha_origin = int(225)
+                image = image.convert('RGBA')
+                image.putalpha(alpha_origin)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                
+            else:
+                alpha_origin = int(225)
+                alpha_seg = int(0.25 * 255)
+                image = image.convert('RGBA')
+                image_seg = image_seg.convert('RGBA')
+                image.putalpha(alpha_origin)
+                image_seg.putalpha(alpha_seg)
+                self.images.append(ImageTk.PhotoImage(image))
+                self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+                self.images.append(ImageTk.PhotoImage(image_seg))
+                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
         # get size
-        height = int(self.label_zoom.cget("text"))
+        height = int(self.label_zoom.cget("text")) 
             
         # slice index
-        image = self.master.img[:,:, int(index_slice)]
-        seg = self.master.seg[:,:,int(index_slice)]
+        image = self.master.img[:, :, int(index_slice)]
             
         # hounsfield
         hf1, hf2 = int(round(self.master.tools.hounsfield_slider.get()[0], 0)), int(round(self.master.tools.hounsfield_slider.get()[1], 0))
@@ -1106,38 +1175,51 @@ class CanvasCoronal:
         # color map
         color_choice = plt.cm.bone if self.color_map.get() == 'bone' else  self.color_map.get()
         plt.imsave("temp.jpg", image, cmap=color_choice)
-        plt.imsave("temp2.jpg", seg, cmap=color_choice)
             
         # brightness
         image_display = cv2.imread("temp.jpg")
-        image_display_seg = cv2.imread("temp2.jpg")
         brightness_image = cv2.convertScaleAbs(image_display, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-        brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
         cv2.imwrite("temp.jpg", brightness_image)
-        cv2.imwrite("temp2.jpg", brightness_image_seg)   
         
         # resize
         image_display = Image.open("temp.jpg").resize((height, height))
-        image_display_seg = Image.open("temp2.jpg").resize((height, height))    
             
         # rotate
         rotation_angle = int(self.rotation_label.cget("text"))
         image_display = image_display.rotate(rotation_angle)
-        image_display_seg = image_display_seg.rotate(rotation_angle)
         
         # flip
         horizontal = self.flip_horizontal_label.cget("text")
         vertical = self.flip_vertical_label.cget("text")
         if horizontal == "horizontal":
             image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
         if vertical == "vertical":
             image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-            image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+            
+        # segmentation
+        if self.master.add_seg == True:
+            seg = self.master.seg[:, :, int(index_slice)]
+            plt.imsave("temp2.jpg", seg, cmap=color_choice)
+            image_display_seg = cv2.imread("temp2.jpg")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite("temp2.jpg", brightness_image_seg)
+            image_display_seg = Image.open("temp2.jpg").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
-        # diplay images
-        x_cord, y_cord = image_position()
-        create_image_alpha(x_cord, y_cord, image_display, image_display_seg)    
+        else:
+            # diplay images
+            x_cord, y_cord = image_position()
+            create_image_alpha(x_cord, y_cord, image_display, image_seg=None)  
             
         # create crosshair
         create_crosshair()
@@ -1742,11 +1824,12 @@ class App(customtkinter.CTk):
             "Body Part Examined": "CHEST_TO_PELVIS",
             "Acquisition Date": "20231019"
         }
-        self.seg_raw = sitk.ReadImage('D:/Documents/GitHub/VascuIAR/DeepLearning/data/MM_WHS/seg_res/1006/Segmentation.nii', sitk.sitkFloat32)
-        self.seg = sitk.GetArrayFromImage(self.seg_raw)
-        print('seg:', self.seg.shape)
+        self.seg = None
+        self.seg_raw = None
+        self.add_seg = False
         self.pixel_spacing = 0.858
         self.path = ''
+        self.path_seg = ''
         self.ROI_data = {
             'axial': {
                 'rec': {
@@ -1870,8 +1953,37 @@ class App(customtkinter.CTk):
             self.tools = Tools(self)
             update_hounsfield()
             
+        def update_app_2(event):
+            self.draw_data = {
+                'number_of_elements': 1, 
+                'Bất thường 1': {
+                    'canvas': 'axial',
+                    'type': 'rectangle',
+                    'slice': 100,
+                    'x1': 100,
+                    'y1': 100,
+                    'x2': 300,
+                    'y2': 300,
+                    'color': 'red',
+                    'note': "default analysis",
+                }
+            }
+            
+            def update_hounsfield():
+                self.tools.hounsfield_slider.configure(from_=np.min(self.img))
+                self.tools.hounsfield_slider.configure(to=np.max(self.img))
+                self.tools.hounsfield_slider.set([np.min(self.img), np.max(self.img)])
+                self.tools.btn_left_entry.configure(placeholder_text=np.min(self.img))
+                self.tools.btn_right_entry.configure(placeholder_text=np.max(self.img))
+    
+            self.axial = CanvasAxial(self)
+            self.sagittal = CanvasSagittal(self)
+            self.coronal = CanvasCoronal(self)
+            self.tools = Tools(self)
+            update_hounsfield()  
             
         self.bind("<<UpdateApp>>", update_app)
+        self.bind("<<UpdateApp2>>", update_app_2)
         self.mainloop()
         
         # Save latest data here
