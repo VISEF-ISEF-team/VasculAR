@@ -647,7 +647,7 @@ class CanvasAxial:
             
         # segmentation
         if self.master.add_seg == True:
-            seg = self.master.seg[int(index_slice),:, :]
+            seg = self.master.tools.label_arrays[2][int(index_slice),:, :]
             plt.imsave("temp2.jpg", seg, cmap=color_choice)
             image_display_seg = cv2.imread("temp2.jpg")
             brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
@@ -1202,7 +1202,7 @@ class CanvasCoronal:
             
         # segmentation
         if self.master.add_seg == True:
-            seg = self.master.tools.label_arrays[2][:, :, int(index_slice)]
+            seg = self.master.seg[:, :, int(index_slice)]
             plt.imsave("temp2.jpg", seg, cmap=color_choice)
             image_display_seg = cv2.imread("temp2.jpg")
             brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
@@ -1741,8 +1741,8 @@ class Tools:
             self.tabview_2 = customtkinter.CTkTabview(master=self.master)
             self.tabview_2.grid(column=9, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
             self.tabview_2_tab_1 = self.tabview_2.add("Segmentation")    
-            self.tabview_2_tab_1.rowconfigure((0,1,2,3,4,5,6,7), weight=1)
-            self.tabview_2_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_2_tab_1.rowconfigure((0,1,2,3,4,5,6,7), weight=1, uniform='a')
+            self.tabview_2_tab_1.columnconfigure((0,1,2,3,4,5), weight=1, uniform='a')
 
             self.tabview_2_tab_2 = self.tabview_2.add("3D reconstruction")
             self.tabview_2_tab_3 = self.tabview_2.add("VR/AR connection")
@@ -1757,12 +1757,17 @@ class Tools:
                     self.start_seg_frame.rowconfigure((0, 1, 2), weight=1)
                     self.start_seg_frame_header = self.title_toolbox(frame=self.start_seg_frame, title="Deep Segmentation")
                     
+                def start_seg_callback():
+                    if self.master.add_seg == True:
+                        self.seg_progress_bar.start()
+                        filtering_instance = filtering(self.master.seg)
+                        self.label_arrays = filtering_instance.get()
                     
                 def widgets():
                     self.seg_progress_bar = customtkinter.CTkProgressBar(self.start_seg_frame, orientation="horizontal")
                     self.seg_progress_bar.set(0)
                     self.seg_progress_bar.grid(column=0, row=2, padx=(0,10), pady=(0,10), sticky='e')
-                    self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start segmentation", command=lambda: self.seg_progress_bar.start())
+                    self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start", width=50, command=start_seg_callback)
                     self.start_seg_btn.grid(column=0, row=2, padx=(10,0), pady=(0,10), sticky='w')
                     
                     self.models = ["VAS", "Unet Attention", "U-Resnet", "Unet"]
@@ -1818,18 +1823,57 @@ class Tools:
             def regions():
                 def frame():
                     self.regions_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
-                    self.regions_frame.grid(row=0, column=2, rowspan=6, columnspan=4, padx=(5,0), sticky='news')
-                    self.regions_frame.columnconfigure((0,1,2), weight=1)
-                    self.regions_frame.rowconfigure((0,1,2,3,4,5), weight=1)
+                    self.regions_frame.grid(row=0, column=2, rowspan=8, columnspan=4, padx=(5,0), sticky='news')
+                    self.regions_frame.columnconfigure((0,1), weight=1)
+                    self.regions_frame.rowconfigure(0, weight=1)
                     self.regions_frame_header = self.title_toolbox(frame=self.regions_frame, title="Regions Control")
                     
+                def load_seg(): 
+                    filtering_instance = filtering(self.master.seg)
+                    self.label_arrays = filtering_instance.get()
+                        
                 def widgets():
-                    if self.master.add_seg == True:
-                        filtering_instance = filtering(self.master.seg)
-                        self.label_arrays = filtering_instance.get()
-                
+                    i = 0
+                    while i < len(self.label_arrays):
+                        region_btn = customtkinter.CTkButton(master=self.regions_frame, text=f'Class Name Region {i}', fg_color=self.master.second_color)
+                        region_btn.grid(padx=(0,90), pady=5, row=(i)//2+1, column=0, sticky='ne')
+                        
+                        eye_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye.png"),size=(20, 20))
+                        eye_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_icon, width=30, height=30)
+                        eye_icon.grid(row=(i)//2+1, column=0,  padx=(10,0), sticky='w')
+                        
+                        fill_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/fill.png"),size=(20, 20))
+                        fill_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                        fill_icon.grid(row=(i)//2+1, column=0, padx=(0,50), sticky='e')
+                        
+                        annotate_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/annotate.png"),size=(20, 20))
+                        annotate_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
+                        annotate_icon.grid(row=(i)//2+1, column=0, padx=(0,10), sticky='e')
+                                
+                        i += 1
+                        
+                        if i < len(self.label_arrays):
+                            region_2_btn = customtkinter.CTkButton(master=self.regions_frame, text=f'Class Name Region {i}', fg_color=self.master.second_color)
+                            region_2_btn.grid(padx=(0,90), pady=5, row=(i)//2+1, column=1, sticky='ne')
+                            
+                            eye_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye.png"),size=(20, 20))
+                            eye_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_icon, width=30, height=30)
+                            eye_icon.grid(row=(i)//2+1, column=1, padx=(10,0), sticky='w')
+                            
+                            fill_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/fill.png"),size=(20, 20))
+                            fill_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                            fill_icon.grid(row=(i)//2+1, column=1, padx=(0,50), sticky='e')
+                            
+                            annotate_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/annotate.png"),size=(20, 20))
+                            annotate_icon = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
+                            annotate_icon.grid(row=(i)//2+1, column=1, padx=(0,10), sticky='e')
+                            
+                            i += 1
+                               
                 frame()
-                widgets()
+                if self.master.add_seg == True:
+                    load_seg()
+                    widgets()
             
             start_seg()
             opacity()
@@ -2015,11 +2059,11 @@ class App(customtkinter.CTk):
                 self.tools.hounsfield_slider.set([np.min(self.img), np.max(self.img)])
                 self.tools.btn_left_entry.configure(placeholder_text=np.min(self.img))
                 self.tools.btn_right_entry.configure(placeholder_text=np.max(self.img))
-    
+                
+            self.tools = Tools(self)
             self.axial = CanvasAxial(self)
             self.sagittal = CanvasSagittal(self)
             self.coronal = CanvasCoronal(self)
-            self.tools = Tools(self)
             update_hounsfield()  
             
         self.bind("<<UpdateApp>>", update_app)
