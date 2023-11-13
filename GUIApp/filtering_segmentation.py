@@ -12,7 +12,7 @@ class filtering:
         label_arrays = []
         for value in unique_values: 
             label_array = np.copy(self.segmentation) 
-            label_array[np.where(label_array != value)] = 0 
+            label_array = np.where(label_array==value, label_array, 0)
             label_arrays.append(label_array)
         return label_arrays
             
