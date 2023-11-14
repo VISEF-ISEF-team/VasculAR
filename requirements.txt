@@ -28,3 +28,4 @@ customtkinter
 sv_ttk
 CustomTkinterTitlebar
 reportlab
+plotly
