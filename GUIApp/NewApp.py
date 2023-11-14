@@ -471,11 +471,7 @@ class CanvasAxial:
         # save into database
         index = self.master.analysis_data['number']
         for element, data in self.master.draw_data.items():
-            
-            print('cur_vol', int(round(self.slider_volume.get(), 0)))
             if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
-                print('data slice', data['slice'])
-                print('equal')
                 if (f'canvas_{index}.png' not in self.master.analysis_data):
                     self.master.analysis_data[f'canvas_{index}.png'] = {}
                 self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
@@ -774,12 +770,21 @@ class CanvasSagittal:
         self.name = 'axial'
                 
     def save_canvas(self):
-        x = self.master.winfo_rootx() + 861
-        y = self.master.winfo_rooty() + 100 
+        # save into database
+        index = self.master.analysis_data['number']
+        for element, data in self.master.draw_data.items():
+            if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'sagittal':
+                if (f'canvas_{index}.png' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}.png'] = {}
+                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+
+        # save file
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
+        y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
-        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
-        print('saved')
+        ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
+        self.master.analysis_data['number'] = index + 1
         
     def create_tool_widgets(self):
         def rotation():
@@ -1053,12 +1058,21 @@ class CanvasCoronal:
         self.create_tool_widgets()  
         
     def save_canvas(self):
-        x = self.master.winfo_rootx() + 857*2
-        y = self.master.winfo_rooty() + 100 
+        # save into database
+        index = self.master.analysis_data['number']
+        for element, data in self.master.draw_data.items():
+            if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'coronal':
+                if (f'canvas_{index}.png' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}.png'] = {}
+                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+
+        # save file
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
+        y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
-        ImageGrab.grab ().crop((x,y,x1,y1)).save("canvas.png")
-        print('saved')
+        ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
+        self.master.analysis_data['number'] = index + 1
 
     def create_tool_widgets(self):            
         def rotation():
