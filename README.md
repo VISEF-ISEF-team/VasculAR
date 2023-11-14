@@ -1,4 +1,4 @@
-# VAS - Phần mềm tích hợp học sâu để phân vùng và tái tạo cấu trúc tim 3 chiều cho ứng dụng thực hành y khoa.
+# VasculAR - Phần mềm tích hợp học sâu để phân vùng và tái tạo cấu trúc tim 3 chiều cho ứng dụng y học.
 [![> Survey Video](https://img.shields.io/badge/Survey%20Video-blue)](https://www.youtube.com/watch?v=pJzWQ4DopQY)
 [![> First Demo](https://img.shields.io/badge/First%20Demo-red)](https://youtu.be/r-55GCIwjAo)
 [![> Updated Demo](https://img.shields.io/badge/Updated%20Demo-yellow)](https://youtu.be/_2katMerd64)
@@ -8,7 +8,7 @@
 
 ### Phiên bản thứ 3
 - Lý do cải tiến (do sự phản hồi từ bác sĩ): cập nhật sau
-![](imgs/Hình ảnh làm việc của nhóm/Quá trình làm phiên bản 3 cho vòng thành phố.jpg)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20l%C3%A0m%20vi%E1%BB%87c%20c%E1%BB%A7a%20nh%C3%B3m/Qu%C3%A1%20tr%C3%ACnh%20l%C3%A0m%20phi%C3%AAn%20b%E1%BA%A3n%203%20cho%20v%C3%B2ng%20th%C3%A0nh%20ph%E1%BB%91.jpg)
 
 ### Giao diện app mới với nhiều tính năng hỗ trợ
 [Video demo phiên bản 2](https://youtu.be/ssdXmd1ua2c?si=EiynVL32P7t3Hdm3)
@@ -20,16 +20,17 @@
 
 Và App giải quyết được các vấn đề trên:
 Giao diện app được xây dựng bằng Python thuận lợi tích hợp Deep Learning.
-![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp1.png)
-![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp2.png)
-![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp3.png)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20s%E1%BA%A3n%20ph%E1%BA%A9m/Phi%C3%AAn%20b%E1%BA%A3n%202/GUIapp1.png)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20s%E1%BA%A3n%20ph%E1%BA%A9m/Phi%C3%AAn%20b%E1%BA%A3n%202/GUIapp2.png)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20s%E1%BA%A3n%20ph%E1%BA%A9m/Phi%C3%AAn%20b%E1%BA%A3n%202/GUIapp3.png)
+
 
 ### Nâng cấp thuật toán tái tạo cấu trúc tim 3D
-![](imgs/GUIapp4.png)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20s%E1%BA%A3n%20ph%E1%BA%A9m/Phi%C3%AAn%20b%E1%BA%A3n%202/GUIapp4.png)
 [Link Video](https://youtu.be/_2katMerd64?si=ygL-vjjW1J7cRJSX)
 
 ## Poster & sơ đồ khối
-![](Hồ sơ dự thi/Poster.png)
+![Image](H%E1%BB%93%20s%C6%A1%20d%E1%BB%B1%20thi/Poster.png)
 
 ## LỜI CẢM ƠN
 - Cảm ơn Bác sĩ Nguyễn Văn Nghĩa (Trưởng khoa tim mạch Viện tim thành phố) đã chỉ dẫn những vấn đề quan trọng liên quan tới tim và ảnh chụp cắt lớp.
@@ -63,7 +64,8 @@ C1: Làm sao để huấn luyện mô hình học sâu đạt kết quả tốt 
 C2: Làm sao để xây dựng một ứng dụng tự động hóa đầy đủ các tính năng, công cụ. 
 C3: Làm sao để xây dựng một cơ sở dữ liệu an toàn, bảo mật, lưu trữ xử lý dữ liệu lớn.
 ### 6. Phương pháp nghiên cứu
-![](imgs/Hình ảnh làm việc của nhóm/Quy trình làm việc.jpeg)
+![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20l%C3%A0m%20vi%E1%BB%87c%20c%E1%BB%A7a%20nh%C3%B3m/Quy%20tr%C3%ACnh%20l%C3%A0m%20vi%E1%BB%87c.jpeg)
+
 
 ### 7. Tính mới và tính sáng tạo của đề tài
 - Nền tảng ứng dụng đầu tiên của người Việt sử dụng các mô hình học sâu ứng dụng cho 
