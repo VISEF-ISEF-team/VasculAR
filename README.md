@@ -4,10 +4,14 @@
 [![> Updated Demo](https://img.shields.io/badge/Updated%20Demo-yellow)](https://youtu.be/_2katMerd64)
 [![> Research Report](https://img.shields.io/badge/Research%20Report-black)](https://github.com/VISEF-ISEF-team/VascuIAR/blob/main/static/BCKH.pdf)
 
-## Nâng cấp mới cho vòng thành phố
+## Nâng cấp mới cho vòng chung kết thành phố
 
-[Video demo mới nhất](https://youtu.be/ssdXmd1ua2c?si=EiynVL32P7t3Hdm3)
+### Phiên bản thứ 3
+- Lý do cải tiến (do sự phản hồi từ bác sĩ): cập nhật sau
+![](imgs/Hình ảnh làm việc của nhóm/Quá trình làm phiên bản 3 cho vòng thành phố.jpg)
+
 ### Giao diện app mới với nhiều tính năng hỗ trợ
+[Video demo phiên bản 2](https://youtu.be/ssdXmd1ua2c?si=EiynVL32P7t3Hdm3)
 - Lý do: Qua quá trình nghiên cứu, khảo sát, xin phản hồi từ người dùng, nền tảng Web có nhược điểm sau:
     - Không đầy đủ công cụ cần thiết
     - Không đủ bảo mật vì hệ cơ sở dữ liệu dùng chung và xử lý dữ liệu không trên máy chủ
@@ -16,16 +20,16 @@
 
 Và App giải quyết được các vấn đề trên:
 Giao diện app được xây dựng bằng Python thuận lợi tích hợp Deep Learning.
-![](imgs/GUIapp1.png)
-![](imgs/GUIapp2.png)
-![](imgs/GUIapp3.png)
+![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp1.png)
+![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp2.png)
+![](imgs/Hình ảnh sản phẩm/Phiên bản 2/GUIapp3.png)
 
 ### Nâng cấp thuật toán tái tạo cấu trúc tim 3D
 ![](imgs/GUIapp4.png)
 [Link Video](https://youtu.be/_2katMerd64?si=ygL-vjjW1J7cRJSX)
 
 ## Poster & sơ đồ khối
-![](Poster.png)
+![](Hồ sơ dự thi/Poster.png)
 
 ## LỜI CẢM ƠN
 - Cảm ơn Bác sĩ Nguyễn Văn Nghĩa (Trưởng khoa tim mạch Viện tim thành phố) đã chỉ dẫn những vấn đề quan trọng liên quan tới tim và ảnh chụp cắt lớp.
@@ -59,7 +63,7 @@ C1: Làm sao để huấn luyện mô hình học sâu đạt kết quả tốt 
 C2: Làm sao để xây dựng một ứng dụng tự động hóa đầy đủ các tính năng, công cụ. 
 C3: Làm sao để xây dựng một cơ sở dữ liệu an toàn, bảo mật, lưu trữ xử lý dữ liệu lớn.
 ### 6. Phương pháp nghiên cứu
-![](quytrinh.jpeg)
+![](imgs/Hình ảnh làm việc của nhóm/Quy trình làm việc.jpeg)
 
 ### 7. Tính mới và tính sáng tạo của đề tài
 - Nền tảng ứng dụng đầu tiên của người Việt sử dụng các mô hình học sâu ứng dụng cho 
