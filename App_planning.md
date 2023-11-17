@@ -77,17 +77,18 @@ Application Structure and organization:
 
 # III. Segmentation
 Class orders:
-- Động mạch chủ (Aorta)
+- Động mạch chủ (Aorta) / 
 - Động mạch phổi (Pulmonary Trunk)
-- Tĩnh mạch phổi (Pulmonary veins)
+- Tĩnh mạch phổi (Pulmonary veins) 
 - Tâm thất trái (Left Ventricle)
 - Tâm nhĩ trái (Left Atrium)
 - Tâm thất phải (Right Ventricle)
 - Tấm nhĩ phải (Right Atrium)
-- Động mạch vành (Coronary artery)
+- Động mạch vành (Coronary artery) / 
 - Van 2 lá (Biscupid valve) --> aortic valve
 - Van 3 lá (Triscupid valve) --> aortic valve
 - Gân còn ống động mạch (Ligamentum Arteriosum)
+- Thành cơ tim (Wall Myocardium)
 
 
 Bảng 
