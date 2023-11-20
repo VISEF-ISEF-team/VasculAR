@@ -29,3 +29,6 @@ sv_ttk
 CustomTkinterTitlebar
 reportlab
 plotly
+trame
+trame-vuetify trame-vtk
+vtk
