@@ -1,9 +1,11 @@
 import vedo
 from vedo import *
 
-class NewWindow():
-    def __init__(self, mesh):
+class ShowDetails():
+    def __init__(self, mesh, analysis_header, analysis_note):
         self.mesh = mesh
+        self.analysis_header = analysis_header
+        self.analysis_note = analysis_note
         self.current_style = 0
         self.styles = ['default', 'metallic', 'plastic', 'shiny', 'glossy', 'ambient', 'off']
         self.button_styles = []
@@ -28,7 +30,7 @@ class NewWindow():
         def slider2(widget, event):
             self.mesh.alpha(widget.value)    
         
-        self.plotter.add_slider(
+        self.plotter.add_slider(    
             slider1,
             xmin=-9,
             xmax=1,
@@ -75,7 +77,7 @@ class NewWindow():
 
     def analysis(self):
         # Create a paragraph of text
-        text_content = """
+        text_content = f"""
         ********************************************
         Đoạn chẩn đoán gợi ý bệnh lý dưới đây 
         được tạo ra từ mô hình Deep Learning
@@ -86,6 +88,8 @@ class NewWindow():
         ********************************************
         
         Đây là nội dung phân tích:
+        {self.analysis_header}
+        {self.analysis_note}
         """
 
         # Create a Text object with the specified content
@@ -97,8 +101,3 @@ class NewWindow():
         self.plotter.add_hover_legend()
         self.plotter.start(axes=1, bg='black').close()
 
-mesh = load("D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/SegmentationData/ct_0022_label_resized/label_6_myocardium.stl")
-mesh.color("white")
-mesh.smooth(niter=100).lighting('default')
-mesh.texture('textures/cardiac_texture_3.jpg')
-instance = NewWindow(mesh)
