@@ -10,6 +10,10 @@
 - Lý do cải tiến (do sự phản hồi từ bác sĩ): cập nhật sau
 ![Image](imgs/H%C3%ACnh%20%E1%BA%A3nh%20l%C3%A0m%20vi%E1%BB%87c%20c%E1%BB%A7a%20nh%C3%B3m/Qu%C3%A1%20tr%C3%ACnh%20l%C3%A0m%20phi%C3%AAn%20b%E1%BA%A3n%203%20cho%20v%C3%B2ng%20th%C3%A0nh%20ph%E1%BB%91.jpg)
 
+![](imgs/Hình%20ảnh%20làm%20việc%20của%20nhóm/New%20update.jpg)
+
+
+
 ### Giao diện app mới với nhiều tính năng hỗ trợ
 [Video demo phiên bản 2](https://youtu.be/ssdXmd1ua2c?si=EiynVL32P7t3Hdm3)
 - Lý do: Qua quá trình nghiên cứu, khảo sát, xin phản hồi từ người dùng, nền tảng Web có nhược điểm sau:
