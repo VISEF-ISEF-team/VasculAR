@@ -1,12 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SlicerChangeSizeUIControl : MonoBehaviour
+public class SlicerCanvasManagerScript : MonoBehaviour
 {
+    [SerializeField] GameObject slicer; 
     [SerializeField] private MeshRenderer slicerPlaneRenderer;
     [SerializeField] float minScale = 0.1f; 
     [SerializeField] float maxScale = 3.0f;
+    private SlicerSpawnOnUIControl slicerSpawnUIControl;
+
+    private void Start()
+    {
+        slicerSpawnUIControl = slicer.GetComponent<SlicerSpawnOnUIControl>();
+    }
+
+    private void OnEnable()
+    {
+        slicer.SetActive(true);
+        slicerSpawnUIControl.SpawnSlicer(); 
+    }
+
+    private void OnDisable()
+    {
+        slicer.SetActive(false); 
+    }
 
     public void ChangeWidth(float widthScaleValue)
     {

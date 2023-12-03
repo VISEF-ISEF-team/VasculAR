@@ -1,22 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetHandPosition: ScriptableObject
+public class GetHandPosition: MonoBehaviour
 {
-    private Transform leftHandTip;
-    private Transform rightHandTip;
-    public void StartScript()
-    {
-        leftHandTip = GameObject.Find("RightGrabRay").transform;
-        rightHandTip = GameObject.Find("LeftGrabRay").transform; 
-    }
+    [SerializeField] GameObject leftHandTip;
+    [SerializeField] GameObject rightHandTip;
     public List<Transform> GetHandTipPositions()
     {
         List<Transform> returnList = new()
         {
-            leftHandTip,
-            rightHandTip
+            leftHandTip.transform,
+            rightHandTip.transform
         };
         return returnList; 
+    }
+
+    public static GetHandPosition GetHandPositionReference()
+    {
+        return GameObject.Find("General Settings").GetComponent<GetHandPosition>();
     }
 }

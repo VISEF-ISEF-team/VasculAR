@@ -1,7 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class GetHeadPosition : ScriptableObject
+public class GetHeadPosition : MonoBehaviour
 {
     private float spawnDistance = 2.0f;
     public float SpawnDistance
@@ -15,12 +14,7 @@ public class GetHeadPosition : ScriptableObject
             }
         }
     }
-
-    private Transform headConfigObjectTransform; 
-    public void StartScript()
-    {
-        headConfigObjectTransform = GameObject.Find("HeadVRTarget").transform;
-    }
+    [SerializeField] Transform headConfigObjectTransform; 
     public Vector3 TransformPositionInFrontOfHead()
     {
         return headConfigObjectTransform.position + new Vector3(headConfigObjectTransform.forward.x, 0, headConfigObjectTransform.forward.z).normalized * spawnDistance;
@@ -40,5 +34,11 @@ public class GetHeadPosition : ScriptableObject
     {
         // Check if the variable is a number
         return variable is int || variable is float || variable is double || variable is decimal;
+    }
+
+    public static GetHeadPosition GetHeadPositionReference()
+    {
+       GetHeadPosition component = GameObject.Find("General Settings").GetComponent<GetHeadPosition>();
+        return component; 
     }
 }
