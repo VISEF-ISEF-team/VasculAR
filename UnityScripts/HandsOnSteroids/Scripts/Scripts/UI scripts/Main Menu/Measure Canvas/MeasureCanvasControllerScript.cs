@@ -13,6 +13,7 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     private float minScale = 0.05f;
 
     private List<GameObject> measurePointList; 
+    private bool allowDelete = false; 
     private void Start()
     {
         measureObjectActionScript = measureObject.GetComponent<MeasureObjectActionScript>();
@@ -65,5 +66,10 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     {
         scale = Mathf.Clamp(scale, maxScale, minScale);
         measureObjectActionScript.MeasurePointScale = new Vector3(scale, scale, scale); 
+    }
+
+    public void OnDeleteButtonPress() 
+    {
+        allowDelete = !allowDelete; 
     }
 }

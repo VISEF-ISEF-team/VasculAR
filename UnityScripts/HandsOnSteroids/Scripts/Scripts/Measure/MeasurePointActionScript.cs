@@ -15,6 +15,13 @@ public class MeasurePointActionScript : MonoBehaviour
     private Vector3 originalStartSpherePosition; 
     private Vector3 originalEndSpherePosition; 
 
+    private bool allowDelete = false; 
+    public bool AllowDelete 
+    {
+        get { return allowDelete; } 
+        set { allowDelete = value; }
+    }
+
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>(); 
@@ -28,9 +35,13 @@ public class MeasurePointActionScript : MonoBehaviour
 
         selfGrabbable.selectEntered.AddListener(OnSelfSelectEnter); 
         selfGrabbable.selectExited.AddListener(OnSelfSelectExit); 
+        selfGrabbable.activated.AddListenenr(OnSelfActivate); 
+        // selfGrabbable.deactivated.AddListener(OnSelfDeactivate); 
 
         endSphereGrabbable.selectEntered.AddListener(OnEndSphereSelectEnter); 
         endSphereGrabbable.selectExited.AddListener(OnEndSphereSelectExit);
+        endSphereGrabbable.activated.AddListener(OnEndSphereActivate); 
+        // endSphereGrabbable.deactivated.AddListener(OnEndSphereDeactivate); 
     }
 
     public void InitializeStartingSphere()
@@ -63,7 +74,7 @@ public class MeasurePointActionScript : MonoBehaviour
         }
     }
 
-    private void OnSelfSelectEnter(SelectEnteredEventArgs args0) 
+    private void OnSelfSelectEnter(SelectEnterEventArgs args0) 
     {
         Vector3 newPosition = transform.position; 
         if (newPosition != originalStartSpherePosition) 
@@ -73,12 +84,21 @@ public class MeasurePointActionScript : MonoBehaviour
         }
     }
 
-    private void OnSelfSelectExit(SelectExitedEventArgs args0) 
+    private void OnSelfSelectExit(SelectExitEventArgs args0) 
     {
         originalStartSpherePosition = transform.position; 
     }
+    
+    private void OnSelfActivate(ActivateEventArgs) 
+    {
+        if (allowDelete) 
+        {
+            Destroy(endSphere); 
+            Destroy(gameObject): 
+        }
+    }
 
-    private void OnEndSphereSelectEnter(SelectEnteredEventArgs args0) 
+    private void OnEndSphereSelectEnter(SelectEnterEventArgs args0) 
     {
         Vector3 newPosition = transform.position; 
         if (newPosition != originalEndSpherePosition) 
@@ -88,8 +108,22 @@ public class MeasurePointActionScript : MonoBehaviour
         }
     }
 
-    private void OnEndSphereSelectExit(SelectExitedEventArgs args0) 
+    private void OnEndSphereSelectExit(SelectExitEventArgs args0) 
     {
         originalEndSpherePosition = transform.position; 
+    }   
+
+    private void OnEndSphereActivate(ActivateEventArgs args0) 
+    {
+        if (allowDelete) 
+        {
+            Destroy(endSphere); 
+            Destroy(gameObject); 
+        }
+    }
+
+    public void SetDeleteStatus(bool value)
+    {
+        allowDelete = value; 
     }
 }

@@ -33,7 +33,7 @@ public class MeasureObjectActionScript : MonoBehaviour
 
     private List<Color> colorList = new List<Color>() 
     {
-
+        // write in color codes for measure points
     };
     private void Start()
     {
@@ -131,5 +131,13 @@ public class MeasureObjectActionScript : MonoBehaviour
             return colorList[currentColorIndex]; 
         } 
         return colorList[currentColorIndex];  
+    }
+
+    public void OnDeleteButtonPress() 
+    {
+        for (var points in measurePointList) 
+        {
+            points.AllowDelete = !points.AllowDelete; 
+        }
     }
 }
