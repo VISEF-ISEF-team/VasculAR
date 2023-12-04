@@ -10,12 +10,27 @@ public class MeasurePointActionScript : MonoBehaviour
 
     // code logic for both when start sphere is moving or end sphere is moving
     private XRGrabInteractable selfGrabbable;
-    private XRGrabInteractable endSphereInteractable; 
+    private XRGrabInteractable endSphereGrabbable; 
+
+    private Vector3 originalStartSpherePosition; 
+    private Vector3 originalEndSpherePosition; 
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>(); 
-        distanceText = endSphere.GetComponent<TextMeshProUGUI>();   
+        distanceText = endSphere.GetComponent<TextMeshProUGUI>();  
+
+        originalStartSpherePosition = transform.position; 
+        originalEndSpherePosition = endSphere.transform.position;  
+
+        selfGrabbable = GetComponent<XRGrabInteractable>(); 
+        endSphereGrabbable = endSphere.GetComponent<XRGrabInteractable>(); 
+
+        selfGrabbable.selectEntered.AddListener(OnSelfSelectEnter); 
+        selfGrabbable.selectExited.AddListener(OnSelfSelectExit); 
+
+        endSphereGrabbable.selectEntered.AddListener(OnEndSphereSelectEnter); 
+        endSphereGrabbable.selectExited.AddListener(OnEndSphereSelectExit);
     }
 
     public void InitializeStartingSphere()
@@ -46,5 +61,35 @@ public class MeasurePointActionScript : MonoBehaviour
         {
             distanceText.text = $"{GetDistance()} cm"; 
         }
+    }
+
+    private void OnSelfSelectEnter(SelectEnteredEventArgs args0) 
+    {
+        Vector3 newPosition = transform.position; 
+        if (newPosition != originalStartSpherePosition) 
+        {
+            originalStartSpherePosition = newPosition; 
+            SetDistanceText(); 
+        }
+    }
+
+    private void OnSelfSelectExit(SelectExitedEventArgs args0) 
+    {
+        originalStartSpherePosition = transform.position; 
+    }
+
+    private void OnEndSphereSelectEnter(SelectEnteredEventArgs args0) 
+    {
+        Vector3 newPosition = transform.position; 
+        if (newPosition != originalEndSpherePosition) 
+        {
+            originalEndSpherePosition = newPosition; 
+            SetDistanceText(); 
+        }
+    }
+
+    private void OnEndSphereSelectExit(SelectExitedEventArgs args0) 
+    {
+        originalEndSpherePosition = transform.position; 
     }
 }

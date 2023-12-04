@@ -31,6 +31,10 @@ public class MeasureObjectActionScript : MonoBehaviour
     public List<GameObject> MeasurePointList
     {  get { return measurePointList; } }
 
+    private List<Color> colorList = new List<Color>() 
+    {
+
+    };
     private void Start()
     {
         handPositions = GetHandPosition.GetHandPositionReference();
@@ -49,10 +53,14 @@ public class MeasureObjectActionScript : MonoBehaviour
             {
                 if (leftTriggerButton.action.WasPressedThisFrame())
                 {
+                    Color sphereColor = GetColor(); 
                     GameObject startSphere = Instantiate(startingMeasurePoint, leftHandTipPosition, Quaternion.identity);
                     startSphere.transform.localScale = measurePointScale; 
+                    startSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
+
                     GameObject endSphere = Instantiate(endingMeasurepoint, leftHandTipPosition, Quaternion.identity);
                     endSphere.transform.localScale = measurePointScale; 
+                    endSphere.GetComponent<MeshRenderer>().material.Color = sphereColor; 
 
                     MeasurePointActionScript measurePointScript = startSphere.GetComponent<MeasurePointActionScript>();
                     measurePointScript.InitializeStartingSphere();
@@ -80,9 +88,14 @@ public class MeasureObjectActionScript : MonoBehaviour
             {
                 if (rightTriggerButton.action.WasPressedThisFrame())
                 {
+                    Color sphereColor = GetColor(); 
                     GameObject startSphere = Instantiate(startingMeasurePoint, rightHandTipPosition, Quaternion.identity);
+                    // set start sphere color 
+                    startSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
                     startSphere.transform.localScale = measurePointScale;
+
                     GameObject endSphere = Instantiate(endingMeasurepoint, rightHandTipPosition, Quaternion.identity);
+                    endSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
                     endSphere.transform.localScale = measurePointScale;
 
                     // attach end sphere to start sphere
@@ -106,5 +119,17 @@ public class MeasureObjectActionScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    Color GetColor() 
+    {
+        static int currentColorIndex = -1; 
+        currentColorIndex++; 
+        if (currentColorIndex >= colorList.Count() - 1) 
+        {
+            currentColorIndex = 0; 
+            return colorList[currentColorIndex]; 
+        } 
+        return colorList[currentColorIndex];  
     }
 }
