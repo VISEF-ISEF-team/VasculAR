@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -7,7 +6,8 @@ public class PaintActionScript : MonoBehaviour
     [SerializeField] Color highlightColor;
     private XRSimpleInteractable selfInteractable;
     private Color selfSphereColor;
-    private MeshRenderer selfMeshRenderer; 
+    private MeshRenderer selfMeshRenderer;
+    private bool allowDelete;
     private void Start()
     {
         selfInteractable = GetComponent<XRSimpleInteractable>();

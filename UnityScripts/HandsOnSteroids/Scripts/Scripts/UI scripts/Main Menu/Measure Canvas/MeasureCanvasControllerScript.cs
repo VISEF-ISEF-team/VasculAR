@@ -1,7 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using UnityEngine.Rendering;
 
 public class MeasureCanvasControllerScript : MonoBehaviour
 {
@@ -11,31 +10,34 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     private MeasureObjectActionScript measureObjectActionScript;
     private float maxScale = 0.2f; 
     private float minScale = 0.05f;
+    private Button deleteButton;
+    private bool isPressed = false;
+    private Color normalColor = new Color(0 / 255.0f, 253 / 255.0f, 241 / 255.0f, 120 / 255.0f);
+    private Color pressedColor = new Color(0 / 255.0f, 147 / 255.0f, 140 / 255.0f, 255 / 255.0f);
 
-    private List<GameObject> measurePointList; 
-    private bool allowDelete = false; 
     private void Start()
     {
         measureObjectActionScript = measureObject.GetComponent<MeasureObjectActionScript>();
         scaleSlider.value = 0.1f;
         scaleSlider.onValueChanged.AddListener(OnSliderChangeSphereSize); 
+        deleteButton = GetComponentInChildren<Button>();
     }
 
     private void Update()
     {
-        
+        deleteButton.onClick.AddListener(OnDeleteButtonPress); 
     }
 
     private void OnEnable()
     {
         measureObject.SetActive(true);
-        measurePointList = measureObjectActionScript.MeasurePointList; 
+        measureObjectActionScript.SetGrabStatusForMeasurePoints(true); 
     }
 
     private void OnDisable()
     {
         measureObject.SetActive(false);
-        measurePointList.Clear(); 
+        measureObjectActionScript.SetGrabStatusForMeasurePoints(false); 
     }
 
     public void OnAllowLeftHandToggle(bool value)
@@ -47,7 +49,7 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     {
         if (value == false)
         {
-            foreach (var points in measurePointList)
+            foreach (var points in measureObjectActionScript.MeasurePointList)
             {
                 points.GetComponent<MeasurePointActionScript>().endSphere.SetActive(false); 
                 points.SetActive(false); 
@@ -55,7 +57,7 @@ public class MeasureCanvasControllerScript : MonoBehaviour
         }
         else if (value == true)
         {
-            foreach (var points in measurePointList)
+            foreach (var points in measureObjectActionScript.MeasurePointList)
             {
                 points.GetComponent<MeasurePointActionScript>().endSphere.SetActive(true);
                 points.SetActive(true);
@@ -68,8 +70,18 @@ public class MeasureCanvasControllerScript : MonoBehaviour
         measureObjectActionScript.MeasurePointScale = new Vector3(scale, scale, scale); 
     }
 
-    public void OnDeleteButtonPress() 
+    public void OnDeleteButtonPress()
     {
-        allowDelete = !allowDelete; 
+        isPressed = !isPressed; 
+        if (isPressed)
+        {
+            Image buttonImage = deleteButton.GetComponent<Image>(); 
+            buttonImage.color = pressedColor; 
+        }
+        else
+        {
+                Image buttonImage = deleteButton.GetComponent<Image>();
+            buttonImage.color = normalColor;    
+        }
     }
 }

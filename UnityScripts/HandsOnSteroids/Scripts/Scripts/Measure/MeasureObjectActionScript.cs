@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MeasureObjectActionScript : MonoBehaviour
 {
     [SerializeField] GameObject startingMeasurePoint;
-    [SerializeField] GameObject endingMeasurepoint; 
+    [SerializeField] GameObject endingMeasurepoint;
     [SerializeField] InputActionProperty rightTriggerButton;
     [SerializeField] InputActionProperty leftTriggerButton;
-    
+
     private GetHandPosition handPositions;
     private readonly float xoffset = 0.05f;
     private bool allowLeftHand;
@@ -25,15 +26,31 @@ public class MeasureObjectActionScript : MonoBehaviour
     }
     private bool isStarting = true;
     private GameObject currentActiveSphere;
-    private GameObject currentActiveOtherSphere; 
+    private GameObject currentActiveOtherSphere;
 
-    private List<GameObject> measurePointList; 
+    private List<GameObject> measurePointList;
     public List<GameObject> MeasurePointList
-    {  get { return measurePointList; } }
+    { get { return measurePointList; } }
 
-    private List<Color> colorList = new List<Color>() 
+    private static int currentColorIndex = 0; 
+    private List<Color> colorList = new List<Color>()
     {
         // write in color codes for measure points
+        new Color(1.0f, 0.0f, 0.0f, 1.0f),
+        new Color(0.0f, 1.0f, 0.0f, 1.0f), 
+        new Color(0.0f, 0.0f, 1.0f, 1.0f), 
+        new Color(1.0f, 1.0f, 0.0f, 1.0f), 
+        new Color(1.0f, 0.0f, 1.0f, 1.0f), 
+        new Color(0.0f, 1.0f, 1.0f, 1.0f), 
+        new Color(1.0f, 1.0f, 1.0f, 1.0f), 
+        new Color(0.5f, 0.5f, 0.5f, 1.0f), 
+        new Color(0.0f, 0.0f, 0.0f, 1.0f), 
+        new Color(0.6f, 0.8f, 1.0f, 1.0f), 
+        new Color(0.7f, 1.0f, 0.7f, 1.0f), 
+        new Color(1.0f, 0.7f, 0.7f, 1.0f), 
+        new Color(1.0f, 0.5f, 0.0f, 1.0f), 
+        new Color(0.5f, 0.0f, 1.0f, 1.0f), 
+        new Color(0.0f, 0.5f, 0.5f, 1.0f)
     };
     private void Start()
     {
@@ -42,43 +59,44 @@ public class MeasureObjectActionScript : MonoBehaviour
 
     private void Update()
     {
+        // only for when the sphere is immediately initialized 
         Transform rightHandTip = handPositions.GetHandTipPositions()[1];
-        Vector3 rightHandTipPosition = new Vector3(rightHandTip.position.x + xoffset, rightHandTip.position.y, rightHandTip.position.z); 
+        Vector3 rightHandTipPosition = new Vector3(rightHandTip.position.x + xoffset, rightHandTip.position.y, rightHandTip.position.z);
 
         if (allowLeftHand)
         {
             Transform leftHandTip = handPositions.GetHandTipPositions()[0];
-            Vector3 leftHandTipPosition = new Vector3(leftHandTip.position.x + xoffset, leftHandTip.position.y, leftHandTip.position.z); 
+            Vector3 leftHandTipPosition = new Vector3(leftHandTip.position.x + xoffset, leftHandTip.position.y, leftHandTip.position.z);
             if (isStarting)
             {
                 if (leftTriggerButton.action.WasPressedThisFrame())
                 {
-                    Color sphereColor = GetColor(); 
+                    Color sphereColor = GetColor();
                     GameObject startSphere = Instantiate(startingMeasurePoint, leftHandTipPosition, Quaternion.identity);
-                    startSphere.transform.localScale = measurePointScale; 
-                    startSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
+                    startSphere.transform.localScale = measurePointScale;
+                    startSphere.GetComponent < MeshRenderer>().material.color = sphereColor;
 
                     GameObject endSphere = Instantiate(endingMeasurepoint, leftHandTipPosition, Quaternion.identity);
-                    endSphere.transform.localScale = measurePointScale; 
-                    endSphere.GetComponent<MeshRenderer>().material.Color = sphereColor; 
+                    endSphere.transform.localScale = measurePointScale;
+                    endSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
 
                     MeasurePointActionScript measurePointScript = startSphere.GetComponent<MeasurePointActionScript>();
-                    measurePointScript.InitializeStartingSphere();
-                    isStarting = false; 
-                    measurePointList.Add(startSphere);
                     measurePointScript.endSphere = endSphere;
+                    measurePointScript.InitializeStartingSphere();
+                    isStarting = false;
+                    measurePointList.Add(startSphere);
                     currentActiveSphere = startSphere;
-                    currentActiveOtherSphere = endSphere; 
+                    currentActiveOtherSphere = endSphere;
                 }
             }
             else
             {
-                currentActiveSphere.GetComponent<MeasurePointActionScript>().SetLineRendererPosition(1, leftHandTipPosition);    
+                currentActiveSphere.GetComponent<MeasurePointActionScript>().SetLineRendererPosition(1, leftHandTipPosition);
                 currentActiveOtherSphere.transform.position = leftHandTipPosition;
-                currentActiveOtherSphere.GetComponent<MeasurePointActionScript>().GetDistance(); 
+                currentActiveOtherSphere.GetComponent<MeasurePointActionScript>().SetDistanceText();
                 if (leftTriggerButton.action.WasPressedThisFrame())
                 {
-                    isStarting = true; 
+                    isStarting = true;
                 }
             }
         }
@@ -88,20 +106,20 @@ public class MeasureObjectActionScript : MonoBehaviour
             {
                 if (rightTriggerButton.action.WasPressedThisFrame())
                 {
-                    Color sphereColor = GetColor(); 
+                    Color sphereColor = GetColor();
                     GameObject startSphere = Instantiate(startingMeasurePoint, rightHandTipPosition, Quaternion.identity);
                     // set start sphere color 
-                    startSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
+                    startSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
                     startSphere.transform.localScale = measurePointScale;
 
                     GameObject endSphere = Instantiate(endingMeasurepoint, rightHandTipPosition, Quaternion.identity);
-                    endSphere.GetComponent<MeshRenderer()>.material.Color = sphereColor; 
+                    endSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
                     endSphere.transform.localScale = measurePointScale;
 
                     // attach end sphere to start sphere
                     MeasurePointActionScript measurePointScript = startSphere.GetComponent<MeasurePointActionScript>();
-                    measurePointScript.InitializeStartingSphere();
                     measurePointScript.endSphere = endSphere;
+                    measurePointScript.InitializeStartingSphere();
                     measurePointList.Add(startSphere);
                     currentActiveSphere = startSphere;
                     currentActiveOtherSphere = endSphere;
@@ -112,7 +130,7 @@ public class MeasureObjectActionScript : MonoBehaviour
             {
                 currentActiveSphere.GetComponent<MeasurePointActionScript>().SetLineRendererPosition(1, rightHandTipPosition);
                 currentActiveOtherSphere.transform.position = rightHandTipPosition;
-                currentActiveOtherSphere.GetComponent<MeasurePointActionScript>().SetDistanceText(); 
+                currentActiveOtherSphere.GetComponent<MeasurePointActionScript>().SetDistanceText();
                 if (leftTriggerButton.action.WasPressedThisFrame())
                 {
                     isStarting = true;
@@ -121,23 +139,35 @@ public class MeasureObjectActionScript : MonoBehaviour
         }
     }
 
-    Color GetColor() 
+    Color GetColor()
     {
-        static int currentColorIndex = -1; 
-        currentColorIndex++; 
-        if (currentColorIndex >= colorList.Count() - 1) 
+        if (currentColorIndex >= colorList.Count() - 1)
         {
-            currentColorIndex = 0; 
-            return colorList[currentColorIndex]; 
-        } 
-        return colorList[currentColorIndex];  
+            currentColorIndex = 0;
+        }
+        Color currentColor = colorList[currentColorIndex]; 
+        if (currentColor != null) 
+        {
+            currentColorIndex++;
+        }
+        return currentColor; 
     }
 
-    public void OnDeleteButtonPress() 
+    public void SetDeleteStatusForMeasurePoints()
     {
-        for (var points in measurePointList) 
+        foreach (var points in measurePointList)
         {
-            points.AllowDelete = !points.AllowDelete; 
+            MeasurePointActionScript pointActionScript = points.GetComponent<MeasurePointActionScript>();
+            pointActionScript.AllowDelete = !pointActionScript.AllowDelete;
+        }
+    }
+
+    public void SetGrabStatusForMeasurePoints(bool value)
+    {
+        foreach (var points in measurePointList) 
+        {
+            MeasurePointActionScript pointActionScript= points.GetComponent<MeasurePointActionScript>();
+            pointActionScript.AllowGrab = value; 
         }
     }
 }
