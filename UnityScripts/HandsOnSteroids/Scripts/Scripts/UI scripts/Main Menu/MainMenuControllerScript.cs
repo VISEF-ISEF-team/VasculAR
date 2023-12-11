@@ -17,7 +17,8 @@ public class MainMenuControllerScript : MonoBehaviour
     [SerializeField] GameObject mainMenuCanvas;
     [SerializeField] GameObject paintBrushCanvas;
     [SerializeField] GameObject slicerCanvas;
-    [SerializeField] GameObject measureCanvas; 
+    [SerializeField] GameObject measureCanvas;
+    [SerializeField] GameObject segmentationCanvas; 
     
     private Stack<int> forwardStack; 
     private Stack<int> backwardStack;
@@ -48,6 +49,7 @@ public class MainMenuControllerScript : MonoBehaviour
             paintBrushCanvas,
             slicerCanvas,
             measureCanvas,
+            segmentationCanvas,
         };
         currentlyActiveIndex = 0;
     }
@@ -154,5 +156,14 @@ public class MainMenuControllerScript : MonoBehaviour
         menuCanvasManager[3].SetActive(true);
         currentlyActiveIndex = 3;
         backwardStack.Push(3);
+    }
+
+    public void OnSegmentCanvasButtonPress()
+    {
+        // index in manager is 4
+        menuCanvasManager[currentlyActiveIndex].SetActive(false);
+        menuCanvasManager[4].SetActive(true);
+        currentlyActiveIndex = 4;
+        backwardStack.Push(4);
     }
 }
