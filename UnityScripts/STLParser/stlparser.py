@@ -76,23 +76,23 @@ def main(dir_path: str):
                         else:
                             triangleList.append(
                                 verticesDictionary[coordinates])
+            else:
+                continue
 
-                sorted_dict_asc = dict(
-                    sorted(verticesDictionary.items(), key=lambda item: item[1]))
+    sorted_dict_asc = dict(
+        sorted(verticesDictionary.items(), key=lambda item: item[1]))
 
-                jsondata = {"triangles": triangleList}
-                jsonvertices = []
-                for key in sorted_dict_asc.keys():
-                    x, y, z = key
-                    newCooridnates = [float(x), float(y), float(z)]
-                    jsonvertices.append(newCooridnates)
+    jsondata = {"triangles": triangleList}
+    jsonvertices = []
+    for key in sorted_dict_asc.keys():
+        x, y, z = key
+        newCooridnates = [float(x), float(y), float(z)]
+        jsonvertices.append(newCooridnates)
 
-                jsondata["vertices"] = jsonvertices
+    jsondata["vertices"] = jsonvertices
 
-                with open(".\\json\\all.json", "w") as json_file:
-                    json.dump(jsondata, json_file, indent=4)
-        else:
-            continue
+    with open(".\\json\\all.json", "w") as json_file:
+        json.dump(jsondata, json_file, indent=4)
 
 
 if __name__ == "__main__":
