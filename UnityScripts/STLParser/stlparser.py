@@ -82,17 +82,22 @@ def main(dir_path: str):
     sorted_dict_asc = dict(
         sorted(verticesDictionary.items(), key=lambda item: item[1]))
 
-    jsondata = {"triangles": triangleList}
-    jsonvertices = []
+    writtenVertices = []
     for key in sorted_dict_asc.keys():
         x, y, z = key
         newCooridnates = [float(x), float(y), float(z)]
-        jsonvertices.append(newCooridnates)
+        writtenVertices.append(newCooridnates)
 
-    jsondata["vertices"] = jsonvertices
+    with open("vertices.txt", "w", encoding="utf-8") as f:
+        f.write("Triangles\n")
+        for triangle in triangleList:
+            f.write(f"{triangle}\n")
 
-    with open(".\\json\\all.json", "w") as json_file:
-        json.dump(jsondata, json_file, indent=4)
+        f.write("Vertices\n")
+        for vertex in writtenVertices:
+            f.write(f"{vertex[0]} {vertex[1]} {vertex[2]}\n")
+
+    # about 2.4 million different vertices => too excessive, may need to reconsider or reconstruct differently in Unity
 
 
 if __name__ == "__main__":
