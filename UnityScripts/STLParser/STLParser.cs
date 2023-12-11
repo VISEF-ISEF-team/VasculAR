@@ -1,53 +1,119 @@
+using UnityEditor;
 using UnityEngine;
+using System;
+using System.Diagnostics;
+using System.Collections;
 using System.IO;
-using System.Collections.Generic;
 
-public class STLParser : MonoBehaviour
+public class LoadFileButtonActionScript : MonoBehaviour
 {
-    public string stlFilePath = "path/to/your/file.stl"; // Replace with the path to your STL file
+    [SerializeField] GameObject meshObject;
+    [SerializeField] Material meshMaterial;
+    private MeshFilter meshFilter;
+    private Mesh mesh; 
 
-    void Start()
+    private bool coroutineError = false;
+    private bool isStartingCoroutine = false;
+
+    private void Start()
     {
-        ParseSTLFile();
+        meshFilter = meshObject.GetComponent<MeshFilter>();
+        mesh = meshFilter.mesh; 
+    }
+    private void Update()
+    {
+        if (coroutineError)
+        {
+            StopCoroutine(LoadFileCoroutine()); 
+        }
     }
 
-    private void ParseSTLFile()
+    public void LoadFile()
     {
-        try
+        if (isStartingCoroutine == false)
         {
-            using (FileStream fileStream = new FileStream(stlFilePath, FileMode.Open, FileAccess.Read))
-            using (BinaryReader reader = new BinaryReader(fileStream))
+            StartCoroutine(LoadFileCoroutine());
+            isStartingCoroutine = true;
+        }
+        else
+        {
+            StopCoroutine(LoadFileCoroutine()); 
+        }
+    }
+    struct MeshData
+    {
+        public int[] triangles;
+        public Vector3[] vertices;  
+    }
+    private IEnumerator LoadFileCoroutine()
+    {
+        string interpreterPath = @"E:\ISEF\VascuIAR\.venv\Scripts\python.exe";
+        string parserFilePath = @"E://ISEF//VascuIAR//UnityScripts//STLParser//stlparser.py";
+/*        string jsonDirPath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\json\";*/
+        string jsonFilePath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\vertices.json";
+
+        string dirPathArg = UnityEditor.EditorUtility.OpenFolderPanel("Select STl file", "", "");
+
+        yield return null;
+
+        if (!string.IsNullOrEmpty(dirPathArg))
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
             {
-                // Read the header (80 bytes, typically ignored)
-                byte[] header = reader.ReadBytes(80);
+                FileName = interpreterPath,
+                Arguments = $"\"{parserFilePath}\" {dirPathArg}",
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
 
-                // Read the number of triangles (4 bytes)
-                uint numberOfTriangles = reader.ReadUInt32();
+            yield return new WaitForSeconds(0.5f);
 
-                // Read each triangle
-                for (int i = 0; i < numberOfTriangles; i++)
+            using (Process process = new Process { StartInfo = processStartInfo })
+            {
+                process.Start();
+                yield return new WaitForSeconds(2.0f); 
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+                process.WaitForExit();
+                
+                if (!string.IsNullOrEmpty(error))
                 {
-                    // Read normal vector (12 bytes)
-                    float normalX = reader.ReadSingle();
-                    float normalY = reader.ReadSingle();
-                    float normalZ = reader.ReadSingle();
-
-                    // Read vertices (3 vertices, each with X, Y, Z - 36 bytes)
-                    Vector3 vertex1 = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-                    Vector3 vertex2 = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-                    Vector3 vertex3 = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-
-                    // Read attribute byte count (2 bytes, typically ignored)
-                    ushort attributeByteCount = reader.ReadUInt16();
-
-                    // Now, you can use the extracted data (e.g., create meshes, visualize, etc.)
-                    Debug.Log($"Triangle {i + 1}: Normal ({normalX}, {normalY}, {normalZ}), Vertices: {vertex1}, {vertex2}, {vertex3}");
+                    UnityEngine.Debug.Log("Python Script Error:");
+                    UnityEngine.Debug.Log(error);
+                    coroutineError = true; 
                 }
+                else if (!string.IsNullOrEmpty(output)) 
+                {
+                    UnityEngine.Debug.Log(output);
+                    coroutineError = true; 
+                }
+/*                string[] jsonFiles = Directory.GetFiles(jsonDirPath);
+
+                for (int i = 0; i < jsonFiles.Length; ++i)
+                {
+                    string file = jsonFiles[i]; 
+                    string jsonContent = File.ReadAllText(file);
+                    MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
+                    mesh.vertices = meshData.vertices;
+                    mesh.SetTriangles(meshData.triangles, i);
+
+                    yield return new WaitForSeconds(.5f); 
+                }*/
+
+                string jsonContent = File.ReadAllText(jsonFilePath);
+                MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
+                mesh.vertices = meshData.vertices;
+                mesh.triangles = meshData.triangles;
             }
         }
-        catch (System.Exception e)
+        else
         {
-            Debug.LogError("Error parsing STL file: " + e.Message);
+            coroutineError = true;
+            yield return null; 
         }
     }
 }
+
