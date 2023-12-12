@@ -1,30 +1,51 @@
 using UnityEditor;
 using UnityEngine;
-using System;
 using System.Diagnostics;
 using System.Collections;
 using System.IO;
+using System.Collections.Generic;
+using System;
 
+[Serializable]
+public class MeshData
+{
+    public int[] triangles;
+
+    public Vector3[] vertices;
+ 
+}
 public class LoadFileButtonActionScript : MonoBehaviour
 {
     [SerializeField] GameObject meshObject;
     [SerializeField] Material meshMaterial;
     private MeshFilter meshFilter;
-    private Mesh mesh; 
+    private Mesh mesh;
+    private string jsonContent;
 
     private bool coroutineError = false;
     private bool isStartingCoroutine = false;
 
+    private float scaleFactor = 0.001f; 
+
     private void Start()
     {
         meshFilter = meshObject.GetComponent<MeshFilter>();
-        mesh = meshFilter.mesh; 
+        mesh = new Mesh(); 
     }
     private void Update()
     {
         if (coroutineError)
         {
             StopCoroutine(LoadFileCoroutine()); 
+        }
+        if (!string.IsNullOrEmpty(jsonContent))
+        {
+            MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
+            UnityEngine.Debug.Log(JsonUtility.ToJson(meshData, true));
+/*            mesh.SetVertices(meshData.vertices); 
+            mesh.SetTriangles(meshData.triangles, 0);     */ 
+/*            meshFilter.mesh = mesh;*/
+            jsonContent = null; 
         }
     }
 
@@ -37,14 +58,11 @@ public class LoadFileButtonActionScript : MonoBehaviour
         }
         else
         {
-            StopCoroutine(LoadFileCoroutine()); 
+            StopCoroutine(LoadFileCoroutine());
+            isStartingCoroutine= false; 
         }
     }
-    struct MeshData
-    {
-        public int[] triangles;
-        public Vector3[] vertices;  
-    }
+
     private IEnumerator LoadFileCoroutine()
     {
         string interpreterPath = @"E:\ISEF\VascuIAR\.venv\Scripts\python.exe";
@@ -52,16 +70,16 @@ public class LoadFileButtonActionScript : MonoBehaviour
 /*        string jsonDirPath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\json\";*/
         string jsonFilePath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\vertices.json";
 
-        string dirPathArg = UnityEditor.EditorUtility.OpenFolderPanel("Select STl file", "", "");
+        string stlFilePath = UnityEditor.EditorUtility.OpenFilePanel("Select STl file", "", "");
 
         yield return null;
 
-        if (!string.IsNullOrEmpty(dirPathArg))
+        if (!string.IsNullOrEmpty(stlFilePath))
         {
             ProcessStartInfo processStartInfo = new ProcessStartInfo()
             {
                 FileName = interpreterPath,
-                Arguments = $"\"{parserFilePath}\" {dirPathArg}",
+                Arguments = $"\"{parserFilePath}\" \"{stlFilePath}\" \"{jsonFilePath}\"",
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -103,10 +121,10 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     yield return new WaitForSeconds(.5f); 
                 }*/
 
-                string jsonContent = File.ReadAllText(jsonFilePath);
-                MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
-                mesh.vertices = meshData.vertices;
-                mesh.triangles = meshData.triangles;
+                jsonContent = File.ReadAllText(jsonFilePath);
+                /*                mesh.vertices = meshData.vertices;
+                                mesh.triangles = meshData.triangles;
+                                meshFilter.mesh = mesh;*/
             }
         }
         else

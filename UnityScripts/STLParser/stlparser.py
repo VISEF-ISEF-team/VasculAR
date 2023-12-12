@@ -18,7 +18,8 @@ def STLToJson(stl_file_path: str, json_file_path: str = "vertices.json"):
 
     for i, triangles in enumerate(meshVar.vectors):
         for vertices in triangles:
-            coordinates = (vertices[0], vertices[1], vertices[2])
+            coordinates = (round(vertices[0], 1), round(
+                vertices[1], 1), round(vertices[2], 1))
             if verticesDictionary.get(coordinates) == None:
                 verticesDictionary[coordinates] = vertexCounter
                 triangleList.append(vertexCounter)
@@ -33,7 +34,8 @@ def STLToJson(stl_file_path: str, json_file_path: str = "vertices.json"):
     jsonvertices = []
     for key, value in sorted_dict_asc.items():
         x, y, z = key
-        newCooridnates = [float(x), float(y), float(z)]
+        newCooridnates = [round(float(x), 1), round(
+            float(y), 1), round(float(z), 1)]
         jsonvertices.append(newCooridnates)
 
     jsondata["vertices"] = jsonvertices
@@ -68,7 +70,8 @@ def main(dir_path: str):
 
                 for i, triangles in enumerate(meshVar.vectors):
                     for vertices in triangles:
-                        coordinates = (vertices[0], vertices[1], vertices[2])
+                        coordinates = (round(vertices[0], 1), round(
+                            vertices[1], 1), round(vertices[2], 1))
                         if verticesDictionary.get(coordinates) == None:
                             verticesDictionary[coordinates] = vertexCounter
                             triangleList.append(vertexCounter)
@@ -76,33 +79,40 @@ def main(dir_path: str):
                         else:
                             triangleList.append(
                                 verticesDictionary[coordinates])
+            else:
+                continue
 
-                sorted_dict_asc = dict(
-                    sorted(verticesDictionary.items(), key=lambda item: item[1]))
+    sorted_dict_asc = dict(
+        sorted(verticesDictionary.items(), key=lambda item: item[1]))
 
-                jsondata = {"triangles": triangleList}
-                jsonvertices = []
-                for key in sorted_dict_asc.keys():
-                    x, y, z = key
-                    newCooridnates = [float(x), float(y), float(z)]
-                    jsonvertices.append(newCooridnates)
+    writtenVertices = []
+    for key in sorted_dict_asc.keys():
+        x, y, z = key
+        newCooridnates = [float(x), float(y), float(z)]
+        writtenVertices.append(newCooridnates)
 
-                jsondata["vertices"] = jsonvertices
+    with open("vertices.txt", "w", encoding="utf-8") as f:
+        f.write("Triangles\n")
+        for triangle in triangleList:
+            f.write(f"{triangle}\n")
 
-                with open(".\\json\\all.json", "w") as json_file:
-                    json.dump(jsondata, json_file, indent=4)
-        else:
-            continue
+        f.write("Vertices\n")
+        for vertex in writtenVertices:
+            f.write(f"{vertex[0]} {vertex[1]} {vertex[2]}\n")
+
+    # about 2.4 million different vertices => too excessive, may need to reconsider or reconstruct differently in Unity
 
 
 if __name__ == "__main__":
     script_name = sys.argv[0]
     arguments = sys.argv[1:]
-    if len(arguments) > 1:
+    if len(arguments) > 2 or type(arguments[0]) != str or type(arguments[1]) != str:
         sys.exit(
-            "Expect 1 command line argument of type string but received 2")
+            "Expect 1 - 2 command line arguments of type string but received 3")
     path = arguments[0]
-    if path.split('.')[-1] == "stl":
-        STLToJson(path)
+
+    if len(arguments) == 2 and path.split('.')[-1] == "stl":
+        STLToJson(path, arguments[1])
     else:
         main(path)
+        print("Success")
