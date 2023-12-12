@@ -18,8 +18,7 @@ def STLToJson(stl_file_path: str, json_file_path: str = "vertices.json"):
 
     for i, triangles in enumerate(meshVar.vectors):
         for vertices in triangles:
-            coordinates = (round(vertices[0], 1), round(
-                vertices[1], 1), round(vertices[2], 1))
+            coordinates = (vertices[0], vertices[1],  vertices[2])
             if verticesDictionary.get(coordinates) == None:
                 verticesDictionary[coordinates] = vertexCounter
                 triangleList.append(vertexCounter)
@@ -34,8 +33,15 @@ def STLToJson(stl_file_path: str, json_file_path: str = "vertices.json"):
     jsonvertices = []
     for key, value in sorted_dict_asc.items():
         x, y, z = key
-        newCooridnates = [round(float(x), 1), round(
-            float(y), 1), round(float(z), 1)]
+        x = float(x)
+        y = float(y)
+        z = float(z)
+
+        newCooridnates = {
+            "x": x,
+            "y": y,
+            "z": z,
+        }
         jsonvertices.append(newCooridnates)
 
     jsondata["vertices"] = jsonvertices
