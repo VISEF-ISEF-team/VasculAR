@@ -76,7 +76,52 @@ def parse_stl(stl_file_path="C://Users//Acer//Downloads//ct_0096_label.nii//labe
         json.dump(jsonData, f, indent=4)
 
 
+def custom_parse_stl(stl_file_path="C://Users//Acer//Downloads//ct_0096_label.nii//label_8_pulmonary_trunk.stl", json_file_path="vertices.json", normal_json_path="normals.json"):
+    jsonData = {}
+    triangleList = []
+    vertexList = []
+    normalsList = []
+    vertexCounter = 0
+    mesh_data = mesh.Mesh.from_file(stl_file_path)
+
+    print(mesh_data.faces)
+
+    # for triangles in mesh_data.vectors:
+    #     for vertex in triangles:
+    #         triangleList.append(vertexCounter)
+    #         coordinates = {
+    #             "x": float(vertex[0]),
+    #             "y": float(vertex[1]),
+    #             "z": float(vertex[2])
+    #         }
+    #         vertexList.append(coordinates)
+    #         vertexCounter += 1
+
+    # for norm in mesh_data.normals:
+    #     coordinates = {
+    #         "x": float(norm[0]),
+    #         "y": float(norm[1]),
+    #         "z": float(norm[2])
+    #     }
+    #     normalsList.append(coordinates)
+
+    # jsonData["triangles"] = triangleList
+    # jsonData["vertices"] = vertexList
+
+    # normalData = {
+    #     "normals": normalsList
+    # }
+
+    # print(len(normalsList), len(vertexList))
+
+    # with open(json_file_path, "w") as f:
+    #     json.dump(jsonData, f, indent=4)
+
+    # with open(normal_json_path, "w") as f:
+    #     json.dump(normalData, f, indent=4)
+
+
 if __name__ == "__main__":
     # STLToJson(
     #     "C://Users//Acer//Downloads//ct_0096_label.nii//label_8_pulmonary_trunk.stl")
-    parse_stl()
+    custom_parse_stl()
