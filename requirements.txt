@@ -32,3 +32,4 @@ plotly
 trame
 trame-vuetify trame-vtk
 vtk
+meshio
