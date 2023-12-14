@@ -2,37 +2,20 @@ using UnityEditor;
 using UnityEngine;
 using System.Diagnostics;
 using System.Collections;
+using Dummiesman;
 using System.IO;
-using System.Collections.Generic;
-using System;
-using UnityEngine.Rendering;
+using System.Xml.Serialization;
 
-[System.Serializable]
-public class MeshData
-{
-    public int[] triangles;
-
-    public Vector3[] vertices; 
- 
-}
 public class LoadFileButtonActionScript : MonoBehaviour
 {
-    [SerializeField] GameObject meshObject;
-    [SerializeField] Material meshMaterial;
-    private MeshFilter meshFilter;
-    private Mesh mesh;
-    private string jsonContent;
+    [SerializeField] Material newMaterial;
+    private MeshRenderer childMeshRenderer;
+    private GameObject loadedObject; 
 
     private bool coroutineError = false;
     private bool isStartingCoroutine = false;
 
-    private float scaleFactor = 0.001f; 
-
-    private void Start()
-    {
-        meshFilter = meshObject.GetComponent<MeshFilter>();
-        mesh = new Mesh(); 
-    }
+    private float scaleFactor = 0.007f; 
     private void Update()
     {
         if (coroutineError)
@@ -43,26 +26,18 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
     public void LoadFile()
     {
-        if (isStartingCoroutine == false)
-        {
-            StartCoroutine(LoadFileCoroutine());
-            isStartingCoroutine = true;
-        }
-        else
-        {
-            StopCoroutine(LoadFileCoroutine());
-            isStartingCoroutine= false; 
-        }
+        StartCoroutine(LoadFileCoroutine());
     }
 
     private IEnumerator LoadFileCoroutine()
     {
-        string interpreterPath = @"E:\ISEF\VascuIAR\.venv\Scripts\python.exe";
-        string parserFilePath = @"E://ISEF//VascuIAR//UnityScripts//STLParser//stlparser.py";
-/*        string jsonDirPath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\json\";*/
-        string jsonFilePath = @"E:\ISEF\VascuIAR\UnityScripts\STLParser\vertices.json";
+        string interpreterPath = @"E:\\ISEF\\VascuIAR\\.venv\\Scripts\\python.exe";
+        string parserFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
+        string objFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj";
 
         string stlFilePath = UnityEditor.EditorUtility.OpenFilePanel("Select STl file", "", "");
+
+        UnityEngine.Debug.Log(stlFilePath); 
 
         yield return null;
 
@@ -71,69 +46,148 @@ public class LoadFileButtonActionScript : MonoBehaviour
             ProcessStartInfo processStartInfo = new ProcessStartInfo()
             {
                 FileName = interpreterPath,
-                Arguments = $"\"{parserFilePath}\" \"{stlFilePath}\" \"{jsonFilePath}\"",
+                Arguments = $"{parserFilePath} {stlFilePath}",
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
             };
 
-            yield return new WaitForSeconds(0.5f);
-
             using (Process process = new Process { StartInfo = processStartInfo })
             {
                 process.Start();
-                yield return new WaitForSeconds(2.0f); 
+                process.WaitForExit();
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
 
-                process.WaitForExit();
                 
                 if (!string.IsNullOrEmpty(error))
                 {
                     UnityEngine.Debug.Log("Python Script Error:");
                     UnityEngine.Debug.Log(error);
-                    coroutineError = true; 
+                    coroutineError = true;
+                    StopCoroutine(LoadFileCoroutine());
                 }
                 else if (!string.IsNullOrEmpty(output)) 
                 {
                     UnityEngine.Debug.Log(output);
-                    coroutineError = true; 
+                    coroutineError = true;
                 }
-/*                string[] jsonFiles = Directory.GetFiles(jsonDirPath);
 
-                for (int i = 0; i < jsonFiles.Length; ++i)
+                string loadedObjectName = ""; 
+                string[] parsedName = Path.GetFileNameWithoutExtension(stlFilePath).Split("_"); 
+
+                if (parsedName.Length > 3)
                 {
-                    string file = jsonFiles[i]; 
-                    string jsonContent = File.ReadAllText(file);
-                    MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
-                    mesh.vertices = meshData.vertices;
-                    mesh.SetTriangles(meshData.triangles, i);
-
-                    yield return new WaitForSeconds(.5f); 
-                }*/
-
-                jsonContent = File.ReadAllText(jsonFilePath);
-                MeshData meshData = JsonUtility.FromJson<MeshData>(jsonContent);
-                yield return new WaitForSeconds(1.0f); 
-                for (int i = 0; i < meshData.vertices.Length; ++i)
-                {
-                    meshData.vertices[i].x = meshData.vertices[i].x * scaleFactor;
-                    meshData.vertices[i].y = meshData.vertices[i].y * scaleFactor;
-                    meshData.vertices[i].z = meshData.vertices[i].z * scaleFactor;
+                    for (int i = 2; i < parsedName.Length; i++)
+                    {
+                        loadedObjectName += parsedName[i];
+                        loadedObjectName += " "; 
+                    }
                 }
-                mesh.SetVertices(meshData.vertices);
-                mesh.SetTriangles(meshData.triangles, 0);
-                mesh.RecalculateNormals();
-                meshFilter.mesh = mesh;
+                else if (parsedName.Length == 3) 
+                {
+                    loadedObjectName = parsedName[2];
+                }
+                else
+                {
+                    loadedObjectName = Path.GetFileNameWithoutExtension(stlFilePath);
+                }
 
+                loadedObject = new OBJLoader().Load(objFilePath);
+                loadedObject.name = loadedObjectName;
+                loadedObject.transform.position = Vector3.zero;
+                loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+                childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>(); 
+                childMeshRenderer.material = newMaterial; 
             }
         }
         else
         {
             coroutineError = true;
-            yield return null; 
+            yield return null;
         }
+    }
+
+    private IEnumerator LoadFolderCoroutine()
+    {
+        string interpreterPath = @"E:\\ISEF\\VascuIAR\\.venv\\Scripts\\python.exe";
+        string parserFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
+        string objFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj";
+
+        string stlFolderPath = UnityEditor.EditorUtility.OpenFolderPanel("Select STL folder", "", "");
+
+        UnityEngine.Debug.Log(stlFolderPath);
+
+        yield return null;
+
+        if (!string.IsNullOrEmpty(stlFolderPath))
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                FileName = interpreterPath,
+                Arguments = $"{parserFilePath} {stlFolderPath}",
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using (Process process = new Process { StartInfo = processStartInfo })
+            {
+                process.Start();
+                process.WaitForExit();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    UnityEngine.Debug.Log("Python Script Error:");
+                    UnityEngine.Debug.Log(error);
+                    coroutineError = true;
+                    StopCoroutine(LoadFileCoroutine());
+                }
+                else if (!string.IsNullOrEmpty(output))
+                {
+                    UnityEngine.Debug.Log(output);
+                    coroutineError = true;
+                }
+
+                string loadedObjectName = "";
+                string[] parsedName = Path.GetFileNameWithoutExtension(stlFolderPath).Split("_");
+
+                if (parsedName.Length > 3)
+                {
+                    for (int i = 2; i < parsedName.Length; i++)
+                    {
+                        loadedObjectName += parsedName[i];
+                        loadedObjectName += " ";
+                    }
+                }
+                else if (parsedName.Length == 3)
+                {
+                    loadedObjectName = parsedName[2];
+                }
+                else
+                {
+                    loadedObjectName = Path.GetFileNameWithoutExtension(stlFolderPath);
+                }
+
+                loadedObject = new OBJLoader().Load(objFilePath);
+                loadedObject.name = loadedObjectName;
+                loadedObject.transform.position = Vector3.zero;
+                loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+                childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>();
+                childMeshRenderer.material = newMaterial;
+            }
+        }
+        else
+        {
+            coroutineError = true;
+            yield return null;
+        }
+        yield return null; 
     }
 }
 
