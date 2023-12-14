@@ -19,18 +19,17 @@ class AutomaticReconstruction():
         self.meshes = []
         self.buttons = []
         self.textures = [
-            'cardiac_texture_3.jpg',  
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg', 
-            'cardiac_texture_3.jpg'
+            'main_texture_1.jpg',  
+            'main_texture_2.png', 
+            'main_texture_1.jpg', 
+            'main_texture_3.png', 
+            'main_texture_3.png', 
+            'main_texture_1.jpg', 
+            'main_texture_2.png', 
+            'main_texture_3.png', 
+            'main_texture_1.jpg', 
+            'main_texture_1.jpg', 
+            'main_texture_1.jpg',
         ]
         self.classes = [
             'Tĩnh mạch chủ', 
@@ -43,7 +42,7 @@ class AutomaticReconstruction():
             'Thành cơ tim', 
             'Cung động mạch chủ', 
             'Động mạch phổi', 
-            'Động mạch chủ trên'
+            'Động mạch chủ trên',
         ]
         self.input_analysis = input_analysis
         self.info_patient_dict = info_patient_dict
@@ -199,7 +198,7 @@ class AutomaticReconstruction():
     
     
 isinstance = AutomaticReconstruction(
-    path_stl='D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/SegmentationData/ct_0042_label_resized/',
+    path_stl='D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/SegmentationData/ct_0074_label_resized/',
     path_volume_rendering= 'D:/Documents/GitHub/VascuIAR/DeepLearning/data/MM_WHS/train_images/ct_train_1017_image.nii.gz',
     input_analysis = {
         'Tổng quan': 'Phân tích tổng quan',
