@@ -15,7 +15,11 @@ public class LoadFileButtonActionScript : MonoBehaviour
     private bool coroutineError = false;
     private bool isStartingCoroutine = false;
 
-    private float scaleFactor = 0.007f; 
+    private float scaleFactor = 0.007f;
+    static List<int> ExtractNumericPart(string fileName)
+    {
+        MatchCollection matches = Regex.Matches(fileName, @"\d+");
+        return matches.Cast<Match>().Select(match => int.Parse(match.Value)).ToList();
     private void Update()
     {
         if (coroutineError)
@@ -31,9 +35,9 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
     private IEnumerator LoadFileCoroutine()
     {
-        string interpreterPath = @"E:\\ISEF\\VascuIAR\\.venv\\Scripts\\python.exe";
-        string parserFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
-        string objFilePath = @"E:\\ISEF\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj";
+        string interpreterPath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\.venv\\Scripts\\python.exe";
+        string parserFilePath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
+        string objFilePath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj";
 
         string stlFilePath = UnityEditor.EditorUtility.OpenFilePanel("Select STl file", "", "");
 
@@ -54,13 +58,13 @@ public class LoadFileButtonActionScript : MonoBehaviour
             };
 
             using (Process process = new Process { StartInfo = processStartInfo })
-            {
+           { 
                 process.Start();
                 process.WaitForExit();
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
 
-                
+               
                 if (!string.IsNullOrEmpty(error))
                 {
                     UnityEngine.Debug.Log("Python Script Error:");
@@ -73,10 +77,10 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     UnityEngine.Debug.Log(output);
                     coroutineError = true;
                 }
-
+ 
                 string loadedObjectName = ""; 
                 string[] parsedName = Path.GetFileNameWithoutExtension(stlFilePath).Split("_"); 
-
+ 
                 if (parsedName.Length > 3)
                 {
                     for (int i = 2; i < parsedName.Length; i++)
@@ -93,14 +97,14 @@ public class LoadFileButtonActionScript : MonoBehaviour
                 {
                     loadedObjectName = Path.GetFileNameWithoutExtension(stlFilePath);
                 }
-
+ 
                 loadedObject = new OBJLoader().Load(objFilePath);
                 loadedObject.name = loadedObjectName;
                 loadedObject.transform.position = Vector3.zero;
                 loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
                 childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>(); 
                 childMeshRenderer.material = newMaterial; 
-            }
+            } 
         }
         else
         {
