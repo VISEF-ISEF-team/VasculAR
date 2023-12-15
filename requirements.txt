@@ -30,5 +30,7 @@ CustomTkinterTitlebar
 reportlab
 plotly
 trame
-trame-vuetify trame-vtk
+trame-vuetify 
+trame-vtk
 vtk
+meshio
