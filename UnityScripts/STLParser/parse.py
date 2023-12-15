@@ -25,7 +25,7 @@ def stl_to_obj(path, output_path="E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\S
     meshio.write(output_path, newMesh)
 
 
-def stl_to_obj_with_recenter(path, output_path="E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj"):
+def stl_to_obj_with_recenter(path,  output_path="E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj"):
     print(path)
     mesh = meshio.read(path)
     newMesh = meshio.Mesh(mesh.points, mesh.cells)
@@ -34,13 +34,29 @@ def stl_to_obj_with_recenter(path, output_path="E:\\ISEF\\VasculAR2\\VascuIAR\\U
     meshio.write(output_path, newMesh)
 
 
-def stl_to_obj_dir_with_recenter(processed_dir_path: list, processed_output_dir_path: list):
+def stl_to_obj_dir_with_recenter(processed_dir_path: list):
     print("called dir with recenter function")
-    counter = 0
+    # C:\Users\Acer\Downloads\ct_0096_label.nii\label_2_left_ventricle.stl
+
+    obj_folder_path = "E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\obj_folder\\"
+    obj_file_name_list = []
     vertices_list = []
     cell_list = []
     for file in processed_dir_path:
         mesh = meshio.read(file)
+        path_split = file.split(".")[1]
+        path_split = path_split.split("_")
+
+        # generate obj file name accordingly
+        filename = ""
+        if len(path_split) > 3:
+            filename += path_split[2]
+            filename += "_"
+            filename += path_split[3]
+        elif len(path_split) == 3:
+            filename = path_split[2]
+        obj_file_name_list.append(
+            f"{os.path.join(obj_folder_path, filename)}.obj")
         vertices_list.append(mesh.points)
         cell_list.append(mesh.cells)
 
@@ -49,10 +65,13 @@ def stl_to_obj_dir_with_recenter(processed_dir_path: list, processed_output_dir_
 
     del all_vertices
 
+    # recenter mesh by adjusting position according to centroid
     recentered_vertices_list = [vert + centroid for vert in vertices_list]
+
+    counter = 0
     for recentered_vertices, current_cell in zip(recentered_vertices_list, cell_list):
         newMesh = meshio.Mesh(recentered_vertices, current_cell)
-        meshio.write(processed_output_dir_path[counter], newMesh)
+        meshio.write(obj_file_name_list[counter], newMesh)
         counter += 1
 
     del vertices_list
@@ -67,13 +86,6 @@ def stl_to_obj_dir_base_function(dir_path):
         return [int(match) for match in matches]
 
     print("called dir function")
-    obj_folder_path = "E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\obj_folder"
-    obj_folder = os.listdir(obj_folder_path)
-    obj_folder = sorted(obj_folder, key=lambda x: int(
-        x.split('_')[1].split('.')[0]))
-
-    for i in range(len(obj_folder)):
-        obj_folder[i] = os.path.join(obj_folder_path, obj_folder[i])
 
     stl_path_list = []
     for file in os.listdir(dir_path):
@@ -83,7 +95,7 @@ def stl_to_obj_dir_base_function(dir_path):
     stl_path_list = sorted(
         stl_path_list, key=extract_numeric_part)
 
-    stl_to_obj_dir_with_recenter(stl_path_list, obj_folder)
+    stl_to_obj_dir_with_recenter(stl_path_list)
 
 
 def get_file_extension(file_path):

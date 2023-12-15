@@ -4,11 +4,6 @@ using System.Diagnostics;
 using System.Collections;
 using Dummiesman;
 using System.IO;
-using System.Xml.Serialization;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 public class LoadFileButtonActionScript : MonoBehaviour
 {
@@ -20,11 +15,6 @@ public class LoadFileButtonActionScript : MonoBehaviour
     private bool isStartingCoroutine = false;
 
     private float scaleFactor = 0.007f;
-    static List<int> ExtractNumericPart(string fileName)
-    {
-        MatchCollection matches = Regex.Matches(fileName, @"\d+");
-        return matches.Cast<Match>().Select(match => int.Parse(match.Value)).ToList();
-    }
     private void Update()
     {
         if (coroutineError)
@@ -128,9 +118,7 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
         string stlFolderPath = UnityEditor.EditorUtility.OpenFolderPanel("Select STL folder", "", "");
 
-        UnityEngine.Debug.Log(stlFolderPath);
-
-        yield return null;
+        yield return null; 
 
         if (!string.IsNullOrEmpty(stlFolderPath))
         {
@@ -165,59 +153,24 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     coroutineError = true;
                 }
 
-                // implement loop through folder logic 
+                string[] objFileList = Directory.GetFiles(objFolderPath);
 
-                if (Directory.Exists(stlFolderPath))
+                // loop through all the file in Object Folder
+                foreach (string filePath in objFileList)
                 {
-                    int counter = 1; 
+                    // initialize object to spawn 
+                    string loadedObjectName = Path.GetFileNameWithoutExtension(filePath);
+                    GameObject loadedObject; 
 
-                    // create and sort STL file folder to match the name in obj file 
-                    string[] stlFolderPathList = Directory.GetFiles(stlFolderPath);
-                    stlFolderPathList = stlFolderPathList.OrderBy(path => ExtractNumericPart(path)).ToArray(); 
-
-                    // loop through all the file in stlFolderPath 
-                    foreach (string filePath in Directory.GetFiles(stlFolderPath))
-                    {
-                        UnityEngine.Debug.Log(filePath);
-                        if (filePath.Split(".")[filePath.Split(".").Length - 1] != "stl") continue; 
-
-                        string[] parsedName = Path.GetFileNameWithoutExtension(filePath).Split("_");
-
-                        // initialize object to spawn 
-                        string loadedObjectName = ""; 
-                        GameObject loadedObject; 
-
-                        // get the name based on the STL file 
-                        if (parsedName.Length > 3)
-                        {
-                            for (int i = 2; i < parsedName.Length; i++)
-                            {
-                                loadedObjectName += parsedName[i];
-                                loadedObjectName += " ";
-                            }
-                        }
-                        else if (parsedName.Length == 3)
-                        {
-                            loadedObjectName = parsedName[2];
-                        }
-                        else
-                        {
-                            loadedObjectName = Path.GetFileNameWithoutExtension(filePath);
-                        }
-
-                        string currentObjFilePath = objFolderPath + $"obj_{counter}.obj";
-                        loadedObject = new OBJLoader().Load(currentObjFilePath);
-                        loadedObject.name = loadedObjectName;
-                        loadedObject.transform.position = Vector3.zero;
-                        loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-                        childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>();
-                        childMeshRenderer.material = newMaterial;
-
-                        // increment file name counter 
-                        counter++; 
-                    }
+                    loadedObject = new OBJLoader().Load(filePath);
+                    loadedObject.name = loadedObjectName;
+                    loadedObject.transform.position = Vector3.zero;
+                    loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+                    childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>();
+                    childMeshRenderer.material = newMaterial;
                 }
             }
+            yield return null; 
         }
         else
         {
