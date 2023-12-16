@@ -1,0 +1,12 @@
+digraph {
+	node [fontcolor="#201010" fontname=Helvetica fontsize=12]
+	edge [arrowsize=0.4 fontname=Helvetica fontsize=6]
+	rankdir=LR
+	139991436306672 [label=<align_to<BR/><SUB><I>rigid = True</I></SUB>> color="#e9c46a" shape=none style=filled]
+	139991436307344 -> 139991436306672 [label=" 0.0s"]
+	139991436307344 [label=clone color="#edede9" shape=diamond style=filled]
+	139991436312528 -> 139991436307344 [label=" 0.0s"]
+	139991436312528 [label=<Mesh<BR/><SUB><I>#pts 200</I></SUB>> color="#e9c46a" shape=none style=filled]
+	139991436308496 -> 139991436306672 [label=" 0.0s"]
+	139991436308496 [label=<Mesh<BR/><SUB><I>#pts 820</I></SUB>> color="#e9c46a" shape=none style=filled]
+}
