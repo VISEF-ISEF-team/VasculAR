@@ -25,12 +25,6 @@ public class SegmentCanvas : MonoBehaviour
         }
         SetupButton();
     }
-
-    private void Update()
-    {
-
-    }
-
     private void SetupButton()
     {
         Transform canvasTransform = segmentCanvas.GetComponent<Transform>();
