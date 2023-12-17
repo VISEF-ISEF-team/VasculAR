@@ -76,7 +76,7 @@ class MenuBar:
                 },
                 'sub_menu': {
                     'add_nifti_file_btn': 'Add Nifti file',
-                    'add_dcm_series_btn': 'Add Segmentation',
+                    'add_segmentation': 'Add Segmentation',
                     'save_case_btn': 'Save case',
                     'export_analysis_btn': 'Export analysis',
                 }
@@ -196,6 +196,17 @@ class MenuBar:
             
         self.hide_all_menu()
         self.master.event_generate("<<UpdateApp2>>")
+    
+    def choose_folder_seg(self):
+        self.master.folder_seg = os.path.dirname(filedialog.askopenfilename())
+        self.master.add_seg = True
+        for file in os.listdir(self.master.folder_seg):
+            if file.endswith('.nii.gz'):
+                img_raw = sitk.ReadImage(self.master.folder_seg + '/' + file, sitk.sitkFloat32)
+                self.master.seg_imgs.append(sitk.GetArrayFromImage(img_raw))
+            
+        self.hide_all_menu()
+        self.master.event_generate("<<UpdateApp2>>")
             
     def choose_file(self):
         self.master.path = filedialog.askopenfilename()
@@ -220,14 +231,13 @@ class MenuBar:
         
     def dropdown_options(self, instance, master):            
         for row, (instance_name, label_name) in enumerate(self.data[instance]['sub_menu'].items()):
-            if instance_name == 'add_dcm_series_btn':
-                print("seg_btn")
+            if instance_name == 'add_segmentation':
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
                     master=master, 
                     text=label_name,
                     fg_color='transparent', 
                     hover_color=self.master.second_color,
-                    command = lambda: self.choose_file_seg(),
+                    command = lambda: self.choose_folder_seg(),
                 )
             elif instance_name == 'add_nifti_file_btn': 
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
@@ -614,7 +624,7 @@ class CanvasAxial:
                             
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False:
+            if self.master.add_seg == False or image_seg == None:
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
             else:
@@ -664,28 +674,8 @@ class CanvasAxial:
             
         # segmentation
         if self.master.add_seg == True:
-            stacked_arrays = []
-            for index, (class_name, data) in enumerate(self.master.class_data.items()):
-                if data['visible'] == True:
-                    seg = self.master.tools.label_arrays[index][int(index_slice), :, :]
-                    stacked_arrays.append(seg)
-
-            combined_seg = np.vstack(stacked_arrays)
-            plt.imsave("temp2.jpg", combined_seg, cmap=color_choice)
-            
-            image_display_seg = cv2.imread("temp2.jpg")
-            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-            cv2.imwrite("temp2.jpg", brightness_image_seg)
-            image_display_seg = Image.open("temp2.jpg").resize((height, height))
-            image_display_seg = image_display_seg.rotate(rotation_angle)
-            
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
-                
+            print(self.master.seg_imgs[11].shape)
+            image_display_seg = None
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
@@ -779,7 +769,7 @@ class CanvasSagittal:
                 self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
 
         # save file
-        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 860
         y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
@@ -903,7 +893,7 @@ class CanvasSagittal:
             
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False:
+            if self.master.add_seg == False or image_seg == None:
                 alpha_origin = int(225)
                 image = image.convert('RGBA')
                 image.putalpha(alpha_origin)
@@ -959,21 +949,8 @@ class CanvasSagittal:
             
         # segmentation
         if self.master.add_seg == True:
-            seg = self.master.seg[:, int(index_slice), :]
-            plt.imsave("temp2.jpg", seg, cmap=color_choice)
-            image_display_seg = cv2.imread("temp2.jpg")
-            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-            cv2.imwrite("temp2.jpg", brightness_image_seg)
-            image_display_seg = Image.open("temp2.jpg").resize((height, height))
-            image_display_seg = image_display_seg.rotate(rotation_angle)
-            
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
-                
+            print(self.master.seg_imgs[11].shape)
+            image_display_seg = None
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
@@ -1067,7 +1044,7 @@ class CanvasCoronal:
                 self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
 
         # save file
-        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 7 
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 1720
         y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
@@ -1190,7 +1167,7 @@ class CanvasCoronal:
           
         self.images = [] 
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False:
+            if self.master.add_seg == False or image_seg==None:
                 alpha_origin = int(225)
                 image = image.convert('RGBA')
                 image.putalpha(alpha_origin)
@@ -1246,21 +1223,8 @@ class CanvasCoronal:
             
         # segmentation
         if self.master.add_seg == True:
-            seg = self.master.seg[:, :, int(index_slice)]
-            plt.imsave("temp2.jpg", seg, cmap=color_choice)
-            image_display_seg = cv2.imread("temp2.jpg")
-            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
-            cv2.imwrite("temp2.jpg", brightness_image_seg)
-            image_display_seg = Image.open("temp2.jpg").resize((height, height))
-            image_display_seg = image_display_seg.rotate(rotation_angle)
-            
-            if horizontal == "horizontal":
-                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
-            if vertical == "vertical":
-                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
-                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
-                
+            print(self.master.seg_imgs[11].shape)
+            image_display_seg = None
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
 
@@ -1357,7 +1321,7 @@ class Tools:
     def TabView1(self):
         def ROI():
             def frame():
-                self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1)
+                self.check_ROI_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, fg_color=self.master.third_color)
                 self.check_ROI_frame.grid(column=0, row=0, columnspan=2, rowspan=3, pady=(0,5), sticky='news')
                 self.check_ROI_frame.rowconfigure((0,1,2,3,4), weight=1)
                 self.check_ROI_frame.columnconfigure((0,1,2,3,4), weight=1)
@@ -1429,7 +1393,7 @@ class Tools:
             
         def HounsField():
             def frame():
-                self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1)
+                self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, fg_color=self.master.third_color)
                 self.hounsfield_frame.grid(column=0, row=3, columnspan=2, rowspan=3, sticky='news')
                 self.hounsfield_frame.rowconfigure((0,1,2), weight=1)
                 self.hounsfield_frame.columnconfigure(0, weight=1)
@@ -1502,11 +1466,11 @@ class Tools:
 
         def DrawingTools():
             def frame():
-                self.layer_frame = customtkinter.CTkScrollableFrame(self.tabview_1_tab_1, label_text='Layer elements')
+                self.layer_frame = customtkinter.CTkScrollableFrame(self.tabview_1_tab_1, label_text='Layer elements', fg_color=self.master.third_color)
                 self.layer_frame.grid(row=0, column=2, columnspan=1, rowspan=6, padx=(5,0), sticky='news')
                 self.layer_frame.columnconfigure((0,1,2,3,4,5,6), weight=1)
                 
-                self.draw_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
+                self.draw_frame = customtkinter.CTkFrame(self.tabview_1_tab_1, fg_color=self.master.third_color)
                 self.draw_frame.grid(row=0, column=3, columnspan=3, rowspan=3, padx=(5,0), sticky='news')
                 self.draw_frame.rowconfigure((0,1), weight=1)
                 self.draw_frame.columnconfigure((0,1,2,3,4,5), weight=1)
@@ -1648,7 +1612,7 @@ class Tools:
 
         def Thresholding():
             def frame():                
-                self.thres_frame = customtkinter.CTkFrame(self.tabview_1_tab_1)
+                self.thres_frame = customtkinter.CTkFrame(self.tabview_1_tab_1, fg_color=self.master.third_color)
                 self.thres_frame.grid(row=3, column=3, columnspan=3, rowspan=3, padx=(5,0), pady=(5,0), sticky='news')
                 self.thres_frame.rowconfigure((0,1,2), weight=1)
                 self.thres_frame.columnconfigure((0,1), weight=1)
@@ -1795,7 +1759,7 @@ class Tools:
         def Segmentation():
             def start_seg():
                 def frame():
-                    self.start_seg_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.start_seg_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1, fg_color=self.master.third_color)
                     self.start_seg_frame.grid(row=0, column=0, rowspan=4, columnspan=2, pady=(0,10), sticky='news')
                     self.start_seg_frame.columnconfigure(0, weight=1)
                     self.start_seg_frame.rowconfigure((0, 1, 2), weight=1)
@@ -1822,7 +1786,7 @@ class Tools:
                 
             def opacity():
                 def frame():
-                    self.opacity_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.opacity_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1, fg_color=self.master.third_color)
                     self.opacity_frame.grid(row=4, column=0, rowspan=4, columnspan=2, sticky='news')
                     self.opacity_frame.columnconfigure(0, weight=1)
                     self.opacity_frame.rowconfigure((0, 1, 2), weight=1)
@@ -1864,7 +1828,7 @@ class Tools:
                 
             def regions():
                 def frame():
-                    self.regions_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1)
+                    self.regions_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_1, fg_color=self.master.third_color)
                     self.regions_frame.grid(row=0, column=2, rowspan=8, columnspan=4, padx=(5,0), sticky='news')
                     self.regions_frame.columnconfigure((0,1,2,3,4,5,6,7,8,9,10,11), weight=1)
                     self.regions_frame.rowconfigure((0,1,2,3,4,5,6,7,8), weight=1)
@@ -2052,7 +2016,7 @@ class Tools:
             
             start_seg()
             opacity()
-            regions()
+            # regions()
             
         create_tabs()
         Segmentation()
@@ -2069,6 +2033,7 @@ class App(customtkinter.CTk):
         
         self.first_color = "#2b2b2b"
         self.second_color = "#3b3b3b"
+        self.third_color = "#303030"
         self.text_disabled_color = "#dce4e2"
         self.text_canvas_color = "yellow"
         
@@ -2090,6 +2055,8 @@ class App(customtkinter.CTk):
         self.pixel_spacing = 0.858
         self.path = ''
         self.path_seg = ''
+        self.folder_seg = ''
+        self.seg_imgs = []
         
         # Data
         self.class_data = {
