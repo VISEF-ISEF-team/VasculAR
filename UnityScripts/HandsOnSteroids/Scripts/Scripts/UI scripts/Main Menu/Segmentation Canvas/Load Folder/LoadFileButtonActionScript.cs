@@ -12,9 +12,15 @@ using UnityEngine.UI;
 public class LoadFileButtonActionScript : MonoBehaviour
 {
     // have another script control all of the buttons in the folder 
+
+    // base material is assigned as asset 
     public Material baseMaterial; 
+
+    // parentObject is the heart segment object in Unity, which is an empty object with scripts only 
     public GameObject parentObject;
-    public XRGrabInteractable customSegmentInteractable;
+
+    // this field is for setting up disappear and appear buttons
+    public SegmentCanvas segmentCanvasControllerScript;
 
     public GameObject? folderButton;
     public GameObject? fileButton;
@@ -44,6 +50,11 @@ public class LoadFileButtonActionScript : MonoBehaviour
     private bool fileCorountineError = false;
     private float scaleFactor = 0.007f;
 
+    private void Start()
+    {
+        baseDeleteSliceOnButtonPressScript = parentObject.GetComponent<DeleteSliceOnButtonPress>();
+        baseEnableSliceOnButtonPressScript = parentObject.GetComponent<EnableSlice>(); 
+    }
     private void Update()
     {
         if (folderCoroutineError)
@@ -82,8 +93,6 @@ public class LoadFileButtonActionScript : MonoBehaviour
         string parserFilePath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
         string objFilePath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\output_file.obj";
 
-        /*        string stlFilePath = UnityEditor.EditorUtility.OpenFilePanel("Select STl file", "", "");*/
-
         UnityEngine.Debug.Log(stlFilePath);
 
         yield return null;
@@ -119,6 +128,11 @@ public class LoadFileButtonActionScript : MonoBehaviour
                 {
                     UnityEngine.Debug.Log(output);
                     fileCorountineError = true;
+                }
+
+                if (HasChildren(parentObject.transform))
+                {
+                    DeleteChildren(parentObject.transform);
                 }
 
                 string loadedObjectName = "";
@@ -197,6 +211,11 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     folderCoroutineError = true;
                 }
 
+                if (HasChildren(parentObject.transform))
+                {
+                    DeleteChildren(parentObject.transform);
+                }
+
                 string[] objFileList = Directory.GetFiles(objFolderPath);
 
                 // loop through all the file in Object Folder
@@ -217,8 +236,26 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
                     loadedObject.transform.SetParent(parentObject.transform, false);
 
+                    // add grab interactable
+                    loadedObject.AddComponent<XRGrabInteractable>();  
+
+                    // initialize delete slice and destroy slice on input
                     DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObject.AddComponent<DeleteSliceOnButtonPress>();   
-                    EnableSlice currentEnableSlice = loadedObject.AddComponent<EnableSlice>();  
+                    EnableSlice currentEnableSlice = loadedObject.AddComponent<EnableSlice>();
+
+                    // set delete slice settings
+                    currentDeleteSliceOnButtonPress.deleteButton = baseDeleteSliceOnButtonPressScript.deleteButton;
+
+                    // set enablie slice settings
+                    currentEnableSlice.heartTarget = loadedObject; 
+
+                    currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
+
+                    currentEnableSlice.planeCoordinates = baseEnableSliceOnButtonPressScript.planeCoordinates;
+
+                    currentEnableSlice.heartRigidBody = baseEnableSliceOnButtonPressScript.heartRigidBody;
+
+                    segmentCanvasControllerScript.StartSetupProcess(); 
                 }
             }
             yield return null;
@@ -233,20 +270,32 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
     public void SetupOnClickListener()
     {
-        UnityEngine.Debug.Log("Setup function called");
-        UnityEngine.Debug.Log(folderButton);
-
         if (folderButton != null)
         {
             UnityEngine.Debug.Log("folderButton is not null");
             UnityEngine.Debug.Log(stlFolderPath);
-            UnityEngine.Debug.Log(folderButton.GetComponent<Button>());
             folderButton.GetComponent<Button>().onClick.AddListener(LoadFolder);
         }
         else if (fileButton != null)
         {
             fileButton.GetComponent<Button>().onClick.AddListener(LoadFile);
         }
+    }
+
+    private void DeleteChildren(Transform parent)
+    {
+        // Loop through each child of the parent
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            // Destroy the child GameObject
+            Destroy(parent.GetChild(i).gameObject);
+        }
+    }
+
+    private bool HasChildren(Transform parent)
+    {
+        // Check if the parent has any children
+        return parent.childCount > 0;
     }
 }
 

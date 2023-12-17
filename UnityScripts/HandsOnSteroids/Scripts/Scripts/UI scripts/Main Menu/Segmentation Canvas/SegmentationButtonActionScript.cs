@@ -22,7 +22,6 @@ public class SegmentButtonActionScript : MonoBehaviour
         }
 
     }
-
     private void OnSegmentButtonClick()
     {
         isPressed = !isPressed;

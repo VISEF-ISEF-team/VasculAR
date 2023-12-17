@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SegmentCanvas : MonoBehaviour
 {
-    [SerializeField] GameObject segmentObject;
+    public GameObject segmentObject;
     [SerializeField] GameObject segmentCanvas;
 
     private float maxScale = 3.0f;
@@ -14,7 +12,7 @@ public class SegmentCanvas : MonoBehaviour
 
     private List<string> segmentNameList; 
 
-    private void Start()
+    public void StartSetupProcess()
     {
         segmentNameList = new List<string>();
 

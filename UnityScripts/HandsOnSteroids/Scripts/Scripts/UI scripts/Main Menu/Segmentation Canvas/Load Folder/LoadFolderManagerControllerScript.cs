@@ -8,27 +8,27 @@ using UnityEngine;
 public class LoadFolderManagerControllerScript : MonoBehaviour
 {
     [SerializeField] Material baseMaterial;
-    [SerializeField] GameObject baseObject;
     [SerializeField] GameObject buttonPrefab;
-    [SerializeField] GameObject heartSegmentObject; 
+    [SerializeField] GameObject heartSegmentObject;
+
+    // this field is for setting up disappear and appear buttons
+    [SerializeField] SegmentCanvas segmentCanvasControllerScript; 
 
     [SerializeField] GameObject fileContentObject;
     [SerializeField] GameObject folderContentObject;
 
-    private EnableSlice enableSliceScript;
-    private DeleteSliceOnButtonPress deleteSliceOnButtonPressScript; 
+    // set base enable slice and destroy on button press 
+    private EnableSlice baseEnableSlice;
+    private DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress; 
 
     private List<string> folderNameList;
     private string baseDirPath = @"C:\\Users\\Acer\\Downloads\\Base_Folder\\";
-    private void Start()
-    {
-        enableSliceScript = heartSegmentObject.GetComponent<EnableSlice>();
-        deleteSliceOnButtonPressScript = heartSegmentObject.GetComponent<DeleteSliceOnButtonPress>();   
-    }
 
     private void OnEnable()
     {
         FolderContentSetup(); 
+        baseEnableSlice = heartSegmentObject.GetComponent<EnableSlice>();
+        baseDeleteSliceOnButtonPress = heartSegmentObject.GetComponent<DeleteSliceOnButtonPress>();
     }
 
     private void FolderContentSetup()
@@ -52,8 +52,15 @@ public class LoadFolderManagerControllerScript : MonoBehaviour
             loadFileButtonActionScript.stlFolderPath = folderPath;
             loadFileButtonActionScript.stlFilePath = null;
 
-            loadFileButtonActionScript.parentObject = baseObject;
+            loadFileButtonActionScript.parentObject = heartSegmentObject;
             loadFileButtonActionScript.baseMaterial = baseMaterial;
+
+            // set segment canvas controller script reference
+            loadFileButtonActionScript.segmentCanvasControllerScript = segmentCanvasControllerScript;
+
+            // set enable slice and delete slice base scripts
+            loadFileButtonActionScript.baseEnableSliceOnButtonPressScript = baseEnableSlice;
+            loadFileButtonActionScript.baseDeleteSliceOnButtonPressScript = baseDeleteSliceOnButtonPress; 
 
             // set event listener
             loadFileButtonActionScript.SetupOnClickListener();
