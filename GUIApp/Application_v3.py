@@ -582,7 +582,7 @@ class CanvasAxial:
             
         def image_position():
             try:
-                image_position = self.canvas.coords(self.canvas_item)
+                image_position = self.canvas.coords(self.canvas_item_1)
                 return image_position[0], image_position[1]
             except:
                 return int(round(673/2,0)), int(round(673/2,0))
@@ -623,7 +623,6 @@ class CanvasAxial:
                             data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
                             
         self.images = [] 
-        
         def transparent_background(image):
             alpha_channel = (image != 0).astype(np.uint8) * 255
             RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
@@ -750,19 +749,19 @@ class CanvasAxial:
             def left():
                 self.canvas.move(self.canvas_item_1, -10, 0)
                 for item in self.canvas_item_seg:
-                    item.move(self.canvas_item_2, -10, 0)     
+                    self.canvas.move(item, -10, 0)     
             def right():
                 self.canvas.move(self.canvas_item_1, 10, 0)
                 for item in self.canvas_item_seg:
-                    item.move(self.canvas_item_2, 10, 0)     
+                    self.canvas.move(item, 10, 0)     
             def up():
                 self.canvas.move(self.canvas_item_1, 0, -10)
                 for item in self.canvas_item_seg:
-                    item.move(self.canvas_item_2, 0, -10)     
+                    self.canvas.move(item, 0, -10)     
             def down():
                 self.canvas.move(self.canvas_item_1, 0, 10)
                 for item in self.canvas_item_seg:
-                    item.move(self.canvas_item_2, 0, 10)     
+                    self.canvas.move(item, 0, 10)     
                 
                 
             self.canvas.bind('<Left>', lambda event: left())
@@ -911,7 +910,7 @@ class CanvasSagittal:
             
         def image_position():
             try:
-                image_position = self.canvas.coords(self.canvas_item)
+                image_position = self.canvas.coords(self.canvas_item_1)
                 return image_position[0], image_position[1]
             except:
                 return 400, 400
@@ -938,26 +937,59 @@ class CanvasSagittal:
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
             
         self.images = [] 
+        def transparent_background(image):
+            alpha_channel = (image != 0).astype(np.uint8) * 255
+            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
+            img = Image.fromarray(RGBimage, 'RGBA')
+            return img
+        
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False or image_seg == None:
-                alpha_origin = int(225)
-                image = image.convert('RGBA')
-                image.putalpha(alpha_origin)
+            if self.master.add_seg == False:
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                
             else:
-                alpha_origin = int(225)
-                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
-                alpha_seg = int(opacity * 255)
-                image = image.convert('RGBA')
-                image_seg = image_seg.convert('RGBA')
-                image.putalpha(alpha_origin)
-                image_seg.putalpha(alpha_seg)
+                # opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                # alpha_seg = int(opacity * 255)
+                # image_seg[3] = image_seg[3].convert('RGBA')
+                # image_seg[3].putalpha(alpha_seg)
+                
+                # xử lý segmentation
+                seg = []
+                for index in range(len(image_seg)):
+                    temp = np.array(image_seg[index])
+                    img = Image.fromarray(temp)
+                    gray = np.array(img.convert('L')) 
+                    seg.append(transparent_background(gray))
+                 
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                self.images.append(ImageTk.PhotoImage(image_seg))
-                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
+                self.canvas_item_seg = []
+                for item in seg:
+                    self.images.append(ImageTk.PhotoImage(item))
+                    self.canvas_item_seg.append(self.canvas.create_image(x, y, image=self.images[-1], anchor='center'))             
+                
+        def return_img_seg(image, index, color_choice, height):
+            image_seg = image[:, int(index_slice), :]
+            image_seg = np.where(image_seg == 1., image_seg, 0)
+            image_seg = Image.fromarray(image_seg * 255).convert('L')
+            image_seg.save(f"temp{index}.png", "PNG", transparency=0)
+            plt.imsave(f"temp{index}.png", image_seg, cmap=color_choice)
+            image_display_seg = cv2.imread(f"temp{index}.png")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite(f"temp{index}.png", brightness_image_seg)
+            image_display_seg = Image.open(f"temp{index}.png").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            return image_display_seg
+
 
         # get size
         height = int(self.label_zoom.cget("text")) 
@@ -995,10 +1027,13 @@ class CanvasSagittal:
             
         # segmentation
         if self.master.add_seg == True:
-            print(self.master.seg_imgs[11].shape)
-            image_display_seg = None
+            image_seg = []
+            for index in range(0,12,1):
+                if self.master.class_data[f"class{index+1}"]['visible'] == True:
+                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+            
             x_cord, y_cord = image_position()
-            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
+            create_image_alpha(x_cord, y_cord, image_display, image_seg)
 
         else:
             # diplay images
@@ -1028,16 +1063,20 @@ class CanvasSagittal:
         def movement_binding():
             def left():
                 self.canvas.move(self.canvas_item_1, -10, 0)
-                self.canvas.move(self.canvas_item_2, -10, 0)     
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, -10, 0)     
             def right():
                 self.canvas.move(self.canvas_item_1, 10, 0)
-                self.canvas.move(self.canvas_item_2, 10, 0)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 10, 0)     
             def up():
                 self.canvas.move(self.canvas_item_1, 0, -10)
-                self.canvas.move(self.canvas_item_2, 0, -10)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 0, -10)     
             def down():
                 self.canvas.move(self.canvas_item_1, 0, 10)
-                self.canvas.move(self.canvas_item_2, 0, 10)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 0, 10) 
                 
                 
             self.canvas.bind('<Left>', lambda event: left())
@@ -1090,7 +1129,7 @@ class CanvasCoronal:
                 self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
 
         # save file
-        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 1720
+        x = self.master.winfo_rootx() + self.canvas.winfo_x() + 1710
         y = self.master.winfo_rooty() + self.canvas.winfo_y() + 100 
         x1 = x + self.canvas.winfo_width()*1.255 
         y1 = y + self.canvas.winfo_height()*1.255  
@@ -1186,7 +1225,7 @@ class CanvasCoronal:
             
         def image_position():
             try:
-                image_position = self.canvas.coords(self.canvas_item)
+                image_position = self.canvas.coords(self.canvas_item_1)
                 return image_position[0], image_position[1]
             except:
                 return 400, 400
@@ -1212,26 +1251,58 @@ class CanvasCoronal:
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])  
           
         self.images = [] 
+        def transparent_background(image):
+            alpha_channel = (image != 0).astype(np.uint8) * 255
+            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
+            img = Image.fromarray(RGBimage, 'RGBA')
+            return img
+        
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False or image_seg==None:
-                alpha_origin = int(225)
-                image = image.convert('RGBA')
-                image.putalpha(alpha_origin)
+            if self.master.add_seg == False:
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                
             else:
-                alpha_origin = int(225)
-                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
-                alpha_seg = int(opacity * 255)
-                image = image.convert('RGBA')
-                image_seg = image_seg.convert('RGBA')
-                image.putalpha(alpha_origin)
-                image_seg.putalpha(alpha_seg)
+                # opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                # alpha_seg = int(opacity * 255)
+                # image_seg[3] = image_seg[3].convert('RGBA')
+                # image_seg[3].putalpha(alpha_seg)
+                
+                # xử lý segmentation
+                seg = []
+                for index in range(len(image_seg)):
+                    temp = np.array(image_seg[index])
+                    img = Image.fromarray(temp)
+                    gray = np.array(img.convert('L')) 
+                    seg.append(transparent_background(gray))
+                 
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                self.images.append(ImageTk.PhotoImage(image_seg))
-                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
+                self.canvas_item_seg = []
+                for item in seg:
+                    self.images.append(ImageTk.PhotoImage(item))
+                    self.canvas_item_seg.append(self.canvas.create_image(x, y, image=self.images[-1], anchor='center'))             
+                
+        def return_img_seg(image, index, color_choice, height):
+            image_seg = image[:,:, int(index_slice)]
+            image_seg = np.where(image_seg == 1., image_seg, 0)
+            image_seg = Image.fromarray(image_seg * 255).convert('L')
+            image_seg.save(f"temp{index}.png", "PNG", transparency=0)
+            plt.imsave(f"temp{index}.png", image_seg, cmap=color_choice)
+            image_display_seg = cv2.imread(f"temp{index}.png")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite(f"temp{index}.png", brightness_image_seg)
+            image_display_seg = Image.open(f"temp{index}.png").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            return image_display_seg
 
         # get size
         height = int(self.label_zoom.cget("text")) 
@@ -1269,10 +1340,13 @@ class CanvasCoronal:
             
         # segmentation
         if self.master.add_seg == True:
-            print(self.master.seg_imgs[11].shape)
-            image_display_seg = None
+            image_seg = []
+            for index in range(0,12,1):
+                if self.master.class_data[f"class{index+1}"]['visible'] == True:
+                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+            
             x_cord, y_cord = image_position()
-            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
+            create_image_alpha(x_cord, y_cord, image_display, image_seg)
 
         else:
             # diplay images
@@ -1302,16 +1376,20 @@ class CanvasCoronal:
         def movement_binding():
             def left():
                 self.canvas.move(self.canvas_item_1, -10, 0)
-                self.canvas.move(self.canvas_item_2, -10, 0)     
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, -10, 0)     
             def right():
                 self.canvas.move(self.canvas_item_1, 10, 0)
-                self.canvas.move(self.canvas_item_2, 10, 0)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 10, 0)     
             def up():
                 self.canvas.move(self.canvas_item_1, 0, -10)
-                self.canvas.move(self.canvas_item_2, 0, -10)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 0, -10)     
             def down():
                 self.canvas.move(self.canvas_item_1, 0, 10)
-                self.canvas.move(self.canvas_item_2, 0, 10)
+                for item in self.canvas_item_seg:
+                    self.canvas.move(item, 0, 10) 
                 
                 
             self.canvas.bind('<Left>', lambda event: left())
@@ -1915,7 +1993,7 @@ class Tools:
                             elif class_name=="class11":
                                 self.eye_class11.configure(image=eye_hide_icon)
                             elif class_name=="class12":
-                                self.eye_class11.configure(image=eye_hide_icon)
+                                self.eye_class12.configure(image=eye_hide_icon)
                             
                         
                         else:
@@ -1943,7 +2021,7 @@ class Tools:
                             elif class_name=="class11":
                                 self.eye_class11.configure(image=eye_icon)
                             elif class_name=="class12":
-                                self.eye_class11.configure(image=eye_icon)
+                                self.eye_class12.configure(image=eye_icon)
 
                     # class1
                     self.eye_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class1"))
@@ -2056,14 +2134,14 @@ class Tools:
                     self.btn_class11.grid(row=6, column=3, sticky='n')
 
                     # class12
-                    self.eye_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class11"))
-                    self.eye_class11.grid(row=6, column=6, padx=(10,0))
-                    self.fill_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
-                    self.fill_class11.grid(row=6, column=7)
-                    self.annotate_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
-                    self.annotate_class11.grid(row=6, column=8)
-                    self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[10], fg_color=self.master.second_color)
-                    self.btn_class11.grid(row=6, column=9, sticky='n')
+                    self.eye_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class12"))
+                    self.eye_class12.grid(row=6, column=6, padx=(10,0))
+                    self.fill_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class12.grid(row=6, column=7)
+                    self.annotate_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
+                    self.annotate_class12.grid(row=6, column=8)
+                    self.btn_class12 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[11], fg_color=self.master.second_color)
+                    self.btn_class12.grid(row=6, column=9, sticky='n')
                                
                 frame()
                 if self.master.add_seg == True:
