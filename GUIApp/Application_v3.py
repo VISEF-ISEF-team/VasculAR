@@ -24,6 +24,7 @@ import webbrowser
 from cloud_database import LoginPage
 import pyrebase
 import os
+import webcolors
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -623,10 +624,15 @@ class CanvasAxial:
                             data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
                             
         self.images = [] 
-        def transparent_background(image):
+        def transparent_background(image, index):
+            hex_color = self.master.class_data[f'class{index+1}']['color']
+            rgba_color = webcolors.hex_to_rgb(hex_color) + (255,)
             alpha_channel = (image != 0).astype(np.uint8) * 255
-            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
-            img = Image.fromarray(RGBimage, 'RGBA')
+            RGBimage = np.stack([np.ones_like(image) * rgba_color[0],
+                                np.ones_like(image) * rgba_color[1],
+                                np.ones_like(image) * rgba_color[2]], axis=-1)
+            RGBAimage = np.concatenate([RGBimage, alpha_channel[..., np.newaxis]], axis=-1)
+            img = Image.fromarray(RGBAimage, 'RGBA')
             return img
         
         def create_image_alpha(x, y, image, image_seg):
@@ -642,10 +648,8 @@ class CanvasAxial:
                 # xử lý segmentation
                 seg = []
                 for index in range(len(image_seg)):
-                    temp = np.array(image_seg[index])
-                    img = Image.fromarray(temp)
-                    gray = np.array(img.convert('L')) 
-                    seg.append(transparent_background(gray))
+                    gray = np.array(image_seg[index][0].convert('L')) 
+                    seg.append(transparent_background(gray, index=image_seg[index][1]))
                  
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
@@ -715,7 +719,7 @@ class CanvasAxial:
             image_seg = []
             for index in range(0,12,1):
                 if self.master.class_data[f"class{index+1}"]['visible'] == True:
-                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+                    image_seg.append((return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice), index))
             
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_seg)
@@ -938,9 +942,14 @@ class CanvasSagittal:
             
         self.images = [] 
         def transparent_background(image):
+            hex_color = self.master.class_data[f'class{index+1}']['color']
+            rgba_color = webcolors.hex_to_rgb(hex_color) + (255,)
             alpha_channel = (image != 0).astype(np.uint8) * 255
-            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
-            img = Image.fromarray(RGBimage, 'RGBA')
+            RGBimage = np.stack([np.ones_like(image) * rgba_color[0],
+                                np.ones_like(image) * rgba_color[1],
+                                np.ones_like(image) * rgba_color[2]], axis=-1)
+            RGBAimage = np.concatenate([RGBimage, alpha_channel[..., np.newaxis]], axis=-1)
+            img = Image.fromarray(RGBAimage, 'RGBA')
             return img
         
         def create_image_alpha(x, y, image, image_seg):
@@ -1252,9 +1261,14 @@ class CanvasCoronal:
           
         self.images = [] 
         def transparent_background(image):
+            hex_color = self.master.class_data[f'class{index+1}']['color']
+            rgba_color = webcolors.hex_to_rgb(hex_color) + (255,)
             alpha_channel = (image != 0).astype(np.uint8) * 255
-            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
-            img = Image.fromarray(RGBimage, 'RGBA')
+            RGBimage = np.stack([np.ones_like(image) * rgba_color[0],
+                                np.ones_like(image) * rgba_color[1],
+                                np.ones_like(image) * rgba_color[2]], axis=-1)
+            RGBAimage = np.concatenate([RGBimage, alpha_channel[..., np.newaxis]], axis=-1)
+            img = Image.fromarray(RGBAimage, 'RGBA')
             return img
         
         def create_image_alpha(x, y, image, image_seg):
@@ -1890,12 +1904,23 @@ class Tools:
                     self.start_seg_frame_header = self.title_toolbox(frame=self.start_seg_frame, title="Deep Segmentation")
                     
                 def start_seg_callback():
-                    if self.master.add_seg == True:
-                        self.seg_progress_bar.start()
+                    self.seg_progress_bar.start()
+                    specified_data = os.path.basename(self.master.path).split('_')[1]
+                    seg_path = f"D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_013_label/ct_{specified_data}_label_1.nii.gz"
+                    self.master.folder_seg = os.path.dirname(seg_path)
+                    self.master.add_seg = True
+                    for file in os.listdir(self.master.folder_seg):
+                        if file.endswith('.nii.gz'):
+                            img_raw = sitk.ReadImage(self.master.folder_seg + '/' + file, sitk.sitkFloat32)
+                            self.master.seg_imgs.append(sitk.GetArrayFromImage(img_raw))
+                    self.master.event_generate("<<UpdateApp2>>") 
                     
                 def widgets():
                     self.seg_progress_bar = customtkinter.CTkProgressBar(self.start_seg_frame, orientation="horizontal")
-                    self.seg_progress_bar.set(0)
+                    if self.master.add_seg == False:
+                        self.seg_progress_bar.set(0)
+                    else: 
+                        self.seg_progress_bar.set(100)
                     self.seg_progress_bar.grid(column=0, row=2, padx=(0,10), pady=(0,10), sticky='e')
                     self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start", width=50, command=start_seg_callback)
                     self.start_seg_btn.grid(column=0, row=2, padx=(10,0), pady=(0,10), sticky='w')
@@ -2022,126 +2047,130 @@ class Tools:
                                 self.eye_class11.configure(image=eye_icon)
                             elif class_name=="class12":
                                 self.eye_class12.configure(image=eye_icon)
+                                
+                    def change_color(class_name):
+                        color_choosed = AskColor() .get()
+                        self.master.class_data[class_name]['color'] = color_choosed
 
                     # class1
                     self.eye_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class1"))
                     self.eye_class1.grid(row=1, column=0, padx=(10,0))
-                    self.fill_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class1"))
                     self.fill_class1.grid(row=1, column=1)
                     self.annotate_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class1.grid(row=1, column=2)
                     self.btn_class1 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[0], fg_color=self.master.second_color)
-                    self.btn_class1.grid(row=1, column=3, sticky='n') 
+                    self.btn_class1.grid(row=1, column=3) 
                     
                     # class2
                     self.eye_class2 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class2"))
                     self.eye_class2.grid(row=1, column=6, padx=(10,0))
-                    self.fill_class2 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class2 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class2"))
                     self.fill_class2.grid(row=1, column=7)
                     self.annotate_class2 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class2.grid(row=1, column=8)
                     self.btn_class2 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[1], fg_color=self.master.second_color)
-                    self.btn_class2.grid(row=1, column=9, sticky='n') 
+                    self.btn_class2.grid(row=1, column=9) 
                     
                     # class3
                     self.eye_class3 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class3"))
                     self.eye_class3.grid(row=2, column=0, padx=(10,0))
-                    self.fill_class3 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class3 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class3"))
                     self.fill_class3.grid(row=2, column=1)
                     self.annotate_class3 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class3.grid(row=2, column=2)
                     self.btn_class3 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[2], fg_color=self.master.second_color)
-                    self.btn_class3.grid(row=2, column=3, sticky='n') 
+                    self.btn_class3.grid(row=2, column=3) 
                     
                     # class4
                     self.eye_class4 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class4"))
                     self.eye_class4.grid(row=2, column=6, padx=(10,0))
-                    self.fill_class4 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class4 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class4"))
                     self.fill_class4.grid(row=2, column=7)
                     self.annotate_class4 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class4.grid(row=2, column=8)
                     self.btn_class4 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[3], fg_color=self.master.second_color)
-                    self.btn_class4.grid(row=2, column=9, sticky='n')
+                    self.btn_class4.grid(row=2, column=9)
                     
                     # class5
                     self.eye_class5 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class5"))
                     self.eye_class5.grid(row=3, column=0, padx=(10,0))
-                    self.fill_class5 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class5 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class5"))
                     self.fill_class5.grid(row=3, column=1)
                     self.annotate_class5 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class5.grid(row=3, column=2)
                     self.btn_class5 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[4], fg_color=self.master.second_color)
-                    self.btn_class5.grid(row=3, column=3, sticky='n')
+                    self.btn_class5.grid(row=3, column=3)
                     
                     # class6
                     self.eye_class6 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class6"))
                     self.eye_class6.grid(row=3, column=6, padx=(10,0))
-                    self.fill_class6 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class6 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class6"))
                     self.fill_class6.grid(row=3, column=7)
                     self.annotate_class6 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class6.grid(row=3, column=8)
                     self.btn_class6 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[5], fg_color=self.master.second_color)
-                    self.btn_class6.grid(row=3, column=9, sticky='n')
+                    self.btn_class6.grid(row=3, column=9)
                     
                     # class7
                     self.eye_class7 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class7"))
                     self.eye_class7.grid(row=4, column=0, padx=(10,0))
-                    self.fill_class7 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class7 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class7"))
                     self.fill_class7.grid(row=4, column=1)
                     self.annotate_class7 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class7.grid(row=4, column=2)
                     self.btn_class7 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[6], fg_color=self.master.second_color)
-                    self.btn_class7.grid(row=4, column=3, sticky='n')
+                    self.btn_class7.grid(row=4, column=3)
                     
                     # class8
                     self.eye_class8 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class8"))
                     self.eye_class8.grid(row=4, column=6, padx=(10,0))
-                    self.fill_class8 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class8 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class8"))
                     self.fill_class8.grid(row=4, column=7)
                     self.annotate_class8 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class8.grid(row=4, column=8)
                     self.btn_class8 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[7], fg_color=self.master.second_color)
-                    self.btn_class8.grid(row=4, column=9, sticky='n')
+                    self.btn_class8.grid(row=4, column=9)
                     
                     # class9
                     self.eye_class9 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class9"))
                     self.eye_class9.grid(row=5, column=0, padx=(10,0))
-                    self.fill_class9 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class9 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class9"))
                     self.fill_class9.grid(row=5, column=1)
                     self.annotate_class9 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class9.grid(row=5, column=2)
                     self.btn_class9 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[8], fg_color=self.master.second_color)
-                    self.btn_class9.grid(row=5, column=3, sticky='n')
+                    self.btn_class9.grid(row=5, column=3)
                     
                     # class10
                     self.eye_class10 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class10"))
                     self.eye_class10.grid(row=5, column=6, padx=(10,0))
-                    self.fill_class10 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class10 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class10"))
                     self.fill_class10.grid(row=5, column=7)
                     self.annotate_class10 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class10.grid(row=5, column=8)
                     self.btn_class10 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[9], fg_color=self.master.second_color)
-                    self.btn_class10.grid(row=5, column=9, sticky='n')
+                    self.btn_class10.grid(row=5, column=9)
                     
                     # class11
                     self.eye_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class11"))
                     self.eye_class11.grid(row=6, column=0, padx=(10,0))
-                    self.fill_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class11"))
                     self.fill_class11.grid(row=6, column=1)
                     self.annotate_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class11.grid(row=6, column=2)
                     self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[10], fg_color=self.master.second_color)
-                    self.btn_class11.grid(row=6, column=3, sticky='n')
+                    self.btn_class11.grid(row=6, column=3)
 
                     # class12
                     self.eye_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class12"))
                     self.eye_class12.grid(row=6, column=6, padx=(10,0))
-                    self.fill_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30, command=lambda : change_color(class_name="class12"))
                     self.fill_class12.grid(row=6, column=7)
                     self.annotate_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class12.grid(row=6, column=8)
                     self.btn_class12 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[11], fg_color=self.master.second_color)
-                    self.btn_class12.grid(row=6, column=9, sticky='n')
+                    self.btn_class12.grid(row=6, column=9)
                                
                 frame()
                 if self.master.add_seg == True:
