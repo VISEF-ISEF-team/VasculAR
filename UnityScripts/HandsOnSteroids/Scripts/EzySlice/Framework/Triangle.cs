@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EzySlice {
     /**
      * Represents a simple 3D Triangle structure with position
-     * and UV map. The UV is required if the slicer needs
+     * and UV map. The UV is required if the slicerObject needs
      * to recalculate the new UV position for texture mapping.
      */
     public struct Triangle {

@@ -26,8 +26,8 @@ public class SlicerInteractorSettings : MonoBehaviour
 
     private void OnHoverEnter(HoverEnterEventArgs arg0)
     {
-        leftRayInteractor.useForceGrab = true;
-        rightRayInteractor.useForceGrab = true;
+        leftRayInteractor.useForceGrab = false;
+        rightRayInteractor.useForceGrab = false;
     }
 
     private void OnSelectExit(SelectExitEventArgs arg0)
@@ -38,7 +38,7 @@ public class SlicerInteractorSettings : MonoBehaviour
 
     private void OnSelectEnter(SelectEnterEventArgs arg0)
     {
-        leftRayInteractor.useForceGrab = true;
-        rightRayInteractor.useForceGrab = true; 
+        leftRayInteractor.useForceGrab = false;
+        rightRayInteractor.useForceGrab = false; 
     }
 }

@@ -105,7 +105,7 @@ public class MainMenuControllerScript : MonoBehaviour
     public void OnForwardButtonPress()
     {
         int top = forwardStack.Pop(); 
-        backwardStack.Push(top);
+        backwardStack.Push(currentlyActiveIndex);
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
         menuCanvasManager[top].SetActive(true);
         currentlyActiveIndex = top; 
@@ -113,7 +113,7 @@ public class MainMenuControllerScript : MonoBehaviour
     public void OnBackwardButtonPress()
     {
         int top = backwardStack.Pop(); 
-        forwardStack.Push(top);
+        forwardStack.Push(currentlyActiveIndex);
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
         menuCanvasManager[top].SetActive(true);
         currentlyActiveIndex = top; 
@@ -125,9 +125,9 @@ public class MainMenuControllerScript : MonoBehaviour
         if (currentlyActiveIndex != 0)
         {
             menuCanvasManager[currentlyActiveIndex].SetActive(false);
+            backwardStack.Push(currentlyActiveIndex);
             menuCanvasManager[0].SetActive(true);
             currentlyActiveIndex = 0;
-            backwardStack.Push(0);
         }
     }
 
@@ -135,35 +135,35 @@ public class MainMenuControllerScript : MonoBehaviour
     {
         // index in manager is 1
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
+        backwardStack.Push(currentlyActiveIndex); 
         menuCanvasManager[1].SetActive(true);
         currentlyActiveIndex = 1;
-        backwardStack.Push(1); 
     }
 
     public void OnSlicerCanvasButtonPress()
     {
         // index in manager is 2
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
+        backwardStack.Push(currentlyActiveIndex);
         menuCanvasManager[2].SetActive(true);
         currentlyActiveIndex = 2;
-        backwardStack.Push(2);
     }
 
     public void OnMeasureCanvasButtonPress()
     {
         // index in manager is 3
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
+        backwardStack.Push(currentlyActiveIndex);
         menuCanvasManager[3].SetActive(true);
         currentlyActiveIndex = 3;
-        backwardStack.Push(3);
     }
 
     public void OnSegmentCanvasButtonPress()
     {
         // index in manager is 4
         menuCanvasManager[currentlyActiveIndex].SetActive(false);
+        backwardStack.Push(currentlyActiveIndex);
         menuCanvasManager[4].SetActive(true);
         currentlyActiveIndex = 4;
-        backwardStack.Push(4);
     }
 }

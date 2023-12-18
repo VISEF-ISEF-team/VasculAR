@@ -19,13 +19,9 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     {
         measureObjectActionScript = measureObject.GetComponent<MeasureObjectActionScript>();
         scaleSlider.value = 0.1f;
-        scaleSlider.onValueChanged.AddListener(OnSliderChangeSphereSize); 
+        scaleSlider.onValueChanged.AddListener(OnSliderChangeSphereSize);
         deleteButton = GetComponentInChildren<Button>();
-    }
-
-    private void Update()
-    {
-        deleteButton.onClick.AddListener(OnDeleteButtonPress); 
+        deleteButton.onClick.AddListener(OnDeleteButtonPress);
     }
 
     private void OnEnable()

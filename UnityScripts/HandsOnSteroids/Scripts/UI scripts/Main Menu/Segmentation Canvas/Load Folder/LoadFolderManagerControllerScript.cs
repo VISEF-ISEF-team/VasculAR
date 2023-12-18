@@ -18,8 +18,11 @@ public class LoadFolderManagerControllerScript : MonoBehaviour
     [SerializeField] GameObject folderContentObject;
 
     // set base enable slice and destroy on button press 
-    private EnableSlice baseEnableSlice;
-    private DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress; 
+    [SerializeField] EnableSlice baseEnableSlice;
+    [SerializeField] DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress;
+
+    // reset button reference
+    [SerializeField] ResetPositionButtonActionScript baseResetButtonActionScript; 
 
     private List<string> folderNameList;
     private string baseDirPath = @"C:\\Users\\Acer\\Downloads\\Base_Folder\\";
@@ -27,8 +30,6 @@ public class LoadFolderManagerControllerScript : MonoBehaviour
     private void OnEnable()
     {
         FolderContentSetup(); 
-        baseEnableSlice = heartSegmentObject.GetComponent<EnableSlice>();
-        baseDeleteSliceOnButtonPress = heartSegmentObject.GetComponent<DeleteSliceOnButtonPress>();
     }
 
     private void FolderContentSetup()
@@ -60,7 +61,10 @@ public class LoadFolderManagerControllerScript : MonoBehaviour
 
             // set enable slice and delete slice base scripts
             loadFileButtonActionScript.baseEnableSliceOnButtonPressScript = baseEnableSlice;
-            loadFileButtonActionScript.baseDeleteSliceOnButtonPressScript = baseDeleteSliceOnButtonPress; 
+            loadFileButtonActionScript.baseDeleteSliceOnButtonPressScript = baseDeleteSliceOnButtonPress;
+
+            // set reset button
+            loadFileButtonActionScript.resetButtonActionScript = baseResetButtonActionScript; 
 
             // set event listener
             loadFileButtonActionScript.SetupOnClickListener();
