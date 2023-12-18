@@ -21,14 +21,20 @@ public class LoadFileButtonActionScript : MonoBehaviour
     // this field is for setting up disappear and appear buttons
     public SegmentCanvas segmentCanvasControllerScript;
 
+    // this field is for reset position script 
+    public BaseObjectControllerScript baseObjectControllerScript; 
+
+    // fields for loading file / folder 
     public GameObject? folderButton;
     public GameObject? fileButton;
     public string stlFolderPath;
     public string stlFilePath;
 
+    // base scripts for slicing and delete slice
     public DeleteSliceOnButtonPress baseDeleteSliceOnButtonPressScript;
     public EnableSlice baseEnableSliceOnButtonPressScript;
 
+    // color coding base on anatomy 
     private Color singleColor = new Color(22 / 255f, 48 / 255f, 32 / 255f);
     private Dictionary<string, Color> colorDictionary = new Dictionary<string, Color>()
     {
@@ -45,17 +51,18 @@ public class LoadFileButtonActionScript : MonoBehaviour
         { "coronary_artery", new Color(216 / 255f, 101 / 255f, 79 / 255f)}
     };
 
+    // condition for stopping
     private bool folderCoroutineError = false;
     private bool fileCorountineError = false;
     private float scaleFactor = 0.007f;
 
     private void Start()
     {
-        if (parentObject != null)
+/*        if (parentObject != null)
         {
             baseDeleteSliceOnButtonPressScript = parentObject.GetComponent<DeleteSliceOnButtonPress>();
             baseEnableSliceOnButtonPressScript = parentObject.GetComponent<EnableSlice>();
-        }
+        }*/
     }
     private void Update()
     {
@@ -166,7 +173,7 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
                 parentObject.GetComponent<BaseObjectControllerScript>().childSegmentObjectList.Add(loadedObject);
 
-                parentObject.GetComponent<BaseObjectControllerScript>().oldPosition.Add(loadedObject.transform);
+                parentObject.GetComponent<BaseObjectControllerScript>().oldPosition.Add(loadedObject.transform.position);
             }
         }
         else
@@ -230,31 +237,44 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     // initialize object to spawn 
                     string loadedObjectName = Path.GetFileNameWithoutExtension(filePath);
 
+                    // general config
                     GameObject loadedObject = new OBJLoader().Load(filePath);
-                    loadedObject.name = loadedObjectName;
-                    loadedObject.transform.position = Vector3.zero;
-                    loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-                    MeshRenderer childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>();
+                    GameObject loadedObjectChild = loadedObject.transform.GetChild(0).gameObject;
+                    Destroy(loadedObject); 
+                    loadedObjectChild.name = loadedObjectName;
+                    loadedObjectChild.transform.position = Vector3.zero;
+                    loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
+                    // set display material
+                    MeshRenderer childMeshRenderer = loadedObjectChild.GetComponent<MeshRenderer>();
                     Material newMaterial = Instantiate(baseMaterial);
-                    newMaterial.color = colorDictionary[loadedObject.name];
-                    UnityEngine.Debug.Log(colorDictionary[loadedObject.name]);
+                    newMaterial.color = colorDictionary[loadedObjectChild.name];
                     childMeshRenderer.material = newMaterial;
 
-                    loadedObject.transform.SetParent(parentObject.transform, false);
+                    // set parent 
+                    loadedObjectChild.transform.SetParent(parentObject.transform, false);
 
                     // initialize delete slice and destroy slice on input
-                    DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObject.AddComponent<DeleteSliceOnButtonPress>();
-                    EnableSlice currentEnableSlice = loadedObject.AddComponent<EnableSlice>();
+                    DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObjectChild.AddComponent<DeleteSliceOnButtonPress>();
+                    EnableSlice currentEnableSlice = loadedObjectChild.AddComponent<EnableSlice>();
 
                     // set delete slice settings
-/*                    currentDeleteSliceOnButtonPress.deleteButton = baseDeleteSliceOnButtonPressScript.deleteButton;*/
+                    /*                    currentDeleteSliceOnButtonPress.deleteButton = baseDeleteSliceOnButtonPressScript.deleteButton;*/
 
-                    // set enablie slice settings
-                    currentEnableSlice.heartTarget = loadedObject;
+                    // set enable slice settings
+                    currentEnableSlice.baseEnableSlice = baseEnableSliceOnButtonPressScript; 
+
+                    currentEnableSlice.heartTarget = loadedObjectChild;
 
                     currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
 
                     currentEnableSlice.planeObject = baseEnableSliceOnButtonPressScript.planeObject;
+
+                    // set mesh collider
+                    loadedObjectChild.AddComponent<MeshCollider>();
+
+                    baseObjectControllerScript.childSegmentObjectList.Add(loadedObjectChild);
+                    baseObjectControllerScript.oldPosition.Add(loadedObjectChild.transform.position); 
                 }
             }
             yield return null;

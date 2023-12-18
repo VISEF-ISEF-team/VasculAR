@@ -223,37 +223,43 @@ public class LoadFileButtonActionScript : MonoBehaviour
                 {
                     // initialize object to spawn 
                     string loadedObjectName = Path.GetFileNameWithoutExtension(filePath);
-
                     GameObject loadedObject = new OBJLoader().Load(filePath);
-                    loadedObject.name = loadedObjectName;
-                    loadedObject.transform.position = Vector3.zero;
-                    loadedObject.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-                    MeshRenderer childMeshRenderer = loadedObject.GetComponentInChildren<MeshRenderer>();
+
+                    // general config
+                    GameObject loadedObjectChild = loadedObject.transform.GetChild(0).gameObject;
+                    Destroy(loadedObject); 
+                    loadedObjectChild.name = loadedObjectName;
+                    loadedObjectChild.transform.position = Vector3.zero;
+                    loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
+                    // set display material 
+                    MeshRenderer childMeshRenderer = loadedObjectChild.GetComponentInChildren<MeshRenderer>();
                     Material newMaterial = Instantiate(baseMaterial);
-                    newMaterial.color = colorDictionary[loadedObject.name];
+                    newMaterial.color = colorDictionary[loadedObjectChild.name];
                     UnityEngine.Debug.Log(colorDictionary[loadedObject.name]);
                     childMeshRenderer.material = newMaterial;
 
-                    loadedObject.transform.SetParent(parentObject.transform, false);
+                    loadedObjectChild.transform.SetParent(parentObject.transform, false);
 
                     // add grab interactable
-                    loadedObject.AddComponent<XRGrabInteractable>();  
+                    loadedObjectChild.AddComponent<XRGrabInteractable>(); 
+                    
+                    // add rigid body 
+                    Rigidbody currentRigidBody = loadedObjectChild.AddComponent<Rigidbody>();
+                    currentRigidBody.isKinematic = false; 
 
                     // initialize delete slice and destroy slice on input
-                    DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObject.AddComponent<DeleteSliceOnButtonPress>();   
-                    EnableSlice currentEnableSlice = loadedObject.AddComponent<EnableSlice>();
+                    DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObjectChild.AddComponent<DeleteSliceOnButtonPress>();   
+                    EnableSlice currentEnableSlice = loadedObjectChild.AddComponent<EnableSlice>();
 
                     // set delete slice settings
                     currentDeleteSliceOnButtonPress.deleteButton = baseDeleteSliceOnButtonPressScript.deleteButton;
 
                     // set enablie slice settings
-                    currentEnableSlice.heartTarget = loadedObject; 
-
+                    currentEnableSlice.baseEnableSlice = baseEnableSliceOnButtonPressScript; 
+                    currentEnableSlice.heartTarget = loadedObjectChild; 
                     currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
-
-                    currentEnableSlice.planeCoordinates = baseEnableSliceOnButtonPressScript.planeCoordinates;
-
-                    currentEnableSlice.heartRigidBody = baseEnableSliceOnButtonPressScript.heartRigidBody;
+                    currentEnableSlice.planeObject = baseEnableSliceOnButtonPressScript.planeObject;
 
                     segmentCanvasControllerScript.StartSetupProcess(); 
                 }

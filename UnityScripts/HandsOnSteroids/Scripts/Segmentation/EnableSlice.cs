@@ -1,76 +1,82 @@
 using UnityEngine;
 using EzySlice;
-using UnityEngine.InputSystem;
-using JetBrains.Annotations;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class EnableSlice : MonoBehaviour
 {
-    public EnableSlice baseEnableSlice;
+    private XRGrabInteractable grabbable;
+    public EnableSlice baseEnableSlice; 
     public GameObject heartTarget;
     public Material crossSectionMaterial;
-    public GameObject planeObject; 
+    public GameObject planeObject;
+    public DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress;
 
-    private DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress;
+    private readonly string layerName = "Interactable"; 
+    private Transform planeCoordinates; 
 
-    private Transform planeCoordinates;
+    private Rigidbody heartRigidBody;
 
     private void Start()
     {
+        grabbable = GetComponent<XRGrabInteractable>();
+        grabbable.activated.AddListener(SliceOnActivate);
         planeCoordinates = planeObject.transform;
     }
 
-    private void Update()
+    private void SliceOnActivate(ActivateEventArgs activateEventArgs) 
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            int id = heartTarget.GetComponent<Collider>().GetInstanceID();
-            Debug.Log("initiate slicing"); 
-            Slice(heartTarget, id); 
-        }
+        int id = heartTarget.GetInstanceID();
+        Slice(heartTarget, id); 
     }
-
-    // normal of a plane is a vector that is perpendicular to the plane
     public void Slice(GameObject target, int targetInstanceID)
     {
         if (GetIntersection(planeObject, 100.0f, targetInstanceID))
         {
-            Debug.Log("inner slicing function reached"); 
             SlicedHull hull = target.Slice(planeCoordinates.position, planeCoordinates.up);
-            Debug.Log(target.name); 
-            if (hull != null)
+            if (hull != null) 
             {
                 // upper hull
                 GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
                 SliceComponentSetup(upperHull, true, target.name);
-                upperHull.transform.position = new Vector3(heartTarget.transform.position.x + 1.5f, heartTarget.transform.position.y, heartTarget.transform.position.z);
+                upperHull.transform.position = new Vector3(heartTarget.transform.position.x, heartTarget.transform.position.y + 1.5f, heartTarget.transform.position.z);
 
                 // lower hull
                 GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
                 SliceComponentSetup(lowerHull, false, target.name);
-                lowerHull.transform.position = new Vector3(heartTarget.transform.position.x - 1.5f, heartTarget.transform.position.y, heartTarget.transform.position.z);
+                lowerHull.transform.position = new Vector3(heartTarget.transform.position.x, heartTarget.transform.position.y - 1.5f, heartTarget.transform.position.z);
             }
         }
-
     }
 
     public void SliceComponentSetup(GameObject sliceComponent, bool upper, string baseName)
     {
-        // set delete on slice
-/*        DeleteSliceOnButtonPress currentDeleteSliceOnButtonPressSettings = sliceComponent.AddComponent<DeleteSliceOnButtonPress>();*/
+        // set grabbable settings
+        XRGrabInteractable sliceGrabbable = sliceComponent.AddComponent<XRGrabInteractable>();
 
-        // set enable slice references 
+        // set delete on slice
+        DeleteSliceOnButtonPress currentDeleteSliceOnButtonPressSettings = sliceComponent.AddComponent<DeleteSliceOnButtonPress>();
+        currentDeleteSliceOnButtonPressSettings.deleteButton = baseDeleteSliceOnButtonPress.deleteButton;
+
+        // set enable slice 
         EnableSlice currentEnableSlice = sliceComponent.AddComponent<EnableSlice>();
 
-        currentEnableSlice.heartTarget = sliceComponent;
+        currentEnableSlice.heartTarget = sliceComponent; 
 
         currentEnableSlice.crossSectionMaterial = baseEnableSlice.crossSectionMaterial;
 
-        currentEnableSlice.planeObject = baseEnableSlice.planeObject; 
+        currentEnableSlice.planeObject = baseEnableSlice.planeObject;   
 
         currentEnableSlice.baseEnableSlice = baseEnableSlice;
 
-        // set collider 
+        // set mesh collider
         sliceComponent.AddComponent<MeshCollider>(); 
+
+        // set rigid boy 
+        heartRigidBody = sliceComponent.AddComponent<Rigidbody>();
+        heartRigidBody.isKinematic = false; 
+
+        // set layer for slice component
+        sliceComponent.layer = LayerMask.NameToLayer(layerName); 
 
         // set name for sliced component
         if (upper)
@@ -79,7 +85,7 @@ public class EnableSlice : MonoBehaviour
         }
         else
         {
-            sliceComponent.name = $"{baseName}-lower";
+            sliceComponent.name = $"{baseName}-lower"; 
         }
     }
 
@@ -89,7 +95,7 @@ public class EnableSlice : MonoBehaviour
 
         bool res2 = DrawRayZDirection(planeObject, numRay, targetInstanceID);
 
-        Debug.Log(res1 && res2); 
+        Debug.Log(res1 && res2);
         return res1 && res2;
     }
 
@@ -206,7 +212,7 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, new Vector3(0, 0, 1), out RaycastHit hit, xMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                int colliderID = hit.colliderInstanceID; 
+                int colliderID = hit.colliderInstanceID;
                 if (!backward && colliderID == targetInstanceID) backward = true;
             }
         }
