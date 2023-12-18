@@ -11,7 +11,6 @@ from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
-# from filtering_segmentation import filtering
 from pdf_save import create_pdf
 from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
@@ -25,6 +24,7 @@ from cloud_database import LoginPage
 import pyrebase
 import os
 import webcolors
+import json
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -184,19 +184,6 @@ class MenuBar:
             
             self.vn_btn.pack(padx=5, pady=5)
             self.vn_btn.configure(anchor="w")
-            
-    def choose_file_seg(self):
-        self.master.path_seg = filedialog.askopenfilename()
-        
-        if self.master.path_seg.endswith('.nii.gz') or self.master.path_seg.endswith('.nii'):
-            self.master.seg_raw = sitk.ReadImage(self.master.path_seg, sitk.sitkFloat32)
-            self.master.seg = sitk.GetArrayFromImage(self.master.seg_raw)
-            self.master.add_seg = True
-        else:
-            print("Error for segmentation uploading")
-            
-        self.hide_all_menu()
-        self.master.event_generate("<<UpdateApp2>>")
     
     def choose_folder_seg(self):
         self.master.folder_seg = os.path.dirname(filedialog.askopenfilename())
@@ -2216,7 +2203,6 @@ class App(customtkinter.CTk):
         }
         self.pixel_spacing = 0.858
         self.path = ''
-        self.path_seg = ''
         self.folder_seg = ''
         self.seg_imgs = []
         
@@ -2436,6 +2422,14 @@ class App(customtkinter.CTk):
         print(self.draw_data)
         print(self.class_data)
         print(self.analysis_data)
+        
+    def save_to_json(self, filename):
+        with open(filename, 'w') as json_file:
+            json.dump(self.dict_info, json_file, indent=4)
+
+    def load_from_json(self, filename):
+        with open(filename, 'r') as json_file:
+            return json.load(json_file) 
 
 app = App(
     title='VasculAR software',
@@ -2444,18 +2438,32 @@ app = App(
 
 
 '''
-        Data saved into .vas:
-            patient_data.json --> dict into
-            draw_data.json --> draw_data
-            ROI_data.json --> ROI_data
-            Photo_data.json --> analysis_data
-                save into pdf (if on that slice there is a analysis box text --> write on the pdf too + 1 page for patient info)
-        Database on firebase:
-            4 files of json + 1 pdf
-            1 for databse management:
-            'patient_name':
-            'date'
-            'modality'
-            'times': 
-            'path_to_file_vas -> clicked --> automate open the zip vas with analysis
+Khi tải phần mềm về thì luôn có một file mặc định default.vas 
+Trong default.vas sẽ chứa các file thông tin như sau: 
+Nếu người dùng chọn file .nii.gz kèm theo một file json chưa dict_info thì ta dùng cái default.vas
+
+    1. class_data  --> default
+    2. ROI_data --> default
+    paths
+        3. self.path = '' --> rỗng --> phải bấm start_seg mới thực hiện segmentation
+        4. self.folder_seg
+    5. self.add_seg = False --> trong default.vas là false vì chưa có segmentation 
+    6. self.draw_data
+    7. analysis_data = rỗng
+    
+
+Chỉ được lưu file nếu như đã login thành công
+Trong fiel saved.vas chưa casc file sau:
+Nếu người dùng chọn file.vas thì ta sử dụng cái này
+    1. class_data  --> đã saved
+    2. ROI_data --> đã saved
+    paths
+        3. self.path = '' --> link của data trước đó đã load trong máy tính 
+        4. self.folder_seg = '' --> đã lưu --> --> thực hiện segmentation khi mởi mở lại luôn
+    5. self.add_seg = False/true --> tùy lúc trước đã thực hiện segmentation hay chưa 
+    6. self.draw_data --> đã được lưu lại
+    7. analysis_data
+    
+--> file này được đẩy lên firebase nếu như save lại 
+--> các ảnh/output.pdf/ảnh 3d xuất ra thì được lưu vào một folder tên analyis trên firebase 
 '''

@@ -1,0 +1,14 @@
+{
+    "number_of_elements": 1,
+    "B\u1ea5t th\u01b0\u1eddng 1": {
+        "canvas": "axial",
+        "type": "rectangle",
+        "slice": 100,
+        "x1": 100,
+        "y1": 100,
+        "x2": 300,
+        "y2": 300,
+        "color": "red",
+        "note": "default analysis"
+    }
+}
