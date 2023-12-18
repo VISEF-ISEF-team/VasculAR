@@ -1,91 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using EzySlice;
-using UnityEngine.InputSystem; 
 
-public class EnableSlice : MonoBehaviour
+public class TestingScript : MonoBehaviour
 {
-    public EnableSlice baseEnableSlice;
-    private DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress;
+    [SerializeField] GameObject planeObject; 
+    [SerializeField] bool show = false;
+    [SerializeField] GameObject cubeObject;
+    [SerializeField] float numRay; 
+    private MeshRenderer planeMeshRenderer;
 
-    public GameObject heartTarget;
-    public Material crossSectionMaterial;
-
-    public GameObject planeObject; 
-    private Transform planeCoordinates;
-
+    private MeshFilter planeMeshFilter; 
+    private Mesh planeMesh; 
+    // get the bounds of the slicer object
+    // then calculate whether points of the object that will be sliced if slicer object is intersecting it
     private void Start()
     {
-        planeCoordinates = planeObject.transform; 
+        planeMeshRenderer = planeObject.GetComponent<MeshRenderer>();
+        planeMeshFilter = planeObject.GetComponent<MeshFilter>();
+        planeMesh = planeMeshFilter.mesh; 
     }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        // cast a ray from center of cube, with y level modified to the y level of plane, to the four faces of the cube. 
+        // if the ray hits plane, cube, plane => intersecting
+        // if the ray hits cube only => not intersecting
+        // if the ray hits plane then cube only => not intersecting
+        // only if ray hits 4 direction in order of plane cube plane does it intersect
+
+        if (show)
         {
-            Slice(heartTarget); 
-        }
-    }
-
-    // normal of a plane is a vector that is perpendicular to the plane
-    public void Slice(GameObject target)
-    {
-        if (GetIntersection(planeObject, 100.0f))
-        {
-            SlicedHull hull = target.Slice(planeCoordinates.position, planeCoordinates.up);
-            Debug.Log(target.name); 
-            if (hull != null)
-            {
-                // upper hull
-                GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
-                SliceComponentSetup(upperHull, true, target.name);
-                upperHull.transform.position = new Vector3(heartTarget.transform.position.x + 1.5f, heartTarget.transform.position.y, heartTarget.transform.position.z);
-
-                // lower hull
-                GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
-                SliceComponentSetup(lowerHull, false, target.name);
-                lowerHull.transform.position = new Vector3(heartTarget.transform.position.x - 1.5f, heartTarget.transform.position.y, heartTarget.transform.position.z);
-            }
-        }
-
-    }
-
-    public void SliceComponentSetup(GameObject sliceComponent, bool upper, string baseName)
-    {
-        // set delete on slice
-/*        DeleteSliceOnButtonPress currentDeleteSliceOnButtonPressSettings = sliceComponent.AddComponent<DeleteSliceOnButtonPress>();*/
-
-        // set enable slice 
-        EnableSlice currentEnableSlice = sliceComponent.AddComponent<EnableSlice>();
-
-        currentEnableSlice.heartTarget = sliceComponent;
-
-        currentEnableSlice.crossSectionMaterial = baseEnableSlice.crossSectionMaterial;
-
-        currentEnableSlice.planeObject = baseEnableSlice.planeObject; 
-
-        currentEnableSlice.baseEnableSlice = baseEnableSlice; 
-
-        // set name for sliced component
-        if (upper)
-        {
-            sliceComponent.name = $"{baseName}-upper";
-        }
-        else
-        {
-            sliceComponent.name = $"{baseName}-lower";
+            Debug.Log(GetIntersection(planeObject, numRay));
+            show = false; 
         }
     }
 
     private bool GetIntersection(GameObject planeObject, float numRay)
     {
-        return DrawRayXDirection(planeObject, numRay) && DrawRayZDirection(planeObject, numRay);
+        return DrawRayXDirection(planeObject, numRay) && DrawRayZDirection(planeObject, numRay); 
     }
 
     private bool DrawRayXDirection(GameObject planeObject, float numberOfRaysEachSide)
     {
         bool forward = false;
-        bool backward = false;
-        Bounds planeMeshBound = planeObject.GetComponent<MeshFilter>().mesh.bounds;
+        bool backward = false; 
+        Bounds planeMeshBound = planeObject.GetComponent<MeshFilter>().mesh.bounds; 
         Vector3 planeExtents = planeMeshBound.extents;
 
         float xScale = planeObject.transform.localScale.x;
@@ -114,7 +73,7 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, new Vector3(-1, 0, 0), out RaycastHit hit, zMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                if (!forward) forward = true;
+                if (!forward) forward = true; 
             }
             else
             {
@@ -141,19 +100,19 @@ public class EnableSlice : MonoBehaviour
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
             }
         }
-        return forward && backward;
+        return forward && backward; 
     }
 
     private bool DrawRayZDirection(GameObject planeObject, float numberOfRaysEachSide)
     {
         bool forward = false;
-        bool backward = false;
+        bool backward = false; 
 
         Bounds planeMeshBound = planeObject.GetComponent<MeshFilter>().mesh.bounds;
         Vector3 planeExtents = planeMeshBound.extents;
 
         float xScale = planeObject.transform.localScale.x;
-        float zScale = planeObject.transform.localScale.z;
+        float zScale = planeObject.transform.localScale.z; 
 
         float xMaxDistance = planeExtents.x * 2 * xScale;
         float xStep = xMaxDistance / numberOfRaysEachSide;
@@ -168,7 +127,7 @@ public class EnableSlice : MonoBehaviour
 
             if (Physics.Raycast(origin, new Vector3(0, 0, -1), out RaycastHit hit, xMaxDistance))
             {
-                if (!forward) forward = true;
+                if (!forward) forward = true; 
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
             }
             else
@@ -187,11 +146,14 @@ public class EnableSlice : MonoBehaviour
 
             if (Physics.Raycast(origin, new Vector3(0, 0, 1), out RaycastHit hit, xMaxDistance))
             {
-                if (!backward) backward = true;
+                if (!backward) backward = true; 
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
             }
         }
 
-        return forward && backward;
+        return forward && backward; 
     }
+    
+    // implement full intersection
 }
+
