@@ -254,7 +254,7 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
                     currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
 
-                    currentEnableSlice.planeCoordinates = baseEnableSliceOnButtonPressScript.planeCoordinates;
+                    currentEnableSlice.planeObject = baseEnableSliceOnButtonPressScript.planeObject;
                 }
             }
             yield return null;
