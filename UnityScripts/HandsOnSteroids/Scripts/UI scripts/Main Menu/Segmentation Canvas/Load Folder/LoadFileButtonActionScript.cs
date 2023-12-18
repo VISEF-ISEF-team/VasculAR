@@ -22,14 +22,17 @@ public class LoadFileButtonActionScript : MonoBehaviour
     // this field is for setting up disappear and appear buttons
     public SegmentCanvas segmentCanvasControllerScript;
 
+    // files for clicking logic and loading files 
     public GameObject? folderButton;
     public GameObject? fileButton;
     public string stlFolderPath;
     public string stlFilePath;
 
+    // base configs on heart segment object 
     public DeleteSliceOnButtonPress baseDeleteSliceOnButtonPressScript;
     public EnableSlice baseEnableSliceOnButtonPressScript;
 
+    // color coding 
     private Color singleColor = new Color(22 / 255f, 48 / 255f, 32 / 255f);
     private Dictionary<string, Color> colorDictionary = new Dictionary<string, Color>()
     {
@@ -46,6 +49,10 @@ public class LoadFileButtonActionScript : MonoBehaviour
         { "coronary_artery", new Color(216 / 255f, 101 / 255f, 79 / 255f)}
     };
 
+    // reset position button 
+    public ResetPositionButtonActionScript resetButtonActionScript; 
+
+    // error logic
     private bool folderCoroutineError = false;
     private bool fileCorountineError = false;
     private float scaleFactor = 0.007f;
@@ -233,12 +240,17 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
                     // set display material 
-                    MeshRenderer childMeshRenderer = loadedObjectChild.GetComponentInChildren<MeshRenderer>();
+                    MeshRenderer childMeshRenderer = loadedObjectChild.GetComponent<MeshRenderer>();
                     Material newMaterial = Instantiate(baseMaterial);
                     newMaterial.color = colorDictionary[loadedObjectChild.name];
                     UnityEngine.Debug.Log(colorDictionary[loadedObject.name]);
                     childMeshRenderer.material = newMaterial;
 
+                    // try to optimize mesh for slicing 
+                    Mesh childMesh = loadedObjectChild.GetComponent<MeshFilter>().mesh;
+                    childMesh.Optimize(); 
+
+                    // set child object (which name is the name of the heart segment)
                     loadedObjectChild.transform.SetParent(parentObject.transform, false);
 
                     // add grab interactable
@@ -261,8 +273,13 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
                     currentEnableSlice.planeObject = baseEnableSliceOnButtonPressScript.planeObject;
 
-                    segmentCanvasControllerScript.StartSetupProcess(); 
+                    // set position for reset button 
+                    resetButtonActionScript.childSegmentObjectList.Add(loadedObjectChild);
+                    resetButtonActionScript.oldPosition.Add(loadedObjectChild.transform.position); 
+
                 }
+                // set hide and show button on canvas
+                segmentCanvasControllerScript.StartSetupProcess(); 
             }
             yield return null;
         }

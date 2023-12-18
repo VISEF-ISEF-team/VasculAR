@@ -44,6 +44,8 @@ public class PaintBrushActionScript : MonoBehaviour
     {
         Transform leftHandTip = handPositions.GetHandTipPositions()[0]; 
         Transform rightHandTip = handPositions.GetHandTipPositions()[1];
+
+        // the color will be update continously whenever color picker is changed since when color picker's color changes, the otherSphereMeshRenderer is changed as well
         Color otherSphereColor = otherSphereMeshRenderer.material.color;
         spherePrefab.GetComponent<MeshRenderer>().material.SetColor("New Color", otherSphereColor);
         spherePrefab.transform.localScale = realSphereSize; 

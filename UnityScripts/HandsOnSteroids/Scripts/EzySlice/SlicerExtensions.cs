@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EzySlice {
     /**
-     * Define Extension methods for easy access to slicer functionality
+     * Define Extension methods for easy access to slicerObject functionality
      */
     public static class SlicerExtensions {
 

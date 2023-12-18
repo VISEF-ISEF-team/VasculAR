@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SlicerCanvasManagerScript : MonoBehaviour
 {
-    [SerializeField] GameObject slicer; 
+    [SerializeField] GameObject slicerObject; 
     [SerializeField] private MeshRenderer slicerPlaneRenderer;
     [SerializeField] float minScale = 0.1f; 
     [SerializeField] float maxScale = 3.0f;
@@ -10,30 +10,30 @@ public class SlicerCanvasManagerScript : MonoBehaviour
 
     private void Start()
     {
-        slicerSpawnUIControl = slicer.GetComponent<SlicerSpawnOnUIControl>();
+        slicerSpawnUIControl = slicerObject.GetComponent<SlicerSpawnOnUIControl>();
     }
 
     private void OnEnable()
     {
-        slicer.SetActive(true);
+        slicerObject.SetActive(true);
         slicerSpawnUIControl.SpawnSlicer(); 
     }
 
     private void OnDisable()
     {
-        slicer.SetActive(false); 
+        slicerObject.SetActive(false); 
     }
 
     public void ChangeWidth(float widthScaleValue)
     {
         widthScaleValue = Mathf.Clamp(widthScaleValue, minScale, maxScale);
-        transform.localScale = new Vector3(widthScaleValue, transform.localScale.y, transform.localScale.z);
+        slicerObject.transform.localScale = new Vector3(widthScaleValue, transform.localScale.y, transform.localScale.z);
     }
 
     public void ChangeHeight(float heightScaleValue)
     {
         heightScaleValue = Mathf.Clamp(heightScaleValue, minScale, maxScale);
-        transform.localScale = new Vector3(transform.localScale.x, heightScaleValue, transform.localScale.z);
+        slicerObject.transform.localScale = new Vector3(transform.localScale.x, heightScaleValue, transform.localScale.z);
     }
 
     public void ChangeTransparency(float transparencyValue)
