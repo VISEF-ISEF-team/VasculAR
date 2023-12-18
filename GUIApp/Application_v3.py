@@ -11,7 +11,7 @@ from tkinter import filedialog, Canvas
 from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
-from filtering_segmentation import filtering
+# from filtering_segmentation import filtering
 from pdf_save import create_pdf
 from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
@@ -623,20 +623,59 @@ class CanvasAxial:
                             data['y2'] = data['y2'] + (zoom_ratio + 0.85 / ratio)
                             
         self.images = [] 
+        
+        def transparent_background(image):
+            alpha_channel = (image != 0).astype(np.uint8) * 255
+            RGBimage = np.stack([np.ones_like(image) * 255] * 3 + [alpha_channel], axis=-1)
+            img = Image.fromarray(RGBimage, 'RGBA')
+            return img
+        
         def create_image_alpha(x, y, image, image_seg):
-            if self.master.add_seg == False or image_seg == None:
+            if self.master.add_seg == False:
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
             else:
-                opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
-                alpha_seg = int(opacity * 255)
-                image_seg = image_seg.convert('RGBA')
-                image_seg.putalpha(alpha_seg)
+                # opacity = int(round(self.master.tools.slider_opacity.get(), 0)) / 100
+                # alpha_seg = int(opacity * 255)
+                # image_seg[3] = image_seg[3].convert('RGBA')
+                # image_seg[3].putalpha(alpha_seg)
                 
+                # xử lý segmentation
+                seg = []
+                for index in range(len(image_seg)):
+                    temp = np.array(image_seg[index])
+                    img = Image.fromarray(temp)
+                    gray = np.array(img.convert('L')) 
+                    seg.append(transparent_background(gray))
+                 
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
-                self.images.append(ImageTk.PhotoImage(image_seg))
-                self.canvas_item_2 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
+
+                self.canvas_item_seg = []
+                for item in seg:
+                    self.images.append(ImageTk.PhotoImage(item))
+                    self.canvas_item_seg.append(self.canvas.create_image(x, y, image=self.images[-1], anchor='center'))             
+                
+        def return_img_seg(image, index, color_choice, height):
+            image_seg = image[int(index_slice),:, :]
+            image_seg = np.where(image_seg == 1., image_seg, 0)
+            image_seg = Image.fromarray(image_seg * 255).convert('L')
+            image_seg.save(f"temp{index}.png", "PNG", transparency=0)
+            plt.imsave(f"temp{index}.png", image_seg, cmap=color_choice)
+            image_display_seg = cv2.imread(f"temp{index}.png")
+            brightness_image_seg = cv2.convertScaleAbs(image_display_seg, alpha=float(self.master.tools.entry_brightness_value.get()), beta=0)
+            cv2.imwrite(f"temp{index}.png", brightness_image_seg)
+            image_display_seg = Image.open(f"temp{index}.png").resize((height, height))
+            image_display_seg = image_display_seg.rotate(rotation_angle)
+            
+            if horizontal == "horizontal":
+                image_display = image_display.transpose(Image.FLIP_LEFT_RIGHT)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_LEFT_RIGHT)
+            if vertical == "vertical":
+                image_display = image_display.transpose(Image.FLIP_TOP_BOTTOM)
+                image_display_seg = image_display_seg.transpose(Image.FLIP_TOP_BOTTOM)
+                
+            return image_display_seg
 
         # get size
         height = int(self.label_zoom.cget("text")) 
@@ -674,10 +713,13 @@ class CanvasAxial:
             
         # segmentation
         if self.master.add_seg == True:
-            print(self.master.seg_imgs[11].shape)
-            image_display_seg = None
+            image_seg = []
+            for index in range(0,12,1):
+                if self.master.class_data[f"class{index+1}"]['visible'] == True:
+                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+            
             x_cord, y_cord = image_position()
-            create_image_alpha(x_cord, y_cord, image_display, image_display_seg)
+            create_image_alpha(x_cord, y_cord, image_display, image_seg)
 
         else:
             # diplay images
@@ -707,16 +749,20 @@ class CanvasAxial:
         def movement_binding():
             def left():
                 self.canvas.move(self.canvas_item_1, -10, 0)
-                self.canvas.move(self.canvas_item_2, -10, 0)     
+                for item in self.canvas_item_seg:
+                    item.move(self.canvas_item_2, -10, 0)     
             def right():
                 self.canvas.move(self.canvas_item_1, 10, 0)
-                self.canvas.move(self.canvas_item_2, 10, 0)
+                for item in self.canvas_item_seg:
+                    item.move(self.canvas_item_2, 10, 0)     
             def up():
                 self.canvas.move(self.canvas_item_1, 0, -10)
-                self.canvas.move(self.canvas_item_2, 0, -10)
+                for item in self.canvas_item_seg:
+                    item.move(self.canvas_item_2, 0, -10)     
             def down():
                 self.canvas.move(self.canvas_item_1, 0, 10)
-                self.canvas.move(self.canvas_item_2, 0, 10)
+                for item in self.canvas_item_seg:
+                    item.move(self.canvas_item_2, 0, 10)     
                 
                 
             self.canvas.bind('<Left>', lambda event: left())
@@ -1833,14 +1879,10 @@ class Tools:
                     self.regions_frame.columnconfigure((0,1,2,3,4,5,6,7,8,9,10,11), weight=1)
                     self.regions_frame.rowconfigure((0,1,2,3,4,5,6,7,8), weight=1)
                     self.regions_frame_header = self.title_toolbox(frame=self.regions_frame, title="Regions Control")
-                    
-                def load_seg(): 
-                    filtering_instance = filtering(self.master.seg)
-                    self.label_arrays = filtering_instance.get()
                         
                 def widgets():
-                    self.region_list_vn = ['Phông nền', 'Động mạch chủ', 'Động mạch phổi', 'Tĩnh mạch phổi', 'Tâm thất trái', 'Tâm nhĩ trái', 'Tâm thất phải', 'Tấm nhĩ phải', 'Động mạch vành', 'Van 2 lá', 'Van 3 lá'] 
-                    self.region_list_en = ['Background', 'Aorta', 'Pulmonary trunk', 'Pulmonary veins', 'Left ventricle', 'left atrium', 'right ventricle', 'right atrium', 'coronary artery', 'triscupid valve', 'biscupid valve']
+                    self.region_list_vn = ['Phông nền', 'Tĩnh mạch chủ', 'Tiểu nhĩ', 'Động mạch vành', 'Tâm thất trái', 'Tâm thất phải', 'Tâm nhĩ trái', 'Tâm nhĩ phải', 'Màng cơ tim', 'Cung động mạch', 'Động mạch phổi', 'Động mạch chủ trên'] 
+                    self.region_list_en = ['Background', 'Vena cava', 'Auricle', 'Coronary Artery', 'Left ventricle', 'Right ventricle', 'left atrium', 'right atrium', 'Myocardium', 'Aortic Arch', 'Pulmonary trunk', 'Coronary Artery']
                     # icon
                     eye_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye.png"),size=(20, 20))
                     eye_hide_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye_hide.png"),size=(20, 20))
@@ -1872,6 +1914,9 @@ class Tools:
                                 self.eye_class10.configure(image=eye_hide_icon)
                             elif class_name=="class11":
                                 self.eye_class11.configure(image=eye_hide_icon)
+                            elif class_name=="class12":
+                                self.eye_class11.configure(image=eye_hide_icon)
+                            
                         
                         else:
                             self.master.class_data[class_name]['visible'] = True
@@ -1896,6 +1941,8 @@ class Tools:
                             elif class_name=="class10":
                                 self.eye_class10.configure(image=eye_icon)
                             elif class_name=="class11":
+                                self.eye_class11.configure(image=eye_icon)
+                            elif class_name=="class12":
                                 self.eye_class11.configure(image=eye_icon)
 
                     # class1
@@ -2008,15 +2055,23 @@ class Tools:
                     self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[10], fg_color=self.master.second_color)
                     self.btn_class11.grid(row=6, column=3, sticky='n')
 
+                    # class12
+                    self.eye_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=eye_hide_icon, width=30, height=30, command=lambda : eye_hide(class_name="class11"))
+                    self.eye_class11.grid(row=6, column=6, padx=(10,0))
+                    self.fill_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=fill_icon, width=30, height=30)
+                    self.fill_class11.grid(row=6, column=7)
+                    self.annotate_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
+                    self.annotate_class11.grid(row=6, column=8)
+                    self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[10], fg_color=self.master.second_color)
+                    self.btn_class11.grid(row=6, column=9, sticky='n')
                                
                 frame()
                 if self.master.add_seg == True:
-                    load_seg()
                     widgets()
             
             start_seg()
             opacity()
-            # regions()
+            regions()
             
         create_tabs()
         Segmentation()
@@ -2101,6 +2156,10 @@ class App(customtkinter.CTk):
                 'color': '#FFFFFF',
             },
             'class11':{
+                'visible': False,
+                'color': '#FFFFFF',
+            },
+            'class12':{
                 'visible': False,
                 'color': '#FFFFFF',
             }
