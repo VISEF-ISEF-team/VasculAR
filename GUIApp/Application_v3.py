@@ -236,6 +236,7 @@ class MenuBar:
         create_pdf(package=self.master.analysis_data)
         
     def save_case(self):
+        # save local
         directory = filedialog.askdirectory()
         if directory != None:
             self.master.data_manager.save_after_data(
@@ -248,6 +249,19 @@ class MenuBar:
                 dict_info=self.master.dict_info,
                 paths=self.master.paths,
             )
+            
+        # auto save on cloud
+        case = {
+            "file_name" : f'ct_{self.master.specified_data}_saved',
+            "directory" : directory,
+            "ROI_data" : self.master.ROI_data,
+            "draw_data" : self.master.draw_data,
+            "class_data" : self.master.class_data,
+            "analysis_data" : self.master.analysis_data,
+            "dict_info" : self.master.dict_info,
+            "paths" : self.master.paths,
+        }
+        db.child(f"case_{self.master.specified_data}").set(case)
     
         
     def dropdown_options(self, instance, master):            
@@ -511,9 +525,9 @@ class CanvasAxial:
         index = self.master.analysis_data['number']
         for element, data in self.master.draw_data.items():
             if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'axial':
-                if (f'canvas_{index}.png' not in self.master.analysis_data):
-                    self.master.analysis_data[f'canvas_{index}.png'] = {}
-                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+                if (f'canvas_{index}' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}'] = {}
+                self.master.analysis_data[f'canvas_{index}'][element] = data['note']
                 print(self.master.analysis_data)
 
         # save file
@@ -2299,7 +2313,7 @@ class App(customtkinter.CTk):
         self.mainloop()
         
         # Auto save when closing window
-        
+        print(self.analysis_data)
         
         
         

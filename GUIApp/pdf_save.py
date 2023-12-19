@@ -30,7 +30,7 @@ def create_pdf(package, output_pdf="output.pdf"):
         if i > 1:
             pdf_canvas.showPage()  # Start a new page after each iteration
 
-        img = utils.ImageReader(image_path)
+        img = utils.ImageReader(image_path + ".png")
         pdf_canvas.drawImage(img, 10, 420, width=300, height=300)
 
         for j, (header, content) in enumerate(data.items()):
