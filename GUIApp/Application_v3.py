@@ -215,6 +215,7 @@ class MenuBar:
             
     def choose_file(self):
         self.master.paths['image_path'] = filedialog.askopenfilename()
+        self.master.specified_data = os.path.basename(self.master.paths['image_path']).split('_')[1]
         
         if self.master.paths['image_path'].endswith('.nii.gz') or self.master.paths['image_path'].endswith('.nii'):
             par_dir = os.path.dirname(self.master.paths['image_path'])
@@ -537,6 +538,9 @@ class CanvasAxial:
         y1 = y + self.canvas.winfo_height()*1.255  
         ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
         self.master.analysis_data['number'] = index + 1
+        
+        # save on cloud
+        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
     
     def create_tool_widgets(self):
         def rotation():
@@ -855,9 +859,9 @@ class CanvasSagittal:
         index = self.master.analysis_data['number']
         for element, data in self.master.draw_data.items():
             if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'sagittal':
-                if (f'canvas_{index}.png' not in self.master.analysis_data):
-                    self.master.analysis_data[f'canvas_{index}.png'] = {}
-                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+                if (f'canvas_{index}' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}'] = {}
+                self.master.analysis_data[f'canvas_{index}'][element] = data['note']
 
         # save file
         x = self.master.winfo_rootx() + self.canvas.winfo_x() + 860
@@ -866,6 +870,9 @@ class CanvasSagittal:
         y1 = y + self.canvas.winfo_height()*1.255  
         ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
         self.master.analysis_data['number'] = index + 1
+        
+        # save on cloud
+        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
         
     def create_tool_widgets(self):
         def rotation():
@@ -1173,9 +1180,9 @@ class CanvasCoronal:
         index = self.master.analysis_data['number']
         for element, data in self.master.draw_data.items():
             if element != 'number_of_elements' and data['slice'] == int(round(self.slider_volume.get(), 0)) and data['canvas'] == 'coronal':
-                if (f'canvas_{index}.png' not in self.master.analysis_data):
-                    self.master.analysis_data[f'canvas_{index}.png'] = {}
-                self.master.analysis_data[f'canvas_{index}.png'][element] = data['note']
+                if (f'canvas_{index}' not in self.master.analysis_data):
+                    self.master.analysis_data[f'canvas_{index}'] = {}
+                self.master.analysis_data[f'canvas_{index}'][element] = data['note']
 
         # save file
         x = self.master.winfo_rootx() + self.canvas.winfo_x() + 1710
@@ -1184,6 +1191,9 @@ class CanvasCoronal:
         y1 = y + self.canvas.winfo_height()*1.255  
         ImageGrab.grab().crop((x,y,x1,y1)).save(f"canvas_{index}.png")
         self.master.analysis_data['number'] = index + 1
+        
+        # save on cloud
+        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
 
     def create_tool_widgets(self):            
         def rotation():
@@ -1943,7 +1953,6 @@ class Tools:
                     
                 def start_seg_callback():
                     self.seg_progress_bar.start()
-                    self.master.specified_data = os.path.basename(self.master.paths['image_path']).split('_')[1]
                     seg_path = f"D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{self.master.specified_data}_label/ct_{self.master.specified_data}_label_1.nii.gz"
                     self.master.paths['folder_seg'] = os.path.dirname(seg_path)
                     self.master.add_seg = True
