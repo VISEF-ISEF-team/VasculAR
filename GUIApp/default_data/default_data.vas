@@ -1,0 +1,143 @@
+{
+    "analysis_data.json": {
+        "number": 0
+    },
+    "class_data.json": {
+        "class1": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class2": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class3": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class4": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class5": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class6": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class7": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class8": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class9": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class10": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class11": {
+            "visible": false,
+            "color": "#FFFFFF"
+        },
+        "class12": {
+            "visible": false,
+            "color": "#FFFFFF"
+        }
+    },
+    "draw_data.json": {
+        "number_of_elements": 1,
+        "B\u1ea5t th\u01b0\u1eddng 1": {
+            "canvas": "axial",
+            "type": "rectangle",
+            "slice": 100,
+            "x1": 100,
+            "y1": 100,
+            "x2": 300,
+            "y2": 300,
+            "color": "red",
+            "note": "default analysis"
+        }
+    },
+    "ROI_data.json": {
+        "axial": {
+            "rec": {
+                "x1": 50,
+                "y1": 50,
+                "x2": 500,
+                "y2": 500
+            },
+            "nw": {
+                "x": 0,
+                "y": 0
+            },
+            "ne": {
+                "x": 0,
+                "y": 0
+            },
+            "sw": {
+                "x": 0,
+                "y": 0
+            },
+            "se": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "sagittal": {
+            "rec": {
+                "x1": 50,
+                "y1": 50,
+                "x2": 500,
+                "y2": 500
+            },
+            "nw": {
+                "x": 0,
+                "y": 0
+            },
+            "ne": {
+                "x": 0,
+                "y": 0
+            },
+            "sw": {
+                "x": 0,
+                "y": 0
+            },
+            "se": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        "coronal": {
+            "rec": {
+                "x1": 50,
+                "y1": 50,
+                "x2": 500,
+                "y2": 500
+            },
+            "nw": {
+                "x": 0,
+                "y": 0
+            },
+            "ne": {
+                "x": 0,
+                "y": 0
+            },
+            "sw": {
+                "x": 0,
+                "y": 0
+            },
+            "se": {
+                "x": 0,
+                "y": 0
+            }
+        }
+    }
+}

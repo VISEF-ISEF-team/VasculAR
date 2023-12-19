@@ -12,6 +12,7 @@ from CTkRangeSlider import *
 from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from pdf_save import create_pdf
+from data_manager import DataManager
 from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
@@ -44,6 +45,7 @@ firebase = pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
 db = firebase.database()
 storage = firebase.storage()
+data_manager = DataManager()
 
 class AboutWindow(customtkinter.CTkToplevel):
     def __init__(self, parent, title):
@@ -200,8 +202,13 @@ class MenuBar:
         self.master.path = filedialog.askopenfilename()
         
         if self.master.path.endswith('.nii.gz') or self.master.path.endswith('.nii'):
+            par_dir = os.path.dirname(self.master.path)
+            self.master.dict_info = self.master.data_manager.load_patient_json_data(par_dir + '/patient_data.json')
             self.master.img_raw = sitk.ReadImage(self.master.path, sitk.sitkFloat32)
             self.master.img = sitk.GetArrayFromImage(self.master.img_raw)
+            
+        elif self.master.path.endswith('.vas'):
+            pass # load the software saved file format
         
         elif self.master.path.endswith('.dcm'):
             parent_dir = os.path.dirname(self.master.path)
@@ -2180,162 +2187,34 @@ class App(customtkinter.CTk):
         self.minsize(500, 500)
         self.iconbitmap(logo_path)
         
+        # Color specification
         self.first_color = "#2b2b2b"
         self.second_color = "#3b3b3b"
         self.third_color = "#303030"
         self.text_disabled_color = "#dce4e2"
         self.text_canvas_color = "yellow"
         
+        # Image variables
         self.img = None
         self.img_raw = None
+        self.pixel_spacing = 0.858
 
+        # Segmentaion variables
         self.seg = None
         self.seg_raw = None
         self.add_seg = False
-        
-        self.dict_info = {
-            "Organization": "Benh vien Cho Ray",
-            "Patient's name": "Ton That Hung",
-            "Modality": "MRI",
-            "Patient ID": "0000097031",
-            "Body Part Examined": "CHEST_TO_PELVIS",
-            "Acquisition Date": "20231019"
-        }
-        self.pixel_spacing = 0.858
-        self.path = ''
-        self.folder_seg = ''
         self.seg_imgs = []
         
         # Data
-        self.class_data = {
-            'class1':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class2':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class3':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class4':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class5':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class6':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class7':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class8':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class9':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class10':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class11':{
-                'visible': False,
-                'color': '#FFFFFF',
-            },
-            'class12':{
-                'visible': False,
-                'color': '#FFFFFF',
-            }
-        }
-        
-        self.ROI_data = {
-            'axial': {
-                'rec': {
-                    'x1': 50,
-                    'y1': 50,
-                    'x2': 500,
-                    'y2': 500,
-                },
-                'nw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'ne': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'sw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'se': {
-                    'x': 0,
-                    'y': 0,
-                }
-            },
-            'sagittal': {
-                'rec': {
-                'x1': 50,
-                'y1': 50,
-                'x2': 500,
-                'y2': 500,
-                },
-                'nw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'ne': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'sw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'se': {
-                    'x': 0,
-                    'y': 0,
-                }
-            },
-            'coronal': {
-                'rec': {
-                'x1': 50,
-                'y1': 50,
-                'x2': 500,
-                'y2': 500,
-                },
-                'nw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'ne': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'sw': {
-                    'x': 0,
-                    'y': 0,
-                },
-                'se': {
-                    'x': 0,
-                    'y': 0,
-                }
-            }
-        }
-        self.analysis_data = {
-            'number': 0,
-        }
-        self.draw_data = {}
+        self.data_manager = DataManager()
+        self.dict_info = {}
+        loaded_default_data = self.data_manager.load_default_data()
+        self.analysis_data = loaded_default_data["analysis_data.json"]
+        self.class_data = loaded_default_data["class_data.json"]
+        self.draw_data = loaded_default_data["draw_data.json"]
+        self.ROI_data = loaded_default_data["ROI_data.json"]
+        self.path = ''
+        self.folder_seg = ''
         
         
         # column and rows
@@ -2355,22 +2234,6 @@ class App(customtkinter.CTk):
         self.tools = Tools(self)
         
         def update_app(event):
-            
-            self.draw_data = {
-                'number_of_elements': 1, 
-                'Bất thường 1': {
-                    'canvas': 'axial',
-                    'type': 'rectangle',
-                    'slice': 100,
-                    'x1': 100,
-                    'y1': 100,
-                    'x2': 300,
-                    'y2': 300,
-                    'color': 'red',
-                    'note': "default analysis",
-                }
-            }
-            
             def update_hounsfield():
                 self.tools.hounsfield_slider.configure(from_=np.min(self.img))
                 self.tools.hounsfield_slider.configure(to=np.max(self.img))
@@ -2385,21 +2248,6 @@ class App(customtkinter.CTk):
             update_hounsfield()
             
         def update_app_2(event):
-            self.draw_data = {
-                'number_of_elements': 1, 
-                'Bất thường 1': {
-                    'canvas': 'axial',
-                    'type': 'rectangle',
-                    'slice': 100,
-                    'x1': 100,
-                    'y1': 100,
-                    'x2': 300,
-                    'y2': 300,
-                    'color': 'red',
-                    'note': "default analysis",
-                }
-            }
-            
             def update_hounsfield():
                 self.tools.hounsfield_slider.configure(from_=np.min(self.img))
                 self.tools.hounsfield_slider.configure(to=np.max(self.img))
