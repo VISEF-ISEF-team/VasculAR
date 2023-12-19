@@ -79,7 +79,7 @@ class MenuBar:
                 },
                 'sub_menu': {
                     'add_nifti_file_btn': 'Add Nifti file',
-                    'add_segmentation': 'Add Segmentation',
+                    'open_vas_file': 'Open Vas File',
                     'save_case_btn': 'Save case',
                     'export_analysis_btn': 'Export analysis',
                 }
@@ -187,31 +187,43 @@ class MenuBar:
             self.vn_btn.pack(padx=5, pady=5)
             self.vn_btn.configure(anchor="w")
     
-    def choose_folder_seg(self):
-        self.master.folder_seg = os.path.dirname(filedialog.askopenfilename())
-        self.master.add_seg = True
-        for file in os.listdir(self.master.folder_seg):
-            if file.endswith('.nii.gz'):
-                img_raw = sitk.ReadImage(self.master.folder_seg + '/' + file, sitk.sitkFloat32)
-                self.master.seg_imgs.append(sitk.GetArrayFromImage(img_raw))
+    def open_vas(self):
+        vas_file_path = filedialog.askopenfilename()
+        if vas_file_path.endswith('.vas'):
+            loaded_default_data = self.master.data_manager.load_saved_vas_data(vas_file_path)
+            self.master.dict_info = loaded_default_data["analysis_data.json"]
+            self.master.analysis_data = loaded_default_data["analysis_data.json"]
+            self.master.class_data = loaded_default_data["class_data.json"]
+            self.master.draw_data = loaded_default_data["draw_data.json"]
+            self.master.ROI_data = loaded_default_data["ROI_data.json"]
+            self.master.paths = loaded_default_data["paths.json"]
             
-        self.hide_all_menu()
-        self.master.event_generate("<<UpdateApp2>>")
-            
-    def choose_file(self):
-        self.master.path = filedialog.askopenfilename()
-        
-        if self.master.path.endswith('.nii.gz') or self.master.path.endswith('.nii'):
-            par_dir = os.path.dirname(self.master.path)
-            self.master.dict_info = self.master.data_manager.load_patient_json_data(par_dir + '/patient_data.json')
-            self.master.img_raw = sitk.ReadImage(self.master.path, sitk.sitkFloat32)
+            # Load image
+            self.master.img_raw = sitk.ReadImage(self.master.paths['image_path'], sitk.sitkFloat32)
             self.master.img = sitk.GetArrayFromImage(self.master.img_raw)
             
-        elif self.master.path.endswith('.vas'):
-            pass # load the software saved file format
+            # Load segmentation
+            self.master.specified_data = os.path.basename(self.master.paths['image_path']).split('_')[1]
+            self.master.paths['folder_seg'] 
+            self.master.add_seg = True
+            for file in os.listdir(self.master.paths['folder_seg']):
+                if file.endswith('.nii.gz'):
+                    img_raw = sitk.ReadImage( self.master.paths['folder_seg'] + '/' + file, sitk.sitkFloat32)
+                    self.master.seg_imgs.append(sitk.GetArrayFromImage(img_raw))
+            self.master.event_generate("<<UpdateApp2>>") 
+
+            
+    def choose_file(self):
+        self.master.paths['image_path'] = filedialog.askopenfilename()
         
-        elif self.master.path.endswith('.dcm'):
-            parent_dir = os.path.dirname(self.master.path)
+        if self.master.paths['image_path'].endswith('.nii.gz') or self.master.paths['image_path'].endswith('.nii'):
+            par_dir = os.path.dirname(self.master.paths['image_path'])
+            self.master.dict_info = self.master.data_manager.load_dict_info_data(par_dir + '/dict_info.json')
+            self.master.img_raw = sitk.ReadImage(self.master.paths['image_path'], sitk.sitkFloat32)
+            self.master.img = sitk.GetArrayFromImage(self.master.img_raw)
+        
+        elif self.master.paths['image_path'].endswith('.dcm'):
+            parent_dir = os.path.dirname(self.master.paths['image_path'])
             instance = ReadDCM(parent_dir)
             self.master.img_raw, self.master.img, self.master.dict_info, self.master.pixel_spacing = instance.read_file_dcm()
             print(self.master.dict_info)
@@ -222,17 +234,31 @@ class MenuBar:
     def export_analysis(self):
         print(self.master.analysis_data)
         create_pdf(package=self.master.analysis_data)
+        
+    def save_case(self):
+        directory = filedialog.askdirectory()
+        if directory != None:
+            self.master.data_manager.save_after_data(
+                file_name=f'ct_{self.master.specified_data}_saved',
+                directory=directory,
+                ROI_data=self.master.ROI_data,
+                draw_data=self.master.draw_data,
+                class_data=self.master.class_data,
+                analysis_data=self.master.analysis_data,
+                dict_info=self.master.dict_info,
+                paths=self.master.paths,
+            )
     
         
     def dropdown_options(self, instance, master):            
         for row, (instance_name, label_name) in enumerate(self.data[instance]['sub_menu'].items()):
-            if instance_name == 'add_segmentation':
+            if instance_name == 'open_vas_file':
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
                     master=master, 
                     text=label_name,
                     fg_color='transparent', 
                     hover_color=self.master.second_color,
-                    command = lambda: self.choose_folder_seg(),
+                    command = lambda: self.open_vas(),
                 )
             elif instance_name == 'add_nifti_file_btn': 
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
@@ -242,7 +268,14 @@ class MenuBar:
                     hover_color=self.master.second_color,
                     command = lambda: self.choose_file(),
                 )
-                
+            elif instance_name == 'save_case_btn': 
+                self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
+                    master=master, 
+                    text=label_name,
+                    fg_color='transparent', 
+                    hover_color=self.master.second_color,
+                    command = lambda: self.save_case(),
+                )
             elif instance_name == 'export_analysis_btn':
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
                     master=master, 
@@ -251,6 +284,7 @@ class MenuBar:
                     hover_color=self.master.second_color,
                     command = lambda: self.export_analysis(),
                 )
+                
             else:
                 self.menu_item['sub_menu'][instance_name] = customtkinter.CTkButton(
                     master=master, 
@@ -935,7 +969,7 @@ class CanvasSagittal:
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])
             
         self.images = [] 
-        def transparent_background(image):
+        def transparent_background(image, index):
             hex_color = self.master.class_data[f'class{index+1}']['color']
             rgba_color = webcolors.hex_to_rgb(hex_color) + (255,)
             alpha_channel = (image != 0).astype(np.uint8) * 255
@@ -959,10 +993,8 @@ class CanvasSagittal:
                 # xử lý segmentation
                 seg = []
                 for index in range(len(image_seg)):
-                    temp = np.array(image_seg[index])
-                    img = Image.fromarray(temp)
-                    gray = np.array(img.convert('L')) 
-                    seg.append(transparent_background(gray))
+                    gray = np.array(image_seg[index][0].convert('L')) 
+                    seg.append(transparent_background(gray, index=image_seg[index][1]))
                  
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
@@ -1033,7 +1065,7 @@ class CanvasSagittal:
             image_seg = []
             for index in range(0,12,1):
                 if self.master.class_data[f"class{index+1}"]['visible'] == True:
-                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+                    image_seg.append((return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice), index))
             
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_seg)
@@ -1254,7 +1286,7 @@ class CanvasCoronal:
                         self.canvas.create_text((data['x2'] + data['x1'])/2, data['y1']-20, text=f'{element} : {distance}mm', anchor="center", fill=data['color'])  
           
         self.images = [] 
-        def transparent_background(image):
+        def transparent_background(image, index):
             hex_color = self.master.class_data[f'class{index+1}']['color']
             rgba_color = webcolors.hex_to_rgb(hex_color) + (255,)
             alpha_channel = (image != 0).astype(np.uint8) * 255
@@ -1278,10 +1310,8 @@ class CanvasCoronal:
                 # xử lý segmentation
                 seg = []
                 for index in range(len(image_seg)):
-                    temp = np.array(image_seg[index])
-                    img = Image.fromarray(temp)
-                    gray = np.array(img.convert('L')) 
-                    seg.append(transparent_background(gray))
+                    gray = np.array(image_seg[index][0].convert('L')) 
+                    seg.append(transparent_background(gray, index=image_seg[index][1]))
                  
                 self.images.append(ImageTk.PhotoImage(image))
                 self.canvas_item_1 = self.canvas.create_image(x, y, image=self.images[-1], anchor='center')
@@ -1289,7 +1319,7 @@ class CanvasCoronal:
                 self.canvas_item_seg = []
                 for item in seg:
                     self.images.append(ImageTk.PhotoImage(item))
-                    self.canvas_item_seg.append(self.canvas.create_image(x, y, image=self.images[-1], anchor='center'))             
+                    self.canvas_item_seg.append(self.canvas.create_image(x, y, image=self.images[-1], anchor='center'))            
                 
         def return_img_seg(image, index, color_choice, height):
             image_seg = image[:,:, int(index_slice)]
@@ -1351,7 +1381,7 @@ class CanvasCoronal:
             image_seg = []
             for index in range(0,12,1):
                 if self.master.class_data[f"class{index+1}"]['visible'] == True:
-                    image_seg.append(return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice))
+                    image_seg.append((return_img_seg(self.master.seg_imgs[index], index=index, height=height, color_choice=color_choice), index))
             
             x_cord, y_cord = image_position()
             create_image_alpha(x_cord, y_cord, image_display, image_seg)
@@ -1899,13 +1929,13 @@ class Tools:
                     
                 def start_seg_callback():
                     self.seg_progress_bar.start()
-                    specified_data = os.path.basename(self.master.path).split('_')[1]
-                    seg_path = f"D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_013_label/ct_{specified_data}_label_1.nii.gz"
-                    self.master.folder_seg = os.path.dirname(seg_path)
+                    self.master.specified_data = os.path.basename(self.master.paths['image_path']).split('_')[1]
+                    seg_path = f"D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{self.master.specified_data}_label/ct_{self.master.specified_data}_label_1.nii.gz"
+                    self.master.paths['folder_seg'] = os.path.dirname(seg_path)
                     self.master.add_seg = True
-                    for file in os.listdir(self.master.folder_seg):
+                    for file in os.listdir(self.master.paths['folder_seg']):
                         if file.endswith('.nii.gz'):
-                            img_raw = sitk.ReadImage(self.master.folder_seg + '/' + file, sitk.sitkFloat32)
+                            img_raw = sitk.ReadImage( self.master.paths['folder_seg'] + '/' + file, sitk.sitkFloat32)
                             self.master.seg_imgs.append(sitk.GetArrayFromImage(img_raw))
                     self.master.event_generate("<<UpdateApp2>>") 
                     
@@ -2194,7 +2224,8 @@ class App(customtkinter.CTk):
         self.text_disabled_color = "#dce4e2"
         self.text_canvas_color = "yellow"
         
-        # Image variables
+        # Image variables]
+        self.specified_data = ''
         self.img = None
         self.img_raw = None
         self.pixel_spacing = 0.858
@@ -2213,8 +2244,10 @@ class App(customtkinter.CTk):
         self.class_data = loaded_default_data["class_data.json"]
         self.draw_data = loaded_default_data["draw_data.json"]
         self.ROI_data = loaded_default_data["ROI_data.json"]
-        self.path = ''
-        self.folder_seg = ''
+        self.paths = {
+            'image_path': '',
+            'folder_seg': '',
+        }
         
         
         # column and rows
@@ -2265,11 +2298,10 @@ class App(customtkinter.CTk):
         self.bind("<<UpdateApp2>>", update_app_2)
         self.mainloop()
         
-        # Save latest data here
-        print(self.ROI_data)
-        print(self.draw_data)
-        print(self.class_data)
-        print(self.analysis_data)
+        # Auto save when closing window
+        
+        
+        
         
     def save_to_json(self, filename):
         with open(filename, 'w') as json_file:
