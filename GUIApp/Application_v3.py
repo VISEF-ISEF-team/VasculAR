@@ -24,6 +24,8 @@ import pyrebase
 import os
 import webcolors
 import json
+import subprocess
+import sys
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -196,9 +198,7 @@ class MenuBar:
             self.master.draw_data = loaded_default_data["draw_data.json"]
             self.master.ROI_data = loaded_default_data["ROI_data.json"]
             self.master.paths = loaded_default_data["paths.json"]
-            self.folder_imgs = loaded_default_data["folder_imgs.json"]
-            
-            self.master.openvas = True
+            self.master.folder_imgs = loaded_default_data["folder_imgs.json"]
             
             # Load image
             self.master.img_raw = sitk.ReadImage(self.master.paths['image_path'], sitk.sitkFloat32)
@@ -548,10 +548,12 @@ class CanvasAxial:
         storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
 
         # save link to database
+        print(self.master.folder_imgs)
         image_url = storage.child(filename).get_url(None)
-        if f"case_{self.master.specified_data}" not in self.master.folder_imgs and self.master.openvas==False:
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
             self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
         self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
+        print(self.master.folder_imgs)
     
     def create_tool_widgets(self):
         def rotation():
@@ -887,8 +889,9 @@ class CanvasSagittal:
         storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
 
         # save link to database
+        print(self.master.folder_imgs)
         image_url = storage.child(filename).get_url(None)
-        if f"case_{self.master.specified_data}" not in self.master.folder_imgs and self.master.openvas==False:
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
             self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
         self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
         
@@ -1215,8 +1218,9 @@ class CanvasCoronal:
         storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
 
         # save link to database
+        print(self.master.folder_imgs)
         image_url = storage.child(filename).get_url(None)
-        if f"case_{self.master.specified_data}" not in self.master.folder_imgs and self.master.openvas == False:
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
             self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
         self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
 
@@ -2252,8 +2256,28 @@ class Tools:
             opacity()
             regions()
             
+        def Reconstruction():
+            def start_reconstruction():
+                venv_activate_script = os.path.join('D:/Documents/GitHub/VascuIAR/.venv/Scripts', 'activate')
+                if sys.platform.startswith('win'):
+                    activation_command = f"call {venv_activate_script}"
+                    start_command = "start"
+                else:
+                    activation_command = f"source {venv_activate_script}"
+                    start_command = "x-terminal-emulator -e"
+
+                command = f"{activation_command} && {start_command} python automatic_reconstruction.py {self.master.specified_data}"
+                subprocess.run(command, shell=True)
+            
+            self.reconstruction_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_2, fg_color=self.master.third_color)
+            self.reconstruction_frame.pack()
+            self.btn_reconstruction = customtkinter.CTkButton(master=self.reconstruction_frame, text="3D reconstruction", command=start_reconstruction)
+            self.btn_reconstruction.pack()
+            
+        
         create_tabs()
         Segmentation()
+        Reconstruction()
     
 class App(customtkinter.CTk):
     def __init__(self, title, logo_path):
@@ -2283,9 +2307,6 @@ class App(customtkinter.CTk):
         self.seg_raw = None
         self.add_seg = False
         self.seg_imgs = []
-        
-        # openvas
-        self.openvas = False
         
         # Data
         self.data_manager = DataManager()
@@ -2351,7 +2372,6 @@ class App(customtkinter.CTk):
         self.mainloop()
         
         # Auto save when closing window
-        print(self.analysis_data)
         
         
         
