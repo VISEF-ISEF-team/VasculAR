@@ -25,12 +25,14 @@ public class EnableSlice : MonoBehaviour
     public void SliceOnActivate() 
     {
         int id = heartTarget.GetInstanceID();
+        Debug.Log("instantiate slicing"); 
         Slice(heartTarget, id); 
     }
     public void Slice(GameObject target, int targetInstanceID)
     {
         if (GetIntersection(planeObject, 100.0f, targetInstanceID))
         {
+            Debug.Log("get intersecion successful"); 
             SlicedHull hull = target.Slice(planeCoordinates.position, planeCoordinates.up);
             if (hull != null) 
             {
@@ -122,14 +124,25 @@ public class EnableSlice : MonoBehaviour
             // then we change what we add to the center.z to move it down
             // each step will be extents.z * 2 * scale / step 
 
-            // positive X
-            float newX = planeObject.transform.position.x + (planeExtents.x * xScale);
-            float newY = planeObject.transform.position.y;
-            float newZ = planeObject.transform.position.z + (planeExtents.z * zScale) - zStep * i;
+            // center.x + extents.x, center.y, center.z + extents.z 
+            // then we change what we add to the center.z to move it down
+            // each step will be extents.z * 2 * scale / step 
 
-            Vector3 origin = new Vector3(newX, newY, newZ);
+            // positive x
 
-            if (Physics.Raycast(origin, new Vector3(-1, 0, 0), out RaycastHit hit, zMaxDistance))
+            // get new direction that is already calculated based on object's rotation 
+            Vector3 xDirection = planeObject.transform.right;
+            Vector3 zDirection = planeObject.transform.forward;
+
+            // calculate new starting point base on new direction vector
+            Vector3 origin = planeObject.transform.position + (planeExtents.x * xScale * xDirection);
+            origin = origin + (zDirection * planeExtents.z * zScale) - zDirection * zStep * i;
+
+            // calculate new ray end point 
+            Vector3 endPoint = planeObject.transform.position + (planeExtents.x * xScale * -xDirection);
+            endPoint = endPoint + (zDirection * planeExtents.z * zScale) - zDirection * zStep * i;
+
+            if (Physics.Raycast(origin, -xDirection, out RaycastHit hit, zMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
                 int colliderID = hit.colliderInstanceID;
@@ -139,24 +152,20 @@ public class EnableSlice : MonoBehaviour
             }
             else
             {
-                Debug.DrawLine(origin, new Vector3(planeObject.transform.position.x - (planeExtents.x * xScale), origin.y, origin.z), Color.red, 100.0f);
+                Debug.DrawLine(origin, endPoint, Color.red, 100.0f);
             }
         }
 
+        // negative X 
         for (int i = 0; i < numberOfRaysEachSide; i++)
         {
-            // center.x + extents.x, center.y, center.z + extents.z 
-            // then we change what we add to the center.z to move it down
-            // each step will be extents.z * 2 * scale / step 
+            Vector3 xDirection = -planeObject.transform.right;
+            Vector3 zDirection = planeObject.transform.forward;
 
-            // positive X
-            float newX = planeObject.transform.position.x - (planeExtents.x * xScale);
-            float newY = planeObject.transform.position.y;
-            float newZ = planeObject.transform.position.z + (planeExtents.z * zScale) - zStep * i;
+            Vector3 origin = planeObject.transform.position + (planeExtents.x * xScale * xDirection);
+            origin = origin + (zDirection * planeExtents.z * zScale) - zDirection * zStep * i;
 
-            Vector3 origin = new Vector3(newX, newY, newZ);
-
-            if (Physics.Raycast(origin, new Vector3(1, 0, 0), out RaycastHit hit, zMaxDistance))
+            if (Physics.Raycast(origin, -xDirection, out RaycastHit hit, zMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
                 int colliderID = hit.colliderInstanceID;
@@ -181,15 +190,22 @@ public class EnableSlice : MonoBehaviour
         float xMaxDistance = planeExtents.x * 2 * xScale;
         float xStep = xMaxDistance / numberOfRaysEachSide;
 
+        // positive z direction 
         for (int i = 0; i < numberOfRaysEachSide; i++)
         {
-            float newX = planeObject.transform.position.x + (planeExtents.x * xScale) - xStep * i;
-            float newY = planeObject.transform.position.y;
-            float newZ = planeObject.transform.position.z + (planeExtents.z * zScale);
+            // get new z direction based on object rotation 
+            Vector3 zDirection = planeObject.transform.forward;
+            Vector3 xDirection = planeObject.transform.right;
 
-            Vector3 origin = new Vector3(newX, newY, newZ);
+            // create origin point
+            Vector3 origin = planeObject.transform.position + (planeExtents.z * zScale * zDirection);
+            origin = origin + (xDirection * planeExtents.x * xScale) - xDirection * xStep * i;
 
-            if (Physics.Raycast(origin, new Vector3(0, 0, -1), out RaycastHit hit, xMaxDistance))
+            // create endpoint 
+            Vector3 endPoint = planeObject.transform.position + (planeExtents.z * zScale * -zDirection);
+            endPoint = endPoint + (xDirection * planeExtents.x * xScale) - xDirection * xStep * i;
+
+            if (Physics.Raycast(origin, -zDirection, out RaycastHit hit, xMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
                 int colliderID = hit.colliderInstanceID;
@@ -197,19 +213,21 @@ public class EnableSlice : MonoBehaviour
             }
             else
             {
-                Debug.DrawLine(origin, new Vector3(origin.x, origin.y, planeObject.transform.position.z - (planeExtents.z * zScale)), Color.red, 100.0f);
+                Debug.DrawLine(origin, endPoint, Color.red, 100.0f);
             }
         }
 
         for (int i = 0; i < numberOfRaysEachSide; i++)
         {
-            float newX = planeObject.transform.position.x + (planeExtents.x * xScale) - xStep * i;
-            float newY = planeObject.transform.position.y;
-            float newZ = planeObject.transform.position.z - (planeExtents.z * zScale);
+            // get new z direction based on object rotation 
+            Vector3 zDirection = -planeObject.transform.forward;
+            Vector3 xDirection = planeObject.transform.right;
 
-            Vector3 origin = new Vector3(newX, newY, newZ);
+            // create origin point
+            Vector3 origin = planeObject.transform.position + (planeExtents.z * zScale * zDirection);
+            origin = origin + (xDirection * planeExtents.x * xScale) - xDirection * xStep * i;
 
-            if (Physics.Raycast(origin, new Vector3(0, 0, 1), out RaycastHit hit, xMaxDistance))
+            if (Physics.Raycast(origin, -zDirection, out RaycastHit hit, xMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
                 int colliderID = hit.colliderInstanceID;

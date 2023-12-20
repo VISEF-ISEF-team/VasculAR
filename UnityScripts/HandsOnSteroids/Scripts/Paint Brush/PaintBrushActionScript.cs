@@ -32,18 +32,18 @@ public class PaintBrushActionScript : MonoBehaviour
         {
             if (allowLeftHand)
             {
-                if (lefttriggerButton.action.ReadValue<float>() > 0f)
+                if (lefttriggerButton.action.ReadValue<float>() > 0.5f)
                 {
                     DrawParticles(true);
                 }
-                else if (righttriggerButton.action.ReadValue<float>() > 0f)
+                else if (righttriggerButton.action.ReadValue<float>() > 0.5f)
                 {
                     DrawParticles(false); 
                 }
             }
             else
             {
-                if (righttriggerButton.action.ReadValue<float>() > 0f)
+                if (righttriggerButton.action.ReadValue<float>() > 0.5f)
 
                     DrawParticles(false);
             }
