@@ -1,7 +1,7 @@
 '''
 VasculAR software
-Author: Nguyen Le Quoc Bao
-Version: 0.2
+Author: Nguyen Le Quoc Bao & Le Tuan Hy
+Version: 0.3
 Competition: Visef & Isef
 '''
 
@@ -13,19 +13,19 @@ from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from pdf_save import create_pdf
 from data_manager import DataManager
-from draw import draw_canvas
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
 from readdcm import ReadDCM
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import webbrowser
 from cloud_database import LoginPage
 import pyrebase
 import os
 import webcolors
 import json
+import subprocess
+import sys
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -190,13 +190,15 @@ class MenuBar:
     def open_vas(self):
         vas_file_path = filedialog.askopenfilename()
         if vas_file_path.endswith('.vas'):
+            
             loaded_default_data = self.master.data_manager.load_saved_vas_data(vas_file_path)
-            self.master.dict_info = loaded_default_data["analysis_data.json"]
+            self.master.dict_info = loaded_default_data["dict_info.json"]
             self.master.analysis_data = loaded_default_data["analysis_data.json"]
             self.master.class_data = loaded_default_data["class_data.json"]
             self.master.draw_data = loaded_default_data["draw_data.json"]
             self.master.ROI_data = loaded_default_data["ROI_data.json"]
             self.master.paths = loaded_default_data["paths.json"]
+            self.master.folder_imgs = loaded_default_data["folder_imgs.json"]
             
             # Load image
             self.master.img_raw = sitk.ReadImage(self.master.paths['image_path'], sitk.sitkFloat32)
@@ -249,6 +251,7 @@ class MenuBar:
                 analysis_data=self.master.analysis_data,
                 dict_info=self.master.dict_info,
                 paths=self.master.paths,
+                folder_imgs=self.master.folder_imgs,
             )
             
         # auto save on cloud
@@ -261,6 +264,7 @@ class MenuBar:
             "analysis_data" : self.master.analysis_data,
             "dict_info" : self.master.dict_info,
             "paths" : self.master.paths,
+            "folder_imgs": self.master.folder_imgs,
         }
         db.child(f"case_{self.master.specified_data}").set(case)
     
@@ -540,7 +544,16 @@ class CanvasAxial:
         self.master.analysis_data['number'] = index + 1
         
         # save on cloud
-        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+        filename = f"case_{self.master.specified_data}/canvas_{index}"
+        storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+
+        # save link to database
+        print(self.master.folder_imgs)
+        image_url = storage.child(filename).get_url(None)
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
+            self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
+        self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
+        print(self.master.folder_imgs)
     
     def create_tool_widgets(self):
         def rotation():
@@ -872,7 +885,15 @@ class CanvasSagittal:
         self.master.analysis_data['number'] = index + 1
         
         # save on cloud
-        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+        filename = f"case_{self.master.specified_data}/canvas_{index}"
+        storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+
+        # save link to database
+        print(self.master.folder_imgs)
+        image_url = storage.child(filename).get_url(None)
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
+            self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
+        self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
         
     def create_tool_widgets(self):
         def rotation():
@@ -1193,7 +1214,15 @@ class CanvasCoronal:
         self.master.analysis_data['number'] = index + 1
         
         # save on cloud
-        storage.child(f"case_{self.master.specified_data}/canvas_{index}").put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+        filename = f"case_{self.master.specified_data}/canvas_{index}"
+        storage.child(filename).put(f"D:/Documents/GitHub/VascuIAR/GUIApp/canvas_{index}.png")
+
+        # save link to database
+        print(self.master.folder_imgs)
+        image_url = storage.child(filename).get_url(None)
+        if f"case_{self.master.specified_data}" not in self.master.folder_imgs:
+            self.master.folder_imgs[f"case_{self.master.specified_data}"] = {}
+        self.master.folder_imgs[f"case_{self.master.specified_data}"][f"canvas_{index}"] = image_url
 
     def create_tool_widgets(self):            
         def rotation():
@@ -2227,8 +2256,28 @@ class Tools:
             opacity()
             regions()
             
+        def Reconstruction():
+            def start_reconstruction():
+                venv_activate_script = os.path.join('D:/Documents/GitHub/VascuIAR/.venv/Scripts', 'activate')
+                if sys.platform.startswith('win'):
+                    activation_command = f"call {venv_activate_script}"
+                    start_command = "start"
+                else:
+                    activation_command = f"source {venv_activate_script}"
+                    start_command = "x-terminal-emulator -e"
+
+                command = f"{activation_command} && {start_command} python automatic_reconstruction.py {self.master.specified_data}"
+                subprocess.run(command, shell=True)
+            
+            self.reconstruction_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_2, fg_color=self.master.third_color)
+            self.reconstruction_frame.pack()
+            self.btn_reconstruction = customtkinter.CTkButton(master=self.reconstruction_frame, text="3D reconstruction", command=start_reconstruction)
+            self.btn_reconstruction.pack()
+            
+        
         create_tabs()
         Segmentation()
+        Reconstruction()
     
 class App(customtkinter.CTk):
     def __init__(self, title, logo_path):
@@ -2247,7 +2296,7 @@ class App(customtkinter.CTk):
         self.text_disabled_color = "#dce4e2"
         self.text_canvas_color = "yellow"
         
-        # Image variables]
+        # Image variables
         self.specified_data = ''
         self.img = None
         self.img_raw = None
@@ -2271,6 +2320,7 @@ class App(customtkinter.CTk):
             'image_path': '',
             'folder_seg': '',
         }
+        self.folder_imgs = {}
         
         
         # column and rows
@@ -2322,7 +2372,6 @@ class App(customtkinter.CTk):
         self.mainloop()
         
         # Auto save when closing window
-        print(self.analysis_data)
         
         
         

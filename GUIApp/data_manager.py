@@ -9,7 +9,7 @@ class DataManager:
     def save_after_data(self, file_name, directory, 
                         ROI_data, draw_data, 
                         class_data, analysis_data, 
-                        dict_info, paths):
+                        dict_info, paths, folder_imgs):
         combined_data = {
             "ROI_data.json": ROI_data,
             "draw_data.json": draw_data,
@@ -17,6 +17,7 @@ class DataManager:
             "analysis_data.json": analysis_data,
             "dict_info.json": dict_info,
             "paths.json" : paths,
+            "folder_imgs.json": folder_imgs,
         }
         combined_file_path = os.path.join(directory, f"{file_name}{self.file_extension}")
         with open(combined_file_path, 'w') as vas_file:

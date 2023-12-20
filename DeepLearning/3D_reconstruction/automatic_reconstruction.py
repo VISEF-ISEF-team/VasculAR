@@ -10,6 +10,9 @@ from tqdm import tqdm
 from vedo.applications import IsosurfaceBrowser
 import vedo
 from DetailCutting import ShowDetails
+import sys
+
+specified_data = sys.argv[1]
 
 class AutomaticReconstruction():
     def __init__(self, path_stl, path_volume_rendering, input_analysis, info_patient_dict):
@@ -198,7 +201,7 @@ class AutomaticReconstruction():
     
     
 isinstance = AutomaticReconstruction(
-    path_stl='D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD/VHSCDD_020_label/',
+    path_stl=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{specified_data}_label/',
     path_volume_rendering= 'D:/Documents/GitHub/VascuIAR/DeepLearning/data/MM_WHS/train_images/ct_train_1017_image.nii.gz',
     input_analysis = {
         'Tổng quan': 'Phân tích tổng quan',
