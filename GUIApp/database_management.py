@@ -368,5 +368,4 @@ class DatabaseManagment(customtkinter.CTk):
                 self.item_frame[key].pack_forget()
         self.scrollable_frame._parent_canvas.yview_moveto(0.0)   
         
-        
-database_management = DatabaseManagment()
+    

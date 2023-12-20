@@ -13,6 +13,7 @@ from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from pdf_save import create_pdf
 from data_manager import DataManager
+
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
 from readdcm import ReadDCM
@@ -116,10 +117,10 @@ class MenuBar:
                     'connection_btn': 'VR & AR connection'
                 }
             },
-            'About': {
+            'Database': {
                 'main_menu': {
-                    'instance_name': 'about_btn',
-                    'label_name': 'About', 
+                    'instance_name': 'database_btn',
+                    'label_name': 'Database', 
                 }
             },
             'Account': {
@@ -317,7 +318,7 @@ class MenuBar:
 
     def dropdown_frame(self, widget_option, col):
         self.hide_all_menu()
-        if widget_option.cget("text") != 'About' and widget_option.cget("text") != 'Account':
+        if widget_option.cget("text") != 'Database' and widget_option.cget("text") != 'Account':
             self.dropdown = customtkinter.CTkFrame(master=self.master)
             x = widget_option.winfo_x() - col
             self.dropdown.place(
@@ -346,11 +347,18 @@ class MenuBar:
                 )
 
         
-        elif widget_option.cget("text") == 'About':
-            self.about_window = AboutWindow(
-                parent=self.master,
-                title='About VasculAR Software',
-            )
+        elif widget_option.cget("text") == 'Database':
+            # run command line 
+            venv_activate_script = os.path.join('D:/Documents/GitHub/VascuIAR/.venv/Scripts', 'activate')
+            if sys.platform.startswith('win'):
+                activation_command = f"call {venv_activate_script}"
+                start_command = "start"
+            else:
+                activation_command = f"source {venv_activate_script}"
+                start_command = "x-terminal-emulator -e"
+
+            command = f"{activation_command} && python run_database.py"
+            subprocess.run(command, shell=True)
             
         elif widget_option.cget("text") == 'Account':
             self.login_page = LoginPage(
