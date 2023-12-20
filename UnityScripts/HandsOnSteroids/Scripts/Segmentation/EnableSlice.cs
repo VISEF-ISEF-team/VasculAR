@@ -1,29 +1,28 @@
 using UnityEngine;
 using EzySlice;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.UI;
 
 public class EnableSlice : MonoBehaviour
 {
-    private XRGrabInteractable grabbable;
     public EnableSlice baseEnableSlice; 
     public GameObject heartTarget;
     public Material crossSectionMaterial;
     public GameObject planeObject;
     public DeleteSliceOnButtonPress baseDeleteSliceOnButtonPress;
+    public Button sliceButton;
 
     private readonly string layerName = "Interactable"; 
-    private Transform planeCoordinates; 
+    private Transform planeCoordinates;
 
     private Rigidbody heartRigidBody;
-
     private void Start()
     {
-        grabbable = GetComponent<XRGrabInteractable>();
-        grabbable.activated.AddListener(SliceOnActivate);
+        sliceButton.onClick.AddListener(SliceOnActivate); 
         planeCoordinates = planeObject.transform;
     }
 
-    private void SliceOnActivate(ActivateEventArgs activateEventArgs) 
+    public void SliceOnActivate() 
     {
         int id = heartTarget.GetInstanceID();
         Slice(heartTarget, id); 
@@ -51,7 +50,8 @@ public class EnableSlice : MonoBehaviour
     public void SliceComponentSetup(GameObject sliceComponent, bool upper, string baseName)
     {
         // set grabbable settings
-        XRGrabInteractable sliceGrabbable = sliceComponent.AddComponent<XRGrabInteractable>();
+        XRGrabInteractable currentGrabbable = sliceComponent.AddComponent<XRGrabInteractable>();
+        currentGrabbable.useDynamicAttach = true; 
 
         // set delete on slice
         DeleteSliceOnButtonPress currentDeleteSliceOnButtonPressSettings = sliceComponent.AddComponent<DeleteSliceOnButtonPress>();

@@ -183,6 +183,8 @@ public class LoadFileButtonActionScript : MonoBehaviour
         string parserFilePath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\parse.py";
         string objFolderPath = @"E:\\ISEF\\VasculAR2\\VascuIAR\\UnityScripts\\STLParser\\\obj_folder\\";
 
+        UnityEngine.Debug.Log("load folder coroutine"); 
+
         yield return null;
 
         if (!string.IsNullOrEmpty(stlFolderPath))
@@ -239,6 +241,9 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     loadedObjectChild.transform.position = Vector3.zero;
                     loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
+                    // set child object (which name is the name of the heart segment)
+                    loadedObjectChild.transform.SetParent(parentObject.transform, false);
+
                     // set display material 
                     MeshRenderer childMeshRenderer = loadedObjectChild.GetComponent<MeshRenderer>();
                     Material newMaterial = Instantiate(baseMaterial);
@@ -249,16 +254,18 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     // try to optimize mesh for slicing 
                     Mesh childMesh = loadedObjectChild.GetComponent<MeshFilter>().mesh;
                     childMesh.Optimize(); 
-
-                    // set child object (which name is the name of the heart segment)
-                    loadedObjectChild.transform.SetParent(parentObject.transform, false);
-
-                    // add grab interactable
-                    loadedObjectChild.AddComponent<XRGrabInteractable>(); 
                     
                     // add rigid body 
                     Rigidbody currentRigidBody = loadedObjectChild.AddComponent<Rigidbody>();
-                    currentRigidBody.isKinematic = false; 
+                    currentRigidBody.isKinematic = true; 
+                    currentRigidBody.useGravity = false;
+
+                    // add mesh collider
+                    loadedObjectChild.AddComponent<MeshCollider>();
+
+                    // add grab interactable
+                    XRGrabInteractable currentGrabbable =  loadedObjectChild.AddComponent<XRGrabInteractable>();
+                    currentGrabbable.useDynamicAttach = true; 
 
                     // initialize delete slice and destroy slice on input
                     DeleteSliceOnButtonPress currentDeleteSliceOnButtonPress = loadedObjectChild.AddComponent<DeleteSliceOnButtonPress>();   
@@ -272,6 +279,8 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     currentEnableSlice.heartTarget = loadedObjectChild; 
                     currentEnableSlice.crossSectionMaterial = baseEnableSliceOnButtonPressScript.crossSectionMaterial;
                     currentEnableSlice.planeObject = baseEnableSliceOnButtonPressScript.planeObject;
+                    currentEnableSlice.sliceButton = baseEnableSliceOnButtonPressScript.sliceButton;
+                    currentEnableSlice.baseDeleteSliceOnButtonPress = baseDeleteSliceOnButtonPressScript; 
 
                     // set position for reset button 
                     resetButtonActionScript.childSegmentObjectList.Add(loadedObjectChild);
@@ -296,7 +305,6 @@ public class LoadFileButtonActionScript : MonoBehaviour
         if (folderButton != null)
         {
             UnityEngine.Debug.Log("folderButton is not null");
-            UnityEngine.Debug.Log(stlFolderPath);
             folderButton.GetComponent<Button>().onClick.AddListener(LoadFolder);
         }
         else if (fileButton != null)
