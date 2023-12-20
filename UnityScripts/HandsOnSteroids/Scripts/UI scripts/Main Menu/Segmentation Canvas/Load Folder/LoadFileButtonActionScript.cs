@@ -57,6 +57,9 @@ public class LoadFileButtonActionScript : MonoBehaviour
     private bool fileCorountineError = false;
     private float scaleFactor = 0.007f;
 
+    // name for layer 
+    private readonly string layerName = "Interactable";
+
     private void Start()
     {
         baseDeleteSliceOnButtonPressScript = parentObject.GetComponent<DeleteSliceOnButtonPress>();
@@ -243,6 +246,9 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
                     // set child object (which name is the name of the heart segment)
                     loadedObjectChild.transform.SetParent(parentObject.transform, false);
+
+                    // set layer for object 
+                    loadedObjectChild.layer = LayerMask.NameToLayer(layerName);
 
                     // set display material 
                     MeshRenderer childMeshRenderer = loadedObjectChild.GetComponent<MeshRenderer>();

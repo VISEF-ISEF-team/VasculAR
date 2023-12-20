@@ -245,6 +245,9 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     loadedObjectChild.transform.position = Vector3.zero;
                     loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
+                    // optimize mesh 
+                    loadedObjectChild.GetComponent<MeshFilter>().mesh.Optimize(); 
+
                     // set display material
                     MeshRenderer childMeshRenderer = loadedObjectChild.GetComponent<MeshRenderer>();
                     Material newMaterial = Instantiate(baseMaterial);
