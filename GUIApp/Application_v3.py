@@ -1,7 +1,7 @@
 '''
 VasculAR software
-Author: Nguyen Le Quoc Bao
-Version: 0.2
+Author: Nguyen Le Quoc Bao & Le Tuan Hy
+Version: 0.3
 Competition: Visef & Isef
 '''
 
