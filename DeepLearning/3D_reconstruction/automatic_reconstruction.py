@@ -198,7 +198,7 @@ class AutomaticReconstruction():
     
     
 isinstance = AutomaticReconstruction(
-    path_stl='D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD/VHSCDD_020_label/',
+    path_stl='D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_026_label/',
     path_volume_rendering= 'D:/Documents/GitHub/VascuIAR/DeepLearning/data/MM_WHS/train_images/ct_train_1017_image.nii.gz',
     input_analysis = {
         'Tổng quan': 'Phân tích tổng quan',
