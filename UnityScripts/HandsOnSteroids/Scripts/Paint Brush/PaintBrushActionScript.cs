@@ -18,44 +18,55 @@ public class PaintBrushActionScript : MonoBehaviour
     public Vector3 RealSphereSize
     {
         get { return realSphereSize; }
-        set { if (value.x > 0&& value.y > 0 && value.z > 0) realSphereSize = value; }
+        set { realSphereSize = value; }
     }
+
+    public bool allowDrawing = false; 
     private void Start()
     {
         handPositions = GetHandPosition.GetHandPositionReference(); 
     }
     private void Update()
     {
-        if (allowLeftHand)
+        if (allowDrawing)
         {
-            if (lefttriggerButton.action.WasPressedThisFrame())
+            if (allowLeftHand)
             {
-                DrawParticles(true);
+                if (lefttriggerButton.action.ReadValue<float>() > 0f)
+                {
+                    DrawParticles(true);
+                }
+                else if (righttriggerButton.action.ReadValue<float>() > 0f)
+                {
+                    DrawParticles(false); 
+                }
+            }
+            else
+            {
+                if (righttriggerButton.action.ReadValue<float>() > 0f)
+
+                    DrawParticles(false);
             }
         }
-        else
-        {
-            if (righttriggerButton.action.WasPressedThisFrame())
-
-                DrawParticles(false);
-        }
     }
-    private void DrawParticles(bool allowLeftHandArgs)
+    private void DrawParticles(bool leftHand)
     {
         Transform leftHandTip = handPositions.GetHandTipPositions()[0]; 
         Transform rightHandTip = handPositions.GetHandTipPositions()[1];
 
         // the color will be update continously whenever color picker is changed since when color picker's color changes, the otherSphereMeshRenderer is changed as well
         Color otherSphereColor = otherSphereMeshRenderer.material.color;
-        spherePrefab.GetComponent<MeshRenderer>().material.SetColor("New Color", otherSphereColor);
-        spherePrefab.transform.localScale = realSphereSize; 
-        if (allowLeftHandArgs)
+        if (leftHand)
         {
-            Instantiate(spherePrefab, new Vector3(leftHandTip.position.x + xOffset, leftHandTip.position.y, leftHandTip.position.z), Quaternion.identity);
+            GameObject paintSphere = Instantiate(spherePrefab, new Vector3(leftHandTip.position.x + xOffset, leftHandTip.position.y, leftHandTip.position.z), Quaternion.identity);
+            paintSphere.transform.localScale = realSphereSize;
+            paintSphere.GetComponent<MeshRenderer>().material.color = otherSphereColor; 
         }
         else
         {
-            Instantiate(spherePrefab, new Vector3(rightHandTip.position.x + xOffset, rightHandTip.position.y, rightHandTip.position.z), Quaternion.identity);
+            GameObject paintSphere = Instantiate(spherePrefab, new Vector3(rightHandTip.position.x + xOffset, rightHandTip.position.y, rightHandTip.position.z), Quaternion.identity);
+            paintSphere.transform.localScale = realSphereSize;
+            paintSphere.GetComponent<MeshRenderer>().material.color = otherSphereColor; 
         }
     }
 }

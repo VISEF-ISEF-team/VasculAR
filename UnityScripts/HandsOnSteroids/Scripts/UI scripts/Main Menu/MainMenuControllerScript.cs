@@ -28,10 +28,9 @@ public class MainMenuControllerScript : MonoBehaviour
     // UI references
     [SerializeField] Button forwardButton;
     [SerializeField] Button backwardButton;
-    private void Start()
+    private void Awake()
     {
         rayInteractorSettings = ScriptableObject.CreateInstance<RayInteractorSettingsForGrabAndAnchor>();
-        rayInteractorSettings.StartScript();
         uiGrabbable = GetComponent<XRGrabInteractable>();
         uiGrabbable.hoverEntered.AddListener(OnUIHoverEnter);
         uiGrabbable.hoverExited.AddListener(OnUIHoverExit);
@@ -58,16 +57,20 @@ public class MainMenuControllerScript : MonoBehaviour
     {
         if (menuButton.action.WasPressedThisFrame())
         {
-            mainCanvas.SetActive(!mainMenuCanvasActiveState);
+            mainMenuCanvasActiveState = !mainMenuCanvasActiveState;
+            mainCanvas.SetActive(mainMenuCanvasActiveState);
+            menuCanvasManager[currentlyActiveIndex].SetActive(mainMenuCanvasActiveState);
             Reposition(); 
         }
 
-        CheckStackStatus();
+        if (mainMenuCanvasActiveState)
+        {
+            CheckStackStatus();
+        }
     }
 
     private void Reposition()
     {
-        mainMenuCanvasActiveState = !mainMenuCanvasActiveState;
         transform.position = getHeadPosition.TransformPositionInFrontOfHead();
         transform.LookAt(getHeadPosition.TransformToLookAt(transform.position.y));
         mainCanvas.transform.forward *= -1;
@@ -104,19 +107,25 @@ public class MainMenuControllerScript : MonoBehaviour
     }
     public void OnForwardButtonPress()
     {
-        int top = forwardStack.Pop(); 
-        backwardStack.Push(currentlyActiveIndex);
-        menuCanvasManager[currentlyActiveIndex].SetActive(false);
-        menuCanvasManager[top].SetActive(true);
-        currentlyActiveIndex = top; 
+        if (forwardStack.Count > 0)
+        {
+            int top = forwardStack.Pop(); 
+            backwardStack.Push(currentlyActiveIndex);
+            menuCanvasManager[currentlyActiveIndex].SetActive(false);
+            menuCanvasManager[top].SetActive(true);
+            currentlyActiveIndex = top; 
+        }
     }
     public void OnBackwardButtonPress()
     {
-        int top = backwardStack.Pop(); 
-        forwardStack.Push(currentlyActiveIndex);
-        menuCanvasManager[currentlyActiveIndex].SetActive(false);
-        menuCanvasManager[top].SetActive(true);
-        currentlyActiveIndex = top; 
+        if (backwardStack.Count > 0)
+        {
+            int top = backwardStack.Pop(); 
+            forwardStack.Push(currentlyActiveIndex);
+            menuCanvasManager[currentlyActiveIndex].SetActive(false);
+            menuCanvasManager[top].SetActive(true);
+            currentlyActiveIndex = top; 
+        }
     }
 
     public void OnSelectToolButtonPress()

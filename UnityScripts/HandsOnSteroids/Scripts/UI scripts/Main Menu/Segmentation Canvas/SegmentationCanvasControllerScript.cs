@@ -46,9 +46,8 @@ public class SegmentCanvas : MonoBehaviour
                     }
 
                     child.GetComponentInChildren<TextMeshProUGUI>().text = name; 
-                    counter++;
-
                     actionScript.segmentObjectChild = segmentObject.transform.Find(segmentNameList[counter]).gameObject;
+                    counter++;
                 }
                 else
                 {

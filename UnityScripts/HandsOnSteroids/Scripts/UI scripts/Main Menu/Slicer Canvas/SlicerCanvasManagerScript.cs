@@ -5,10 +5,13 @@ public class SlicerCanvasManagerScript : MonoBehaviour
     [SerializeField] GameObject slicerObject; 
     [SerializeField] private MeshRenderer slicerPlaneRenderer;
     [SerializeField] float minScale = 0.1f; 
-    [SerializeField] float maxScale = 3.0f;
+    [SerializeField] float maxScale = 1;
     private SlicerSpawnOnUIControl slicerSpawnUIControl;
+    float oldXScale;
+    float oldYScale;
+    float oldZScale; 
 
-    private void Start()
+    private void Awake()
     {
         slicerSpawnUIControl = slicerObject.GetComponent<SlicerSpawnOnUIControl>();
     }
@@ -16,7 +19,12 @@ public class SlicerCanvasManagerScript : MonoBehaviour
     private void OnEnable()
     {
         slicerObject.SetActive(true);
-        slicerSpawnUIControl.SpawnSlicer(); 
+        slicerSpawnUIControl.SpawnSlicer();
+        oldXScale = slicerObject.transform.localScale.x;
+        oldYScale = slicerObject.transform.localScale.y;
+        oldZScale = slicerObject.transform.localScale.z;
+
+        Debug.Log($"{oldXScale} - {oldYScale} - {oldZScale}"); 
     }
 
     private void OnDisable()
@@ -24,19 +32,23 @@ public class SlicerCanvasManagerScript : MonoBehaviour
         slicerObject.SetActive(false); 
     }
 
-    public void ChangeWidth(float widthScaleValue)
+    public void OnSliderChangeWidth(float widthScaleValue)
     {
         widthScaleValue = Mathf.Clamp(widthScaleValue, minScale, maxScale);
-        slicerObject.transform.localScale = new Vector3(widthScaleValue, transform.localScale.y, transform.localScale.z);
+        slicerObject.transform.localScale = new Vector3(widthScaleValue, oldYScale, oldZScale);
+
+        oldXScale = widthScaleValue; 
     }
 
-    public void ChangeHeight(float heightScaleValue)
+    public void OnSliderChangeHeight(float heightScaleValue)
     {
         heightScaleValue = Mathf.Clamp(heightScaleValue, minScale, maxScale);
-        slicerObject.transform.localScale = new Vector3(transform.localScale.x, heightScaleValue, transform.localScale.z);
+        slicerObject.transform.localScale = new Vector3(oldXScale, oldYScale, heightScaleValue);
+
+        oldZScale = heightScaleValue;
     }
 
-    public void ChangeTransparency(float transparencyValue)
+/*    public void OnSliderChangeTransparency(float transparencyValue)
     {
         // alpha value goes from 0 - 255 => go from 10 - 255 on slider value range
 
@@ -44,5 +56,5 @@ public class SlicerCanvasManagerScript : MonoBehaviour
         Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, transparencyValue);
 
         slicerPlaneRenderer.material.color = newColor; 
-    }
+    }*/
 }
