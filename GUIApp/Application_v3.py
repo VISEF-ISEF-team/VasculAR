@@ -13,7 +13,7 @@ from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from pdf_save import create_pdf
 from data_manager import DataManager
-
+from defect_detection import DiseaseDectection
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
 from readdcm import ReadDCM
@@ -1903,13 +1903,68 @@ class Tools:
             self.tabview_1_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1_tab_2 = self.tabview_1.add("Defect Detection")
+            self.tabview_1_tab_2.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_1_tab_2.columnconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1.set("Image Processing") 
             
         def Defects():
+            # defect frame and header
             self.defect_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_2, fg_color=self.master.third_color)
-            self.defect_frame.grid(column=0, row=0, columnspan=2, rowspan=3, pady=(0,5), sticky='news')
-            self.defect_frame.rowconfigure((0,1,2,3,4), weight=1)
-            self.defect_frame.columnconfigure((0,1,2,3,4), weight=1)
+            self.defect_frame.grid(column=0, row=0, columnspan=3, rowspan=3, pady=(0,5), sticky='news')
+            self.defect_frame.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.defect_frame.columnconfigure((0,1,2), weight=1)
+            self.defect_header = self.title_toolbox(frame=self.defect_frame, title='Types all structural diseases')
+            
+            # Radop buttons
+            def radiobutton_event():
+                print("radiobutton toggled, current value:", self.defect_var.get())
+
+            self.defect_var = tkinter.IntVar(value=0)
+            defect_1 = customtkinter.CTkRadioButton(self.defect_frame, text="Thông liên thất", command=radiobutton_event, variable= self.defect_var, value=1)
+            defect_1.grid(row=1, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_2 = customtkinter.CTkRadioButton(self.defect_frame, text="Còn ống động mạch", command=radiobutton_event, variable= self.defect_var, value=2)
+            defect_2.grid(row=1, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_3 = customtkinter.CTkRadioButton(self.defect_frame, text="Thân chung động mạch", command=radiobutton_event, variable= self.defect_var, value=3)
+            defect_3.grid(row=1, column=2, padx=(10,0), pady=10, sticky='w')
+            
+            defect_4 = customtkinter.CTkRadioButton(self.defect_frame, text="Bất thường động mạch vành", command=radiobutton_event, variable= self.defect_var, value=4)
+            defect_4.grid(row=2, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_5 = customtkinter.CTkRadioButton(self.defect_frame, text="Phình động mạch", command=radiobutton_event, variable= self.defect_var, value=5)
+            defect_5.grid(row=2, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_6 = customtkinter.CTkRadioButton(self.defect_frame, text="Tĩnh mạch chủ kép", command=radiobutton_event, variable= self.defect_var, value=6)
+            defect_6.grid(row=2, column=2, padx=(10,0), pady=10, sticky='w')
+            
+            defect_7 = customtkinter.CTkRadioButton(self.defect_frame, text="Tĩnh mạch phổi trở về tuần hoàn", command=radiobutton_event, variable= self.defect_var, value=7)
+            defect_7.grid(row=3, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_8 = customtkinter.CTkRadioButton(self.defect_frame, text="Đảo gốc động mạch", command=radiobutton_event, variable= self.defect_var, value=8)
+            defect_8.grid(row=3, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_9 = customtkinter.CTkRadioButton(self.defect_frame, text="Vòng thắt động mạch phổi", command=radiobutton_event, variable= self.defect_var, value=9)
+            defect_9.grid(row=3, column=2, padx=(10,0), pady=10, sticky='w')
+            
+            defect_10 = customtkinter.CTkRadioButton(self.defect_frame, text="Hẹp eo động mạch chủ", command=radiobutton_event, variable= self.defect_var, value=10)
+            defect_10.grid(row=4, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_11 = customtkinter.CTkRadioButton(self.defect_frame, text="Cung động mạch chủ đôi", command=radiobutton_event, variable= self.defect_var, value=11)
+            defect_11.grid(row=4, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_12 = customtkinter.CTkRadioButton(self.defect_frame, text="Thất phải hai đường ra", command=radiobutton_event, variable= self.defect_var, value=12)
+            defect_12.grid(row=4, column=2, padx=(10,0), pady=10, sticky='w')
+            
+            # Start button
+            def start_defect():
+                defect_dectection = DiseaseDectection()
+                defect_dectection.main_process(specified_data=self.master.specified_data, defect_var=self.defect_var.get())
+            
+            self.defect_progress_bar = customtkinter.CTkProgressBar(self.defect_frame, orientation="horizontal")
+            self.defect_progress_bar.set(0)
+            self.defect_progress_bar.grid(column=1, row=5, columnspan=5, padx=10, pady=10, sticky='swe')
+            self.start_defect_btn = customtkinter.CTkButton(self.defect_frame, text="Start", width=50, command=start_defect)
+            self.start_defect_btn.grid(column=0, row=5, pady=10, sticky='s')
+            
+            # results frame and header
+            self.res_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_2, fg_color=self.master.third_color)
+            self.res_frame.grid(column=3, row=0, columnspan=3, rowspan=3, padx=(10,0), sticky='news')
+            self.res_frame.columnconfigure(0, weight=1)
+            self.res_header = self.title_toolbox(frame=self.res_frame, title='Results')
+            
             
         create_tabs()
         ROI()
