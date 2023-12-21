@@ -13,7 +13,8 @@ from CTkColorPicker import *
 from NoteAnalysis import NoteWindow 
 from pdf_save import create_pdf
 from data_manager import DataManager
-
+from defect_detection import DiseaseDectection
+from defect_education import defectEducation
 from PIL import Image, ImageTk, ImageGrab
 import SimpleITK as sitk
 from readdcm import ReadDCM
@@ -1614,6 +1615,7 @@ class Tools:
             sagittal()
             coronal()
             
+            
         def HounsField():
             def frame():
                 self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, fg_color=self.master.third_color)
@@ -1830,7 +1832,6 @@ class Tools:
             create_tool_btns()
             color_picker()
             create_radio_btn()
-            
         
 
         def Thresholding():
@@ -1894,6 +1895,7 @@ class Tools:
             support_function()
             brightness()
 
+
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
             self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
@@ -1902,13 +1904,111 @@ class Tools:
             self.tabview_1_tab_1.rowconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1_tab_1.columnconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1_tab_2 = self.tabview_1.add("Defect Detection")
+            self.tabview_1_tab_2.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.tabview_1_tab_2.columnconfigure((0,1,2,3,4,5), weight=1)
             self.tabview_1.set("Image Processing") 
+            
+        def Defects():
+            # defect frame and header
+            self.defect_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_2, fg_color=self.master.third_color)
+            self.defect_frame.grid(column=0, row=0, columnspan=3, rowspan=3, pady=(0,5), sticky='news')
+            self.defect_frame.rowconfigure((0,1,2,3,4,5), weight=1)
+            self.defect_frame.columnconfigure((0,1,2), weight=1)
+            self.defect_header = self.title_toolbox(frame=self.defect_frame, title='Types all structural diseases')
+            
+            
+            def open_defect_info(value):
+                # https://www.rch.org.au/cardiology/heart_defects/Patent_Ductus_Arteriosus_PDA/
+                self.defect_info_window = defectEducation(parent=self.master, info=self.master.data_defects[value])
+                
+
+            self.defect_var = tkinter.IntVar(value=0)
+            defect_1 = customtkinter.CTkRadioButton(self.defect_frame, text="Thông liên thất", variable= self.defect_var, value=1)
+            defect_1.grid(row=1, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_info_1 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=1))
+            defect_info_1.grid(row=1, column=0, padx=(0,5), pady=10, sticky='e')
+            
+            defect_2 = customtkinter.CTkRadioButton(self.defect_frame, text="Còn ống động mạch", variable= self.defect_var, value=2)
+            defect_2.grid(row=1, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_info_2 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=2))
+            defect_info_2.grid(row=1, column=1, padx=(0,5), pady=10, sticky='e')
+            
+            defect_3 = customtkinter.CTkRadioButton(self.defect_frame, text="Thân chung động mạch", variable= self.defect_var, value=3)
+            defect_3.grid(row=1, column=2, padx=(10,0), pady=10, sticky='w')
+            defect_info_3 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=3))
+            defect_info_3.grid(row=1, column=2, padx=(0,5), pady=10, sticky='e')
+            
+            defect_4 = customtkinter.CTkRadioButton(self.defect_frame, text="Bất thường động mạch vành", variable= self.defect_var, value=4)
+            defect_4.grid(row=2, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_info_4 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=4))
+            defect_info_4.grid(row=2, column=0, padx=(0,5), pady=10, sticky='e')
+            
+            defect_5 = customtkinter.CTkRadioButton(self.defect_frame, text="Phình động mạch", variable= self.defect_var, value=5)
+            defect_5.grid(row=2, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_info_5 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=5))
+            defect_info_5.grid(row=2, column=1, padx=(0,5), pady=10, sticky='e')
+            
+            defect_6 = customtkinter.CTkRadioButton(self.defect_frame, text="Tĩnh mạch chủ kép", variable= self.defect_var, value=6)
+            defect_6.grid(row=2, column=2, padx=(10,0), pady=10, sticky='w')
+            defect_info_6 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=6))
+            defect_info_6.grid(row=2, column=2, padx=(0,5), pady=10, sticky='e')
+            
+            defect_7 = customtkinter.CTkRadioButton(self.defect_frame, text="Tĩnh mạch phổi trở về tuần hoàn", variable= self.defect_var, value=7)
+            defect_7.grid(row=3, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_info_7 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=7))
+            defect_info_7.grid(row=3, column=0, padx=(0,5), pady=10, sticky='e')
+            
+            defect_8 = customtkinter.CTkRadioButton(self.defect_frame, text="Đảo gốc động mạch", variable= self.defect_var, value=8)
+            defect_8.grid(row=3, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_info_8 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=8))
+            defect_info_8.grid(row=3, column=1, padx=(0,5), pady=10, sticky='e')
+            
+            defect_9 = customtkinter.CTkRadioButton(self.defect_frame, text="Vòng thắt động mạch phổi", variable= self.defect_var, value=9)
+            defect_9.grid(row=3, column=2, padx=(10,0), pady=10, sticky='w')
+            defect_info_9 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=9))
+            defect_info_9.grid(row=3, column=2, padx=(0,5), pady=10, sticky='e')
+            
+            defect_10 = customtkinter.CTkRadioButton(self.defect_frame, text="Hẹp eo động mạch chủ", variable= self.defect_var, value=10)
+            defect_10.grid(row=4, column=0, padx=(10,0), pady=10, sticky='w')
+            defect_info_10 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=10))
+            defect_info_10.grid(row=4, column=0, padx=(0,5), pady=10, sticky='e')
+            
+            defect_11 = customtkinter.CTkRadioButton(self.defect_frame, text="Cung động mạch chủ đôi", variable= self.defect_var, value=11)
+            defect_11.grid(row=4, column=1, padx=(10,0), pady=10, sticky='w')
+            defect_info_11 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=11))
+            defect_info_11.grid(row=4, column=1, padx=(0,5), pady=10, sticky='e')
+            
+            defect_12 = customtkinter.CTkRadioButton(self.defect_frame, text="Thất phải hai đường ra", variable= self.defect_var, value=12)
+            defect_12.grid(row=4, column=2, padx=(10,0), pady=10, sticky='w')
+            defect_info_12 = customtkinter.CTkButton(self.defect_frame, text="i", width=20, height=20, command=lambda: open_defect_info(value=12))
+            defect_info_12.grid(row=4, column=2, padx=(0,5), pady=10, sticky='e')
+            
+            
+            # Start button
+            def start_defect():
+                defect_dectection = DiseaseDectection()
+                defect_ratio, normal_ratio = defect_dectection.main_process(specified_data=self.master.specified_data, defect_var=self.defect_var.get())
+                print(defect_ratio, normal_ratio)
+            
+            self.defect_progress_bar = customtkinter.CTkProgressBar(self.defect_frame, orientation="horizontal")
+            self.defect_progress_bar.set(0)
+            self.defect_progress_bar.grid(column=1, row=5, columnspan=5, padx=10, pady=10, sticky='swe')
+            self.start_defect_btn = customtkinter.CTkButton(self.defect_frame, text="Start", width=50, command=start_defect)
+            self.start_defect_btn.grid(column=0, row=5, pady=10, sticky='s')
+            
+            # results frame and header
+            self.res_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_2, fg_color=self.master.third_color)
+            self.res_frame.grid(column=3, row=0, columnspan=3, rowspan=3, padx=(10,0), sticky='news')
+            self.res_frame.columnconfigure(0, weight=1)
+            self.res_header = self.title_toolbox(frame=self.res_frame, title='Results')
+            
             
         create_tabs()
         ROI()
         HounsField()
         DrawingTools()
         Thresholding()
+        Defects()
         
     def layers_management(self):
         def delete_element(element):
@@ -2329,6 +2429,102 @@ class App(customtkinter.CTk):
             'folder_seg': '',
         }
         self.folder_imgs = {}
+        self.data_defects = {
+            1: {
+                'defect': 'Thông liên thất',
+                'description': 'Là một dị tật của vách liên thất, là vách ngăn giữa hai buồng tâm thất của tim. Vách liên thất là một cấu trúc phức tạp gồm: phần cơ, phần màng, phần phễu, phần buồng nhận. Thông thường khi trẻ sinh ra, vách này không có lỗ thông, vì vậy không cho phép máu của hai tâm thất hòa trộn với nhau. Thông liên thất lớn gây shunt trái sang phải lớn, gây khó thở khi ăn uống và chậm tăng cân. Triệu chứng: Da, môi và móng tay xanh tím, ăn kém, chậm lớn, thở nhanh hoặc khó thở, mệt mỏi, sưng phù chân, bàn chân hoặc bụng, tim đập nhanh. Đôi khi dị tật vách liên thất không được phát hiện cho đến khi tới tuổi trưởng thành và phát triển các triệu chứng của suy tim như khó thở.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thông liên thất.png',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thông liên thất 2.jpg',
+                }
+            },
+            2: {
+                'defect' : 'Còn ống động mạch',
+                'description': 'Còn ống động mạch (Patent ductus arteriosus - PDA) là là sự tồn tại dai dẳng sau sinh của cấu trúc trong thời kỳ bào thai liên kết động mạch chủ và động mạch phổi. Ống động mạch nhỏ có thể tự đóng. Đối với những ống động mạch lớn gây ra các vấn đề về lưu thông máu ở trẻ. Nếu không có các bất thường về cấu trúc tim hoặc tăng sức cản mạch phổi thì dòng máu đi qua ống động mạch sẽ theo chiều từ trái sang phải (từ động mạch chủ đến động mạch phổi). Máu sẽ lưu thông trực tiếp từ động mạch chủ qua động mạch phổi, dẫn đến gia tăng dòng máu vào hệ tuần hoàn phổi, tăng lượng máu trở về tim trái. Nếu còn ống động mạch lớn, áp lực trong mạch máu phổi cũng tăng theo. Hệ quả là trẻ có nguy cơ bị suy tim khi chỉ mới vài tuần tuổi. Ống động mạch lớn không được điều trị có thể khiến dòng máu chảy bất thường từ các động mạch lớn trong tim, tăng áp lực trong buồng tim, làm suy yếu cơ tim và gây ra các biến chứng khác. Triệu chứng có thể bao gồm chậm lớn, ăn kém, nhịp tim nhanh, và thở nhanh. Một tiếng thổi liên tục ở phía trên bên trái xương ức là phổ biến. Chẩn đoán bằng siêu âm tim, CT, MRI. Sử dụng thuốc ức chế cyclooxygenase (ibuprofen lysine hoặc indomethacin) có hoặc không hạn chế dịch có thể được thử ở trẻ sinh non có luồng thông đáng kể, nhưng liệu pháp này không hiệu quả ở trẻ đủ tháng hoặc trẻ lớn hơn mắc PDA. Nếu vẫn còn tồn tại ống động mạch, chỉ định phẫu thuật hoặc thông tim được đặt ra.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch.png',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 2.jpg',
+                    3: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 3.jpg',
+                }
+            },
+            3: {
+                'defect': 'Thân chung động mạch',
+                'description': 'Tồn tại thân chung động mạch xảy ra khi, trong quá trình phát triển của bào thai, thân động mạch nguyên thủy không phân chia thành động mạch chủ và động mạch phổi, kết quả là một thân động mạch lớn, đơn độc, cưỡi ngựa lên thông liên thất phần màng hoặc quanh màng. Do đó, máu trộn giữa máu giàu oxy và máu khử oxy đi nuôi cơ thể, phổi, và hệ thống động mạch vành. Bệnh lý này thường đi kèm với khuyết tật vách liên thất. Triệu chứng bao gồm tím và suy tim, ăn uống khó khăn, vã mồ hôi, và thở nhanh. Tiếng tim thứ nhất bình thường (S1) và tiếng tim thứ hai lớn, đơn lẻ (S2) là phổ biến; tiếng thổi có thể khác nhau. Trước khi suy tim sâu phát triển, các xung ngoại vi sẽ bị ràng buộc vì dòng chảy lớn từ động mạch chủ gần đến động mạch phổi. Chẩn đoán bằng siêu âm tim, chụp cộng hưởng từ, chụp mạch CT, hoặc thông tim. Điều trị nội khoa cho suy tim, sau đó phẫu thuật sửa chữa sớm.',
+                'image':{
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thân chung động mạch.png',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thân chung động mạch 2.jpg',
+                    3: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thân chung động mạch 3.jpg',
+                }
+            },
+            4: {
+                'defect': 'Bất thường động mạch vành',
+                'description': 'Các bệnh động mạch vành là một trong những nguyên nhân gây tử vong hàng đầu trên thế giới, là một nguyên nhân phổ biến thứ hai gây đột quỵ cho các vận động viên. Động mạch vành có hai nhánh chính là động mạch vành trái (Left Coronary Artery - LCA) xuất phát từ xoang vành trái (left sinus of Valsalva) và động mạch vành phải (Right Coronary Artery - RCA) xuất phát từ xoang vành phải (right sinus of Valsalva) [29]. Bất kì sự xuất phát sai vị trí nào của hai nhánh động mạch vành này đều được xem là bất thường động mạch vành. Ví dụ: Động mạch vành phải xuất phát từ xoang vành trái hoặc xuất phát từ xoang không mạch vành (non-coronary sinus). Bộ dữ liệu có thể phân vùng chi tiết động mạch vành đến các vi mạch, nhưng không thể phản ánh chính xác độ dày hẹp cũng như gán nhãn các mảng xơ vữa hoặc vôi hóa.',
+                 'image' : {
+                     1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Bất thường động mạch vành.jpg',
+                 }
+            },
+            5: {
+                'defect' : 'Phình động mạch',
+                'description': 'Phình động mạch là một bất thường hiếm gặp của hệ động mạch, khi động mạch bị giãn khu trú do sự suy yếu của thành mạch. Phình động mạch có thể xuất hiện ở bất kỳ vị trí nào của động mạch, nhưng thường gặp ở động mạch trung tâm và bên trái. Phình động mạch có thể gây ra các triệu chứng như ho, khó thở, đau ngực, ho ra máu, tím tái, chóng mặt hoặc ngất xỉu. Phình động mạch có thể được phát hiện bằng chụp cộng hưởng từ, chụp CT hay siêu âm. Điều trị phình động mạch phụ thuộc vào nguyên nhân, vị trí, kích thước và triệu chứng của bệnh. Có thể sử dụng các phương pháp nội khoa, can thiệp nội mạch hoặc phẫu thuật.',
+                'image' : {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Phình động mạch.png',
+                }
+            },
+            6: {
+                'defect' : 'Tĩnh mạch chủ kép',
+                'description':  'Là một biến thể giải phẫu hiếm gặp xuất phát từ tĩnh mạch chủ trên bên trái dai dẳng, do sự thoái lui của tĩnh mạch chính trước về mặt phôi thai đã thất bại. SVC bên trái dẫn lưu vào tâm nhĩ phải trong 90% trường hợp qua xoang vành giãn, các vị trí thay thế bao gồm tĩnh mạch chủ dưới, tĩnh mạch gan và tâm nhĩ trái. Sự dẫn lưu SVC trái không điển hình vào tâm nhĩ trái dẫn đến shunt phải sang trái, có thể gây tím tái và có liên quan đến các trường hợp tắc mạch nhiễm trùng. SVC bên phải được thấy trong 82-90% trường hợp SVC kép. Sự vắng mặt của SVC phải hoặc SVC trái dẫn lưu vào tâm nhĩ trái có liên quan đến việc tăng tỷ lệ mắc các bệnh tim bẩm sinh như ASD, VSD và TOF.'
+                ''
+            },
+            7: {
+                'defect' : 'Bất thường tĩnh mạch phổi trở về tuần hoàn',
+                'description': 'Bất thường tĩnh mạch phổi trở về hoàn toàn (Total Anomalous Pulmonary Venous Return - TAPVR) là một dị tật bẩm sinh của tim. Ở trẻ mắc TAPVR, máu giàu oxy không trở về tâm nhĩ trái từ phổi. Thay vào đó, máu giàu oxy sẽ quay trở lại bên phải tim. Ở đây, máu giàu oxy trộn lẫn với máu nghèo oxy. Điều này khiến em bé nhận được ít oxy hơn mức cần thiết cho cơ thể. Để sống sót với khiếm khuyết này, trẻ sơ sinh mắc TAPVR thường có một lỗ giữa tâm nhĩ phải và tâm nhĩ trái (khiếm khuyết thông liên nhĩ) cho phép máu hỗn hợp đi đến bên trái tim và bơm ra phần còn lại của cơ thể. Một số trẻ có thể bị các khuyết tật tim khác cùng với TAPVR, ngoài khuyết tật thông liên nhĩ. Vì em bé bị khuyết tật này có thể cần phẫu thuật hoặc các thủ tục khác ngay sau khi sinh nên TAPVR được coi là một khuyết tật tim bẩm sinh nghiêm trọng.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Bất thường tĩnh mạch phổi trở về tuần hoàn.jpg',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Bất thường tĩnh mạch phổi trở về tuần hoàn 2.jpg',
+                    3: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Bất thường tĩnh mạch phổi trở về tuần hoàn 3.jpg',
+                }
+            },
+            8: {
+                'defect' : 'Đảo gốc động mạch',
+                'description': 'Là sự thay đổi vị trí của các động mạch lớn (TGA), khi các động mạch “lớn”, động mạch chủ và tâm thất phải, bị đảo ngược về phần gốc từ tim. Động mạch chủ được kết nối với tâm thất phải và động mạch phổi được kết nối với tâm thất trái - hoàn toàn trái ngược với giải phẫu của tim bình thường. Khi các động mạch này đảo ngược, máu ít oxy (màu xanh lam) từ cơ thể trở về tâm nhĩ phải, đi vào tâm thất phải, sau đó đi vào động mạch chủ và trở lại cơ thể. Máu giàu oxy (màu đỏ) trở lại tâm nhĩ trái từ phổi và đi vào tâm thất trái, bơm máu trở lại phổi - ngược lại với cách máu lưu thông bình thường.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Đảo gốc động mạch.png',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 2.jpg',
+                    3: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 3.jpg',
+                }
+            },
+            9: {
+                'defect' : 'Vòng thắt động mạch phổi',
+                'description': 'Là một bệnh lý hiếm gặp, được xác định là một dạng vòng mạch máu phổi. Bệnh này gây ra sự chèn ép khí quản do vòng thắt mạch máu phổi bị bóp nghẹt. Bệnh này thường được phát hiện ở trẻ em và có thể gây ra các triệu chứng như khò khè, thở khò khè, ho, thở nhanh và khó thở. Để điều trị bệnh này, các bác sĩ có thể sử dụng phẫu thuật tái tạo khí quản hoặc đặt một ống nong động mạch chủ vào khí quản để giúp nông khí quản.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Đảo gốc động mạch.png',
+                    2: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 2.jpg',
+                    3: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Còn ống động mạch 3.jpg',
+                }
+            },
+            10: {
+                'defect' : 'Hẹp eo động mạch chủ',
+                'description': 'Hẹp eo động mạch chủ là một tình trạng bẩm sinh mà động mạch chủ bị hẹp, thường tập trung ở vùng ống động mạch chủ, gọi là dây chằng động mạch. Một trường hợp phổ biến là hẹp ở vòm động mạch chủ (Aortic Arch), có thể xuất hiện kích thước nhỏ ở trẻ sơ sinh gặp vấn đề với eo. Khi có hẹp eo, tâm thất trái phải làm việc hơn bình thường, tạo ra áp lực cao để đẩy máu qua động mạch chủ thu hẹp, đưa máu đến phần dưới của cơ thể. Nếu hẹp eo nghiêm trọng, tâm thất trái có thể không đủ mạnh để vượt qua chỗ hẹp, dẫn đến tình trạng thiếu máu ở phần dưới cơ thể. Tình trạng này có thể gây ra các vấn đề khác nhau, bao gồm tăng huyết áp ở chi trên, phì đại thất trái, và thậm chí gây rối loạn tưới máu cho các cơ quan trong ổ bụng và chi dưới. Triệu chứng của hẹp eo động mạch chủ đa dạng, phụ thuộc vào mức độ hẹp, bao gồm đau đầu, đau ngực, lạnh chân, mệt mỏi, và yếu chân. Tiếng thổi nhẹ có thể nghe được qua khu vực hẹp eo. Chẩn đoán thường được thực hiện bằng siêu âm tim, chụp CT, hoặc chụp MRI. Để điều trị hẹp eo động mạch chủ, các phương pháp bao gồm nong mạch bằng bóng với đặt stent hoặc phẫu thuật. Quá trình này có thể giúp mở rộng đường động mạch chủ và cải thiện lưu thông máu, giảm bớt các vấn đề liên quan đến hẹp eo.',
+                'image':{
+                    1:'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Hẹp eo động mạch chủ.jpg'
+                }
+            },
+            11: {
+                'defect' : 'Cung động mạch chủ đôi',
+                'description': 'Vòm/Cung động mạch chủ đôi là một dị thường của vòm động mạch chủ, trong đó hai vòm động mạch chủ tạo thành một vòng mạch hoàn chỉnh có thể chèn ép khí quản và/hoặc thực quản. Cung động mạch chủ là đoạn đầu tiên của động mạch chủ rời khỏi tim để cấp máu cho các cơ quan của cơ thể. Vòng mạch máu do cung động mạch chủ đôi là dị dạng của cung động mạch chủ. Vòng mạch máu do cung động mạch chủ đôi bao bọc một phần hoặc hoàn toàn khí quản hoặc thực quản. Có những trường hợp là cả hai. Những dị tật này có ngay từ lúc mới sinh (bẩm sinh). Nhưng các triệu chứng có thể xảy ra ở giai đoạn sơ sinh hoặc sau này ở độ tuổi thiếu nhi, thanh thiếu niên.',
+                'image': {
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Cung động mạch chủ đôi.png'
+                }
+            },
+            12: {
+                'defect' : 'Thất phải hai đường ra',
+                'description': 'Trong tâm thất phải hai lối ra, cả động mạch chủ và van động mạch phổi đều kết nối với tâm thất phải. Thông liên thất hầu như luôn đi kèm với dị dạng này và các biểu hiện lâm sàng được xác định bởi vị trí của lỗ thông và có hay không có hẹp van động mạch phổi. Trong trái tim bình thường, động mạch chủ kết nối với buồng tim trái dưới. Động mạch phổi kết nối với buồng tim phải dưới. Tuy nhiên, ở trẻ em bị DORV, cả động mạch chủ và động mạch phổi kết nối một phần hoặc hoàn toàn với buồng tim phải dưới. Trẻ em bị DORV cũng có lỗ giữa hai buồng tim dưới. Lỗ này được gọi là khuyết tán giữa hai buồng tim. Lỗ này gây ra sự trộn lẫn giữa máu giàu oxy và máu nghèo oxy. Trẻ em bị bệnh này có thể không đủ oxy trong tuần hoàn máu. Da có thể trở nên xám hoặc xanh. Nếu quá nhiều máu chảy qua động mạch phổi đến phổi, nó có thể dẫn đến suy tim và tăng nguy cơ suy dinh dưỡng. Chẩn đoán bằng điện tâm đồ, chẩn đoán hình ảnh và thông tim. Điều trị nội khoa là hữu ích, nhưng can thiệp phẫu thuật luôn cần thiết.',
+                'image':{
+                    1: 'D:/Documents/GitHub/VascuIAR/GUIApp/imgs/Thất phải hai đường ra.jpg'
+                }
+                
+            },
+        }
         
         
         # column and rows
