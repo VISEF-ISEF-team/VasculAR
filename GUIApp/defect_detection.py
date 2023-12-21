@@ -45,7 +45,8 @@ class DiseaseDectection:
                 return (val_true/cnt_true, val_false/cnt_false)
             
     def display(self, res, disease):
-        print(f"Tỉ lệ mắc {disease}: {(res[0]/(res[0] + res[1]))*100}" , f"Tỉ lệ bình thường: {(res[1]/(res[0] + res[1]))*100}")
+        print(disease)
+        return (res[0]/(res[0] + res[1]))*100, (res[1]/(res[0] + res[1]))*100
 
 
     def detection(self, class_label, input_img, defect_var):
@@ -67,22 +68,22 @@ class DiseaseDectection:
         if class_label == ('label_8', 'label_9'):
             A = self.comparison(class_label=class_label[0], disease='Thân chung động mạch', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Thân chung động mạch', input_img=input_img_2)
-            self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Thân chung động mạch')
+            return self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Thân chung động mạch')
             
         elif class_label == ('label_7', 'label_8'):
             A = self.comparison(class_label=class_label[0], disease='Phình động mạch', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Phình động mạch', input_img=input_img_2)
-            self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Phình động mạch')
+            return self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Phình động mạch')
             
         elif class_label == ('label_4', 'label_10'):
             A = self.comparison(class_label=class_label[0], disease='Bất thường tĩnh mạch phổi trở về tuần hoàn', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Bất thường tĩnh mạch phổi trở về tuần hoàn', input_img=input_img_2)
-            self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Bất thường tĩnh mạch phổi trở về tuần hoàn')
+            return self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Bất thường tĩnh mạch phổi trở về tuần hoàn')
             
         elif class_label == ('label_2', 'label_3'):
             A = self.comparison(class_label=class_label[0], disease='Thông liên thất', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Thông liên thất', input_img=input_img_2)
-            self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Thông liên thất')
+            return self.display(((A[0] + B[0])/2, (A[1] + B[1])/2), disease='Thông liên thất')
             
     def triple_detection(self, class_label, input_img_1, input_img_2, input_img_3):
         if class_label == ('label_3', 'label_8', 'label_9'):
