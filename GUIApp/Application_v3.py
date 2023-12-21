@@ -1614,6 +1614,7 @@ class Tools:
             sagittal()
             coronal()
             
+            
         def HounsField():
             def frame():
                 self.hounsfield_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_1, fg_color=self.master.third_color)
@@ -1830,7 +1831,6 @@ class Tools:
             create_tool_btns()
             color_picker()
             create_radio_btn()
-            
         
 
         def Thresholding():
@@ -1894,6 +1894,7 @@ class Tools:
             support_function()
             brightness()
 
+
         def create_tabs():
             self.tabview_1 = customtkinter.CTkTabview(master=self.master)
             self.tabview_1.grid(column=0, row=10, columnspan=9, rowspan=5, padx=5, pady=5, sticky="nsew")
@@ -1904,11 +1905,18 @@ class Tools:
             self.tabview_1_tab_2 = self.tabview_1.add("Defect Detection")
             self.tabview_1.set("Image Processing") 
             
+        def Defects():
+            self.defect_frame = customtkinter.CTkFrame(master=self.tabview_1_tab_2, fg_color=self.master.third_color)
+            self.defect_frame.grid(column=0, row=0, columnspan=2, rowspan=3, pady=(0,5), sticky='news')
+            self.defect_frame.rowconfigure((0,1,2,3,4), weight=1)
+            self.defect_frame.columnconfigure((0,1,2,3,4), weight=1)
+            
         create_tabs()
         ROI()
         HounsField()
         DrawingTools()
         Thresholding()
+        Defects()
         
     def layers_management(self):
         def delete_element(element):
