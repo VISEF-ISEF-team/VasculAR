@@ -110,5 +110,11 @@ def CreateVnet():
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
 
+    return model
+
     # results = model.fit(X_train, Y_train, validation_split=0.1, batch_size=16, epochs=25, callbacks=callbacks)
-    model.save(".\\vnet.keras")
+
+
+if __name__ == "__main__":
+    model = CreateVnet()
+    model.summary()
