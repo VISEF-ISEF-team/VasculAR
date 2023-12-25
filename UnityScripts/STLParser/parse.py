@@ -107,16 +107,19 @@ def get_file_extension(file_path):
 def worker_read_mesh_function(file: str, obj_file_name_list: list, obj_folder_path: str, vertices_list: list, cell_list: list, lock: multiprocessing.Lock):
     """file: string - a path of an stl file in the whole directory"""
     mesh = meshio.read(file)
-    path_split = file.split(".")[1].split("_")
+    path_split = file.split("label_")[-1].split("_")
 
     # generate obj file name accordingly
     filename = ""
-    if len(path_split) > 3:
-        filename += path_split[2]
+    if len(path_split) == 3:
+        # pulmonary _ trunk
+        secondary_organ_name = path_split[-1].split(".")[0]
+        filename += path_split[1]
         filename += "_"
-        filename += path_split[3]
-    elif len(path_split) == 3:
-        filename = path_split[2]
+        filename += secondary_organ_name
+    elif len(path_split) == 2:
+        secondary_organ_name = path_split[-1].split(".")[0]
+        filename = secondary_organ_name
 
     with lock:
         obj_file_name_list.append(

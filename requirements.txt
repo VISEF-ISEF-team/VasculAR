@@ -34,3 +34,4 @@ trame-vuetify
 trame-vtk
 vtk
 meshio
+pydot
