@@ -3,9 +3,9 @@ import tensorflow as tf
 os.environ["tf_gpu_allocator"] = "cuda_malloc_async"
 
 
-def CreateUnetModified(num_classes, x, y, z):
+def CreateUnetModified(x, y, z, channel, num_classes):
     # Build the model
-    inputs = tf.keras.layers.Input(shape=(x, y, z, 1))
+    inputs = tf.keras.layers.Input(shape=(x, y, z, channel))
     s = tf.keras.layers.Lambda(lambda x: x / 255)(inputs)
 
     # Contraction path (Encoder)
@@ -88,3 +88,8 @@ def CreateUnetModified(num_classes, x, y, z):
                   metrics=['accuracy'])
 
     return model
+
+
+if __name__ == "__main__":
+    model = CreateUnetModified(64, 64, 64, 1, 8)
+    model.summary()

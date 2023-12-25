@@ -6,7 +6,7 @@ import numpy as np
 
 class DiseaseDectection:
     def __init__(self):
-        self.path = "D:/Documents/GitHub/VascuIAR/DeepLearning/Training/Defects Detection/input/data_label.json"
+        self.path = "D:/Documents/GitHub/VascuIAR/GUIApp/input/data_label.json"
         self.main_path = "D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels"
         with open(self.path, 'r', encoding='utf-8') as file:
             self.data_label = json.load(file)
@@ -46,6 +46,8 @@ class DiseaseDectection:
             
     def display(self, res, disease):
         print(disease)
+        print((res[0]/(res[0] + res[1]))*100)
+        print((res[1]/(res[0] + res[1]))*100)
         return (res[0]/(res[0] + res[1]))*100, (res[1]/(res[0] + res[1]))*100
 
 
@@ -90,13 +92,13 @@ class DiseaseDectection:
             A = self.comparison(class_label=class_label[0], disease='Thất phải hai đường ra', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Thất phải hai đường ra', input_img=input_img_2)
             C = self.comparison(class_label=class_label[2], disease='Thất phải hai đường ra', input_img=input_img_3)
-            self.display(((A[0] + B[0] + C[0])/2, (A[1] + B[1] + C[1])/2), disease='Thất phải hai đường ra')
+            return self.display(((A[0] + B[0] + C[0])/2, (A[1] + B[1] + C[1])/2), disease='Thất phải hai đường ra')
             
         elif class_label == ('label_7', 'label_8', 'label_9'):
             A = self.comparison(class_label=class_label[0], disease='Còn ống động mạch', input_img=input_img_1)
             B = self.comparison(class_label=class_label[1], disease='Còn ống động mạch', input_img=input_img_2)
             C = self.comparison(class_label=class_label[2], disease='Còn ống động mạch', input_img=input_img_3)
-            self.display(((A[0] + B[0] + C[0])/2, (A[1] + B[1] + C[1])/2), disease='Còn ống động mạch')
+            return self.display(((A[0] + B[0] + C[0])/2, (A[1] + B[1] + C[1])/2), disease='Còn ống động mạch')
             
     def quad_detection(self, class_label, input_img_1, input_img_2, input_img_3, input_img_4):
         if class_label == ('label_2', 'class_3', 'label_8', 'label_9'):
@@ -104,7 +106,7 @@ class DiseaseDectection:
             B = self.comparison(class_label=class_label[1], disease='Đảo gốc động mạch', input_img=input_img_2)
             C = self.comparison(class_label=class_label[2], disease='Đảo gốc động mạch', input_img=input_img_3)
             D = self.comparison(class_label=class_label[3], disease='Đảo gốc động mạch', input_img=input_img_4)
-            self.display(((A[0] + B[0] + C[0] + D[0])/2, (A[1] + B[1] + C[1] + D[1])/2), disease='Đảo gốc động mạch')
+            return self.display(((A[0] + B[0] + C[0] + D[0])/2, (A[1] + B[1] + C[1] + D[1])/2), disease='Đảo gốc động mạch')
         
     def main_process(self, specified_data, defect_var):
         if defect_var == 1:
@@ -113,7 +115,7 @@ class DiseaseDectection:
             input_img_1 = self.read_img(input_path_1)
             input_img_2 = self.read_img(input_path_2)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7])
-            self.double_detection(class_label, input_img_1, input_img_2)
+            return self.double_detection(class_label, input_img_1, input_img_2)
             
         elif defect_var == 2:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_7.nii.gz")
@@ -123,7 +125,7 @@ class DiseaseDectection:
             input_img_2 = self.read_img(input_path_2)
             input_img_3 = self.read_img(input_path_3)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7], input_path_3[-14:-7])
-            self.triple_detection(class_label, input_img_1, input_img_2, input_img_3)
+            return self.triple_detection(class_label, input_img_1, input_img_2, input_img_3)
             
         elif defect_var == 3:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_8.nii.gz")
@@ -131,13 +133,13 @@ class DiseaseDectection:
             input_img_1 = self.read_img(input_path_1)
             input_img_2 = self.read_img(input_path_2)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7])
-            self.double_detection(class_label, input_img_1, input_img_2)
+            return self.double_detection(class_label, input_img_1, input_img_2)
             
         elif defect_var == 4:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_12.nii.gz")
             input_img_1 = self.read_img(input_path_1)
             class_label = input_path_1[-14:-7]
-            self.detection(class_label, input_img_1, defect_var=None)
+            return self.detection(class_label, input_img_1, defect_var=None)
             
         elif defect_var == 5:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_7.nii.gz")
@@ -145,7 +147,7 @@ class DiseaseDectection:
             input_img_1 = self.read_img(input_path_1)
             input_img_2 = self.read_img(input_path_2)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7])
-            self.double_detection(class_label, input_img_1, input_img_2)
+            return self.double_detection(class_label, input_img_1, input_img_2)
     
         elif defect_var == 6:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_4.nii.gz")
@@ -153,13 +155,13 @@ class DiseaseDectection:
             input_img_1 = self.read_img(input_path_1)
             input_img_2 = self.read_img(input_path_2)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7])
-            self.double_detection(class_label, input_img_1, input_img_2)
+            return self.double_detection(class_label, input_img_1, input_img_2)
             
         elif defect_var == 7:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_10.nii.gz")
             input_img_1 = self.read_img(input_path_1)
             class_label = input_path_1[-14:-7]
-            self.detection(class_label, input_img_1, defect_var=None)
+            return self.detection(class_label, input_img_1, defect_var=None)
             
         elif defect_var == 8:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_2.nii.gz")
@@ -171,25 +173,25 @@ class DiseaseDectection:
             input_img_3 = self.read_img(input_path_3)
             input_img_4 = self.read_img(input_path_4)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7], input_path_3[-14:-7], input_path_4[-14:-7])
-            self.triple_detection(class_label, input_img_1, input_img_2, input_img_3, input_img_4)
+            return self.triple_detection(class_label, input_img_1, input_img_2, input_img_3, input_img_4)
             
         elif defect_var == 9:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_8.nii.gz")
             input_img_1 = self.read_img(input_path_1)
             class_label = input_path_1[-14:-7]
-            self.detection(class_label, input_img_1, defect_var=None)
+            return self.detection(class_label, input_img_1, defect_var=None)
             
         elif defect_var == 10:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_9.nii.gz")
             input_img_1 = self.read_img(input_path_1)
             class_label = input_path_1[-14:-7]
-            self.detection(class_label, input_img_1, defect_var=10)
+            return self.detection(class_label, input_img_1, defect_var=10)
             
         elif defect_var == 11:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_9.nii.gz")
             input_img_1 = self.read_img(input_path_1)
             class_label = input_path_1[-14:-7]
-            self.detection(class_label, input_img_1, defect_var=11)
+            return self.detection(class_label, input_img_1, defect_var=11)
             
         elif defect_var == 12:
             input_path_1 = os.path.join(self.main_path, f"VHSCDD_{specified_data}_label", f"ct_{specified_data}_label_3.nii.gz")
@@ -199,5 +201,5 @@ class DiseaseDectection:
             input_img_2 = self.read_img(input_path_2)
             input_img_3 = self.read_img(input_path_3)
             class_label = (input_path_1[-14:-7], input_path_2[-14:-7], input_path_3[-14:-7])
-            self.triple_detection(class_label, input_img_1, input_img_2, input_img_3)
+            return self.triple_detection(class_label, input_img_1, input_img_2, input_img_3)
     

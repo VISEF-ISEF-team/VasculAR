@@ -34,3 +34,9 @@ trame-vuetify
 trame-vtk
 vtk
 meshio
+<<<<<<< HEAD
+efficientnet-3D
+egmentation-models-3D
+=======
+pydot
+>>>>>>> 63a2ffb1802a2056ef824d68f11da76e7bfb4273
