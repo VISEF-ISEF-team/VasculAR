@@ -202,7 +202,7 @@ class AutomaticReconstruction():
     
 isinstance = AutomaticReconstruction(
     path_stl=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{specified_data}_label/',
-    path_volume_rendering= 'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_020_image/ct_020_image.nii.gz',
+    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_020_image/ct_{specified_data}_image.nii.gz',
     input_analysis = {
         'Tổng quan': 'Phân tích tổng quan',
         'Tĩnh mạch chủ': 'Phân tích tĩnh mạch chủ',
