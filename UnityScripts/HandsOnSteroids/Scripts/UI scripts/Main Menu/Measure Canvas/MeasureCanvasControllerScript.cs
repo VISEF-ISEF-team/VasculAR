@@ -6,8 +6,9 @@ public class MeasureCanvasControllerScript : MonoBehaviour
 {
     [SerializeField] GameObject measureObject;
     [SerializeField] Slider scaleSlider;
+    [SerializeField] Toggle showMeasurementToggle; 
+    [SerializeField] MeasureObjectActionScript measureObjectActionScript;
 
-    private MeasureObjectActionScript measureObjectActionScript;
     private float maxScale = 0.2f; 
     private float minScale = 0.05f;
     private Button deleteButton;
@@ -17,9 +18,6 @@ public class MeasureCanvasControllerScript : MonoBehaviour
 
     private void Start()
     {
-        measureObjectActionScript = measureObject.GetComponent<MeasureObjectActionScript>();
-        scaleSlider.value = 0.1f;
-        scaleSlider.onValueChanged.AddListener(OnSliderChangeSphereSize);
         deleteButton = GetComponentInChildren<Button>();
         deleteButton.onClick.AddListener(OnDeleteButtonPress);
     }
@@ -27,7 +25,11 @@ public class MeasureCanvasControllerScript : MonoBehaviour
     private void OnEnable()
     {
         measureObject.SetActive(true);
-        measureObjectActionScript.SetGrabStatusForMeasurePoints(true); 
+        measureObjectActionScript.SetGrabStatusForMeasurePoints(true);
+        float scale = scaleSlider.value;
+        measureObjectActionScript.MeasurePointScale = new Vector3(scale, scale, scale); 
+        bool showMeasurement = showMeasurementToggle.isOn;
+        OnShowMeasurementToggle(showMeasurement); 
     }
 
     private void OnDisable()

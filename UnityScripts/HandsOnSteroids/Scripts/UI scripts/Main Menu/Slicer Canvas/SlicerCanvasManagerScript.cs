@@ -5,7 +5,7 @@ public class SlicerCanvasManagerScript : MonoBehaviour
     [SerializeField] GameObject slicerObject; 
     [SerializeField] private MeshRenderer slicerPlaneRenderer;
     [SerializeField] float minScale = 0.1f; 
-    [SerializeField] float maxScale = 1;
+    [SerializeField] float maxScale = 1.0f;
     private SlicerSpawnOnUIControl slicerSpawnUIControl;
     float oldXScale;
     float oldYScale;

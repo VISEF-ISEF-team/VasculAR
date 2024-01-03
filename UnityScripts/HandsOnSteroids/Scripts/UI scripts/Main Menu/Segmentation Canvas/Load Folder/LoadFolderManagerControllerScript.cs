@@ -25,7 +25,7 @@ public class LoadFolderManagerControllerScript : MonoBehaviour
     [SerializeField] ResetPositionButtonActionScript baseResetButtonActionScript; 
 
     private List<string> folderNameList;
-    private string baseDirPath = @"C:\\Users\\Acer\\Downloads\\Base_Folder\\";
+    private string baseDirPath = @"E:\Base_Folder\";
 
     private void OnEnable()
     {

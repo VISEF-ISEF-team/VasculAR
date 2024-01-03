@@ -6,11 +6,14 @@ public class SegmentCanvas : MonoBehaviour
 {
     public GameObject segmentObject;
     [SerializeField] GameObject segmentCanvas;
+    [SerializeField] TMP_Dropdown dropdownSegmentSelection;
+    [SerializeField] SegmentationColorCanvasControllerScript segmentColorControllerScript; 
 
     private float maxScale = 3.0f;
     private float minScale = 0.5f;
 
-    private List<string> segmentNameList; 
+    private List<string> segmentNameList;
+    private List<GameObject> segmentObjectList = new List<GameObject>(); 
 
     public void StartSetupProcess()
     {
@@ -30,6 +33,7 @@ public class SegmentCanvas : MonoBehaviour
         for (int i = 0; i < canvasTransform.childCount; ++i)
         {
             GameObject child = canvasTransform.GetChild(i).gameObject;
+            if (child == null) continue; 
             SegmentButtonActionScript actionScript = child.GetComponent<SegmentButtonActionScript>(); 
             if (actionScript != null)
             {
@@ -62,5 +66,21 @@ public class SegmentCanvas : MonoBehaviour
     {
         scale = Mathf.Clamp(scale, maxScale, minScale);
         segmentObject.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    public void AddSegmentObjectToList(GameObject target, string segmentName)
+    {
+        if (target != null)
+        {
+            segmentObjectList.Add(target);
+            dropdownSegmentSelection.options.Add(new TMP_Dropdown.OptionData(segmentName));
+        }
+    }
+
+    public void OnDropdownValueChanged(int index)
+    {
+        segmentObject = segmentObjectList[index];
+        segmentColorControllerScript.SetTarget(segmentObjectList[index]); 
+        StartSetupProcess(); 
     }
 }

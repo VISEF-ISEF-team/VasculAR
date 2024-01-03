@@ -15,6 +15,7 @@ public class EnableSlice : MonoBehaviour
     private readonly string layerName = "Interactable"; 
     private Transform planeCoordinates;
 
+    private float spawnPostionOffset = 0.5f; 
     private Rigidbody heartRigidBody;
     private void Start()
     {
@@ -24,36 +25,36 @@ public class EnableSlice : MonoBehaviour
 
     public void SliceOnActivate() 
     {
-        int id = heartTarget.GetInstanceID();
-        Debug.Log("instantiate slicing"); 
-        Slice(heartTarget, id); 
+        Slice(heartTarget); 
     }
-    public void Slice(GameObject target, int targetInstanceID)
+    public void Slice(GameObject target)
     {
-        if (GetIntersection(planeObject, 100.0f, targetInstanceID))
+        Debug.Log($"Target: {target}"); 
+        if (GetIntersection(planeObject, 100.0f))
         {
             Debug.Log("get intersecion successful"); 
             SlicedHull hull = target.Slice(planeCoordinates.position, planeCoordinates.up);
             if (hull != null) 
             {
+                // create transform direction 
+                Vector3 transformOffsetDirection = planeObject.transform.up; 
+
                 // upper hull
                 GameObject upperHull = hull.CreateUpperHull(target, crossSectionMaterial);
                 SliceComponentSetup(upperHull, true, target.name);
-                upperHull.transform.position = new Vector3(heartTarget.transform.position.x, heartTarget.transform.position.y + 1.5f, heartTarget.transform.position.z);
+                upperHull.transform.position = heartTarget.transform.position + transformOffsetDirection * spawnPostionOffset; 
 
                 // lower hull
                 GameObject lowerHull = hull.CreateLowerHull(target, crossSectionMaterial);
                 SliceComponentSetup(lowerHull, false, target.name);
-                lowerHull.transform.position = new Vector3(heartTarget.transform.position.x, heartTarget.transform.position.y - 1.5f, heartTarget.transform.position.z);
+                lowerHull.transform.position = heartTarget.transform.position + transformOffsetDirection * -1 * spawnPostionOffset;
             }
         }
     }
 
     public void SliceComponentSetup(GameObject sliceComponent, bool upper, string baseName)
     {
-        // set grabbable settings
-        XRGrabInteractable currentGrabbable = sliceComponent.AddComponent<XRGrabInteractable>();
-        currentGrabbable.useDynamicAttach = true; 
+        sliceComponent.transform.localScale = sliceComponent.transform.localScale * (float) 0.3; 
 
         // set delete on slice
         DeleteSliceOnButtonPress currentDeleteSliceOnButtonPressSettings = sliceComponent.AddComponent<DeleteSliceOnButtonPress>();
@@ -70,12 +71,18 @@ public class EnableSlice : MonoBehaviour
 
         currentEnableSlice.baseEnableSlice = baseEnableSlice;
 
+        currentEnableSlice.sliceButton = baseEnableSlice.sliceButton;
+
         // set mesh collider
         sliceComponent.AddComponent<MeshCollider>(); 
 
         // set rigid boy 
         heartRigidBody = sliceComponent.AddComponent<Rigidbody>();
-        heartRigidBody.isKinematic = false; 
+        heartRigidBody.isKinematic = true; 
+
+        // set grabbable settings
+        XRGrabInteractable currentGrabbable = sliceComponent.AddComponent<XRGrabInteractable>();
+        currentGrabbable.useDynamicAttach = true; 
 
         // set layer for slice component
         sliceComponent.layer = LayerMask.NameToLayer(layerName); 
@@ -91,17 +98,18 @@ public class EnableSlice : MonoBehaviour
         }
     }
 
-    private bool GetIntersection(GameObject planeObject, float numRay, int targetInstanceID)
+    private bool GetIntersection(GameObject planeObject, float numRay)
     {
-        bool res1 = DrawRayXDirection(planeObject, numRay, targetInstanceID);
+        bool res1 = DrawRayXDirection(planeObject, numRay);
 
-        bool res2 = DrawRayZDirection(planeObject, numRay, targetInstanceID);
+        bool res2 = DrawRayZDirection(planeObject, numRay);
 
-        Debug.Log(res1 && res2);
+        Debug.Log(res1);
+        Debug.Log(res2); 
         return res1 && res2;
     }
 
-    private bool DrawRayXDirection(GameObject planeObject, float numberOfRaysEachSide, int targetInstanceID)
+    private bool DrawRayXDirection(GameObject planeObject, float numberOfRaysEachSide)
     {
         bool forward = false;
         bool backward = false;
@@ -113,9 +121,6 @@ public class EnableSlice : MonoBehaviour
 
         float zMaxDistance = planeExtents.z * 2 * zScale;
         float zStep = zMaxDistance / numberOfRaysEachSide;
-
-        float maxZ = planeObject.transform.position.z + (planeExtents.z * zScale);
-        float minZ = planeObject.transform.position.z - (planeExtents.z * zScale);
 
         // positive X direction ray cast, ray then move in Z direction 
         for (int i = 0; i < numberOfRaysEachSide; i++)
@@ -145,10 +150,13 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, -xDirection, out RaycastHit hit, zMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                int colliderID = hit.colliderInstanceID;
 
                 // check if collider hit was the inteded target 
-                if (!forward && colliderID == targetInstanceID) forward = true;
+                if (!forward && hit.collider.gameObject == heartTarget)
+                {
+                    forward = true;
+                    Debug.Log(hit.collider.gameObject); 
+                }
             }
             else
             {
@@ -168,15 +176,17 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, -xDirection, out RaycastHit hit, zMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                int colliderID = hit.colliderInstanceID;
-
-                if (!backward && colliderID == targetInstanceID) backward = true;
+                if (!backward && hit.collider.gameObject == heartTarget)
+                {
+                    backward = true;
+                    Debug.Log(hit.collider.gameObject); 
+                }
             }
         }
         return forward && backward;
     }
 
-    private bool DrawRayZDirection(GameObject planeObject, float numberOfRaysEachSide, int targetInstanceID)
+    private bool DrawRayZDirection(GameObject planeObject, float numberOfRaysEachSide)
     {
         bool forward = false;
         bool backward = false;
@@ -208,8 +218,7 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, -zDirection, out RaycastHit hit, xMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                int colliderID = hit.colliderInstanceID;
-                if (!forward && colliderID == targetInstanceID) forward = true;
+                if (!forward && hit.collider.gameObject == heartTarget) forward = true;
             }
             else
             {
@@ -230,8 +239,7 @@ public class EnableSlice : MonoBehaviour
             if (Physics.Raycast(origin, -zDirection, out RaycastHit hit, xMaxDistance))
             {
                 Debug.DrawLine(origin, hit.point, Color.green, 100.0f);
-                int colliderID = hit.colliderInstanceID;
-                if (!backward && colliderID == targetInstanceID) backward = true;
+                if (!backward && hit.collider.gameObject == heartTarget) backward = true;
             }
         }
 

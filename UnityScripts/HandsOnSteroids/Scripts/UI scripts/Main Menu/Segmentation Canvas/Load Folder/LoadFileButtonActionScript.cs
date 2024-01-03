@@ -245,6 +245,12 @@ public class LoadFileButtonActionScript : MonoBehaviour
                     loadedObjectChild.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
                     // set child object (which name is the name of the heart segment)
+                    if (HasChildren(parentObject.transform))
+                    {
+                        GameObject newParentObject = new GameObject();
+                        newParentObject.transform.position = parentObject.transform.position + new Vector3(0.5f, 0, 0);
+                        parentObject = newParentObject; 
+                    }
                     loadedObjectChild.transform.SetParent(parentObject.transform, false);
 
                     // set layer for object 
@@ -294,7 +300,8 @@ public class LoadFileButtonActionScript : MonoBehaviour
 
                 }
                 // set hide and show button on canvas
-                segmentCanvasControllerScript.StartSetupProcess(); 
+                segmentCanvasControllerScript.StartSetupProcess();
+                segmentCanvasControllerScript.AddSegmentObjectToList(parentObject, stlFolderPath); 
             }
             yield return null;
         }

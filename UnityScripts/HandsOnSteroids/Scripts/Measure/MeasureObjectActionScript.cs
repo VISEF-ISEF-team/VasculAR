@@ -22,13 +22,13 @@ public class MeasureObjectActionScript : MonoBehaviour
     public Vector3 MeasurePointScale
     {
         get { return measurePointScale; }
-        set { if (value.x > 0 && value.y > 0 && value.z > 0) measurePointScale = value; }
+        set { measurePointScale = value;  }
     }
     private bool isStarting = true;
     private GameObject currentActiveSphere;
     private GameObject currentActiveOtherSphere;
 
-    private List<GameObject> measurePointList;
+    private List<GameObject> measurePointList = new List<GameObject>();
     public List<GameObject> MeasurePointList
     { get { return measurePointList; } }
 
@@ -74,11 +74,11 @@ public class MeasureObjectActionScript : MonoBehaviour
                     Color sphereColor = GetColor();
                     GameObject startSphere = Instantiate(startingMeasurePoint, leftHandTipPosition, Quaternion.identity);
                     startSphere.transform.localScale = measurePointScale;
-                    startSphere.GetComponent < MeshRenderer>().material.color = sphereColor;
+                    startSphere.GetComponentInChildren<MeshRenderer>().material.color = sphereColor;
 
                     GameObject endSphere = Instantiate(endingMeasurepoint, leftHandTipPosition, Quaternion.identity);
                     endSphere.transform.localScale = measurePointScale;
-                    endSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
+                    endSphere.GetComponentInChildren<MeshRenderer>().material.color = sphereColor;
 
                     MeasurePointActionScript measurePointScript = startSphere.GetComponent<MeasurePointActionScript>();
                     measurePointScript.endSphere = endSphere;
@@ -108,12 +108,14 @@ public class MeasureObjectActionScript : MonoBehaviour
                 {
                     Color sphereColor = GetColor();
                     GameObject startSphere = Instantiate(startingMeasurePoint, rightHandTipPosition, Quaternion.identity);
+                    startSphere.SetActive(true); 
                     // set start sphere color 
-                    startSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
+                    startSphere.GetComponentInChildren<MeshRenderer>().material.color = sphereColor;
                     startSphere.transform.localScale = measurePointScale;
 
                     GameObject endSphere = Instantiate(endingMeasurepoint, rightHandTipPosition, Quaternion.identity);
-                    endSphere.GetComponent<MeshRenderer>().material.color = sphereColor;
+                    endSphere.SetActive(true);
+                    endSphere.GetComponentInChildren<MeshRenderer>().material.color = sphereColor;
                     endSphere.transform.localScale = measurePointScale;
 
                     // attach end sphere to start sphere
@@ -131,7 +133,7 @@ public class MeasureObjectActionScript : MonoBehaviour
                 currentActiveSphere.GetComponent<MeasurePointActionScript>().SetLineRendererPosition(1, rightHandTipPosition);
                 currentActiveOtherSphere.transform.position = rightHandTipPosition;
                 currentActiveOtherSphere.GetComponent<MeasurePointActionScript>().SetDistanceText();
-                if (leftTriggerButton.action.WasPressedThisFrame())
+                if (rightTriggerButton.action.WasPressedThisFrame())
                 {
                     isStarting = true;
                 }
