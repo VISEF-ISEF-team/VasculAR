@@ -1,7 +1,9 @@
 # VasculAR - Phần mềm tích hợp học sâu để phân vùng và tái tạo cấu trúc tim nguyên khối trong không gian 3D mô phỏng cho ứng dụng thực hành y khoa
-Tên tiếng Anh: Integration of Deep Learning into automatic volumetric cardiovascular dissection and reconstruction in simulated 3D space for medical practice.
+
 [![> Video Demo](https://img.shields.io/badge/Video%20Demo-blue)](https://youtu.be/fm9QD1Xxpp0?si=IPv3BddstUBnjOWd)
-[![> Video Feedback](https://img.shields.io/badge/Video%20Demo-yellow)](https://youtu.be/FxGYBbMb8q0?si=wBwaCImwXBEnM_xfo)
+[![> Video Feedback](https://img.shields.io/badge/Video%20Feedback-yellow)](https://youtu.be/FxGYBbMb8q0?si=wBwaCImwXBEnM_xfo)
+
+Tên tiếng Anh: Integration of Deep Learning into automatic volumetric cardiovascular dissection and reconstruction in simulated 3D space for medical practice.
 
 ![Image](imgs/Poster.png)
 
