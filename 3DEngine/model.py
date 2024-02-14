@@ -2,6 +2,7 @@ import numpy as np
 import glm
 import pygame as pg
 
+
 class Cube:
     def __init__(self, app):
         self.app = app
@@ -24,12 +25,19 @@ class Cube:
         matrix_model = glm.rotate(self.matrix_model, self.app.time * 0.5, glm.vec3(0, 1, 0))
         self.shader_program['matrix_model'].write(matrix_model)
         self.shader_program['matrix_view'].write(self.app.camera.matrix_view)
+        self.shader_program['camPos'].write(self.app.camera.position)
          
     def get_model_matrix(self):
         matrix_model = glm.mat4()
         return matrix_model     
          
     def on_init(self):
+        # light
+        self.shader_program['light.position'].write(self.app.light.position)
+        self.shader_program['light.Ia'].write(self.app.light.Ia)
+        self.shader_program['light.Id'].write(self.app.light.Id)
+        self.shader_program['light.Is'].write(self.app.light.Is)
+        
         # texture
         self.shader_program['u_texture_0'] = 0
         self.texture.use()
@@ -41,7 +49,7 @@ class Cube:
     
     def get_vertex_array_objects(self):
         ver_arr_obj = self.ctx.vertex_array(self.shader_program, [
-            (self.ver_buf_obj, '2f 3f', 'in_texcoord_0', 'in_position')
+            (self.ver_buf_obj, '2f 3f 3f', 'in_texcoord_0', 'in_normal', 'in_position')
         ])
         return ver_arr_obj
     
@@ -79,6 +87,18 @@ class Cube:
             (3, 1, 2), (3, 0, 1),
         ]
         texture_coord_data = self.get_data(texture_coord, texture_coord_faces)
+        
+        normals = [
+            (0, 0, 1) * 6,
+            (1, 0, 0) * 6,
+            (0, 0, -1) * 6,
+            (-1, 0, 0) * 6,
+            (0, 1, 0) * 6,
+            (0, -1, 0) * 6
+        ]
+        normals = np.array(normals, dtype='f4').reshape(36, 3)
+        
+        vertex_data = np.hstack([normals, vertex_data])
         vertex_data = np.hstack([texture_coord_data, vertex_data])
         return vertex_data
     
