@@ -2,7 +2,6 @@ import numpy as np
 import glm
 import pygame as pg
 
-
 class Cube:
     def __init__(self, app):
         self.app = app

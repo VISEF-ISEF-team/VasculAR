@@ -5,7 +5,7 @@ FOV = 50
 NEAR = 0.1
 FAR = 100
 SPEED = 0.01
-SENSITIVITY = 0.05
+SENSITIVITY = 0.1
 
 class Camera:
     def __init__ (self, app, position=(0,0,4), yaw=-90, pitch=0):
@@ -23,8 +23,8 @@ class Camera:
     def rotate(self):
         rel_x, rel_y = pg.mouse.get_rel()
         self.yaw += rel_x * SENSITIVITY
-        self.pitch -= rel_x * SENSITIVITY
-        self.pitch = max(-89, min(89, self.pitch))
+        self.pitch -= rel_y * SENSITIVITY
+        self.pitch = max(-360, min(360, self.pitch))
         
     def update_camera_vectors(self):
         yaw, pitch = glm.radians(self.yaw), glm.radians(self.pitch)
@@ -58,6 +58,10 @@ class Camera:
             self.position += self.up * velocity
         if keys[pg.K_e]:
             self.position -= self.up * velocity
+        if keys[pg.K_z]:
+            self.yaw -= SENSITIVITY * 10 
+        if keys[pg.K_c]:
+            self.yaw += SENSITIVITY * 10 
         
     def get_projection_matrix(self):
         return glm.perspective(

@@ -1,17 +1,24 @@
 import pygame as pg
 import moderngl as mgl
 import sys
-from model import *
-# from model2 import *
+from model2 import *
 from camera import Camera
 from light import Light
 from mesh import Mesh
+from scene import Scene
+import os
 
 class GraphicsEngine:
     def __init__(self, win_size=(1600, 900)):
         
         pg.init()
         self.WIN_SIZE = win_size
+        
+        # Locate the screen
+        # screen_width, screen_height = pg.display.Info().current_w, pg.display.Info().current_h
+        # window_x = screen_width - self.WIN_SIZE[0]
+        # window_y = screen_height - self.WIN_SIZE[1]*1.2
+        # os.environ['SDL_VIDEO_WINDOW_POS'] = f"{window_x},{window_y}"
         
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MAJOR_VERSION, 3)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, 3)
@@ -30,7 +37,7 @@ class GraphicsEngine:
         self.light = Light()
         self.camera = Camera(self)
         self.mesh = Mesh(self)
-        self.scene = Cube(self)
+        self.scene = Scene(self)
         
     def check_events(self):
         for event in pg.event.get():
@@ -40,7 +47,7 @@ class GraphicsEngine:
                 sys.exit()
                 
     def render(self):
-        self.ctx.clear(color=(0.08, 0.16, 0.18))
+        self.ctx.clear(color=(0, 0, 0))
         self.scene.render()
         pg.display.flip()
         
