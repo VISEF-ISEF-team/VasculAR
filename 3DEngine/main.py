@@ -16,11 +16,13 @@ class GraphicsEngine:
         
         pg.display.set_mode(self.WIN_SIZE, flags=pg.OPENGL | pg.DOUBLEBUF)
         pg.event.set_grab(True)
-        pg.mouse.set_visible(False)
+        pg.mouse.set_visible(True)
 
         self.ctx = mgl.create_context()
         self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE)
         self.clock = pg.time.Clock()
+        self.time = 0
+        self.delta_time = 0
         
         self.camera = Camera(self)
         self.scene = Cube(self)
@@ -44,8 +46,9 @@ class GraphicsEngine:
         while True:
             self.get_time()
             self.check_events()
+            self.camera.update()
             self.render()
-            self.clock.tick(60)
+            self.delta_time = self.clock.tick(60)
             
                 
 if __name__ == '__main__':

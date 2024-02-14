@@ -1,5 +1,6 @@
 import numpy as np
 import glm
+import pygame as pg
 
 class Cube:
     def __init__(self, app):
@@ -9,24 +10,38 @@ class Cube:
         self.shader_program = self.get_shader_program('default')
         self.ver_arr_obj = self.get_vertex_array_objects()
         self.matrix_model = self.get_model_matrix()
+        self.texture = self.get_texture(path='textures/wood.png')
         self.on_init()
         
+    def get_texture(self, path):
+        texture = pg.image.load(path).convert()
+        texture = pg.transform.flip(texture, flip_x=False, flip_y=True)
+        texture = self.ctx.texture(size=texture.get_size(), components=3,
+                                   data=pg.image.tostring(texture, 'RGB'))
+        return texture
+        
     def update(self):
-        matrix_model = glm.rotate(self.matrix_model, self.app.time, glm.vec3(0, 1, 0))
+        matrix_model = glm.rotate(self.matrix_model, self.app.time * 0.5, glm.vec3(0, 1, 0))
         self.shader_program['matrix_model'].write(matrix_model)
+        self.shader_program['matrix_view'].write(self.app.camera.matrix_view)
          
     def get_model_matrix(self):
         matrix_model = glm.mat4()
         return matrix_model     
          
     def on_init(self):
+        # texture
+        self.shader_program['u_texture_0'] = 0
+        self.texture.use()
+        
+        # mvp
         self.shader_program['matrix_projection'].write(self.app.camera.matrix_projection)
         self.shader_program['matrix_view'].write(self.app.camera.matrix_view)
         self.shader_program['matrix_model'].write(self.matrix_model)
     
     def get_vertex_array_objects(self):
         ver_arr_obj = self.ctx.vertex_array(self.shader_program, [
-            (self.ver_buf_obj, '3f', 'in_position')
+            (self.ver_buf_obj, '2f 3f', 'in_texcoord_0', 'in_position')
         ])
         return ver_arr_obj
     
@@ -53,6 +68,18 @@ class Cube:
             (0, 6, 1), (0, 5, 6)
         ]
         vertex_data = self.get_data(vectices, faces)
+        
+        texture_coord = [(0,0), (1,0), (1,1), (0,1)]
+        texture_coord_faces= [
+            (0, 2, 3), (0, 1, 2),
+            (0, 2, 3), (0, 1, 2),
+            (0, 1, 2), (2, 3, 0),
+            (2, 3, 0), (2, 0, 1),
+            (0, 2, 3), (0, 1, 2),
+            (3, 1, 2), (3, 0, 1),
+        ]
+        texture_coord_data = self.get_data(texture_coord, texture_coord_faces)
+        vertex_data = np.hstack([texture_coord_data, vertex_data])
         return vertex_data
     
     @staticmethod
