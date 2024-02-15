@@ -6,7 +6,7 @@ from camera import Camera
 from light import Light
 from mesh import Mesh
 from scene import Scene
-import os
+from scene_renderer import SceneRenderer
 
 class GraphicsEngine:
     def __init__(self, win_size=(1600, 900)):
@@ -38,6 +38,7 @@ class GraphicsEngine:
         self.camera = Camera(self)
         self.mesh = Mesh(self)
         self.scene = Scene(self)
+        self.scene_renderer = SceneRenderer(self)
         
     def check_events(self):
         for event in pg.event.get():
@@ -48,7 +49,7 @@ class GraphicsEngine:
                 
     def render(self):
         self.ctx.clear(color=(0, 0, 0))
-        self.scene.render()
+        self.scene_renderer.render()
         pg.display.flip()
         
     def get_time(self):

@@ -27,12 +27,9 @@ class Scene:
             Cat(app, pos=(0, 0, 0), rot=(-90,0,0))
         )
         
-        # Add sphere mesh model
-        add (
-            Sphere(app, pos=(2, 2, 0))
-        )
-            
-    def render(self):
-        for object in self.objects:
-            object.render()
-        self.skybox.render()
+        # moving cube
+        self.moving_cube = MovingCube(app, pos=(0,6,8), scale=(3,3,3), texture_id=1)
+        add(self.moving_cube)
+        
+    def update(self):
+        self.moving_cube.rot.xyz = self.app.time

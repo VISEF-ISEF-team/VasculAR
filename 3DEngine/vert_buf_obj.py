@@ -7,7 +7,6 @@ class VertexBufferObject:
         self.vert_buf_objs = {}
         self.vert_buf_objs['cube'] = CubeVertexBufferObject(ctx)
         self.vert_buf_objs['cat'] = CatVertexBufferObject(ctx)
-        self.vert_buf_objs['sphere'] = SphereVertexBufferObject(ctx)
         self.vert_buf_objs['skybox'] = SkyBoxVertexBufferObject(ctx)
         self.vert_buf_objs['advanced_skybox'] = AdvancedSkyBoxVertexBufferObject(ctx)
 
@@ -140,7 +139,6 @@ class SkyBoxVertexBufferObject(BaseVertexBufferObject):
         return vertex_data
     
     
-
 class AdvancedSkyBoxVertexBufferObject(BaseVertexBufferObject):
     def __init__(self, ctx):
         super().__init__(ctx)

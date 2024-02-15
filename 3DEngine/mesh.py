@@ -5,7 +5,7 @@ class Mesh:
     def __init__(self, app):
         self.app = app
         self.vert_arr_obj = VertexArrayObject(app.ctx)
-        self.texture = Texture(app.ctx)
+        self.texture = Texture(app.ctx, self.app)
 
     def destroy(self):
         self.vert_arr_obj.destroy()

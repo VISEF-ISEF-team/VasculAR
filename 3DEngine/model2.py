@@ -7,6 +7,7 @@ class BaseModel:
     def __init__(self, app, vert_arr_obj_name, texture_id, pos=(0,0,0), rot=(0,0,0), scale=(1,1,1)):
         self.app = app
         self.pos = pos
+        self.vert_arr_obj_name = vert_arr_obj_name
         self.scale = scale
         self.rot = glm.vec3([glm.radians(a) for a in rot])
         self.matrix_model = self.get_model_matrix()
@@ -42,16 +43,40 @@ class ExtendedBaseModel(BaseModel):
         self.on_init()
 
     def update(self):
-        self.texture.use()
+        self.texture.use(location=0)
         self.program['camPos'].write(self.camera.position)
         self.program['matrix_view'].write(self.camera.matrix_view)
         self.program['matrix_model'].write(self.matrix_model)
 
+    def update_shadow(self):
+        self.shadow_program['matrix_model'].write(self.matrix_model)
+
+    def render_shadow(self):
+        self.update_shadow()
+        self.shadow_vert_arr_obj.render()
+
     def on_init(self):
+        self.program['matrix_view_light'].write(self.app.light.matrix_view_light)
+        
+        # resolution
+        self.program['u_resolution'].write(glm.vec2(self.app.WIN_SIZE))
+
+        # depth texture
+        self.depth_texture = self.app.mesh.texture.textures['depth_texture']
+        self.program['shadowMap'] = 1
+        self.depth_texture.use(location=1)
+        
+        # shadow
+        self.shadow_vert_arr_obj = self.app.mesh.vert_arr_obj.vert_arr_objs['shadow_' + self.vert_arr_obj_name]
+        self.shadow_program = self.shadow_vert_arr_obj.program
+        self.shadow_program['matrix_projection'].write(self.camera.matrix_projection)
+        self.shadow_program['matrix_view_light'].write(self.app.light.matrix_view_light)
+        self.shadow_program['matrix_model'].write(self.matrix_model)
+        
         # texture
         self.texture = self.app.mesh.texture.textures[self.texture_id]
         self.program['u_texture_0'] = 0
-        self.texture.use()
+        self.texture.use(location=0)
         
         # mvp
         self.program['matrix_projection'].write(self.camera.matrix_projection)
@@ -69,6 +94,14 @@ class Cube(ExtendedBaseModel):
                  texture_id=0, pos=(0,0,0), 
                  rot=(0, 0, 0), scale=(1,1,1)):
         super().__init__(app, vert_arr_obj_name, texture_id, pos, rot, scale)
+        
+class MovingCube(Cube):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def update(self):
+        self.m_model = self.get_model_matrix()
+        super().update()
     
         
 class Cat(ExtendedBaseModel):
@@ -78,14 +111,6 @@ class Cat(ExtendedBaseModel):
         super().__init__(app, vert_arr_obj_name, texture_id, pos, rot, scale)
         self.on_init()
         
-        
-class Sphere(ExtendedBaseModel):
-    def __init__(self, app, vert_arr_obj_name='sphere', 
-                 texture_id='sphere', pos=(0,0,0), 
-                 rot=(0,0,0), scale=(1,1,1)):
-        super().__init__(app, vert_arr_obj_name, texture_id, pos, rot, scale)
-        self.on_init()
-
 class Skybox(ExtendedBaseModel):
     def __init__(self, app, vert_arr_obj_name='skybox', 
                  texture_id='skybox', pos=(0,0,0), 

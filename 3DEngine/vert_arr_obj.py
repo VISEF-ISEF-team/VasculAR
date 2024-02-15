@@ -13,19 +13,25 @@ class VertexArrayObject:
             program=self.program.programs['default'],
             vert_buf_obj = self.vert_buf_obj.vert_buf_objs['cube']
         )
+        
+        # shadow cube vertex array object
+        self.vert_arr_objs['shadow_cube'] = self.get_vertex_array_object(
+            program=self.program.programs['shadow_map'],
+            vert_buf_obj = self.vert_buf_obj.vert_buf_objs['cube']
+        )
 
-        # our model vertex array object
+        # cat vertex array object
         self.vert_arr_objs['cat'] = self.get_vertex_array_object(
             program=self.program.programs['default'],
             vert_buf_obj = self.vert_buf_obj.vert_buf_objs['cat']
         )
         
-        # sphere vertex array object
-        self.vert_arr_objs['sphere'] = self.get_vertex_array_object(
-            program=self.program.programs['default'],
-            vert_buf_obj = self.vert_buf_obj.vert_buf_objs['sphere']
+        # shadow cat vertex array object
+        self.vert_arr_objs['shadow_cat'] = self.get_vertex_array_object(
+            program=self.program.programs['shadow_map'],
+            vert_buf_obj = self.vert_buf_obj.vert_buf_objs['cat']
         )
-
+        
         # skybox vertex array object
         self.vert_arr_objs['skybox'] = self.get_vertex_array_object(
             program=self.program.programs['skybox'],
