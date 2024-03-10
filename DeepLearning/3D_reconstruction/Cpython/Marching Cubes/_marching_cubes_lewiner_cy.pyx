@@ -1049,7 +1049,7 @@ cdef void the_big_switch(LutProvider luts, Cell cell, int case, int config) noex
             if test_internal(cell, luts, case, config, subconfig, luts.TEST6.get2(config,1)):
                 cell.add_triangles(luts.TILING6_1_1, config, 3)
             else:
-                #cell.calculate_center_vertex() # v12 needed
+                # cell.calculate_center_vertex() # v12 needed
                 cell.add_triangles(luts.TILING6_1_2, config, 9)
 
     elif case == 7 :
