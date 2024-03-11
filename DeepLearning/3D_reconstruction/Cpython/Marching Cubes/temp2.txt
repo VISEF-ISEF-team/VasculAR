@@ -1,6 +1,6 @@
 import numpy as np
 cimport numpy as cnp
-from stl import mesh
+cnp.import_array()
 
 # Enable low level memory management
 from libc.stdlib cimport malloc, free
@@ -279,298 +279,6 @@ cdef int[:,:] GEOMETRY_LOOKUP = np.array([
         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 255 = 11111111
 ])
 
-cdef cnp.float32_t [:] VOLUME_CASE_LOOKUP = np.array([
-    0,
-    1,       # case 1 # all false
-    1/48,    # case 2
-    1/8,     # case 3
-    1/24,    # case 4
-    1/24,    # case 5
-    17/48,   # case 6
-    7/48,    # case 7
-    1/16,    # case 8
-    1/2,     # case 9
-    1/2,     # case 10
-    1/4,     # case 11
-    (7 + 8**(1/2))/24, # case 12
-    139/144, # case 13
-    1/12,    # case 14
-    5/12,    # case 15
-    1-1,     # case 16 # all true --> base case
-    1-1/48,  # case 17
-    1-1/8,   # case 18
-    1-1/24,  # case 19
-    1-1/24,  # case 20
-    1-17/48, # case 21
-    1-7/48,  # case 22
-    1-1/16,  # case 23
-    1-1/2,   # case 24
-    1-1/2,   # case 25
-    1-1/4,   # case 26
-    1 - ((7 + 8**(1/2))/24), # case 27
-    1-139/144, # case 28
-    1-1/12,  # case 29
-    1-5/12,  # case 30
-]).astype(np.float32)
-
-cdef int [:] VOLUME_LOOKUP = np.array([
-        1,   # 0 = 00000000
-        2,   # 1 = 00000001
-        2,   # 2 = 00000010
-        3,   # 3 = 00000011
-        1,   # 4 = 00000100
-        2,   # 5 = 00000101
-        3,   # 6 = 00000110
-        6,   # 7 = 00000111
-        2,   # 8 = 00001000
-        2,   # 9 = 00001001
-        2,   # 10 = 00001010
-        7,   # 11 = 00001011
-        3,   # 12 = 00001100
-        7,   # 13 = 00001101
-        6,   # 14 = 00001110
-        9,   # 15 = 00001111
-        2,   # 16 = 00010000
-        3,   # 17 = 00010001
-        4,   # 18 = 00010010
-        6,   # 19 = 00010011
-        4,   # 20 = 00010100
-        7,   # 21 = 00010101
-        7,   # 22 = 00010110
-        12,  # 23 = 00010111
-        4,   # 24 = 00011000
-        6,   # 25 = 00011001
-        8,   # 26 = 00011010
-        15,  # 27 = 00011011
-        7,   # 28 = 00011100
-        15,  # 29 = 00011101
-        13,  # 30 = 00011110
-        21,  # 31 = 00011111
-        2,   # 32 = 00100000
-        4,   # 33 = 00100001
-        3,   # 34 = 00100010
-        6,   # 35 = 00100011
-        4,   # 36 = 00100100
-        8,   # 37 = 00100101
-        6,   # 38 = 00100110
-        10,  # 39 = 00100111
-        5,   # 40 = 00101000
-        7,   # 41 = 00101001
-        7,   # 42 = 00101010
-        15,  # 43 = 00101011
-        7,   # 44 = 00101100
-        13,  # 45 = 00101101
-        12,  # 46 = 00101110
-        21,  # 47 = 00101111
-        3,   # 48 = 00110000
-        6,   # 49 = 00110001
-        6,   # 50 = 00110010
-        9,   # 51 = 00110011
-        7,   # 52 = 00110100
-        13,  # 53 = 00110101
-        15,  # 54 = 00110110
-        21,  # 55 = 00110111
-        7,   # 56 = 00111000
-        12,  # 57 = 00111001
-        13,  # 58 = 00111010
-        21,  # 59 = 00111011
-        11,  # 60 = 00111100
-        22,  # 61 = 00111101
-        22,  # 62 = 00111110
-        18,  # 63 = 00111111
-        2,   # 64 = 01000000
-        5,   # 65 = 01000001
-        4,   # 66 = 01000010
-        7,   # 67 = 01000011
-        3,   # 68 = 01000100
-        7,   # 69 = 01000101
-        6,   # 70 = 01000110
-        15,  # 71 = 01000111
-        4,   # 72 = 01001000
-        7,   # 73 = 01001001
-        7,   # 74 = 01001010
-        15,  # 75 = 01001011
-        7,   # 76 = 01001100
-        13,  # 77 = 01001101
-        12,  # 78 = 01001110
-        21,  # 79 = 01001111
-        4,   # 80 = 01010000
-        7,   # 81 = 01010001
-        8,   # 82 = 01010010
-        13,  # 83 = 01010011
-        3,   # 84 = 01010100
-        11,  # 85 = 01010101
-        13,  # 86 = 01010110
-        7,   # 87 = 01010111
-        8,   # 88 = 01011000
-        13,  # 89 = 01011001
-        14,  # 90 = 01011010
-        23,  # 91 = 01011011
-        22,  # 92 = 01011100
-        20,  # 93 = 01011101
-        23,  # 94 = 01011110
-        19,  # 95 = 01011111
-        3,   # 96 = 01100000
-        7,   # 97 = 01100001
-        6,   # 98 = 01100010
-        12,  # 99 = 01100011
-        6,   # 100 = 01100100
-        13,  # 101 = 01100101
-        9,   # 102 = 01100110
-        21,  # 103 = 01100111
-        7,   # 104 = 01101000
-        11,  # 105 = 01101001
-        13,  # 106 = 01101010
-        22,  # 107 = 01101011
-        15,  # 108 = 01101100
-        22,  # 109 = 01101101
-        21,  # 110 = 01101110
-        18,  # 111 = 01101111
-        6,   # 112 = 01110000
-        15,  # 113 = 01110001
-        10,  # 114 = 01110010
-        21,  # 115 = 01110011
-        12,  # 116 = 01110100
-        20,  # 117 = 01110101
-        21,  # 118 = 01110110
-        19,  # 119 = 01110111
-        13,  # 120 = 01111000
-        20,  # 121 = 01111001
-        19,  # 122 = 01111010
-        19,  # 123 = 01111011
-        22,  # 124 = 01111100
-        20,  # 125 = 01111101
-        19,  # 126 = 01111110
-        17,  # 127 = 01111111
-        2,   # 128 = 10000000
-        4,   # 129 = 10000001
-        5,   # 130 = 10000010
-        7,   # 131 = 10000011
-        4,   # 132 = 10000100
-        8,   # 133 = 10000101
-        7,  # 134 = 10000110
-        13, # 135 = 10000111
-        7,  # 136 = 10001000
-        6,  # 137 = 10001001
-        7,  # 138 = 10001010
-        12, # 139 = 10001011
-        6,  # 140 = 10001100
-        10, # 141 = 10001101
-        15, # 142 = 10001110
-        21, # 143 = 10001111
-        7,  # 144 = 10010000
-        6,  # 145 = 10010001
-        7,  # 146 = 10010010
-        15, # 147 = 10010011
-        7,  # 148 = 10010100
-        13, # 149 = 10010101
-        11, # 150 = 10010110
-        22, # 151 = 10010111
-        6,  # 152 = 10011000
-        9,  # 153 = 10011001
-        13, # 154 = 10011010
-        21, # 155 = 10011011
-        12, # 156 = 10011100
-        21, # 157 = 10011101
-        22, # 158 = 10011110
-        18, # 159 = 10011111
-        4,  # 160 = 10100000
-        8,  # 161 = 10100001
-        7,  # 162 = 10100010
-        13, # 163 = 10100011
-        8,  # 164 = 10100100
-        14, # 165 = 10100101
-        13, # 166 = 10100110
-        20, # 167 = 10100111
-        7,  # 168 = 10101000
-        13, # 169 = 10101001
-        11, # 170 = 10101010
-        7,  # 171 = 10101011
-        13, # 172 = 10101100
-        23, # 173 = 10101101
-        22, # 174 = 10101110
-        19, # 175 = 10101111
-        6,  # 176 = 10110000
-        10, # 177 = 10110001
-        12, # 178 = 10110010
-        18, # 179 = 10110011
-        13, # 180 = 10110100
-        19, # 181 = 10110101
-        20, # 182 = 10110110
-        19, # 183 = 10110111
-        15, # 184 = 10111000
-        21, # 185 = 10111001
-        22, # 186 = 10111010
-        18, # 187 = 10111011
-        22, # 188 = 10111100
-        19, # 189 = 10111101
-        20, # 190 = 10111110
-        17, # 191 = 10111111
-        3,  # 192 = 11000000
-        7,  # 193 = 11000001
-        7,  # 194 = 11000010
-        11, # 195 = 11000011
-        6,  # 196 = 11000100
-        13, # 197 = 11000101
-        12, # 198 = 11000110
-        3,  # 199 = 11000111
-        6,  # 200 = 11001000
-        15, # 201 = 11001001
-        13, # 202 = 11001010
-        22, # 203 = 11001011
-        9,  # 204 = 11001100
-        21, # 205 = 11001101
-        21, # 206 = 11001110
-        18, # 207 = 11001111
-        6,  # 208 = 11010000
-        12, # 209 = 11010001
-        13, # 210 = 11010010
-        19, # 211 = 11010011
-        15, # 212 = 11010100
-        18, # 213 = 11010101
-        19, # 214 = 11010110
-        20, # 215 = 11010111
-        10, # 216 = 11011000
-        21, # 217 = 11011001
-        23, # 218 = 11011010
-        19, # 219 = 11011011
-        21, # 220 = 11011100
-        18, # 221 = 11011101
-        19, # 222 = 11011110
-        17, # 223 = 11011111
-        6,  # 224 = 11100000
-        13, # 225 = 11100001
-        15, # 226 = 11100010
-        22, # 227 = 11100011
-        10, # 228 = 11100100
-        23, # 229 = 11100101
-        21, # 230 = 11100110
-        19, # 231 = 11100111
-        12, # 232 = 11101000
-        22, # 233 = 11101001
-        22, # 234 = 11101010
-        20, # 235 = 11101011
-        21, # 236 = 11101100
-        19, # 237 = 11101101
-        18, # 238 = 11101110
-        17, # 239 = 11101111
-        9,  # 240 = 11110000
-        21, # 241 = 11110001
-        21, # 242 = 11110010
-        18, # 243 = 11110011
-        21, # 244 = 11110100
-        19, # 245 = 11110101
-        18, # 246 = 11110110
-        17, # 247 = 11110111
-        21, # 248 = 11111000
-        18, # 249 = 11111001
-        19, # 250 = 11111010
-        17, # 251 = 11111011
-        18, # 252 = 11111100
-        17, # 253 = 11111101
-        17, # 254 = 11111110
-        16, # 255 = 11111111
-])
 
 cdef cnp.float32_t interpolation(cnp.float32_t a, cnp.float32_t b, cnp.float32_t level) nogil: 
     return (a - level) / (a - b + 1e-20)
@@ -585,85 +293,92 @@ cdef int edge_to_vertex_id(int i, int j, int k, int N, int M, int edge_number):
     return calculate_vertex_id(i + dx, j + dy, k + dz, N, M, direction)
 
 
-def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):
+def MarchingCubesLorensen(cnp.float32_t[:, :, :] volume not None, cnp.float32_t level):
 
     # Initialize variables
+    cdef int i, j, k
+    cdef cnp.float32_t SUM
     cdef cnp.float32_t delta
-    cdef int i, j, k, t
     cdef int N, M, P
     cdef list vertices = []
     cdef list vertex_ids = []
     cdef list triangles = []
     cdef list triangle_ids = []
 
-    N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]
+    N, M, P = volume.shape[2], volume.shape[1], volume.shape[0]
     print(N,M,P)
+    cdef bint [50][50][50] mask
+    cdef bint [:,:,:] volume_test = mask
     
+    i,j,k = 0,0,0
+    SUM = 0
+    while (k < P):
+        while (i < N):
+            while (j < M):
+                if (volume[i,j,k] >= level):
+                    volume_test[i,j,k] = True
+                else:
+                    volume_test[i,j,k] = False
+                j += 1
+            i += 1
+        k += 1
+    
+    cdef cnp.float32_t [50][50][50] cube
+    cdef cnp.float32_t [:,:,:] cube_volume = cube
+
+
     cdef int volume_type
     cdef int vertex_id0, vertex_id1, vertex_id2
     cdef int edge0, edge1, edge2
 
+
     i,j,k = 0,0,0
-    for k in range(P):
-        for j in range (M):
-            for i in range (N):
-                if i < (N-1) and mask[i, j, k] != mask[i + 1, j, k]:
+    while (k < P):
+        while (j < M):
+            while (i < N):
+                if i < (N-1) and volume_test[i, j, k] != volume_test[i + 1, j, k]:
                     delta = interpolation(volume[i, j, k], volume[i + 1, j, k], level)
                     vertices.append([i + delta, j, k])
                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionX))
                 
-                if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:
+                if j < (M-1) and volume_test[i, j, k] != volume_test[i, j + 1, k]:
                     delta = interpolation(volume[i, j, k], volume[i, j + 1, k], level)
                     vertices.append([i, j + delta, k])
                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionY))
 
-                if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:
+                if k < (P-1) and volume_test[i, j, k] != volume_test[i, j, k + 1]:
                     delta = interpolation(volume[i, j, k], volume[i, j, k + 1], level)
                     vertices.append([i, j, k + delta])
                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionZ))
             
                 if i == (N - 1) or j == (M - 1) or k == (P - 1):
+                    i += 1
                     continue
 
-                volume_type = 0
-                if mask[i, j, k]:
-                    volume_type |= 1<<0
-                if mask[i + 1, j, k]:
-                    volume_type |= 1<<1
-                if mask[i + 1, j + 1, k]:
-                    volume_type |= 1<<2
-                if mask[i, j + 1, k]:
-                    volume_type |= 1<<3
-                if mask[i, j, k + 1]:
-                    volume_type |= 1<<4
-                if mask[i + 1, j, k + 1]:
-                    volume_type |= 1<<5
-                if mask[i + 1, j + 1, k + 1]:
-                    volume_type |= 1<<6
-                if mask[i, j + 1, k + 1]:
-                    volume_type |= 1<<7
 
-                cube[i, j, k] = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
 
-                lookup = GEOMETRY_LOOKUP[volume_type]
-                t = 0
-                while t < len(lookup):
-                    if lookup[t] < 0:
-                        break
-                    edge0, edge1, edge2 = lookup[t : t + 3]
-                    vertex_id0 = edge_to_vertex_id(i, j, k, N, M, edge0)
-                    vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)
-                    vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)
-                    triangle_ids.append([vertex_id0, vertex_id1, vertex_id2])
-                    t += 3
-    
-    order_of_ids = {id: order for order, id in enumerate(vertex_ids)}
-    for triangle_corners in triangle_ids:
-        triangles.append([order_of_ids[c] for c in triangle_corners])
-    
-    return vertices, triangles
-    
-    
+                i += 1
+            j += 1
+        k += 1
 
-    
+    print("finished")
+    print(vertices)
+    print(vertex_ids)
 
+
+            
+
+
+
+
+
+cdef int cnt = 0
+    i,j,k = 0,0,0
+    while (k < P-1):
+        while (j < M-1):
+            while (i < N-1):               
+                if (mask[i, j, k] != mask[i + 1, j, k]) or (mask[i, j, k] != mask[i, j + 1, k]) or mask[i, j, k] != mask[i, j, k + 1]:
+                    cnt += 1
+                i += 1
+            j += 1
+        k += 1
