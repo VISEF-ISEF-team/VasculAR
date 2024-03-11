@@ -585,23 +585,71 @@ cdef int edge_to_vertex_id(int i, int j, int k, int N, int M, int edge_number):
     return calculate_vertex_id(i + dx, j + dy, k + dz, N, M, direction)
 
 
-def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):
+cdef class FenwickTree3D:
+    cdef cnp.float32_t [:,:,:] bit
+    cdef int n, m, p
+
+    def __cinit__(self, int n, int m, int p):
+        self.n = n
+        self.m = m
+        self.p = p
+        self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+
+    cpdef update(self, int x, int y, int z, cnp.float32_t val):
+        cdef int x1, y1, z1
+        x += 1
+        y += 1
+        z += 1
+        while x <= self.n:
+            y1 = y
+            while y1 <= self.m:
+                z1 = z
+                while z1 <= self.p:
+                    self.bit[x][y1][z1] += val
+                    z1 += z1 & -z1
+                y1 += y1 & -y1
+            x += x & -x
+        
+    cpdef cnp.float32_t getSum(self, int x, int y, int z):
+        cdef int x1, y1, z1
+        x += 1
+        y += 1
+        z += 1
+        cdef cnp.float32_t res = 0
+        while x > 0:
+            y1 = y
+            while y1 > 0:
+                z1 = z
+                while z1 > 0:
+                    res += self.bit[x][y1][z1]
+                    z1 -= z1 & -z1
+                y1 -= y1 & -y1
+            x -= x & -x
+        return res
+        
+    cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):
+        return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+        - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+        
+    
+def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t level):
 
     # Initialize variables
-    cdef cnp.float32_t delta
-    cdef int i, j, k, t
-    cdef int N, M, P
+    cdef cnp.float32_t Sum=0
+    cdef cnp.float32_t delta, CurVol
+    cdef unsigned int i, j, k, t
+    cdef unsigned int N, M, P
     cdef list vertices = []
     cdef list vertex_ids = []
     cdef list triangles = []
     cdef list triangle_ids = []
-
-    N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]
-    print(N,M,P)
-    
     cdef int volume_type
     cdef int vertex_id0, vertex_id1, vertex_id2
     cdef int edge0, edge1, edge2
+
+    # Intialize 3D Fenwick Tree
+    N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]
+    fenwick_tree = FenwickTree3D(N, M, P)
 
     i,j,k = 0,0,0
     for k in range(P):
@@ -643,7 +691,9 @@ def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [
                 if mask[i, j + 1, k + 1]:
                     volume_type |= 1<<7
 
-                cube[i, j, k] = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+                CurVol = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+                Sum += CurVol
+                fenwick_tree.update(i, j, k, CurVol)
 
                 lookup = GEOMETRY_LOOKUP[volume_type]
                 t = 0
@@ -661,7 +711,7 @@ def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [
     for triangle_corners in triangle_ids:
         triangles.append([order_of_ids[c] for c in triangle_corners])
     
-    return vertices, triangles
+    return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum
     
     
 

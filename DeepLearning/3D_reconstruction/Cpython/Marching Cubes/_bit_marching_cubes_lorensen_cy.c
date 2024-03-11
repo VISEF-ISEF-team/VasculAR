@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "_marching_cubes_lorensen_cy",
+        "name": "_bit_marching_cubes_lorensen_cy",
         "sources": [
-            "_marching_cubes_lorensen_cy.pyx"
+            "_bit_marching_cubes_lorensen_cy.pyx"
         ]
     },
-    "module_name": "_marching_cubes_lorensen_cy"
+    "module_name": "_bit_marching_cubes_lorensen_cy"
 }
 END: Cython Metadata */
 
@@ -1199,8 +1199,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE___marching_cubes_lorensen_cy
-#define __PYX_HAVE_API___marching_cubes_lorensen_cy
+#define __PYX_HAVE___bit_marching_cubes_lorensen_cy
+#define __PYX_HAVE_API___bit_marching_cubes_lorensen_cy
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1484,7 +1484,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "_marching_cubes_lorensen_cy.pyx",
+  "_bit_marching_cubes_lorensen_cy.pyx",
   "<stringsource>",
   "__init__.cython-30.pxd",
   "type.pxd",
@@ -1849,6 +1849,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 /* #### Code section: type_declarations ### */
 
 /*--- Type declarations ---*/
+struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
@@ -1889,6 +1890,23 @@ typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
  * cdef inline object PyArray_MultiIterNew1(a):
  */
 typedef npy_cdouble __pyx_t_5numpy_complex_t;
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":588
+ * 
+ * 
+ * cdef class FenwickTree3D:             # <<<<<<<<<<<<<<
+ *     cdef cnp.float32_t [:,:,:] bit
+ *     cdef int n, m, p
+ */
+struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D {
+  PyObject_HEAD
+  struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_vtab;
+  __Pyx_memviewslice bit;
+  int n;
+  int m;
+  int p;
+};
+
 
 /* "View.MemoryView":114
  * @cython.collection_type("sequence")
@@ -1965,6 +1983,22 @@ struct __pyx_memoryviewslice_obj {
   int (*to_dtype_func)(char *, PyObject *);
 };
 
+
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":588
+ * 
+ * 
+ * cdef class FenwickTree3D:             # <<<<<<<<<<<<<<
+ *     cdef cnp.float32_t [:,:,:] bit
+ *     cdef int n, m, p
+ */
+
+struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D {
+  PyObject *(*update)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, __pyx_t_5numpy_float32_t, int __pyx_skip_dispatch);
+  __pyx_t_5numpy_float32_t (*getSum)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, int __pyx_skip_dispatch);
+  __pyx_t_5numpy_float32_t (*queryByRange)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, int, int, int, int __pyx_skip_dispatch);
+};
+static struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_vtabptr_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
 
 
 /* "View.MemoryView":114
@@ -3102,6 +3136,12 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 /* CIntFromPy.proto */
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
+
 /* CIntFromPy.proto */
 static CYTHON_INLINE char __Pyx_PyInt_As_char(PyObject *);
 
@@ -3145,6 +3185,9 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_5shape_shape(PyArrayObjec
 static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayObject *__pyx_v_self); /* proto*/
 static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *__pyx_v_self); /* proto*/
 static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_update(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, __pyx_t_5numpy_float32_t __pyx_v_val, int __pyx_skip_dispatch); /* proto*/
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_getSum(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, int __pyx_skip_dispatch); /* proto*/
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_queryByRange(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x1, int __pyx_v_y1, int __pyx_v_z1, int __pyx_v_x2, int __pyx_v_y2, int __pyx_v_z2, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from "libc.string" */
 
@@ -3166,16 +3209,16 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
 
 /* Module declarations from "libc.stdlib" */
 
-/* Module declarations from "_marching_cubes_lorensen_cy" */
-static __pyx_t_5numpy_float64_t __pyx_v_27_marching_cubes_lorensen_cy_FLT_EPSILON;
-static int __pyx_v_27_marching_cubes_lorensen_cy_DirectionX;
-static int __pyx_v_27_marching_cubes_lorensen_cy_DirectionY;
-static int __pyx_v_27_marching_cubes_lorensen_cy_DirectionZ;
-static __Pyx_memviewslice __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA = { 0, 0, { 0 }, { 0 }, { 0 } };
-static __Pyx_memviewslice __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION = { 0, 0, { 0 }, { 0 }, { 0 } };
-static __Pyx_memviewslice __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
-static __Pyx_memviewslice __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
-static __Pyx_memviewslice __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
+/* Module declarations from "_bit_marching_cubes_lorensen_cy" */
+static __pyx_t_5numpy_float64_t __pyx_v_31_bit_marching_cubes_lorensen_cy_FLT_EPSILON;
+static int __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionX;
+static int __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionY;
+static int __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionZ;
+static __Pyx_memviewslice __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP = { 0, 0, { 0 }, { 0 }, { 0 } };
 static PyObject *__pyx_collections_abc_Sequence = 0;
 static PyObject *generic = 0;
 static PyObject *strided = 0;
@@ -3184,9 +3227,9 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolation(__pyx_t_5numpy_float32_t, __pyx_t_5numpy_float32_t, __pyx_t_5numpy_float32_t); /*proto*/
-static int __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(int, int, int, int, int, int); /*proto*/
-static int __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(int, int, int, int, int, int); /*proto*/
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_interpolation(__pyx_t_5numpy_float32_t, __pyx_t_5numpy_float32_t, __pyx_t_5numpy_float32_t); /*proto*/
+static int __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id(int, int, int, int, int, int); /*proto*/
+static int __pyx_f_31_bit_marching_cubes_lorensen_cy_edge_to_vertex_id(int, int, int, int, int, int); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3226,19 +3269,18 @@ static __Pyx_TypeInfo __Pyx_TypeInfo_int = { "int", NULL, sizeof(int), { 0 }, 0,
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t = { "float32_t", NULL, sizeof(__pyx_t_5numpy_float32_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_int32_t = { "int32_t", NULL, sizeof(__pyx_t_5numpy_int32_t), { 0 }, 0, __PYX_IS_UNSIGNED(__pyx_t_5numpy_int32_t) ? 'U' : 'I', __PYX_IS_UNSIGNED(__pyx_t_5numpy_int32_t), 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "_marching_cubes_lorensen_cy"
-extern int __pyx_module_is_main__marching_cubes_lorensen_cy;
-int __pyx_module_is_main__marching_cubes_lorensen_cy = 0;
+#define __Pyx_MODULE_NAME "_bit_marching_cubes_lorensen_cy"
+extern int __pyx_module_is_main__bit_marching_cubes_lorensen_cy;
+int __pyx_module_is_main__bit_marching_cubes_lorensen_cy = 0;
 
-/* Implementation of "_marching_cubes_lorensen_cy" */
+/* Implementation of "_bit_marching_cubes_lorensen_cy" */
 /* #### Code section: global_var ### */
-static PyObject *__pyx_builtin_print;
 static PyObject *__pyx_builtin_range;
+static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_enumerate;
 static PyObject *__pyx_builtin___import__;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_MemoryError;
-static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_AssertionError;
 static PyObject *__pyx_builtin_Ellipsis;
 static PyObject *__pyx_builtin_id;
@@ -3254,7 +3296,13 @@ static const char __pyx_k_c[] = "c";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_j[] = "j";
 static const char __pyx_k_k[] = "k";
+static const char __pyx_k_m[] = "m";
+static const char __pyx_k_n[] = "n";
+static const char __pyx_k_p[] = "p";
 static const char __pyx_k_t[] = "t";
+static const char __pyx_k_x[] = "x";
+static const char __pyx_k_y[] = "y";
+static const char __pyx_k_z[] = "z";
 static const char __pyx_k__2[] = ".";
 static const char __pyx_k__3[] = "*";
 static const char __pyx_k__6[] = "'";
@@ -3262,7 +3310,14 @@ static const char __pyx_k__7[] = ")";
 static const char __pyx_k_gc[] = "gc";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k__25[] = "?";
+static const char __pyx_k_x1[] = "x1";
+static const char __pyx_k_x2[] = "x2";
+static const char __pyx_k_y1[] = "y1";
+static const char __pyx_k_y2[] = "y2";
+static const char __pyx_k_z1[] = "z1";
+static const char __pyx_k_z2[] = "z2";
+static const char __pyx_k_Sum[] = "Sum";
+static const char __pyx_k__35[] = "?";
 static const char __pyx_k_abc[] = "abc";
 static const char __pyx_k_and[] = " and ";
 static const char __pyx_k_got[] = " (got ";
@@ -3270,8 +3325,8 @@ static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_obj[] = "obj";
 static const char __pyx_k_stl[] = "stl";
 static const char __pyx_k_sys[] = "sys";
+static const char __pyx_k_val[] = "val";
 static const char __pyx_k_base[] = "base";
-static const char __pyx_k_cube[] = "cube";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mask[] = "mask";
@@ -3280,6 +3335,7 @@ static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
 static const char __pyx_k_ndim[] = "ndim";
 static const char __pyx_k_pack[] = "pack";
+static const char __pyx_k_self[] = "self";
 static const char __pyx_k_size[] = "size";
 static const char __pyx_k_spec[] = "__spec__";
 static const char __pyx_k_step[] = "step";
@@ -3299,14 +3355,15 @@ static const char __pyx_k_index[] = "index";
 static const char __pyx_k_level[] = "level";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_order[] = "order";
-static const char __pyx_k_print[] = "print";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_start[] = "start";
+static const char __pyx_k_CurVol[] = "CurVol";
 static const char __pyx_k_astype[] = "astype";
 static const char __pyx_k_enable[] = "enable";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_format[] = "format";
+static const char __pyx_k_getSum[] = "getSum";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_lookup[] = "lookup";
 static const char __pyx_k_name_2[] = "__name__";
@@ -3348,13 +3405,16 @@ static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_volume_type[] = "volume_type";
+static const char __pyx_k_fenwick_tree[] = "fenwick_tree";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_order_of_ids[] = "order_of_ids";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
+static const char __pyx_k_queryByRange[] = "queryByRange";
 static const char __pyx_k_stringsource[] = "<stringsource>";
 static const char __pyx_k_triangle_ids[] = "triangle_ids";
 static const char __pyx_k_version_info[] = "version_info";
+static const char __pyx_k_FenwickTree3D[] = "FenwickTree3D";
 static const char __pyx_k_class_getitem[] = "__class_getitem__";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_AssertionError[] = "AssertionError";
@@ -3369,6 +3429,8 @@ static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
+static const char __pyx_k_FenwickTree3D_getSum[] = "FenwickTree3D.getSum";
+static const char __pyx_k_FenwickTree3D_update[] = "FenwickTree3D.update";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_Invalid_shape_in_axis[] = "Invalid shape in axis ";
 static const char __pyx_k_MarchingCubesLorensen[] = "MarchingCubesLorensen";
@@ -3378,13 +3440,15 @@ static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>"
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_Dimension_d_is_not_direct[] = "Dimension %d is not direct";
+static const char __pyx_k_FenwickTree3D_queryByRange[] = "FenwickTree3D.queryByRange";
 static const char __pyx_k_Index_out_of_bounds_axis_d[] = "Index out of bounds (axis %d)";
-static const char __pyx_k_marching_cubes_lorensen_cy[] = "_marching_cubes_lorensen_cy";
 static const char __pyx_k_Step_may_not_be_zero_axis_d[] = "Step may not be zero (axis %d)";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
+static const char __pyx_k_FenwickTree3D___reduce_cython[] = "FenwickTree3D.__reduce_cython__";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
-static const char __pyx_k_marching_cubes_lorensen_cy_pyx[] = "_marching_cubes_lorensen_cy.pyx";
+static const char __pyx_k_bit_marching_cubes_lorensen_cy[] = "_bit_marching_cubes_lorensen_cy.pyx";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
+static const char __pyx_k_FenwickTree3D___setstate_cython[] = "FenwickTree3D.__setstate_cython__";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_All_dimensions_preceding_dimensi[] = "All dimensions preceding dimension %d must be indexed and not sliced";
 static const char __pyx_k_Buffer_view_does_not_expose_stri[] = "Buffer view does not expose strides";
@@ -3398,6 +3462,7 @@ static const char __pyx_k_Indirect_dimensions_not_supporte[] = "Indirect dimensi
 static const char __pyx_k_Invalid_mode_expected_c_or_fortr[] = "Invalid mode, expected 'c' or 'fortran', got ";
 static const char __pyx_k_Out_of_bounds_on_buffer_access_a[] = "Out of bounds on buffer access (axis ";
 static const char __pyx_k_Unable_to_convert_item_to_object[] = "Unable to convert item to object";
+static const char __pyx_k_bit_marching_cubes_lorensen_cy_2[] = "_bit_marching_cubes_lorensen_cy";
 static const char __pyx_k_got_differing_extents_in_dimensi[] = "got differing extents in dimension ";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
@@ -3444,7 +3509,14 @@ static void __pyx_memoryviewslice___pyx_pf_15View_dot_MemoryView_16_memoryviewsl
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_volume, __Pyx_memviewslice __pyx_v_mask, __Pyx_memviewslice __pyx_v_cube, __pyx_t_5numpy_float32_t __pyx_v_level); /* proto */
+static int __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D___cinit__(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_n, int __pyx_v_m, int __pyx_v_p); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_2update(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, __pyx_t_5numpy_float32_t __pyx_v_val); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_4getSum(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_6queryByRange(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x1, int __pyx_v_y1, int __pyx_v_z1, int __pyx_v_x2, int __pyx_v_y2, int __pyx_v_z2); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_MarchingCubesLorensen(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_volume, __Pyx_memviewslice __pyx_v_mask, __pyx_t_5numpy_float32_t __pyx_v_level); /* proto */
+static PyObject *__pyx_tp_new_31_bit_marching_cubes_lorensen_cy_FenwickTree3D(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3513,11 +3585,13 @@ typedef struct {
   #if CYTHON_USE_MODULE_STATE
   #endif
   #if CYTHON_USE_MODULE_STATE
+  PyObject *__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
   PyObject *__pyx_type___pyx_array;
   PyObject *__pyx_type___pyx_MemviewEnum;
   PyObject *__pyx_type___pyx_memoryview;
   PyObject *__pyx_type___pyx_memoryviewslice;
   #endif
+  PyTypeObject *__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
   PyTypeObject *__pyx_array_type;
   PyTypeObject *__pyx_MemviewEnum_type;
   PyTypeObject *__pyx_memoryview_type;
@@ -3532,9 +3606,16 @@ typedef struct {
   PyObject *__pyx_kp_s_Cannot_create_writable_memory_vi;
   PyObject *__pyx_kp_u_Cannot_index_with_type;
   PyObject *__pyx_kp_s_Cannot_transpose_memoryview_with;
+  PyObject *__pyx_n_s_CurVol;
   PyObject *__pyx_kp_s_Dimension_d_is_not_direct;
   PyObject *__pyx_n_s_Ellipsis;
   PyObject *__pyx_kp_s_Empty_shape_tuple_for_cython_arr;
+  PyObject *__pyx_n_s_FenwickTree3D;
+  PyObject *__pyx_n_s_FenwickTree3D___reduce_cython;
+  PyObject *__pyx_n_s_FenwickTree3D___setstate_cython;
+  PyObject *__pyx_n_s_FenwickTree3D_getSum;
+  PyObject *__pyx_n_s_FenwickTree3D_queryByRange;
+  PyObject *__pyx_n_s_FenwickTree3D_update;
   PyObject *__pyx_n_s_ImportError;
   PyObject *__pyx_kp_s_Incompatible_checksums_0x_x_vs_0;
   PyObject *__pyx_n_s_IndexError;
@@ -3554,13 +3635,14 @@ typedef struct {
   PyObject *__pyx_n_s_PickleError;
   PyObject *__pyx_n_s_Sequence;
   PyObject *__pyx_kp_s_Step_may_not_be_zero_axis_d;
+  PyObject *__pyx_n_s_Sum;
   PyObject *__pyx_n_s_TypeError;
   PyObject *__pyx_kp_s_Unable_to_convert_item_to_object;
   PyObject *__pyx_n_s_ValueError;
   PyObject *__pyx_n_s_View_MemoryView;
   PyObject *__pyx_kp_u__2;
-  PyObject *__pyx_n_s__25;
   PyObject *__pyx_n_s__3;
+  PyObject *__pyx_n_s__35;
   PyObject *__pyx_kp_u__6;
   PyObject *__pyx_kp_u__7;
   PyObject *__pyx_n_s_abc;
@@ -3570,6 +3652,8 @@ typedef struct {
   PyObject *__pyx_n_s_astype;
   PyObject *__pyx_n_s_asyncio_coroutines;
   PyObject *__pyx_n_s_base;
+  PyObject *__pyx_kp_s_bit_marching_cubes_lorensen_cy;
+  PyObject *__pyx_n_s_bit_marching_cubes_lorensen_cy_2;
   PyObject *__pyx_n_s_c;
   PyObject *__pyx_n_u_c;
   PyObject *__pyx_n_s_class;
@@ -3580,7 +3664,6 @@ typedef struct {
   PyObject *__pyx_kp_s_contiguous_and_direct;
   PyObject *__pyx_kp_s_contiguous_and_indirect;
   PyObject *__pyx_n_s_count;
-  PyObject *__pyx_n_s_cube;
   PyObject *__pyx_n_s_delta;
   PyObject *__pyx_n_s_dict;
   PyObject *__pyx_kp_u_disable;
@@ -3592,12 +3675,14 @@ typedef struct {
   PyObject *__pyx_n_s_encode;
   PyObject *__pyx_n_s_enumerate;
   PyObject *__pyx_n_s_error;
+  PyObject *__pyx_n_s_fenwick_tree;
   PyObject *__pyx_n_s_flags;
   PyObject *__pyx_n_s_float32;
   PyObject *__pyx_n_s_format;
   PyObject *__pyx_n_s_fortran;
   PyObject *__pyx_n_u_fortran;
   PyObject *__pyx_kp_u_gc;
+  PyObject *__pyx_n_s_getSum;
   PyObject *__pyx_n_s_getstate;
   PyObject *__pyx_kp_u_got;
   PyObject *__pyx_kp_u_got_differing_extents_in_dimensi;
@@ -3614,13 +3699,13 @@ typedef struct {
   PyObject *__pyx_n_s_k;
   PyObject *__pyx_n_s_level;
   PyObject *__pyx_n_s_lookup;
+  PyObject *__pyx_n_s_m;
   PyObject *__pyx_n_s_main;
-  PyObject *__pyx_n_s_marching_cubes_lorensen_cy;
-  PyObject *__pyx_kp_s_marching_cubes_lorensen_cy_pyx;
   PyObject *__pyx_n_s_mask;
   PyObject *__pyx_n_s_memview;
   PyObject *__pyx_n_s_mesh;
   PyObject *__pyx_n_s_mode;
+  PyObject *__pyx_n_s_n;
   PyObject *__pyx_n_s_name;
   PyObject *__pyx_n_s_name_2;
   PyObject *__pyx_n_s_ndim;
@@ -3633,9 +3718,9 @@ typedef struct {
   PyObject *__pyx_n_s_obj;
   PyObject *__pyx_n_s_order;
   PyObject *__pyx_n_s_order_of_ids;
+  PyObject *__pyx_n_s_p;
   PyObject *__pyx_n_s_pack;
   PyObject *__pyx_n_s_pickle;
-  PyObject *__pyx_n_s_print;
   PyObject *__pyx_n_s_pyx_PickleError;
   PyObject *__pyx_n_s_pyx_checksum;
   PyObject *__pyx_n_s_pyx_result;
@@ -3643,11 +3728,13 @@ typedef struct {
   PyObject *__pyx_n_s_pyx_type;
   PyObject *__pyx_n_s_pyx_unpickle_Enum;
   PyObject *__pyx_n_s_pyx_vtable;
+  PyObject *__pyx_n_s_queryByRange;
   PyObject *__pyx_n_s_range;
   PyObject *__pyx_n_s_reduce;
   PyObject *__pyx_n_s_reduce_cython;
   PyObject *__pyx_n_s_reduce_ex;
   PyObject *__pyx_n_s_register;
+  PyObject *__pyx_n_s_self;
   PyObject *__pyx_n_s_setstate;
   PyObject *__pyx_n_s_setstate_cython;
   PyObject *__pyx_n_s_shape;
@@ -3673,6 +3760,7 @@ typedef struct {
   PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
   PyObject *__pyx_n_s_unpack;
   PyObject *__pyx_n_s_update;
+  PyObject *__pyx_n_s_val;
   PyObject *__pyx_n_s_version_info;
   PyObject *__pyx_n_s_vertex_id0;
   PyObject *__pyx_n_s_vertex_id1;
@@ -3681,6 +3769,16 @@ typedef struct {
   PyObject *__pyx_n_s_vertices;
   PyObject *__pyx_n_s_volume;
   PyObject *__pyx_n_s_volume_type;
+  PyObject *__pyx_n_s_x;
+  PyObject *__pyx_n_s_x1;
+  PyObject *__pyx_n_s_x2;
+  PyObject *__pyx_n_s_y;
+  PyObject *__pyx_n_s_y1;
+  PyObject *__pyx_n_s_y2;
+  PyObject *__pyx_n_s_z;
+  PyObject *__pyx_n_s_z1;
+  PyObject *__pyx_n_s_z2;
+  PyObject *__pyx_float_0_0;
   PyObject *__pyx_float_1_0;
   PyObject *__pyx_int_0;
   PyObject *__pyx_int_1;
@@ -3727,8 +3825,18 @@ typedef struct {
   PyObject *__pyx_tuple__20;
   PyObject *__pyx_tuple__22;
   PyObject *__pyx_tuple__23;
+  PyObject *__pyx_tuple__25;
+  PyObject *__pyx_tuple__27;
+  PyObject *__pyx_tuple__29;
+  PyObject *__pyx_tuple__31;
+  PyObject *__pyx_tuple__33;
   PyObject *__pyx_codeobj__21;
   PyObject *__pyx_codeobj__24;
+  PyObject *__pyx_codeobj__26;
+  PyObject *__pyx_codeobj__28;
+  PyObject *__pyx_codeobj__30;
+  PyObject *__pyx_codeobj__32;
+  PyObject *__pyx_codeobj__34;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -3787,6 +3895,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_flexible);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_character);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ufunc);
+  Py_CLEAR(clear_module_state->__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
+  Py_CLEAR(clear_module_state->__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
   Py_CLEAR(clear_module_state->__pyx_array_type);
   Py_CLEAR(clear_module_state->__pyx_type___pyx_array);
   Py_CLEAR(clear_module_state->__pyx_MemviewEnum_type);
@@ -3805,9 +3915,16 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_Cannot_create_writable_memory_vi);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Cannot_index_with_type);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Cannot_transpose_memoryview_with);
+  Py_CLEAR(clear_module_state->__pyx_n_s_CurVol);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Dimension_d_is_not_direct);
   Py_CLEAR(clear_module_state->__pyx_n_s_Ellipsis);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Empty_shape_tuple_for_cython_arr);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D___reduce_cython);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D___setstate_cython);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D_getSum);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D_queryByRange);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FenwickTree3D_update);
   Py_CLEAR(clear_module_state->__pyx_n_s_ImportError);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Incompatible_checksums_0x_x_vs_0);
   Py_CLEAR(clear_module_state->__pyx_n_s_IndexError);
@@ -3827,13 +3944,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_Sequence);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Step_may_not_be_zero_axis_d);
+  Py_CLEAR(clear_module_state->__pyx_n_s_Sum);
   Py_CLEAR(clear_module_state->__pyx_n_s_TypeError);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Unable_to_convert_item_to_object);
   Py_CLEAR(clear_module_state->__pyx_n_s_ValueError);
   Py_CLEAR(clear_module_state->__pyx_n_s_View_MemoryView);
   Py_CLEAR(clear_module_state->__pyx_kp_u__2);
-  Py_CLEAR(clear_module_state->__pyx_n_s__25);
   Py_CLEAR(clear_module_state->__pyx_n_s__3);
+  Py_CLEAR(clear_module_state->__pyx_n_s__35);
   Py_CLEAR(clear_module_state->__pyx_kp_u__6);
   Py_CLEAR(clear_module_state->__pyx_kp_u__7);
   Py_CLEAR(clear_module_state->__pyx_n_s_abc);
@@ -3843,6 +3961,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_astype);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
   Py_CLEAR(clear_module_state->__pyx_n_s_base);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_bit_marching_cubes_lorensen_cy);
+  Py_CLEAR(clear_module_state->__pyx_n_s_bit_marching_cubes_lorensen_cy_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_c);
   Py_CLEAR(clear_module_state->__pyx_n_u_c);
   Py_CLEAR(clear_module_state->__pyx_n_s_class);
@@ -3853,7 +3973,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_contiguous_and_direct);
   Py_CLEAR(clear_module_state->__pyx_kp_s_contiguous_and_indirect);
   Py_CLEAR(clear_module_state->__pyx_n_s_count);
-  Py_CLEAR(clear_module_state->__pyx_n_s_cube);
   Py_CLEAR(clear_module_state->__pyx_n_s_delta);
   Py_CLEAR(clear_module_state->__pyx_n_s_dict);
   Py_CLEAR(clear_module_state->__pyx_kp_u_disable);
@@ -3865,12 +3984,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_encode);
   Py_CLEAR(clear_module_state->__pyx_n_s_enumerate);
   Py_CLEAR(clear_module_state->__pyx_n_s_error);
+  Py_CLEAR(clear_module_state->__pyx_n_s_fenwick_tree);
   Py_CLEAR(clear_module_state->__pyx_n_s_flags);
   Py_CLEAR(clear_module_state->__pyx_n_s_float32);
   Py_CLEAR(clear_module_state->__pyx_n_s_format);
   Py_CLEAR(clear_module_state->__pyx_n_s_fortran);
   Py_CLEAR(clear_module_state->__pyx_n_u_fortran);
   Py_CLEAR(clear_module_state->__pyx_kp_u_gc);
+  Py_CLEAR(clear_module_state->__pyx_n_s_getSum);
   Py_CLEAR(clear_module_state->__pyx_n_s_getstate);
   Py_CLEAR(clear_module_state->__pyx_kp_u_got);
   Py_CLEAR(clear_module_state->__pyx_kp_u_got_differing_extents_in_dimensi);
@@ -3887,13 +4008,13 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_k);
   Py_CLEAR(clear_module_state->__pyx_n_s_level);
   Py_CLEAR(clear_module_state->__pyx_n_s_lookup);
+  Py_CLEAR(clear_module_state->__pyx_n_s_m);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
-  Py_CLEAR(clear_module_state->__pyx_n_s_marching_cubes_lorensen_cy);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_marching_cubes_lorensen_cy_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_mask);
   Py_CLEAR(clear_module_state->__pyx_n_s_memview);
   Py_CLEAR(clear_module_state->__pyx_n_s_mesh);
   Py_CLEAR(clear_module_state->__pyx_n_s_mode);
+  Py_CLEAR(clear_module_state->__pyx_n_s_n);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
   Py_CLEAR(clear_module_state->__pyx_n_s_name_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_ndim);
@@ -3906,9 +4027,9 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_obj);
   Py_CLEAR(clear_module_state->__pyx_n_s_order);
   Py_CLEAR(clear_module_state->__pyx_n_s_order_of_ids);
+  Py_CLEAR(clear_module_state->__pyx_n_s_p);
   Py_CLEAR(clear_module_state->__pyx_n_s_pack);
   Py_CLEAR(clear_module_state->__pyx_n_s_pickle);
-  Py_CLEAR(clear_module_state->__pyx_n_s_print);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_checksum);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_result);
@@ -3916,11 +4037,13 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_type);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_unpickle_Enum);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_vtable);
+  Py_CLEAR(clear_module_state->__pyx_n_s_queryByRange);
   Py_CLEAR(clear_module_state->__pyx_n_s_range);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_ex);
   Py_CLEAR(clear_module_state->__pyx_n_s_register);
+  Py_CLEAR(clear_module_state->__pyx_n_s_self);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_shape);
@@ -3946,6 +4069,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_unable_to_allocate_shape_and_str);
   Py_CLEAR(clear_module_state->__pyx_n_s_unpack);
   Py_CLEAR(clear_module_state->__pyx_n_s_update);
+  Py_CLEAR(clear_module_state->__pyx_n_s_val);
   Py_CLEAR(clear_module_state->__pyx_n_s_version_info);
   Py_CLEAR(clear_module_state->__pyx_n_s_vertex_id0);
   Py_CLEAR(clear_module_state->__pyx_n_s_vertex_id1);
@@ -3954,6 +4078,16 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_vertices);
   Py_CLEAR(clear_module_state->__pyx_n_s_volume);
   Py_CLEAR(clear_module_state->__pyx_n_s_volume_type);
+  Py_CLEAR(clear_module_state->__pyx_n_s_x);
+  Py_CLEAR(clear_module_state->__pyx_n_s_x1);
+  Py_CLEAR(clear_module_state->__pyx_n_s_x2);
+  Py_CLEAR(clear_module_state->__pyx_n_s_y);
+  Py_CLEAR(clear_module_state->__pyx_n_s_y1);
+  Py_CLEAR(clear_module_state->__pyx_n_s_y2);
+  Py_CLEAR(clear_module_state->__pyx_n_s_z);
+  Py_CLEAR(clear_module_state->__pyx_n_s_z1);
+  Py_CLEAR(clear_module_state->__pyx_n_s_z2);
+  Py_CLEAR(clear_module_state->__pyx_float_0_0);
   Py_CLEAR(clear_module_state->__pyx_float_1_0);
   Py_CLEAR(clear_module_state->__pyx_int_0);
   Py_CLEAR(clear_module_state->__pyx_int_1);
@@ -4000,8 +4134,18 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__20);
   Py_CLEAR(clear_module_state->__pyx_tuple__22);
   Py_CLEAR(clear_module_state->__pyx_tuple__23);
+  Py_CLEAR(clear_module_state->__pyx_tuple__25);
+  Py_CLEAR(clear_module_state->__pyx_tuple__27);
+  Py_CLEAR(clear_module_state->__pyx_tuple__29);
+  Py_CLEAR(clear_module_state->__pyx_tuple__31);
+  Py_CLEAR(clear_module_state->__pyx_tuple__33);
   Py_CLEAR(clear_module_state->__pyx_codeobj__21);
   Py_CLEAR(clear_module_state->__pyx_codeobj__24);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__26);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__28);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__30);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__32);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__34);
   return 0;
 }
 #endif
@@ -4038,6 +4182,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_flexible);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_character);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ufunc);
+  Py_VISIT(traverse_module_state->__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
+  Py_VISIT(traverse_module_state->__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
   Py_VISIT(traverse_module_state->__pyx_array_type);
   Py_VISIT(traverse_module_state->__pyx_type___pyx_array);
   Py_VISIT(traverse_module_state->__pyx_MemviewEnum_type);
@@ -4056,9 +4202,16 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_Cannot_create_writable_memory_vi);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Cannot_index_with_type);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Cannot_transpose_memoryview_with);
+  Py_VISIT(traverse_module_state->__pyx_n_s_CurVol);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Dimension_d_is_not_direct);
   Py_VISIT(traverse_module_state->__pyx_n_s_Ellipsis);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Empty_shape_tuple_for_cython_arr);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D___reduce_cython);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D___setstate_cython);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D_getSum);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D_queryByRange);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FenwickTree3D_update);
   Py_VISIT(traverse_module_state->__pyx_n_s_ImportError);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Incompatible_checksums_0x_x_vs_0);
   Py_VISIT(traverse_module_state->__pyx_n_s_IndexError);
@@ -4078,13 +4231,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_Sequence);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Step_may_not_be_zero_axis_d);
+  Py_VISIT(traverse_module_state->__pyx_n_s_Sum);
   Py_VISIT(traverse_module_state->__pyx_n_s_TypeError);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Unable_to_convert_item_to_object);
   Py_VISIT(traverse_module_state->__pyx_n_s_ValueError);
   Py_VISIT(traverse_module_state->__pyx_n_s_View_MemoryView);
   Py_VISIT(traverse_module_state->__pyx_kp_u__2);
-  Py_VISIT(traverse_module_state->__pyx_n_s__25);
   Py_VISIT(traverse_module_state->__pyx_n_s__3);
+  Py_VISIT(traverse_module_state->__pyx_n_s__35);
   Py_VISIT(traverse_module_state->__pyx_kp_u__6);
   Py_VISIT(traverse_module_state->__pyx_kp_u__7);
   Py_VISIT(traverse_module_state->__pyx_n_s_abc);
@@ -4094,6 +4248,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_astype);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
   Py_VISIT(traverse_module_state->__pyx_n_s_base);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_bit_marching_cubes_lorensen_cy);
+  Py_VISIT(traverse_module_state->__pyx_n_s_bit_marching_cubes_lorensen_cy_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_c);
   Py_VISIT(traverse_module_state->__pyx_n_u_c);
   Py_VISIT(traverse_module_state->__pyx_n_s_class);
@@ -4104,7 +4260,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_contiguous_and_direct);
   Py_VISIT(traverse_module_state->__pyx_kp_s_contiguous_and_indirect);
   Py_VISIT(traverse_module_state->__pyx_n_s_count);
-  Py_VISIT(traverse_module_state->__pyx_n_s_cube);
   Py_VISIT(traverse_module_state->__pyx_n_s_delta);
   Py_VISIT(traverse_module_state->__pyx_n_s_dict);
   Py_VISIT(traverse_module_state->__pyx_kp_u_disable);
@@ -4116,12 +4271,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_encode);
   Py_VISIT(traverse_module_state->__pyx_n_s_enumerate);
   Py_VISIT(traverse_module_state->__pyx_n_s_error);
+  Py_VISIT(traverse_module_state->__pyx_n_s_fenwick_tree);
   Py_VISIT(traverse_module_state->__pyx_n_s_flags);
   Py_VISIT(traverse_module_state->__pyx_n_s_float32);
   Py_VISIT(traverse_module_state->__pyx_n_s_format);
   Py_VISIT(traverse_module_state->__pyx_n_s_fortran);
   Py_VISIT(traverse_module_state->__pyx_n_u_fortran);
   Py_VISIT(traverse_module_state->__pyx_kp_u_gc);
+  Py_VISIT(traverse_module_state->__pyx_n_s_getSum);
   Py_VISIT(traverse_module_state->__pyx_n_s_getstate);
   Py_VISIT(traverse_module_state->__pyx_kp_u_got);
   Py_VISIT(traverse_module_state->__pyx_kp_u_got_differing_extents_in_dimensi);
@@ -4138,13 +4295,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_k);
   Py_VISIT(traverse_module_state->__pyx_n_s_level);
   Py_VISIT(traverse_module_state->__pyx_n_s_lookup);
+  Py_VISIT(traverse_module_state->__pyx_n_s_m);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
-  Py_VISIT(traverse_module_state->__pyx_n_s_marching_cubes_lorensen_cy);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_marching_cubes_lorensen_cy_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_mask);
   Py_VISIT(traverse_module_state->__pyx_n_s_memview);
   Py_VISIT(traverse_module_state->__pyx_n_s_mesh);
   Py_VISIT(traverse_module_state->__pyx_n_s_mode);
+  Py_VISIT(traverse_module_state->__pyx_n_s_n);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
   Py_VISIT(traverse_module_state->__pyx_n_s_name_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_ndim);
@@ -4157,9 +4314,9 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_obj);
   Py_VISIT(traverse_module_state->__pyx_n_s_order);
   Py_VISIT(traverse_module_state->__pyx_n_s_order_of_ids);
+  Py_VISIT(traverse_module_state->__pyx_n_s_p);
   Py_VISIT(traverse_module_state->__pyx_n_s_pack);
   Py_VISIT(traverse_module_state->__pyx_n_s_pickle);
-  Py_VISIT(traverse_module_state->__pyx_n_s_print);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_checksum);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_result);
@@ -4167,11 +4324,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_type);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_unpickle_Enum);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_vtable);
+  Py_VISIT(traverse_module_state->__pyx_n_s_queryByRange);
   Py_VISIT(traverse_module_state->__pyx_n_s_range);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_ex);
   Py_VISIT(traverse_module_state->__pyx_n_s_register);
+  Py_VISIT(traverse_module_state->__pyx_n_s_self);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_shape);
@@ -4197,6 +4356,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_unable_to_allocate_shape_and_str);
   Py_VISIT(traverse_module_state->__pyx_n_s_unpack);
   Py_VISIT(traverse_module_state->__pyx_n_s_update);
+  Py_VISIT(traverse_module_state->__pyx_n_s_val);
   Py_VISIT(traverse_module_state->__pyx_n_s_version_info);
   Py_VISIT(traverse_module_state->__pyx_n_s_vertex_id0);
   Py_VISIT(traverse_module_state->__pyx_n_s_vertex_id1);
@@ -4205,6 +4365,16 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_vertices);
   Py_VISIT(traverse_module_state->__pyx_n_s_volume);
   Py_VISIT(traverse_module_state->__pyx_n_s_volume_type);
+  Py_VISIT(traverse_module_state->__pyx_n_s_x);
+  Py_VISIT(traverse_module_state->__pyx_n_s_x1);
+  Py_VISIT(traverse_module_state->__pyx_n_s_x2);
+  Py_VISIT(traverse_module_state->__pyx_n_s_y);
+  Py_VISIT(traverse_module_state->__pyx_n_s_y1);
+  Py_VISIT(traverse_module_state->__pyx_n_s_y2);
+  Py_VISIT(traverse_module_state->__pyx_n_s_z);
+  Py_VISIT(traverse_module_state->__pyx_n_s_z1);
+  Py_VISIT(traverse_module_state->__pyx_n_s_z2);
+  Py_VISIT(traverse_module_state->__pyx_float_0_0);
   Py_VISIT(traverse_module_state->__pyx_float_1_0);
   Py_VISIT(traverse_module_state->__pyx_int_0);
   Py_VISIT(traverse_module_state->__pyx_int_1);
@@ -4251,8 +4421,18 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__20);
   Py_VISIT(traverse_module_state->__pyx_tuple__22);
   Py_VISIT(traverse_module_state->__pyx_tuple__23);
+  Py_VISIT(traverse_module_state->__pyx_tuple__25);
+  Py_VISIT(traverse_module_state->__pyx_tuple__27);
+  Py_VISIT(traverse_module_state->__pyx_tuple__29);
+  Py_VISIT(traverse_module_state->__pyx_tuple__31);
+  Py_VISIT(traverse_module_state->__pyx_tuple__33);
   Py_VISIT(traverse_module_state->__pyx_codeobj__21);
   Py_VISIT(traverse_module_state->__pyx_codeobj__24);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__26);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__28);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__30);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__32);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__34);
   return 0;
 }
 #endif
@@ -4318,11 +4498,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #if CYTHON_USE_MODULE_STATE
 #endif
 #if CYTHON_USE_MODULE_STATE
+#define __pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D __pyx_mstate_global->__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D
 #define __pyx_type___pyx_array __pyx_mstate_global->__pyx_type___pyx_array
 #define __pyx_type___pyx_MemviewEnum __pyx_mstate_global->__pyx_type___pyx_MemviewEnum
 #define __pyx_type___pyx_memoryview __pyx_mstate_global->__pyx_type___pyx_memoryview
 #define __pyx_type___pyx_memoryviewslice __pyx_mstate_global->__pyx_type___pyx_memoryviewslice
 #endif
+#define __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D __pyx_mstate_global->__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D
 #define __pyx_array_type __pyx_mstate_global->__pyx_array_type
 #define __pyx_MemviewEnum_type __pyx_mstate_global->__pyx_MemviewEnum_type
 #define __pyx_memoryview_type __pyx_mstate_global->__pyx_memoryview_type
@@ -4337,9 +4519,16 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_Cannot_create_writable_memory_vi __pyx_mstate_global->__pyx_kp_s_Cannot_create_writable_memory_vi
 #define __pyx_kp_u_Cannot_index_with_type __pyx_mstate_global->__pyx_kp_u_Cannot_index_with_type
 #define __pyx_kp_s_Cannot_transpose_memoryview_with __pyx_mstate_global->__pyx_kp_s_Cannot_transpose_memoryview_with
+#define __pyx_n_s_CurVol __pyx_mstate_global->__pyx_n_s_CurVol
 #define __pyx_kp_s_Dimension_d_is_not_direct __pyx_mstate_global->__pyx_kp_s_Dimension_d_is_not_direct
 #define __pyx_n_s_Ellipsis __pyx_mstate_global->__pyx_n_s_Ellipsis
 #define __pyx_kp_s_Empty_shape_tuple_for_cython_arr __pyx_mstate_global->__pyx_kp_s_Empty_shape_tuple_for_cython_arr
+#define __pyx_n_s_FenwickTree3D __pyx_mstate_global->__pyx_n_s_FenwickTree3D
+#define __pyx_n_s_FenwickTree3D___reduce_cython __pyx_mstate_global->__pyx_n_s_FenwickTree3D___reduce_cython
+#define __pyx_n_s_FenwickTree3D___setstate_cython __pyx_mstate_global->__pyx_n_s_FenwickTree3D___setstate_cython
+#define __pyx_n_s_FenwickTree3D_getSum __pyx_mstate_global->__pyx_n_s_FenwickTree3D_getSum
+#define __pyx_n_s_FenwickTree3D_queryByRange __pyx_mstate_global->__pyx_n_s_FenwickTree3D_queryByRange
+#define __pyx_n_s_FenwickTree3D_update __pyx_mstate_global->__pyx_n_s_FenwickTree3D_update
 #define __pyx_n_s_ImportError __pyx_mstate_global->__pyx_n_s_ImportError
 #define __pyx_kp_s_Incompatible_checksums_0x_x_vs_0 __pyx_mstate_global->__pyx_kp_s_Incompatible_checksums_0x_x_vs_0
 #define __pyx_n_s_IndexError __pyx_mstate_global->__pyx_n_s_IndexError
@@ -4359,13 +4548,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_PickleError __pyx_mstate_global->__pyx_n_s_PickleError
 #define __pyx_n_s_Sequence __pyx_mstate_global->__pyx_n_s_Sequence
 #define __pyx_kp_s_Step_may_not_be_zero_axis_d __pyx_mstate_global->__pyx_kp_s_Step_may_not_be_zero_axis_d
+#define __pyx_n_s_Sum __pyx_mstate_global->__pyx_n_s_Sum
 #define __pyx_n_s_TypeError __pyx_mstate_global->__pyx_n_s_TypeError
 #define __pyx_kp_s_Unable_to_convert_item_to_object __pyx_mstate_global->__pyx_kp_s_Unable_to_convert_item_to_object
 #define __pyx_n_s_ValueError __pyx_mstate_global->__pyx_n_s_ValueError
 #define __pyx_n_s_View_MemoryView __pyx_mstate_global->__pyx_n_s_View_MemoryView
 #define __pyx_kp_u__2 __pyx_mstate_global->__pyx_kp_u__2
-#define __pyx_n_s__25 __pyx_mstate_global->__pyx_n_s__25
 #define __pyx_n_s__3 __pyx_mstate_global->__pyx_n_s__3
+#define __pyx_n_s__35 __pyx_mstate_global->__pyx_n_s__35
 #define __pyx_kp_u__6 __pyx_mstate_global->__pyx_kp_u__6
 #define __pyx_kp_u__7 __pyx_mstate_global->__pyx_kp_u__7
 #define __pyx_n_s_abc __pyx_mstate_global->__pyx_n_s_abc
@@ -4375,6 +4565,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_astype __pyx_mstate_global->__pyx_n_s_astype
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
 #define __pyx_n_s_base __pyx_mstate_global->__pyx_n_s_base
+#define __pyx_kp_s_bit_marching_cubes_lorensen_cy __pyx_mstate_global->__pyx_kp_s_bit_marching_cubes_lorensen_cy
+#define __pyx_n_s_bit_marching_cubes_lorensen_cy_2 __pyx_mstate_global->__pyx_n_s_bit_marching_cubes_lorensen_cy_2
 #define __pyx_n_s_c __pyx_mstate_global->__pyx_n_s_c
 #define __pyx_n_u_c __pyx_mstate_global->__pyx_n_u_c
 #define __pyx_n_s_class __pyx_mstate_global->__pyx_n_s_class
@@ -4385,7 +4577,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_contiguous_and_direct __pyx_mstate_global->__pyx_kp_s_contiguous_and_direct
 #define __pyx_kp_s_contiguous_and_indirect __pyx_mstate_global->__pyx_kp_s_contiguous_and_indirect
 #define __pyx_n_s_count __pyx_mstate_global->__pyx_n_s_count
-#define __pyx_n_s_cube __pyx_mstate_global->__pyx_n_s_cube
 #define __pyx_n_s_delta __pyx_mstate_global->__pyx_n_s_delta
 #define __pyx_n_s_dict __pyx_mstate_global->__pyx_n_s_dict
 #define __pyx_kp_u_disable __pyx_mstate_global->__pyx_kp_u_disable
@@ -4397,12 +4588,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_encode __pyx_mstate_global->__pyx_n_s_encode
 #define __pyx_n_s_enumerate __pyx_mstate_global->__pyx_n_s_enumerate
 #define __pyx_n_s_error __pyx_mstate_global->__pyx_n_s_error
+#define __pyx_n_s_fenwick_tree __pyx_mstate_global->__pyx_n_s_fenwick_tree
 #define __pyx_n_s_flags __pyx_mstate_global->__pyx_n_s_flags
 #define __pyx_n_s_float32 __pyx_mstate_global->__pyx_n_s_float32
 #define __pyx_n_s_format __pyx_mstate_global->__pyx_n_s_format
 #define __pyx_n_s_fortran __pyx_mstate_global->__pyx_n_s_fortran
 #define __pyx_n_u_fortran __pyx_mstate_global->__pyx_n_u_fortran
 #define __pyx_kp_u_gc __pyx_mstate_global->__pyx_kp_u_gc
+#define __pyx_n_s_getSum __pyx_mstate_global->__pyx_n_s_getSum
 #define __pyx_n_s_getstate __pyx_mstate_global->__pyx_n_s_getstate
 #define __pyx_kp_u_got __pyx_mstate_global->__pyx_kp_u_got
 #define __pyx_kp_u_got_differing_extents_in_dimensi __pyx_mstate_global->__pyx_kp_u_got_differing_extents_in_dimensi
@@ -4419,13 +4612,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_k __pyx_mstate_global->__pyx_n_s_k
 #define __pyx_n_s_level __pyx_mstate_global->__pyx_n_s_level
 #define __pyx_n_s_lookup __pyx_mstate_global->__pyx_n_s_lookup
+#define __pyx_n_s_m __pyx_mstate_global->__pyx_n_s_m
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
-#define __pyx_n_s_marching_cubes_lorensen_cy __pyx_mstate_global->__pyx_n_s_marching_cubes_lorensen_cy
-#define __pyx_kp_s_marching_cubes_lorensen_cy_pyx __pyx_mstate_global->__pyx_kp_s_marching_cubes_lorensen_cy_pyx
 #define __pyx_n_s_mask __pyx_mstate_global->__pyx_n_s_mask
 #define __pyx_n_s_memview __pyx_mstate_global->__pyx_n_s_memview
 #define __pyx_n_s_mesh __pyx_mstate_global->__pyx_n_s_mesh
 #define __pyx_n_s_mode __pyx_mstate_global->__pyx_n_s_mode
+#define __pyx_n_s_n __pyx_mstate_global->__pyx_n_s_n
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
 #define __pyx_n_s_name_2 __pyx_mstate_global->__pyx_n_s_name_2
 #define __pyx_n_s_ndim __pyx_mstate_global->__pyx_n_s_ndim
@@ -4438,9 +4631,9 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_obj __pyx_mstate_global->__pyx_n_s_obj
 #define __pyx_n_s_order __pyx_mstate_global->__pyx_n_s_order
 #define __pyx_n_s_order_of_ids __pyx_mstate_global->__pyx_n_s_order_of_ids
+#define __pyx_n_s_p __pyx_mstate_global->__pyx_n_s_p
 #define __pyx_n_s_pack __pyx_mstate_global->__pyx_n_s_pack
 #define __pyx_n_s_pickle __pyx_mstate_global->__pyx_n_s_pickle
-#define __pyx_n_s_print __pyx_mstate_global->__pyx_n_s_print
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
 #define __pyx_n_s_pyx_checksum __pyx_mstate_global->__pyx_n_s_pyx_checksum
 #define __pyx_n_s_pyx_result __pyx_mstate_global->__pyx_n_s_pyx_result
@@ -4448,11 +4641,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_pyx_type __pyx_mstate_global->__pyx_n_s_pyx_type
 #define __pyx_n_s_pyx_unpickle_Enum __pyx_mstate_global->__pyx_n_s_pyx_unpickle_Enum
 #define __pyx_n_s_pyx_vtable __pyx_mstate_global->__pyx_n_s_pyx_vtable
+#define __pyx_n_s_queryByRange __pyx_mstate_global->__pyx_n_s_queryByRange
 #define __pyx_n_s_range __pyx_mstate_global->__pyx_n_s_range
 #define __pyx_n_s_reduce __pyx_mstate_global->__pyx_n_s_reduce
 #define __pyx_n_s_reduce_cython __pyx_mstate_global->__pyx_n_s_reduce_cython
 #define __pyx_n_s_reduce_ex __pyx_mstate_global->__pyx_n_s_reduce_ex
 #define __pyx_n_s_register __pyx_mstate_global->__pyx_n_s_register
+#define __pyx_n_s_self __pyx_mstate_global->__pyx_n_s_self
 #define __pyx_n_s_setstate __pyx_mstate_global->__pyx_n_s_setstate
 #define __pyx_n_s_setstate_cython __pyx_mstate_global->__pyx_n_s_setstate_cython
 #define __pyx_n_s_shape __pyx_mstate_global->__pyx_n_s_shape
@@ -4478,6 +4673,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_unable_to_allocate_shape_and_str __pyx_mstate_global->__pyx_kp_s_unable_to_allocate_shape_and_str
 #define __pyx_n_s_unpack __pyx_mstate_global->__pyx_n_s_unpack
 #define __pyx_n_s_update __pyx_mstate_global->__pyx_n_s_update
+#define __pyx_n_s_val __pyx_mstate_global->__pyx_n_s_val
 #define __pyx_n_s_version_info __pyx_mstate_global->__pyx_n_s_version_info
 #define __pyx_n_s_vertex_id0 __pyx_mstate_global->__pyx_n_s_vertex_id0
 #define __pyx_n_s_vertex_id1 __pyx_mstate_global->__pyx_n_s_vertex_id1
@@ -4486,6 +4682,16 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_vertices __pyx_mstate_global->__pyx_n_s_vertices
 #define __pyx_n_s_volume __pyx_mstate_global->__pyx_n_s_volume
 #define __pyx_n_s_volume_type __pyx_mstate_global->__pyx_n_s_volume_type
+#define __pyx_n_s_x __pyx_mstate_global->__pyx_n_s_x
+#define __pyx_n_s_x1 __pyx_mstate_global->__pyx_n_s_x1
+#define __pyx_n_s_x2 __pyx_mstate_global->__pyx_n_s_x2
+#define __pyx_n_s_y __pyx_mstate_global->__pyx_n_s_y
+#define __pyx_n_s_y1 __pyx_mstate_global->__pyx_n_s_y1
+#define __pyx_n_s_y2 __pyx_mstate_global->__pyx_n_s_y2
+#define __pyx_n_s_z __pyx_mstate_global->__pyx_n_s_z
+#define __pyx_n_s_z1 __pyx_mstate_global->__pyx_n_s_z1
+#define __pyx_n_s_z2 __pyx_mstate_global->__pyx_n_s_z2
+#define __pyx_float_0_0 __pyx_mstate_global->__pyx_float_0_0
 #define __pyx_float_1_0 __pyx_mstate_global->__pyx_float_1_0
 #define __pyx_int_0 __pyx_mstate_global->__pyx_int_0
 #define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
@@ -4532,8 +4738,18 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__20 __pyx_mstate_global->__pyx_tuple__20
 #define __pyx_tuple__22 __pyx_mstate_global->__pyx_tuple__22
 #define __pyx_tuple__23 __pyx_mstate_global->__pyx_tuple__23
+#define __pyx_tuple__25 __pyx_mstate_global->__pyx_tuple__25
+#define __pyx_tuple__27 __pyx_mstate_global->__pyx_tuple__27
+#define __pyx_tuple__29 __pyx_mstate_global->__pyx_tuple__29
+#define __pyx_tuple__31 __pyx_mstate_global->__pyx_tuple__31
+#define __pyx_tuple__33 __pyx_mstate_global->__pyx_tuple__33
 #define __pyx_codeobj__21 __pyx_mstate_global->__pyx_codeobj__21
 #define __pyx_codeobj__24 __pyx_mstate_global->__pyx_codeobj__24
+#define __pyx_codeobj__26 __pyx_mstate_global->__pyx_codeobj__26
+#define __pyx_codeobj__28 __pyx_mstate_global->__pyx_codeobj__28
+#define __pyx_codeobj__30 __pyx_mstate_global->__pyx_codeobj__30
+#define __pyx_codeobj__32 __pyx_mstate_global->__pyx_codeobj__32
+#define __pyx_codeobj__34 __pyx_mstate_global->__pyx_codeobj__34
 /* #### Code section: module_code ### */
 
 /* "View.MemoryView":131
@@ -19416,7 +19632,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "_marching_cubes_lorensen_cy.pyx":575
+/* "_bit_marching_cubes_lorensen_cy.pyx":575
  * ])
  * 
  * cdef cnp.float32_t interpolation(cnp.float32_t a, cnp.float32_t b, cnp.float32_t level) nogil:             # <<<<<<<<<<<<<<
@@ -19424,7 +19640,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
  * 
  */
 
-static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolation(__pyx_t_5numpy_float32_t __pyx_v_a, __pyx_t_5numpy_float32_t __pyx_v_b, __pyx_t_5numpy_float32_t __pyx_v_level) {
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_interpolation(__pyx_t_5numpy_float32_t __pyx_v_a, __pyx_t_5numpy_float32_t __pyx_v_b, __pyx_t_5numpy_float32_t __pyx_v_level) {
   __pyx_t_5numpy_float32_t __pyx_r;
   __pyx_t_5numpy_float32_t __pyx_t_1;
   double __pyx_t_2;
@@ -19435,7 +19651,7 @@ static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolat
   PyGILState_STATE __pyx_gilstate_save;
   #endif
 
-  /* "_marching_cubes_lorensen_cy.pyx":576
+  /* "_bit_marching_cubes_lorensen_cy.pyx":576
  * 
  * cdef cnp.float32_t interpolation(cnp.float32_t a, cnp.float32_t b, cnp.float32_t level) nogil:
  *     return (a - level) / (a - b + 1e-20)             # <<<<<<<<<<<<<<
@@ -19457,7 +19673,7 @@ static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolat
   __pyx_r = (((double)__pyx_t_1) / __pyx_t_2);
   goto __pyx_L0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":575
+  /* "_bit_marching_cubes_lorensen_cy.pyx":575
  * ])
  * 
  * cdef cnp.float32_t interpolation(cnp.float32_t a, cnp.float32_t b, cnp.float32_t level) nogil:             # <<<<<<<<<<<<<<
@@ -19470,7 +19686,7 @@ static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolat
   #ifdef WITH_THREAD
   __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
   #endif
-  __Pyx_AddTraceback("_marching_cubes_lorensen_cy.interpolation", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.interpolation", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   #ifdef WITH_THREAD
   __Pyx_PyGILState_Release(__pyx_gilstate_save);
@@ -19479,7 +19695,7 @@ static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolat
   return __pyx_r;
 }
 
-/* "_marching_cubes_lorensen_cy.pyx":578
+/* "_bit_marching_cubes_lorensen_cy.pyx":578
  *     return (a - level) / (a - b + 1e-20)
  * 
  * cdef int calculate_vertex_id (int i, int j, int k, int N, int M, int direction):             # <<<<<<<<<<<<<<
@@ -19487,10 +19703,10 @@ static __pyx_t_5numpy_float32_t __pyx_f_27_marching_cubes_lorensen_cy_interpolat
  * 
  */
 
-static int __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, int __pyx_v_N, int __pyx_v_M, int __pyx_v_direction) {
+static int __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, int __pyx_v_N, int __pyx_v_M, int __pyx_v_direction) {
   int __pyx_r;
 
-  /* "_marching_cubes_lorensen_cy.pyx":579
+  /* "_bit_marching_cubes_lorensen_cy.pyx":579
  * 
  * cdef int calculate_vertex_id (int i, int j, int k, int N, int M, int direction):
  *     return (i + j * N + k * N * M) * 3 + direction             # <<<<<<<<<<<<<<
@@ -19500,7 +19716,7 @@ static int __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(int __pyx_v
   __pyx_r = ((((__pyx_v_i + (__pyx_v_j * __pyx_v_N)) + ((__pyx_v_k * __pyx_v_N) * __pyx_v_M)) * 3) + __pyx_v_direction);
   goto __pyx_L0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":578
+  /* "_bit_marching_cubes_lorensen_cy.pyx":578
  *     return (a - level) / (a - b + 1e-20)
  * 
  * cdef int calculate_vertex_id (int i, int j, int k, int N, int M, int direction):             # <<<<<<<<<<<<<<
@@ -19513,7 +19729,7 @@ static int __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(int __pyx_v
   return __pyx_r;
 }
 
-/* "_marching_cubes_lorensen_cy.pyx":581
+/* "_bit_marching_cubes_lorensen_cy.pyx":581
  *     return (i + j * N + k * N * M) * 3 + direction
  * 
  * cdef int edge_to_vertex_id(int i, int j, int k, int N, int M, int edge_number):             # <<<<<<<<<<<<<<
@@ -19521,7 +19737,7 @@ static int __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(int __pyx_v
  *     dx, dy, dz = EDGE_DELTA[edge_number]
  */
 
-static int __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, int __pyx_v_N, int __pyx_v_M, int __pyx_v_edge_number) {
+static int __pyx_f_31_bit_marching_cubes_lorensen_cy_edge_to_vertex_id(int __pyx_v_i, int __pyx_v_j, int __pyx_v_k, int __pyx_v_N, int __pyx_v_M, int __pyx_v_edge_number) {
   int __pyx_v_dx;
   int __pyx_v_dy;
   int __pyx_v_dz;
@@ -19544,21 +19760,21 @@ static int __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(int __pyx_v_i
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("edge_to_vertex_id", 1);
 
-  /* "_marching_cubes_lorensen_cy.pyx":583
+  /* "_bit_marching_cubes_lorensen_cy.pyx":583
  * cdef int edge_to_vertex_id(int i, int j, int k, int N, int M, int edge_number):
  *     cdef int dx, dy, dz, direction
  *     dx, dy, dz = EDGE_DELTA[edge_number]             # <<<<<<<<<<<<<<
  *     direction = EDGE_DIRECTION[edge_number]
  *     return calculate_vertex_id(i + dx, j + dy, k + dz, N, M, direction)
  */
-  if (unlikely(!__pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.memview)) { __Pyx_RaiseUnboundLocalError("EDGE_DELTA"); __PYX_ERR(0, 583, __pyx_L1_error) }
-  __pyx_t_1.data = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.data;
-  __pyx_t_1.memview = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.memview;
+  if (unlikely(!__pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.memview)) { __Pyx_RaiseUnboundLocalError("EDGE_DELTA"); __PYX_ERR(0, 583, __pyx_L1_error) }
+  __pyx_t_1.data = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.data;
+  __pyx_t_1.memview = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 1);
   {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_edge_number;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
@@ -19569,8 +19785,8 @@ static int __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(int __pyx_v_i
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_1.shape[0] = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.shape[1];
-__pyx_t_1.strides[0] = __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA.strides[1];
+__pyx_t_1.shape[0] = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.shape[1];
+__pyx_t_1.strides[0] = __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA.strides[1];
     __pyx_t_1.suboffsets[0] = -1;
 
 __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_t_1, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 583, __pyx_L1_error)
@@ -19640,38 +19856,38 @@ __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_t_1, 1, (PyObject *(*)(char *)) __p
   __pyx_v_dy = __pyx_t_9;
   __pyx_v_dz = __pyx_t_10;
 
-  /* "_marching_cubes_lorensen_cy.pyx":584
+  /* "_bit_marching_cubes_lorensen_cy.pyx":584
  *     cdef int dx, dy, dz, direction
  *     dx, dy, dz = EDGE_DELTA[edge_number]
  *     direction = EDGE_DIRECTION[edge_number]             # <<<<<<<<<<<<<<
  *     return calculate_vertex_id(i + dx, j + dy, k + dz, N, M, direction)
  * 
  */
-  if (unlikely(!__pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION.memview)) { __Pyx_RaiseUnboundLocalError("EDGE_DIRECTION"); __PYX_ERR(0, 584, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION.memview)) { __Pyx_RaiseUnboundLocalError("EDGE_DIRECTION"); __PYX_ERR(0, 584, __pyx_L1_error) }
   __pyx_t_11 = __pyx_v_edge_number;
   __pyx_t_10 = -1;
   if (__pyx_t_11 < 0) {
-    __pyx_t_11 += __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION.shape[0];
+    __pyx_t_11 += __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION.shape[0];
     if (unlikely(__pyx_t_11 < 0)) __pyx_t_10 = 0;
-  } else if (unlikely(__pyx_t_11 >= __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION.shape[0])) __pyx_t_10 = 0;
+  } else if (unlikely(__pyx_t_11 >= __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION.shape[0])) __pyx_t_10 = 0;
   if (unlikely(__pyx_t_10 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_10);
     __PYX_ERR(0, 584, __pyx_L1_error)
   }
-  __pyx_v_direction = (*((int *) ( /* dim=0 */ (__pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION.data + __pyx_t_11 * __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION.strides[0]) )));
+  __pyx_v_direction = (*((int *) ( /* dim=0 */ (__pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION.data + __pyx_t_11 * __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION.strides[0]) )));
 
-  /* "_marching_cubes_lorensen_cy.pyx":585
+  /* "_bit_marching_cubes_lorensen_cy.pyx":585
  *     dx, dy, dz = EDGE_DELTA[edge_number]
  *     direction = EDGE_DIRECTION[edge_number]
  *     return calculate_vertex_id(i + dx, j + dy, k + dz, N, M, direction)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_10 = __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id((__pyx_v_i + __pyx_v_dx), (__pyx_v_j + __pyx_v_dy), (__pyx_v_k + __pyx_v_dz), __pyx_v_N, __pyx_v_M, __pyx_v_direction); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 585, __pyx_L1_error)
+  __pyx_t_10 = __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id((__pyx_v_i + __pyx_v_dx), (__pyx_v_j + __pyx_v_dy), (__pyx_v_k + __pyx_v_dz), __pyx_v_N, __pyx_v_M, __pyx_v_direction); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 585, __pyx_L1_error)
   __pyx_r = __pyx_t_10;
   goto __pyx_L0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":581
+  /* "_bit_marching_cubes_lorensen_cy.pyx":581
  *     return (i + j * N + k * N * M) * 3 + direction
  * 
  * cdef int edge_to_vertex_id(int i, int j, int k, int N, int M, int edge_number):             # <<<<<<<<<<<<<<
@@ -19687,41 +19903,602 @@ __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_t_1, 1, (PyObject *(*)(char *)) __p
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("_marching_cubes_lorensen_cy.edge_to_vertex_id", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.edge_to_vertex_id", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "_marching_cubes_lorensen_cy.pyx":588
+/* "_bit_marching_cubes_lorensen_cy.pyx":592
+ *     cdef int n, m, p
  * 
- * 
- * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
- * 
- *     # Initialize variables
+ *     def __cinit__(self, int n, int m, int p):             # <<<<<<<<<<<<<<
+ *         self.n = n
+ *         self.m = m
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_27_marching_cubes_lorensen_cy_1MarchingCubesLorensen(PyObject *__pyx_self, 
+static int __pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  int __pyx_v_n;
+  int __pyx_v_m;
+  int __pyx_v_p;
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return -1;
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_n,&__pyx_n_s_m,&__pyx_n_s_p,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_VARARGS(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_n)) != 0)) {
+          (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_m)) != 0)) {
+          (void)__Pyx_Arg_NewRef_VARARGS(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 3, 3, 1); __PYX_ERR(0, 592, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_p)) != 0)) {
+          (void)__Pyx_Arg_NewRef_VARARGS(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 3, 3, 2); __PYX_ERR(0, 592, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__cinit__") < 0)) __PYX_ERR(0, 592, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
+      values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
+      values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+    }
+    __pyx_v_n = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_n == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+    __pyx_v_m = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_m == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+    __pyx_v_p = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_p == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 592, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 592, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D___cinit__(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self), __pyx_v_n, __pyx_v_m, __pyx_v_p);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D___cinit__(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_n, int __pyx_v_m, int __pyx_v_p) {
+  CYTHON_UNUSED long __pyx_7genexpr__pyx_v__;
+  CYTHON_UNUSED long __pyx_8genexpr1__pyx_v__;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  long __pyx_t_5;
+  long __pyx_t_6;
+  long __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  long __pyx_t_9;
+  long __pyx_t_10;
+  long __pyx_t_11;
+  long __pyx_t_12;
+  PyObject *__pyx_t_13 = NULL;
+  int __pyx_t_14;
+  __Pyx_memviewslice __pyx_t_15 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__cinit__", 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":593
+ * 
+ *     def __cinit__(self, int n, int m, int p):
+ *         self.n = n             # <<<<<<<<<<<<<<
+ *         self.m = m
+ *         self.p = p
+ */
+  __pyx_v_self->n = __pyx_v_n;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":594
+ *     def __cinit__(self, int n, int m, int p):
+ *         self.n = n
+ *         self.m = m             # <<<<<<<<<<<<<<
+ *         self.p = p
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ */
+  __pyx_v_self->m = __pyx_v_m;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":595
+ *         self.n = n
+ *         self.m = m
+ *         self.p = p             # <<<<<<<<<<<<<<
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ * 
+ */
+  __pyx_v_self->p = __pyx_v_p;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":596
+ *         self.m = m
+ *         self.p = p
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_array); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  { /* enter inner scope */
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 596, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_5 = (__pyx_v_n + 1);
+    __pyx_t_6 = __pyx_t_5;
+    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+      __pyx_7genexpr__pyx_v__ = __pyx_t_7;
+      { /* enter inner scope */
+        __pyx_t_8 = PyList_New(0); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 596, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_9 = (__pyx_v_m + 1);
+        __pyx_t_10 = __pyx_t_9;
+        for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+          __pyx_8genexpr1__pyx_v__ = __pyx_t_11;
+          __pyx_t_12 = (__pyx_v_p + 1);
+          __pyx_t_13 = PyList_New(1 * ((__pyx_t_12<0) ? 0:__pyx_t_12)); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 596, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_13);
+          { Py_ssize_t __pyx_temp;
+            for (__pyx_temp=0; __pyx_temp < __pyx_t_12; __pyx_temp++) {
+              __Pyx_INCREF(__pyx_float_0_0);
+              __Pyx_GIVEREF(__pyx_float_0_0);
+              if (__Pyx_PyList_SET_ITEM(__pyx_t_13, __pyx_temp, __pyx_float_0_0)) __PYX_ERR(0, 596, __pyx_L1_error);
+            }
+          }
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_8, (PyObject*)__pyx_t_13))) __PYX_ERR(0, 596, __pyx_L1_error)
+          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+        }
+      } /* exit inner scope */
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_8))) __PYX_ERR(0, 596, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    }
+  } /* exit inner scope */
+  __pyx_t_8 = NULL;
+  __pyx_t_14 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_4);
+    if (likely(__pyx_t_8)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_8);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_4, function);
+      __pyx_t_14 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_8, __pyx_t_3};
+    __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_14, 1+__pyx_t_14);
+    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 596, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  }
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_astype); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float32); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = NULL;
+  __pyx_t_14 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (likely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_4, function);
+      __pyx_t_14 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_t_3};
+    __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_14, 1+__pyx_t_14);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 596, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  }
+  __pyx_t_15 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float32_t(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_15.memview)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_self->bit, 0);
+  __pyx_v_self->bit = __pyx_t_15;
+  __pyx_t_15.memview = NULL;
+  __pyx_t_15.data = NULL;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":592
+ *     cdef int n, m, p
+ * 
+ *     def __cinit__(self, int n, int m, int p):             # <<<<<<<<<<<<<<
+ *         self.n = n
+ *         self.m = m
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_13);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_15, 1);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":598
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ * 
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_27_marching_cubes_lorensen_cy_1MarchingCubesLorensen = {"MarchingCubesLorensen", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_27_marching_cubes_lorensen_cy_1MarchingCubesLorensen, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_27_marching_cubes_lorensen_cy_1MarchingCubesLorensen(PyObject *__pyx_self, 
+static PyObject *__pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_update(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, __pyx_t_5numpy_float32_t __pyx_v_val, int __pyx_skip_dispatch) {
+  int __pyx_v_y1;
+  int __pyx_v_z1;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
+  Py_ssize_t __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("update", 1);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || __Pyx_PyType_HasFeature(Py_TYPE(((PyObject *)__pyx_v_self)), (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
+    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
+      PY_UINT64_T __pyx_typedict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      #endif
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_update); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 598, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update)) {
+        __Pyx_XDECREF(__pyx_r);
+        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 598, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 598, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_z); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 598, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_6 = PyFloat_FromDouble(__pyx_v_val); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 598, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __Pyx_INCREF(__pyx_t_1);
+        __pyx_t_7 = __pyx_t_1; __pyx_t_8 = NULL;
+        __pyx_t_9 = 0;
+        #if CYTHON_UNPACK_METHODS
+        if (unlikely(PyMethod_Check(__pyx_t_7))) {
+          __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_7);
+          if (likely(__pyx_t_8)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+            __Pyx_INCREF(__pyx_t_8);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_7, function);
+            __pyx_t_9 = 1;
+          }
+        }
+        #endif
+        {
+          PyObject *__pyx_callargs[5] = {__pyx_t_8, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6};
+          __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_7, __pyx_callargs+1-__pyx_t_9, 4+__pyx_t_9);
+          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 598, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_2);
+          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        }
+        __pyx_r = __pyx_t_2;
+        __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L0;
+      }
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
+      if (unlikely(__pyx_typedict_guard != __pyx_tp_dict_version)) {
+        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+      }
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    }
+    #endif
+  }
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":600
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):
+ *         cdef int x1, y1, z1
+ *         x += 1             # <<<<<<<<<<<<<<
+ *         y += 1
+ *         z += 1
+ */
+  __pyx_v_x = (__pyx_v_x + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":601
+ *         cdef int x1, y1, z1
+ *         x += 1
+ *         y += 1             # <<<<<<<<<<<<<<
+ *         z += 1
+ *         while x <= self.n:
+ */
+  __pyx_v_y = (__pyx_v_y + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":602
+ *         x += 1
+ *         y += 1
+ *         z += 1             # <<<<<<<<<<<<<<
+ *         while x <= self.n:
+ *             y1 = y
+ */
+  __pyx_v_z = (__pyx_v_z + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":603
+ *         y += 1
+ *         z += 1
+ *         while x <= self.n:             # <<<<<<<<<<<<<<
+ *             y1 = y
+ *             while y1 <= self.m:
+ */
+  while (1) {
+    __pyx_t_10 = (__pyx_v_x <= __pyx_v_self->n);
+    if (!__pyx_t_10) break;
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":604
+ *         z += 1
+ *         while x <= self.n:
+ *             y1 = y             # <<<<<<<<<<<<<<
+ *             while y1 <= self.m:
+ *                 z1 = z
+ */
+    __pyx_v_y1 = __pyx_v_y;
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":605
+ *         while x <= self.n:
+ *             y1 = y
+ *             while y1 <= self.m:             # <<<<<<<<<<<<<<
+ *                 z1 = z
+ *                 while z1 <= self.p:
+ */
+    while (1) {
+      __pyx_t_10 = (__pyx_v_y1 <= __pyx_v_self->m);
+      if (!__pyx_t_10) break;
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":606
+ *             y1 = y
+ *             while y1 <= self.m:
+ *                 z1 = z             # <<<<<<<<<<<<<<
+ *                 while z1 <= self.p:
+ *                     self.bit[x][y1][z1] += val
+ */
+      __pyx_v_z1 = __pyx_v_z;
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":607
+ *             while y1 <= self.m:
+ *                 z1 = z
+ *                 while z1 <= self.p:             # <<<<<<<<<<<<<<
+ *                     self.bit[x][y1][z1] += val
+ *                     z1 += z1 & -z1
+ */
+      while (1) {
+        __pyx_t_10 = (__pyx_v_z1 <= __pyx_v_self->p);
+        if (!__pyx_t_10) break;
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":608
+ *                 z1 = z
+ *                 while z1 <= self.p:
+ *                     self.bit[x][y1][z1] += val             # <<<<<<<<<<<<<<
+ *                     z1 += z1 & -z1
+ *                 y1 += y1 & -y1
+ */
+        if (unlikely(!__pyx_v_self->bit.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 608, __pyx_L1_error)}
+        __pyx_t_11 = __pyx_v_x;
+        __pyx_t_12 = __pyx_v_y1;
+        __pyx_t_13 = __pyx_v_z1;
+        __pyx_t_9 = -1;
+        if (__pyx_t_11 < 0) {
+          __pyx_t_11 += __pyx_v_self->bit.shape[0];
+          if (unlikely(__pyx_t_11 < 0)) __pyx_t_9 = 0;
+        } else if (unlikely(__pyx_t_11 >= __pyx_v_self->bit.shape[0])) __pyx_t_9 = 0;
+        if (__pyx_t_12 < 0) {
+          __pyx_t_12 += __pyx_v_self->bit.shape[1];
+          if (unlikely(__pyx_t_12 < 0)) __pyx_t_9 = 1;
+        } else if (unlikely(__pyx_t_12 >= __pyx_v_self->bit.shape[1])) __pyx_t_9 = 1;
+        if (__pyx_t_13 < 0) {
+          __pyx_t_13 += __pyx_v_self->bit.shape[2];
+          if (unlikely(__pyx_t_13 < 0)) __pyx_t_9 = 2;
+        } else if (unlikely(__pyx_t_13 >= __pyx_v_self->bit.shape[2])) __pyx_t_9 = 2;
+        if (unlikely(__pyx_t_9 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_9);
+          __PYX_ERR(0, 608, __pyx_L1_error)
+        }
+        *((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->bit.data + __pyx_t_11 * __pyx_v_self->bit.strides[0]) ) + __pyx_t_12 * __pyx_v_self->bit.strides[1]) ) + __pyx_t_13 * __pyx_v_self->bit.strides[2]) )) += __pyx_v_val;
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":609
+ *                 while z1 <= self.p:
+ *                     self.bit[x][y1][z1] += val
+ *                     z1 += z1 & -z1             # <<<<<<<<<<<<<<
+ *                 y1 += y1 & -y1
+ *             x += x & -x
+ */
+        __pyx_v_z1 = (__pyx_v_z1 + (__pyx_v_z1 & (-__pyx_v_z1)));
+      }
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":610
+ *                     self.bit[x][y1][z1] += val
+ *                     z1 += z1 & -z1
+ *                 y1 += y1 & -y1             # <<<<<<<<<<<<<<
+ *             x += x & -x
+ * 
+ */
+      __pyx_v_y1 = (__pyx_v_y1 + (__pyx_v_y1 & (-__pyx_v_y1)));
+    }
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":611
+ *                     z1 += z1 & -z1
+ *                 y1 += y1 & -y1
+ *             x += x & -x             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):
+ */
+    __pyx_v_x = (__pyx_v_x + (__pyx_v_x & (-__pyx_v_x)));
+  }
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":598
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ * 
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.update", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update = {"update", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ) {
-  __Pyx_memviewslice __pyx_v_volume = { 0, 0, { 0 }, { 0 }, { 0 } };
-  __Pyx_memviewslice __pyx_v_mask = { 0, 0, { 0 }, { 0 }, { 0 } };
-  __Pyx_memviewslice __pyx_v_cube = { 0, 0, { 0 }, { 0 }, { 0 } };
-  __pyx_t_5numpy_float32_t __pyx_v_level;
+  int __pyx_v_x;
+  int __pyx_v_y;
+  int __pyx_v_z;
+  __pyx_t_5numpy_float32_t __pyx_v_val;
   #if !CYTHON_METH_FASTCALL
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   #endif
@@ -19732,7 +20509,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("MarchingCubesLorensen (wrapper)", 0);
+  __Pyx_RefNannySetupContext("update (wrapper)", 0);
   #if !CYTHON_METH_FASTCALL
   #if CYTHON_ASSUME_SAFE_MACROS
   __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
@@ -19742,7 +20519,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   #endif
   __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
   {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_volume,&__pyx_n_s_mask,&__pyx_n_s_cube,&__pyx_n_s_level,0};
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_x,&__pyx_n_s_y,&__pyx_n_s_z,&__pyx_n_s_val,0};
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
@@ -19760,46 +20537,46 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
       switch (__pyx_nargs) {
         case  0:
-        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_volume)) != 0)) {
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
-        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_mask)) != 0)) {
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_y)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 4, 4, 1); __PYX_ERR(0, 588, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("update", 1, 4, 4, 1); __PYX_ERR(0, 598, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
-        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cube)) != 0)) {
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_z)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 4, 4, 2); __PYX_ERR(0, 588, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("update", 1, 4, 4, 2); __PYX_ERR(0, 598, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
-        if (likely((values[3] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_level)) != 0)) {
+        if (likely((values[3] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_val)) != 0)) {
           (void)__Pyx_Arg_NewRef_FASTCALL(values[3]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 4, 4, 3); __PYX_ERR(0, 588, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("update", 1, 4, 4, 3); __PYX_ERR(0, 598, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "MarchingCubesLorensen") < 0)) __PYX_ERR(0, 588, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "update") < 0)) __PYX_ERR(0, 598, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 4)) {
       goto __pyx_L5_argtuple_error;
@@ -19809,14 +20586,1189 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
       values[3] = __Pyx_Arg_FASTCALL(__pyx_args, 3);
     }
-    __pyx_v_volume = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float32_t(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_volume.memview)) __PYX_ERR(0, 588, __pyx_L3_error)
-    __pyx_v_mask = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_mask.memview)) __PYX_ERR(0, 588, __pyx_L3_error)
-    __pyx_v_cube = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float32_t(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_cube.memview)) __PYX_ERR(0, 588, __pyx_L3_error)
-    __pyx_v_level = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_level == ((npy_float32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L3_error)
+    __pyx_v_x = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_x == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
+    __pyx_v_y = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
+    __pyx_v_z = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_z == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
+    __pyx_v_val = __pyx_PyFloat_AsFloat(values[3]); if (unlikely((__pyx_v_val == ((npy_float32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 598, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 4, 4, __pyx_nargs); __PYX_ERR(0, 588, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("update", 1, 4, 4, __pyx_nargs); __PYX_ERR(0, 598, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.update", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_2update(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self), __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_val);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_2update(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, __pyx_t_5numpy_float32_t __pyx_v_val) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("update", 1);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_update(__pyx_v_self, __pyx_v_x, __pyx_v_y, __pyx_v_z, __pyx_v_val, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 598, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.update", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":613
+ *             x += x & -x
+ * 
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_getSum(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z, int __pyx_skip_dispatch) {
+  int __pyx_v_y1;
+  int __pyx_v_z1;
+  __pyx_t_5numpy_float32_t __pyx_v_res;
+  __pyx_t_5numpy_float32_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  int __pyx_t_8;
+  __pyx_t_5numpy_float32_t __pyx_t_9;
+  int __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
+  Py_ssize_t __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("getSum", 1);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || __Pyx_PyType_HasFeature(Py_TYPE(((PyObject *)__pyx_v_self)), (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
+    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
+      PY_UINT64_T __pyx_typedict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      #endif
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_getSum); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 613, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum)) {
+        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 613, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 613, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_z); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 613, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_1);
+        __pyx_t_6 = __pyx_t_1; __pyx_t_7 = NULL;
+        __pyx_t_8 = 0;
+        #if CYTHON_UNPACK_METHODS
+        if (unlikely(PyMethod_Check(__pyx_t_6))) {
+          __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_6);
+          if (likely(__pyx_t_7)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+            __Pyx_INCREF(__pyx_t_7);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_6, function);
+            __pyx_t_8 = 1;
+          }
+        }
+        #endif
+        {
+          PyObject *__pyx_callargs[4] = {__pyx_t_7, __pyx_t_3, __pyx_t_4, __pyx_t_5};
+          __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_6, __pyx_callargs+1-__pyx_t_8, 3+__pyx_t_8);
+          __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 613, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_2);
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+        }
+        __pyx_t_9 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_9 == ((npy_float32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __pyx_r = __pyx_t_9;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L0;
+      }
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
+      if (unlikely(__pyx_typedict_guard != __pyx_tp_dict_version)) {
+        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+      }
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    }
+    #endif
+  }
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":615
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):
+ *         cdef int x1, y1, z1
+ *         x += 1             # <<<<<<<<<<<<<<
+ *         y += 1
+ *         z += 1
+ */
+  __pyx_v_x = (__pyx_v_x + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":616
+ *         cdef int x1, y1, z1
+ *         x += 1
+ *         y += 1             # <<<<<<<<<<<<<<
+ *         z += 1
+ *         cdef cnp.float32_t res = 0
+ */
+  __pyx_v_y = (__pyx_v_y + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":617
+ *         x += 1
+ *         y += 1
+ *         z += 1             # <<<<<<<<<<<<<<
+ *         cdef cnp.float32_t res = 0
+ *         while x > 0:
+ */
+  __pyx_v_z = (__pyx_v_z + 1);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":618
+ *         y += 1
+ *         z += 1
+ *         cdef cnp.float32_t res = 0             # <<<<<<<<<<<<<<
+ *         while x > 0:
+ *             y1 = y
+ */
+  __pyx_v_res = 0.0;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":619
+ *         z += 1
+ *         cdef cnp.float32_t res = 0
+ *         while x > 0:             # <<<<<<<<<<<<<<
+ *             y1 = y
+ *             while y1 > 0:
+ */
+  while (1) {
+    __pyx_t_10 = (__pyx_v_x > 0);
+    if (!__pyx_t_10) break;
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":620
+ *         cdef cnp.float32_t res = 0
+ *         while x > 0:
+ *             y1 = y             # <<<<<<<<<<<<<<
+ *             while y1 > 0:
+ *                 z1 = z
+ */
+    __pyx_v_y1 = __pyx_v_y;
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":621
+ *         while x > 0:
+ *             y1 = y
+ *             while y1 > 0:             # <<<<<<<<<<<<<<
+ *                 z1 = z
+ *                 while z1 > 0:
+ */
+    while (1) {
+      __pyx_t_10 = (__pyx_v_y1 > 0);
+      if (!__pyx_t_10) break;
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":622
+ *             y1 = y
+ *             while y1 > 0:
+ *                 z1 = z             # <<<<<<<<<<<<<<
+ *                 while z1 > 0:
+ *                     res += self.bit[x][y1][z1]
+ */
+      __pyx_v_z1 = __pyx_v_z;
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":623
+ *             while y1 > 0:
+ *                 z1 = z
+ *                 while z1 > 0:             # <<<<<<<<<<<<<<
+ *                     res += self.bit[x][y1][z1]
+ *                     z1 -= z1 & -z1
+ */
+      while (1) {
+        __pyx_t_10 = (__pyx_v_z1 > 0);
+        if (!__pyx_t_10) break;
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":624
+ *                 z1 = z
+ *                 while z1 > 0:
+ *                     res += self.bit[x][y1][z1]             # <<<<<<<<<<<<<<
+ *                     z1 -= z1 & -z1
+ *                 y1 -= y1 & -y1
+ */
+        if (unlikely(!__pyx_v_self->bit.memview)) {PyErr_SetString(PyExc_AttributeError,"Memoryview is not initialized");__PYX_ERR(0, 624, __pyx_L1_error)}
+        __pyx_t_11 = __pyx_v_x;
+        __pyx_t_12 = __pyx_v_y1;
+        __pyx_t_13 = __pyx_v_z1;
+        __pyx_t_8 = -1;
+        if (__pyx_t_11 < 0) {
+          __pyx_t_11 += __pyx_v_self->bit.shape[0];
+          if (unlikely(__pyx_t_11 < 0)) __pyx_t_8 = 0;
+        } else if (unlikely(__pyx_t_11 >= __pyx_v_self->bit.shape[0])) __pyx_t_8 = 0;
+        if (__pyx_t_12 < 0) {
+          __pyx_t_12 += __pyx_v_self->bit.shape[1];
+          if (unlikely(__pyx_t_12 < 0)) __pyx_t_8 = 1;
+        } else if (unlikely(__pyx_t_12 >= __pyx_v_self->bit.shape[1])) __pyx_t_8 = 1;
+        if (__pyx_t_13 < 0) {
+          __pyx_t_13 += __pyx_v_self->bit.shape[2];
+          if (unlikely(__pyx_t_13 < 0)) __pyx_t_8 = 2;
+        } else if (unlikely(__pyx_t_13 >= __pyx_v_self->bit.shape[2])) __pyx_t_8 = 2;
+        if (unlikely(__pyx_t_8 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_8);
+          __PYX_ERR(0, 624, __pyx_L1_error)
+        }
+        __pyx_v_res = (__pyx_v_res + (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_self->bit.data + __pyx_t_11 * __pyx_v_self->bit.strides[0]) ) + __pyx_t_12 * __pyx_v_self->bit.strides[1]) ) + __pyx_t_13 * __pyx_v_self->bit.strides[2]) ))));
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":625
+ *                 while z1 > 0:
+ *                     res += self.bit[x][y1][z1]
+ *                     z1 -= z1 & -z1             # <<<<<<<<<<<<<<
+ *                 y1 -= y1 & -y1
+ *             x -= x & -x
+ */
+        __pyx_v_z1 = (__pyx_v_z1 - (__pyx_v_z1 & (-__pyx_v_z1)));
+      }
+
+      /* "_bit_marching_cubes_lorensen_cy.pyx":626
+ *                     res += self.bit[x][y1][z1]
+ *                     z1 -= z1 & -z1
+ *                 y1 -= y1 & -y1             # <<<<<<<<<<<<<<
+ *             x -= x & -x
+ *         return res
+ */
+      __pyx_v_y1 = (__pyx_v_y1 - (__pyx_v_y1 & (-__pyx_v_y1)));
+    }
+
+    /* "_bit_marching_cubes_lorensen_cy.pyx":627
+ *                     z1 -= z1 & -z1
+ *                 y1 -= y1 & -y1
+ *             x -= x & -x             # <<<<<<<<<<<<<<
+ *         return res
+ * 
+ */
+    __pyx_v_x = (__pyx_v_x - (__pyx_v_x & (-__pyx_v_x)));
+  }
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":628
+ *                 y1 -= y1 & -y1
+ *             x -= x & -x
+ *         return res             # <<<<<<<<<<<<<<
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):
+ */
+  __pyx_r = __pyx_v_res;
+  goto __pyx_L0;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":613
+ *             x += x & -x
+ * 
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.getSum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum = {"getSum", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  int __pyx_v_x;
+  int __pyx_v_y;
+  int __pyx_v_z;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("getSum (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_x,&__pyx_n_s_y,&__pyx_n_s_z,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_y)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("getSum", 1, 3, 3, 1); __PYX_ERR(0, 613, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_z)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("getSum", 1, 3, 3, 2); __PYX_ERR(0, 613, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "getSum") < 0)) __PYX_ERR(0, 613, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_x = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_x == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+    __pyx_v_y = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+    __pyx_v_z = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_z == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("getSum", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 613, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.getSum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_4getSum(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self), __pyx_v_x, __pyx_v_y, __pyx_v_z);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_4getSum(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x, int __pyx_v_y, int __pyx_v_z) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __pyx_t_5numpy_float32_t __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("getSum", 1);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_getSum(__pyx_v_self, __pyx_v_x, __pyx_v_y, __pyx_v_z, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.getSum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":630
+ *         return res
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):             # <<<<<<<<<<<<<<
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+ */
+
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static __pyx_t_5numpy_float32_t __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_queryByRange(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x1, int __pyx_v_y1, int __pyx_v_z1, int __pyx_v_x2, int __pyx_v_y2, int __pyx_v_z2, int __pyx_skip_dispatch) {
+  __pyx_t_5numpy_float32_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  int __pyx_t_11;
+  __pyx_t_5numpy_float32_t __pyx_t_12;
+  __pyx_t_5numpy_float32_t __pyx_t_13;
+  __pyx_t_5numpy_float32_t __pyx_t_14;
+  __pyx_t_5numpy_float32_t __pyx_t_15;
+  __pyx_t_5numpy_float32_t __pyx_t_16;
+  __pyx_t_5numpy_float32_t __pyx_t_17;
+  __pyx_t_5numpy_float32_t __pyx_t_18;
+  __pyx_t_5numpy_float32_t __pyx_t_19;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("queryByRange", 1);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || __Pyx_PyType_HasFeature(Py_TYPE(((PyObject *)__pyx_v_self)), (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
+    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
+      PY_UINT64_T __pyx_typedict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      #endif
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_queryByRange); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 630, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange)) {
+        __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_x1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_y1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_z1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_x2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_y2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_z2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_INCREF(__pyx_t_1);
+        __pyx_t_9 = __pyx_t_1; __pyx_t_10 = NULL;
+        __pyx_t_11 = 0;
+        #if CYTHON_UNPACK_METHODS
+        if (unlikely(PyMethod_Check(__pyx_t_9))) {
+          __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_9);
+          if (likely(__pyx_t_10)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
+            __Pyx_INCREF(__pyx_t_10);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_9, function);
+            __pyx_t_11 = 1;
+          }
+        }
+        #endif
+        {
+          PyObject *__pyx_callargs[7] = {__pyx_t_10, __pyx_t_3, __pyx_t_4, __pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8};
+          __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_9, __pyx_callargs+1-__pyx_t_11, 6+__pyx_t_11);
+          __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+          __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 630, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_2);
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        }
+        __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_12 == ((npy_float32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __pyx_r = __pyx_t_12;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L0;
+      }
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
+      if (unlikely(__pyx_typedict_guard != __pyx_tp_dict_version)) {
+        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+      }
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    }
+    #endif
+  }
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":631
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \             # <<<<<<<<<<<<<<
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+ * 
+ */
+  __pyx_t_12 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, __pyx_v_x2, __pyx_v_y2, __pyx_v_z2, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 631, __pyx_L1_error)
+  __pyx_t_13 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, __pyx_v_x2, __pyx_v_y2, (__pyx_v_z1 - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 631, __pyx_L1_error)
+  __pyx_t_14 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, __pyx_v_x2, (__pyx_v_y1 - 1), __pyx_v_z2, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 631, __pyx_L1_error)
+  __pyx_t_15 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, __pyx_v_x2, (__pyx_v_y1 - 1), (__pyx_v_z1 - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 631, __pyx_L1_error)
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":632
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_16 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, (__pyx_v_x1 - 1), __pyx_v_y2, __pyx_v_z2, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_t_17 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, (__pyx_v_x1 - 1), __pyx_v_y2, (__pyx_v_z1 - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_t_18 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, (__pyx_v_x1 - 1), (__pyx_v_y1 - 1), __pyx_v_z2, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_t_19 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self->__pyx_vtab)->getSum(__pyx_v_self, (__pyx_v_x1 - 1), (__pyx_v_y1 - 1), (__pyx_v_z1 - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_r = (((((((__pyx_t_12 - __pyx_t_13) - __pyx_t_14) + __pyx_t_15) - __pyx_t_16) + __pyx_t_17) + __pyx_t_18) - __pyx_t_19);
+  goto __pyx_L0;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":630
+ *         return res
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):             # <<<<<<<<<<<<<<
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.queryByRange", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange = {"queryByRange", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  int __pyx_v_x1;
+  int __pyx_v_y1;
+  int __pyx_v_z1;
+  int __pyx_v_x2;
+  int __pyx_v_y2;
+  int __pyx_v_z2;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[6] = {0,0,0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("queryByRange (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_x1,&__pyx_n_s_y1,&__pyx_n_s_z1,&__pyx_n_s_x2,&__pyx_n_s_y2,&__pyx_n_s_z2,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  6: values[5] = __Pyx_Arg_FASTCALL(__pyx_args, 5);
+        CYTHON_FALLTHROUGH;
+        case  5: values[4] = __Pyx_Arg_FASTCALL(__pyx_args, 4);
+        CYTHON_FALLTHROUGH;
+        case  4: values[3] = __Pyx_Arg_FASTCALL(__pyx_args, 3);
+        CYTHON_FALLTHROUGH;
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x1)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_y1)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, 1); __PYX_ERR(0, 630, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_z1)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, 2); __PYX_ERR(0, 630, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  3:
+        if (likely((values[3] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x2)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[3]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, 3); __PYX_ERR(0, 630, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  4:
+        if (likely((values[4] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_y2)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[4]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, 4); __PYX_ERR(0, 630, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  5:
+        if (likely((values[5] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_z2)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[5]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, 5); __PYX_ERR(0, 630, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "queryByRange") < 0)) __PYX_ERR(0, 630, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 6)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+      values[3] = __Pyx_Arg_FASTCALL(__pyx_args, 3);
+      values[4] = __Pyx_Arg_FASTCALL(__pyx_args, 4);
+      values[5] = __Pyx_Arg_FASTCALL(__pyx_args, 5);
+    }
+    __pyx_v_x1 = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_x1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_y1 = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_y1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_z1 = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_z1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_x2 = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_x2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_y2 = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_y2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_z2 = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_z2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("queryByRange", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 630, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.queryByRange", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_6queryByRange(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self), __pyx_v_x1, __pyx_v_y1, __pyx_v_z1, __pyx_v_x2, __pyx_v_y2, __pyx_v_z2);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_6queryByRange(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, int __pyx_v_x1, int __pyx_v_y1, int __pyx_v_z1, int __pyx_v_x2, int __pyx_v_y2, int __pyx_v_z2) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __pyx_t_5numpy_float32_t __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("queryByRange", 1);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_queryByRange(__pyx_v_self, __pyx_v_x1, __pyx_v_y1, __pyx_v_z1, __pyx_v_x2, __pyx_v_y2, __pyx_v_z2, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 630, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.queryByRange", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  if (unlikely(__pyx_nargs > 0)) {
+    __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
+  if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_8__reduce_cython__(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__reduce_cython__", 1);
+
+  /* "(tree fragment)":2
+ * def __reduce_cython__(self):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"             # <<<<<<<<<<<<<<
+ * def __setstate_cython__(self, __pyx_state):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ */
+  __Pyx_Raise(__pyx_builtin_TypeError, __pyx_kp_s_no_default___reduce___due_to_non, 0, 0);
+  __PYX_ERR(1, 2, __pyx_L1_error)
+
+  /* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__(PyObject *__pyx_v_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  CYTHON_UNUSED PyObject *__pyx_v___pyx_state = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_pyx_state,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_pyx_state)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 3, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__setstate_cython__") < 0)) __PYX_ERR(1, 3, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v___pyx_state = values[0];
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__setstate_cython__", 1, 1, 1, __pyx_nargs); __PYX_ERR(1, 3, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_10__setstate_cython__(((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_self), __pyx_v___pyx_state);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("__setstate_cython__", 1);
+
+  /* "(tree fragment)":4
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"             # <<<<<<<<<<<<<<
+ */
+  __Pyx_Raise(__pyx_builtin_TypeError, __pyx_kp_s_no_default___reduce___due_to_non, 0, 0);
+  __PYX_ERR(1, 4, __pyx_L1_error)
+
+  /* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.FenwickTree3D.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "_bit_marching_cubes_lorensen_cy.pyx":635
+ * 
+ * 
+ * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
+ * 
+ *     # Initialize variables
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_1MarchingCubesLorensen(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_31_bit_marching_cubes_lorensen_cy_1MarchingCubesLorensen = {"MarchingCubesLorensen", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_1MarchingCubesLorensen, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_31_bit_marching_cubes_lorensen_cy_1MarchingCubesLorensen(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  __Pyx_memviewslice __pyx_v_volume = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_mask = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __pyx_t_5numpy_float32_t __pyx_v_level;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[3] = {0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("MarchingCubesLorensen (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_volume,&__pyx_n_s_mask,&__pyx_n_s_level,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_volume)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 635, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_mask)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 635, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 3, 3, 1); __PYX_ERR(0, 635, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_level)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 635, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 3, 3, 2); __PYX_ERR(0, 635, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "MarchingCubesLorensen") < 0)) __PYX_ERR(0, 635, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_volume = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float32_t(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_volume.memview)) __PYX_ERR(0, 635, __pyx_L3_error)
+    __pyx_v_mask = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_int32_t(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_mask.memview)) __PYX_ERR(0, 635, __pyx_L3_error)
+    __pyx_v_level = __pyx_PyFloat_AsFloat(values[2]); if (unlikely((__pyx_v_level == ((npy_float32)-1)) && PyErr_Occurred())) __PYX_ERR(0, 635, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("MarchingCubesLorensen", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 635, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -19828,21 +21780,17 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_volume, 1);
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_mask, 1);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_cube, 1);
-  __Pyx_AddTraceback("_marching_cubes_lorensen_cy.MarchingCubesLorensen", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.MarchingCubesLorensen", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(((PyObject *)__pyx_v_volume.memview) == Py_None)) {
-    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "volume"); __PYX_ERR(0, 588, __pyx_L1_error)
+    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "volume"); __PYX_ERR(0, 635, __pyx_L1_error)
   }
   if (unlikely(((PyObject *)__pyx_v_mask.memview) == Py_None)) {
-    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "mask"); __PYX_ERR(0, 588, __pyx_L1_error)
+    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "mask"); __PYX_ERR(0, 635, __pyx_L1_error)
   }
-  if (unlikely(((PyObject *)__pyx_v_cube.memview) == Py_None)) {
-    PyErr_Format(PyExc_TypeError, "Argument '%.200s' must not be None", "cube"); __PYX_ERR(0, 588, __pyx_L1_error)
-  }
-  __pyx_r = __pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(__pyx_self, __pyx_v_volume, __pyx_v_mask, __pyx_v_cube, __pyx_v_level);
+  __pyx_r = __pyx_pf_31_bit_marching_cubes_lorensen_cy_MarchingCubesLorensen(__pyx_self, __pyx_v_volume, __pyx_v_mask, __pyx_v_level);
 
   /* function exit code */
   goto __pyx_L0;
@@ -19851,7 +21799,6 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __pyx_L0:;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_volume, 1);
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_mask, 1);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_cube, 1);
   {
     Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -19862,15 +21809,17 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_volume, __Pyx_memviewslice __pyx_v_mask, __Pyx_memviewslice __pyx_v_cube, __pyx_t_5numpy_float32_t __pyx_v_level) {
+static PyObject *__pyx_pf_31_bit_marching_cubes_lorensen_cy_MarchingCubesLorensen(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_volume, __Pyx_memviewslice __pyx_v_mask, __pyx_t_5numpy_float32_t __pyx_v_level) {
+  __pyx_t_5numpy_float32_t __pyx_v_Sum;
   __pyx_t_5numpy_float32_t __pyx_v_delta;
-  int __pyx_v_i;
-  int __pyx_v_j;
-  int __pyx_v_k;
-  int __pyx_v_t;
-  int __pyx_v_N;
-  int __pyx_v_M;
-  int __pyx_v_P;
+  __pyx_t_5numpy_float32_t __pyx_v_CurVol;
+  unsigned int __pyx_v_i;
+  unsigned int __pyx_v_j;
+  unsigned int __pyx_v_k;
+  unsigned int __pyx_v_t;
+  unsigned int __pyx_v_N;
+  unsigned int __pyx_v_M;
+  unsigned int __pyx_v_P;
   PyObject *__pyx_v_vertices = 0;
   PyObject *__pyx_v_vertex_ids = 0;
   PyObject *__pyx_v_triangles = 0;
@@ -19882,12 +21831,13 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
   int __pyx_v_edge0;
   int __pyx_v_edge1;
   int __pyx_v_edge2;
+  struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *__pyx_v_fenwick_tree = NULL;
   __Pyx_memviewslice __pyx_v_lookup = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_v_order_of_ids = NULL;
   PyObject *__pyx_v_triangle_corners = NULL;
-  Py_ssize_t __pyx_7genexpr__pyx_v_order;
-  PyObject *__pyx_7genexpr__pyx_v_id = NULL;
-  PyObject *__pyx_8genexpr1__pyx_v_c = NULL;
+  Py_ssize_t __pyx_8genexpr2__pyx_v_order;
+  PyObject *__pyx_8genexpr2__pyx_v_id = NULL;
+  PyObject *__pyx_8genexpr3__pyx_v_c = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19897,90 +21847,101 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
-  int __pyx_t_8;
-  int __pyx_t_9;
-  int __pyx_t_10;
-  int __pyx_t_11;
-  int __pyx_t_12;
-  int __pyx_t_13;
-  int __pyx_t_14;
-  int __pyx_t_15;
-  int __pyx_t_16;
+  unsigned int __pyx_t_8;
+  unsigned int __pyx_t_9;
+  unsigned int __pyx_t_10;
+  unsigned int __pyx_t_11;
+  unsigned int __pyx_t_12;
+  unsigned int __pyx_t_13;
+  unsigned int __pyx_t_14;
+  unsigned int __pyx_t_15;
+  unsigned int __pyx_t_16;
   int __pyx_t_17;
   int __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
-  Py_ssize_t __pyx_t_20;
-  Py_ssize_t __pyx_t_21;
+  size_t __pyx_t_19;
+  size_t __pyx_t_20;
+  size_t __pyx_t_21;
   int __pyx_t_22;
   Py_ssize_t __pyx_t_23;
-  Py_ssize_t __pyx_t_24;
-  Py_ssize_t __pyx_t_25;
+  size_t __pyx_t_24;
+  size_t __pyx_t_25;
   __pyx_t_5numpy_float32_t __pyx_t_26;
   int __pyx_t_27;
-  __Pyx_memviewslice __pyx_t_28 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  PyObject *__pyx_t_29 = NULL;
-  PyObject *(*__pyx_t_30)(PyObject *);
-  int __pyx_t_31;
-  int __pyx_t_32;
-  PyObject *(*__pyx_t_33)(PyObject *);
+  Py_ssize_t __pyx_t_28;
+  Py_ssize_t __pyx_t_29;
+  __Pyx_memviewslice __pyx_t_30 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_t_31 = NULL;
+  PyObject *(*__pyx_t_32)(PyObject *);
+  int __pyx_t_33;
+  int __pyx_t_34;
+  PyObject *(*__pyx_t_35)(PyObject *);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("MarchingCubesLorensen", 1);
 
-  /* "_marching_cubes_lorensen_cy.pyx":594
- *     cdef int i, j, k, t
- *     cdef int N, M, P
+  /* "_bit_marching_cubes_lorensen_cy.pyx":638
+ * 
+ *     # Initialize variables
+ *     cdef cnp.float32_t Sum=0             # <<<<<<<<<<<<<<
+ *     cdef cnp.float32_t delta, CurVol
+ *     cdef unsigned int i, j, k, t
+ */
+  __pyx_v_Sum = 0.0;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":642
+ *     cdef unsigned int i, j, k, t
+ *     cdef unsigned int N, M, P
  *     cdef list vertices = []             # <<<<<<<<<<<<<<
  *     cdef list vertex_ids = []
  *     cdef list triangles = []
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 594, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 642, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_vertices = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":595
- *     cdef int N, M, P
+  /* "_bit_marching_cubes_lorensen_cy.pyx":643
+ *     cdef unsigned int N, M, P
  *     cdef list vertices = []
  *     cdef list vertex_ids = []             # <<<<<<<<<<<<<<
  *     cdef list triangles = []
  *     cdef list triangle_ids = []
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 595, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 643, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_vertex_ids = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":596
+  /* "_bit_marching_cubes_lorensen_cy.pyx":644
  *     cdef list vertices = []
  *     cdef list vertex_ids = []
  *     cdef list triangles = []             # <<<<<<<<<<<<<<
  *     cdef list triangle_ids = []
- * 
+ *     cdef int volume_type
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 596, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_triangles = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":597
+  /* "_bit_marching_cubes_lorensen_cy.pyx":645
  *     cdef list vertex_ids = []
  *     cdef list triangles = []
  *     cdef list triangle_ids = []             # <<<<<<<<<<<<<<
- * 
- *     N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]
+ *     cdef int volume_type
+ *     cdef int vertex_id0, vertex_id1, vertex_id2
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 597, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 645, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_triangle_ids = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":599
- *     cdef list triangle_ids = []
+  /* "_bit_marching_cubes_lorensen_cy.pyx":651
  * 
+ *     # Intialize 3D Fenwick Tree
  *     N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]             # <<<<<<<<<<<<<<
- *     print(N,M,P)
+ *     fenwick_tree = FenwickTree3D(N, M, P)
  * 
  */
   __pyx_t_2 = (__pyx_v_volume.shape[0]);
@@ -19990,37 +21951,38 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
   __pyx_v_M = __pyx_t_3;
   __pyx_v_P = __pyx_t_4;
 
-  /* "_marching_cubes_lorensen_cy.pyx":600
- * 
+  /* "_bit_marching_cubes_lorensen_cy.pyx":652
+ *     # Intialize 3D Fenwick Tree
  *     N, M, P = volume.shape[0], volume.shape[1], volume.shape[2]
- *     print(N,M,P)             # <<<<<<<<<<<<<<
+ *     fenwick_tree = FenwickTree3D(N, M, P)             # <<<<<<<<<<<<<<
  * 
- *     cdef int volume_type
+ *     i,j,k = 0,0,0
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_M); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_unsigned_int(__pyx_v_M); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_P); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1)) __PYX_ERR(0, 600, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1)) __PYX_ERR(0, 652, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_5)) __PYX_ERR(0, 600, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_5)) __PYX_ERR(0, 652, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_6);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_6)) __PYX_ERR(0, 600, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_6)) __PYX_ERR(0, 652, __pyx_L1_error);
   __pyx_t_1 = 0;
   __pyx_t_5 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 600, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D), __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_v_fenwick_tree = ((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_t_6);
+  __pyx_t_6 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":606
- *     cdef int edge0, edge1, edge2
+  /* "_bit_marching_cubes_lorensen_cy.pyx":654
+ *     fenwick_tree = FenwickTree3D(N, M, P)
  * 
  *     i,j,k = 0,0,0             # <<<<<<<<<<<<<<
  *     for k in range(P):
@@ -20033,7 +21995,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
   __pyx_v_j = __pyx_t_9;
   __pyx_v_k = __pyx_t_10;
 
-  /* "_marching_cubes_lorensen_cy.pyx":607
+  /* "_bit_marching_cubes_lorensen_cy.pyx":655
  * 
  *     i,j,k = 0,0,0
  *     for k in range(P):             # <<<<<<<<<<<<<<
@@ -20045,7 +22007,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_9; __pyx_t_8+=1) {
     __pyx_v_k = __pyx_t_8;
 
-    /* "_marching_cubes_lorensen_cy.pyx":608
+    /* "_bit_marching_cubes_lorensen_cy.pyx":656
  *     i,j,k = 0,0,0
  *     for k in range(P):
  *         for j in range (M):             # <<<<<<<<<<<<<<
@@ -20057,7 +22019,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
     for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
       __pyx_v_j = __pyx_t_13;
 
-      /* "_marching_cubes_lorensen_cy.pyx":609
+      /* "_bit_marching_cubes_lorensen_cy.pyx":657
  *     for k in range(P):
  *         for j in range (M):
  *             for i in range (N):             # <<<<<<<<<<<<<<
@@ -20069,7 +22031,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
       for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
         __pyx_v_i = __pyx_t_16;
 
-        /* "_marching_cubes_lorensen_cy.pyx":610
+        /* "_bit_marching_cubes_lorensen_cy.pyx":658
  *         for j in range (M):
  *             for i in range (N):
  *                 if i < (N-1) and mask[i, j, k] != mask[i + 1, j, k]:             # <<<<<<<<<<<<<<
@@ -20086,21 +22048,12 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
         __pyx_t_20 = __pyx_v_j;
         __pyx_t_21 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 610, __pyx_L1_error)
+          __PYX_ERR(0, 658, __pyx_L1_error)
         }
         __pyx_t_23 = (__pyx_v_i + 1);
         __pyx_t_24 = __pyx_v_j;
@@ -20110,24 +22063,18 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
           __pyx_t_23 += __pyx_v_mask.shape[0];
           if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
         } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_24 < 0) {
-          __pyx_t_24 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_24 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_25 < 0) {
-          __pyx_t_25 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_25 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 610, __pyx_L1_error)
+          __PYX_ERR(0, 658, __pyx_L1_error)
         }
         __pyx_t_18 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != (*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_24 * __pyx_v_mask.strides[1]) ) + __pyx_t_25 * __pyx_v_mask.strides[2]) ))));
         __pyx_t_17 = __pyx_t_18;
         __pyx_L10_bool_binop_done:;
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":611
+          /* "_bit_marching_cubes_lorensen_cy.pyx":659
  *             for i in range (N):
  *                 if i < (N-1) and mask[i, j, k] != mask[i + 1, j, k]:
  *                     delta = interpolation(volume[i, j, k], volume[i + 1, j, k], level)             # <<<<<<<<<<<<<<
@@ -20136,88 +22083,73 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_t_25 = __pyx_v_i;
           __pyx_t_24 = __pyx_v_j;
-          __pyx_t_23 = __pyx_v_k;
+          __pyx_t_21 = __pyx_v_k;
           __pyx_t_22 = -1;
-          if (__pyx_t_25 < 0) {
-            __pyx_t_25 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_25 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_24 < 0) {
-            __pyx_t_24 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_24 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
-          if (__pyx_t_23 < 0) {
-            __pyx_t_23 += __pyx_v_volume.shape[2];
-            if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 2;
-          } else if (unlikely(__pyx_t_23 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
+          if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_volume.shape[2])) __pyx_t_22 = 2;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 611, __pyx_L1_error)
+            __PYX_ERR(0, 659, __pyx_L1_error)
           }
-          __pyx_t_21 = (__pyx_v_i + 1);
+          __pyx_t_23 = (__pyx_v_i + 1);
           __pyx_t_20 = __pyx_v_j;
           __pyx_t_19 = __pyx_v_k;
           __pyx_t_22 = -1;
-          if (__pyx_t_21 < 0) {
-            __pyx_t_21 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_21 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_20 < 0) {
-            __pyx_t_20 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_20 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
-          if (__pyx_t_19 < 0) {
-            __pyx_t_19 += __pyx_v_volume.shape[2];
-            if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-          } else if (unlikely(__pyx_t_19 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
+          if (__pyx_t_23 < 0) {
+            __pyx_t_23 += __pyx_v_volume.shape[0];
+            if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
+          } else if (unlikely(__pyx_t_23 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_volume.shape[2])) __pyx_t_22 = 2;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 611, __pyx_L1_error)
+            __PYX_ERR(0, 659, __pyx_L1_error)
           }
-          __pyx_t_26 = __pyx_f_27_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_23 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_21 * __pyx_v_volume.strides[0]) ) + __pyx_t_20 * __pyx_v_volume.strides[1]) ) + __pyx_t_19 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 611, __pyx_L1_error)
+          __pyx_t_26 = __pyx_f_31_bit_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_21 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_23 * __pyx_v_volume.strides[0]) ) + __pyx_t_20 * __pyx_v_volume.strides[1]) ) + __pyx_t_19 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 659, __pyx_L1_error)
           __pyx_v_delta = __pyx_t_26;
 
-          /* "_marching_cubes_lorensen_cy.pyx":612
+          /* "_bit_marching_cubes_lorensen_cy.pyx":660
  *                 if i < (N-1) and mask[i, j, k] != mask[i + 1, j, k]:
  *                     delta = interpolation(volume[i, j, k], volume[i + 1, j, k], level)
  *                     vertices.append([i + delta, j, k])             # <<<<<<<<<<<<<<
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionX))
  * 
  */
-          __pyx_t_6 = PyFloat_FromDouble((__pyx_v_i + __pyx_v_delta)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 612, __pyx_L1_error)
+          __pyx_t_6 = PyFloat_FromDouble((__pyx_v_i + __pyx_v_delta)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 660, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 612, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_j); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 660, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_k); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 612, __pyx_L1_error)
+          __pyx_t_5 = __Pyx_PyInt_From_unsigned_int(__pyx_v_k); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 660, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
+          __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 660, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GIVEREF(__pyx_t_6);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_6)) __PYX_ERR(0, 612, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_6)) __PYX_ERR(0, 660, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_7);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_7)) __PYX_ERR(0, 612, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_7)) __PYX_ERR(0, 660, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_5);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_5)) __PYX_ERR(0, 612, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_5)) __PYX_ERR(0, 660, __pyx_L1_error);
           __pyx_t_6 = 0;
           __pyx_t_7 = 0;
           __pyx_t_5 = 0;
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 612, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 660, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":613
+          /* "_bit_marching_cubes_lorensen_cy.pyx":661
  *                     delta = interpolation(volume[i, j, k], volume[i + 1, j, k], level)
  *                     vertices.append([i + delta, j, k])
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionX))             # <<<<<<<<<<<<<<
  * 
  *                 if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:
  */
-          __pyx_t_22 = __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_27_marching_cubes_lorensen_cy_DirectionX); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L1_error)
-          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 613, __pyx_L1_error)
+          __pyx_t_22 = __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionX); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 661, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 661, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 613, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 661, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":610
+          /* "_bit_marching_cubes_lorensen_cy.pyx":658
  *         for j in range (M):
  *             for i in range (N):
  *                 if i < (N-1) and mask[i, j, k] != mask[i + 1, j, k]:             # <<<<<<<<<<<<<<
@@ -20226,7 +22158,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":615
+        /* "_bit_marching_cubes_lorensen_cy.pyx":663
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionX))
  * 
  *                 if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:             # <<<<<<<<<<<<<<
@@ -20243,48 +22175,33 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
         __pyx_t_20 = __pyx_v_j;
         __pyx_t_21 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 615, __pyx_L1_error)
+          __PYX_ERR(0, 663, __pyx_L1_error)
         }
-        __pyx_t_23 = __pyx_v_i;
-        __pyx_t_24 = (__pyx_v_j + 1);
+        __pyx_t_24 = __pyx_v_i;
+        __pyx_t_23 = (__pyx_v_j + 1);
         __pyx_t_25 = __pyx_v_k;
         __pyx_t_22 = -1;
+        if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
         if (__pyx_t_23 < 0) {
-          __pyx_t_23 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_24 < 0) {
-          __pyx_t_24 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_24 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_25 < 0) {
-          __pyx_t_25 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_25 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+          __pyx_t_23 += __pyx_v_mask.shape[1];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 1;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 615, __pyx_L1_error)
+          __PYX_ERR(0, 663, __pyx_L1_error)
         }
-        __pyx_t_18 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != (*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_24 * __pyx_v_mask.strides[1]) ) + __pyx_t_25 * __pyx_v_mask.strides[2]) ))));
+        __pyx_t_18 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != (*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_24 * __pyx_v_mask.strides[0]) ) + __pyx_t_23 * __pyx_v_mask.strides[1]) ) + __pyx_t_25 * __pyx_v_mask.strides[2]) ))));
         __pyx_t_17 = __pyx_t_18;
         __pyx_L13_bool_binop_done:;
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":616
+          /* "_bit_marching_cubes_lorensen_cy.pyx":664
  * 
  *                 if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:
  *                     delta = interpolation(volume[i, j, k], volume[i, j + 1, k], level)             # <<<<<<<<<<<<<<
@@ -20293,88 +22210,73 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_t_25 = __pyx_v_i;
           __pyx_t_24 = __pyx_v_j;
-          __pyx_t_23 = __pyx_v_k;
+          __pyx_t_21 = __pyx_v_k;
           __pyx_t_22 = -1;
-          if (__pyx_t_25 < 0) {
-            __pyx_t_25 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_25 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_24 < 0) {
-            __pyx_t_24 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_24 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
-          if (__pyx_t_23 < 0) {
-            __pyx_t_23 += __pyx_v_volume.shape[2];
-            if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 2;
-          } else if (unlikely(__pyx_t_23 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
+          if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_volume.shape[2])) __pyx_t_22 = 2;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 616, __pyx_L1_error)
+            __PYX_ERR(0, 664, __pyx_L1_error)
           }
-          __pyx_t_21 = __pyx_v_i;
-          __pyx_t_20 = (__pyx_v_j + 1);
+          __pyx_t_20 = __pyx_v_i;
+          __pyx_t_23 = (__pyx_v_j + 1);
           __pyx_t_19 = __pyx_v_k;
           __pyx_t_22 = -1;
-          if (__pyx_t_21 < 0) {
-            __pyx_t_21 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_21 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_20 < 0) {
-            __pyx_t_20 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_20 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
-          if (__pyx_t_19 < 0) {
-            __pyx_t_19 += __pyx_v_volume.shape[2];
-            if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-          } else if (unlikely(__pyx_t_19 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
+          if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (__pyx_t_23 < 0) {
+            __pyx_t_23 += __pyx_v_volume.shape[1];
+            if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 1;
+          } else if (unlikely(__pyx_t_23 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_volume.shape[2])) __pyx_t_22 = 2;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 616, __pyx_L1_error)
+            __PYX_ERR(0, 664, __pyx_L1_error)
           }
-          __pyx_t_26 = __pyx_f_27_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_23 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_21 * __pyx_v_volume.strides[0]) ) + __pyx_t_20 * __pyx_v_volume.strides[1]) ) + __pyx_t_19 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 616, __pyx_L1_error)
+          __pyx_t_26 = __pyx_f_31_bit_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_21 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_20 * __pyx_v_volume.strides[0]) ) + __pyx_t_23 * __pyx_v_volume.strides[1]) ) + __pyx_t_19 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 664, __pyx_L1_error)
           __pyx_v_delta = __pyx_t_26;
 
-          /* "_marching_cubes_lorensen_cy.pyx":617
+          /* "_bit_marching_cubes_lorensen_cy.pyx":665
  *                 if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:
  *                     delta = interpolation(volume[i, j, k], volume[i, j + 1, k], level)
  *                     vertices.append([i, j + delta, k])             # <<<<<<<<<<<<<<
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionY))
  * 
  */
-          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 617, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_unsigned_int(__pyx_v_i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 665, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_5 = PyFloat_FromDouble((__pyx_v_j + __pyx_v_delta)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 617, __pyx_L1_error)
+          __pyx_t_5 = PyFloat_FromDouble((__pyx_v_j + __pyx_v_delta)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 665, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_k); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 617, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_k); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 665, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_6 = PyList_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 617, __pyx_L1_error)
+          __pyx_t_6 = PyList_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 665, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_GIVEREF(__pyx_t_1);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_1)) __PYX_ERR(0, 617, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_1)) __PYX_ERR(0, 665, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_5);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_t_5)) __PYX_ERR(0, 617, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_t_5)) __PYX_ERR(0, 665, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_7);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 2, __pyx_t_7)) __PYX_ERR(0, 617, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 2, __pyx_t_7)) __PYX_ERR(0, 665, __pyx_L1_error);
           __pyx_t_1 = 0;
           __pyx_t_5 = 0;
           __pyx_t_7 = 0;
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_6); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 617, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_6); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 665, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":618
+          /* "_bit_marching_cubes_lorensen_cy.pyx":666
  *                     delta = interpolation(volume[i, j, k], volume[i, j + 1, k], level)
  *                     vertices.append([i, j + delta, k])
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionY))             # <<<<<<<<<<<<<<
  * 
  *                 if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:
  */
-          __pyx_t_22 = __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_27_marching_cubes_lorensen_cy_DirectionY); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 618, __pyx_L1_error)
-          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 618, __pyx_L1_error)
+          __pyx_t_22 = __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionY); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 666, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 666, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_6); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 618, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_6); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 666, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":615
+          /* "_bit_marching_cubes_lorensen_cy.pyx":663
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionX))
  * 
  *                 if j < (M-1) and mask[i, j, k] != mask[i, j + 1, k]:             # <<<<<<<<<<<<<<
@@ -20383,7 +22285,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":620
+        /* "_bit_marching_cubes_lorensen_cy.pyx":668
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionY))
  * 
  *                 if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:             # <<<<<<<<<<<<<<
@@ -20400,48 +22302,33 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
         __pyx_t_20 = __pyx_v_j;
         __pyx_t_21 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 620, __pyx_L1_error)
+          __PYX_ERR(0, 668, __pyx_L1_error)
         }
-        __pyx_t_23 = __pyx_v_i;
-        __pyx_t_24 = __pyx_v_j;
-        __pyx_t_25 = (__pyx_v_k + 1);
+        __pyx_t_24 = __pyx_v_i;
+        __pyx_t_25 = __pyx_v_j;
+        __pyx_t_23 = (__pyx_v_k + 1);
         __pyx_t_22 = -1;
+        if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
         if (__pyx_t_23 < 0) {
-          __pyx_t_23 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_24 < 0) {
-          __pyx_t_24 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_24 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_25 < 0) {
-          __pyx_t_25 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_25 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+          __pyx_t_23 += __pyx_v_mask.shape[2];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 2;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 620, __pyx_L1_error)
+          __PYX_ERR(0, 668, __pyx_L1_error)
         }
-        __pyx_t_18 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != (*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_24 * __pyx_v_mask.strides[1]) ) + __pyx_t_25 * __pyx_v_mask.strides[2]) ))));
+        __pyx_t_18 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != (*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_24 * __pyx_v_mask.strides[0]) ) + __pyx_t_25 * __pyx_v_mask.strides[1]) ) + __pyx_t_23 * __pyx_v_mask.strides[2]) ))));
         __pyx_t_17 = __pyx_t_18;
         __pyx_L16_bool_binop_done:;
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":621
+          /* "_bit_marching_cubes_lorensen_cy.pyx":669
  * 
  *                 if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:
  *                     delta = interpolation(volume[i, j, k], volume[i, j, k + 1], level)             # <<<<<<<<<<<<<<
@@ -20450,88 +22337,73 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_t_25 = __pyx_v_i;
           __pyx_t_24 = __pyx_v_j;
-          __pyx_t_23 = __pyx_v_k;
+          __pyx_t_21 = __pyx_v_k;
           __pyx_t_22 = -1;
-          if (__pyx_t_25 < 0) {
-            __pyx_t_25 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_25 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_25 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_24 < 0) {
-            __pyx_t_24 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_24 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_25 >= (size_t)__pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_24 >= (size_t)__pyx_v_volume.shape[1])) __pyx_t_22 = 1;
+          if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_volume.shape[2])) __pyx_t_22 = 2;
+          if (unlikely(__pyx_t_22 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_22);
+            __PYX_ERR(0, 669, __pyx_L1_error)
+          }
+          __pyx_t_20 = __pyx_v_i;
+          __pyx_t_19 = __pyx_v_j;
+          __pyx_t_23 = (__pyx_v_k + 1);
+          __pyx_t_22 = -1;
+          if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_volume.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_volume.shape[1])) __pyx_t_22 = 1;
           if (__pyx_t_23 < 0) {
             __pyx_t_23 += __pyx_v_volume.shape[2];
             if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 2;
           } else if (unlikely(__pyx_t_23 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 621, __pyx_L1_error)
+            __PYX_ERR(0, 669, __pyx_L1_error)
           }
-          __pyx_t_21 = __pyx_v_i;
-          __pyx_t_20 = __pyx_v_j;
-          __pyx_t_19 = (__pyx_v_k + 1);
-          __pyx_t_22 = -1;
-          if (__pyx_t_21 < 0) {
-            __pyx_t_21 += __pyx_v_volume.shape[0];
-            if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_21 >= __pyx_v_volume.shape[0])) __pyx_t_22 = 0;
-          if (__pyx_t_20 < 0) {
-            __pyx_t_20 += __pyx_v_volume.shape[1];
-            if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-          } else if (unlikely(__pyx_t_20 >= __pyx_v_volume.shape[1])) __pyx_t_22 = 1;
-          if (__pyx_t_19 < 0) {
-            __pyx_t_19 += __pyx_v_volume.shape[2];
-            if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-          } else if (unlikely(__pyx_t_19 >= __pyx_v_volume.shape[2])) __pyx_t_22 = 2;
-          if (unlikely(__pyx_t_22 != -1)) {
-            __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 621, __pyx_L1_error)
-          }
-          __pyx_t_26 = __pyx_f_27_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_23 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_21 * __pyx_v_volume.strides[0]) ) + __pyx_t_20 * __pyx_v_volume.strides[1]) ) + __pyx_t_19 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 621, __pyx_L1_error)
+          __pyx_t_26 = __pyx_f_31_bit_marching_cubes_lorensen_cy_interpolation((*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_25 * __pyx_v_volume.strides[0]) ) + __pyx_t_24 * __pyx_v_volume.strides[1]) ) + __pyx_t_21 * __pyx_v_volume.strides[2]) ))), (*((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_volume.data + __pyx_t_20 * __pyx_v_volume.strides[0]) ) + __pyx_t_19 * __pyx_v_volume.strides[1]) ) + __pyx_t_23 * __pyx_v_volume.strides[2]) ))), __pyx_v_level); if (unlikely(__pyx_t_26 == ((__pyx_t_5numpy_float32_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 669, __pyx_L1_error)
           __pyx_v_delta = __pyx_t_26;
 
-          /* "_marching_cubes_lorensen_cy.pyx":622
+          /* "_bit_marching_cubes_lorensen_cy.pyx":670
  *                 if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:
  *                     delta = interpolation(volume[i, j, k], volume[i, j, k + 1], level)
  *                     vertices.append([i, j, k + delta])             # <<<<<<<<<<<<<<
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionZ))
  * 
  */
-          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 622, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyInt_From_unsigned_int(__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 670, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_j); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 622, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyInt_From_unsigned_int(__pyx_v_j); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 670, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_5 = PyFloat_FromDouble((__pyx_v_k + __pyx_v_delta)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 622, __pyx_L1_error)
+          __pyx_t_5 = PyFloat_FromDouble((__pyx_v_k + __pyx_v_delta)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 670, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 622, __pyx_L1_error)
+          __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 670, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GIVEREF(__pyx_t_6);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_6)) __PYX_ERR(0, 622, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_6)) __PYX_ERR(0, 670, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_7);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_7)) __PYX_ERR(0, 622, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_7)) __PYX_ERR(0, 670, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_5);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_5)) __PYX_ERR(0, 622, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_5)) __PYX_ERR(0, 670, __pyx_L1_error);
           __pyx_t_6 = 0;
           __pyx_t_7 = 0;
           __pyx_t_5 = 0;
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 622, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertices, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 670, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":623
+          /* "_bit_marching_cubes_lorensen_cy.pyx":671
  *                     delta = interpolation(volume[i, j, k], volume[i, j, k + 1], level)
  *                     vertices.append([i, j, k + delta])
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionZ))             # <<<<<<<<<<<<<<
  * 
  *                 if i == (N - 1) or j == (M - 1) or k == (P - 1):
  */
-          __pyx_t_22 = __pyx_f_27_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_27_marching_cubes_lorensen_cy_DirectionZ); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 623, __pyx_L1_error)
-          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 623, __pyx_L1_error)
+          __pyx_t_22 = __pyx_f_31_bit_marching_cubes_lorensen_cy_calculate_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionZ); if (unlikely(__pyx_t_22 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 671, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_22); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 671, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 623, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_vertex_ids, __pyx_t_1); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 671, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":620
+          /* "_bit_marching_cubes_lorensen_cy.pyx":668
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionY))
  * 
  *                 if k < (P-1) and mask[i, j, k] != mask[i, j, k + 1]:             # <<<<<<<<<<<<<<
@@ -20540,7 +22412,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":625
+        /* "_bit_marching_cubes_lorensen_cy.pyx":673
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionZ))
  * 
  *                 if i == (N - 1) or j == (M - 1) or k == (P - 1):             # <<<<<<<<<<<<<<
@@ -20564,7 +22436,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
         __pyx_L19_bool_binop_done:;
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":626
+          /* "_bit_marching_cubes_lorensen_cy.pyx":674
  * 
  *                 if i == (N - 1) or j == (M - 1) or k == (P - 1):
  *                     continue             # <<<<<<<<<<<<<<
@@ -20573,7 +22445,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           goto __pyx_L7_continue;
 
-          /* "_marching_cubes_lorensen_cy.pyx":625
+          /* "_bit_marching_cubes_lorensen_cy.pyx":673
  *                     vertex_ids.append(calculate_vertex_id(i, j, k, N, M, DirectionZ))
  * 
  *                 if i == (N - 1) or j == (M - 1) or k == (P - 1):             # <<<<<<<<<<<<<<
@@ -20582,7 +22454,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":628
+        /* "_bit_marching_cubes_lorensen_cy.pyx":676
  *                     continue
  * 
  *                 volume_type = 0             # <<<<<<<<<<<<<<
@@ -20591,7 +22463,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         __pyx_v_volume_type = 0;
 
-        /* "_marching_cubes_lorensen_cy.pyx":629
+        /* "_bit_marching_cubes_lorensen_cy.pyx":677
  * 
  *                 volume_type = 0
  *                 if mask[i, j, k]:             # <<<<<<<<<<<<<<
@@ -20602,26 +22474,17 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
         __pyx_t_20 = __pyx_v_j;
         __pyx_t_21 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_19 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 629, __pyx_L1_error)
+          __PYX_ERR(0, 677, __pyx_L1_error)
         }
         __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":630
+          /* "_bit_marching_cubes_lorensen_cy.pyx":678
  *                 volume_type = 0
  *                 if mask[i, j, k]:
  *                     volume_type |= 1<<0             # <<<<<<<<<<<<<<
@@ -20630,7 +22493,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x1);
 
-          /* "_marching_cubes_lorensen_cy.pyx":629
+          /* "_bit_marching_cubes_lorensen_cy.pyx":677
  * 
  *                 volume_type = 0
  *                 if mask[i, j, k]:             # <<<<<<<<<<<<<<
@@ -20639,37 +22502,31 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":631
+        /* "_bit_marching_cubes_lorensen_cy.pyx":679
  *                 if mask[i, j, k]:
  *                     volume_type |= 1<<0
  *                 if mask[i + 1, j, k]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<1
  *                 if mask[i + 1, j + 1, k]:
  */
-        __pyx_t_21 = (__pyx_v_i + 1);
-        __pyx_t_20 = __pyx_v_j;
-        __pyx_t_19 = __pyx_v_k;
+        __pyx_t_23 = (__pyx_v_i + 1);
+        __pyx_t_21 = __pyx_v_j;
+        __pyx_t_20 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (__pyx_t_23 < 0) {
+          __pyx_t_23 += __pyx_v_mask.shape[0];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 631, __pyx_L1_error)
+          __PYX_ERR(0, 679, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_21 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_19 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_21 * __pyx_v_mask.strides[1]) ) + __pyx_t_20 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":632
+          /* "_bit_marching_cubes_lorensen_cy.pyx":680
  *                     volume_type |= 1<<0
  *                 if mask[i + 1, j, k]:
  *                     volume_type |= 1<<1             # <<<<<<<<<<<<<<
@@ -20678,7 +22535,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x2);
 
-          /* "_marching_cubes_lorensen_cy.pyx":631
+          /* "_bit_marching_cubes_lorensen_cy.pyx":679
  *                 if mask[i, j, k]:
  *                     volume_type |= 1<<0
  *                 if mask[i + 1, j, k]:             # <<<<<<<<<<<<<<
@@ -20687,37 +22544,34 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":633
+        /* "_bit_marching_cubes_lorensen_cy.pyx":681
  *                 if mask[i + 1, j, k]:
  *                     volume_type |= 1<<1
  *                 if mask[i + 1, j + 1, k]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<2
  *                 if mask[i, j + 1, k]:
  */
-        __pyx_t_19 = (__pyx_v_i + 1);
-        __pyx_t_20 = (__pyx_v_j + 1);
-        __pyx_t_21 = __pyx_v_k;
+        __pyx_t_23 = (__pyx_v_i + 1);
+        __pyx_t_28 = (__pyx_v_j + 1);
+        __pyx_t_20 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (__pyx_t_23 < 0) {
+          __pyx_t_23 += __pyx_v_mask.shape[0];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[1];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 1;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 633, __pyx_L1_error)
+          __PYX_ERR(0, 681, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_28 * __pyx_v_mask.strides[1]) ) + __pyx_t_20 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":634
+          /* "_bit_marching_cubes_lorensen_cy.pyx":682
  *                     volume_type |= 1<<1
  *                 if mask[i + 1, j + 1, k]:
  *                     volume_type |= 1<<2             # <<<<<<<<<<<<<<
@@ -20726,7 +22580,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x4);
 
-          /* "_marching_cubes_lorensen_cy.pyx":633
+          /* "_bit_marching_cubes_lorensen_cy.pyx":681
  *                 if mask[i + 1, j, k]:
  *                     volume_type |= 1<<1
  *                 if mask[i + 1, j + 1, k]:             # <<<<<<<<<<<<<<
@@ -20735,37 +22589,31 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":635
+        /* "_bit_marching_cubes_lorensen_cy.pyx":683
  *                 if mask[i + 1, j + 1, k]:
  *                     volume_type |= 1<<2
  *                 if mask[i, j + 1, k]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<3
  *                 if mask[i, j, k + 1]:
  */
-        __pyx_t_21 = __pyx_v_i;
-        __pyx_t_20 = (__pyx_v_j + 1);
-        __pyx_t_19 = __pyx_v_k;
+        __pyx_t_20 = __pyx_v_i;
+        __pyx_t_28 = (__pyx_v_j + 1);
+        __pyx_t_21 = __pyx_v_k;
         __pyx_t_22 = -1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[1];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 1;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 635, __pyx_L1_error)
+          __PYX_ERR(0, 683, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_21 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_19 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_20 * __pyx_v_mask.strides[0]) ) + __pyx_t_28 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":636
+          /* "_bit_marching_cubes_lorensen_cy.pyx":684
  *                     volume_type |= 1<<2
  *                 if mask[i, j + 1, k]:
  *                     volume_type |= 1<<3             # <<<<<<<<<<<<<<
@@ -20774,7 +22622,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x8);
 
-          /* "_marching_cubes_lorensen_cy.pyx":635
+          /* "_bit_marching_cubes_lorensen_cy.pyx":683
  *                 if mask[i + 1, j + 1, k]:
  *                     volume_type |= 1<<2
  *                 if mask[i, j + 1, k]:             # <<<<<<<<<<<<<<
@@ -20783,37 +22631,31 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":637
+        /* "_bit_marching_cubes_lorensen_cy.pyx":685
  *                 if mask[i, j + 1, k]:
  *                     volume_type |= 1<<3
  *                 if mask[i, j, k + 1]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<4
  *                 if mask[i + 1, j, k + 1]:
  */
-        __pyx_t_19 = __pyx_v_i;
+        __pyx_t_21 = __pyx_v_i;
         __pyx_t_20 = __pyx_v_j;
-        __pyx_t_21 = (__pyx_v_k + 1);
+        __pyx_t_28 = (__pyx_v_k + 1);
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_21 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[2];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 2;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 637, __pyx_L1_error)
+          __PYX_ERR(0, 685, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_21 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_28 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":638
+          /* "_bit_marching_cubes_lorensen_cy.pyx":686
  *                     volume_type |= 1<<3
  *                 if mask[i, j, k + 1]:
  *                     volume_type |= 1<<4             # <<<<<<<<<<<<<<
@@ -20822,7 +22664,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x10);
 
-          /* "_marching_cubes_lorensen_cy.pyx":637
+          /* "_bit_marching_cubes_lorensen_cy.pyx":685
  *                 if mask[i, j + 1, k]:
  *                     volume_type |= 1<<3
  *                 if mask[i, j, k + 1]:             # <<<<<<<<<<<<<<
@@ -20831,37 +22673,34 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":639
+        /* "_bit_marching_cubes_lorensen_cy.pyx":687
  *                 if mask[i, j, k + 1]:
  *                     volume_type |= 1<<4
  *                 if mask[i + 1, j, k + 1]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<5
  *                 if mask[i + 1, j + 1, k + 1]:
  */
-        __pyx_t_21 = (__pyx_v_i + 1);
+        __pyx_t_28 = (__pyx_v_i + 1);
         __pyx_t_20 = __pyx_v_j;
-        __pyx_t_19 = (__pyx_v_k + 1);
+        __pyx_t_23 = (__pyx_v_k + 1);
         __pyx_t_22 = -1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[0];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (__pyx_t_23 < 0) {
+          __pyx_t_23 += __pyx_v_mask.shape[2];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 2;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 639, __pyx_L1_error)
+          __PYX_ERR(0, 687, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_21 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_19 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_28 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_23 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":640
+          /* "_bit_marching_cubes_lorensen_cy.pyx":688
  *                     volume_type |= 1<<4
  *                 if mask[i + 1, j, k + 1]:
  *                     volume_type |= 1<<5             # <<<<<<<<<<<<<<
@@ -20870,7 +22709,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x20);
 
-          /* "_marching_cubes_lorensen_cy.pyx":639
+          /* "_bit_marching_cubes_lorensen_cy.pyx":687
  *                 if mask[i, j, k + 1]:
  *                     volume_type |= 1<<4
  *                 if mask[i + 1, j, k + 1]:             # <<<<<<<<<<<<<<
@@ -20879,37 +22718,37 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":641
+        /* "_bit_marching_cubes_lorensen_cy.pyx":689
  *                 if mask[i + 1, j, k + 1]:
  *                     volume_type |= 1<<5
  *                 if mask[i + 1, j + 1, k + 1]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<6
  *                 if mask[i, j + 1, k + 1]:
  */
-        __pyx_t_19 = (__pyx_v_i + 1);
-        __pyx_t_20 = (__pyx_v_j + 1);
-        __pyx_t_21 = (__pyx_v_k + 1);
+        __pyx_t_23 = (__pyx_v_i + 1);
+        __pyx_t_28 = (__pyx_v_j + 1);
+        __pyx_t_29 = (__pyx_v_k + 1);
         __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (__pyx_t_23 < 0) {
+          __pyx_t_23 += __pyx_v_mask.shape[0];
+          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_23 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[1];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 1;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (__pyx_t_29 < 0) {
+          __pyx_t_29 += __pyx_v_mask.shape[2];
+          if (unlikely(__pyx_t_29 < 0)) __pyx_t_22 = 2;
+        } else if (unlikely(__pyx_t_29 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 641, __pyx_L1_error)
+          __PYX_ERR(0, 689, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_19 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_21 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_23 * __pyx_v_mask.strides[0]) ) + __pyx_t_28 * __pyx_v_mask.strides[1]) ) + __pyx_t_29 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":642
+          /* "_bit_marching_cubes_lorensen_cy.pyx":690
  *                     volume_type |= 1<<5
  *                 if mask[i + 1, j + 1, k + 1]:
  *                     volume_type |= 1<<6             # <<<<<<<<<<<<<<
@@ -20918,7 +22757,7 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x40);
 
-          /* "_marching_cubes_lorensen_cy.pyx":641
+          /* "_bit_marching_cubes_lorensen_cy.pyx":689
  *                 if mask[i + 1, j, k + 1]:
  *                     volume_type |= 1<<5
  *                 if mask[i + 1, j + 1, k + 1]:             # <<<<<<<<<<<<<<
@@ -20927,46 +22766,43 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":643
+        /* "_bit_marching_cubes_lorensen_cy.pyx":691
  *                 if mask[i + 1, j + 1, k + 1]:
  *                     volume_type |= 1<<6
  *                 if mask[i, j + 1, k + 1]:             # <<<<<<<<<<<<<<
  *                     volume_type |= 1<<7
  * 
  */
-        __pyx_t_21 = __pyx_v_i;
-        __pyx_t_20 = (__pyx_v_j + 1);
-        __pyx_t_19 = (__pyx_v_k + 1);
+        __pyx_t_20 = __pyx_v_i;
+        __pyx_t_29 = (__pyx_v_j + 1);
+        __pyx_t_28 = (__pyx_v_k + 1);
         __pyx_t_22 = -1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_mask.shape[0];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_mask.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_mask.shape[1];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_mask.shape[2];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
+        if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_mask.shape[0])) __pyx_t_22 = 0;
+        if (__pyx_t_29 < 0) {
+          __pyx_t_29 += __pyx_v_mask.shape[1];
+          if (unlikely(__pyx_t_29 < 0)) __pyx_t_22 = 1;
+        } else if (unlikely(__pyx_t_29 >= __pyx_v_mask.shape[1])) __pyx_t_22 = 1;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_mask.shape[2];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 2;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_mask.shape[2])) __pyx_t_22 = 2;
         if (unlikely(__pyx_t_22 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 643, __pyx_L1_error)
+          __PYX_ERR(0, 691, __pyx_L1_error)
         }
-        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_21 * __pyx_v_mask.strides[0]) ) + __pyx_t_20 * __pyx_v_mask.strides[1]) ) + __pyx_t_19 * __pyx_v_mask.strides[2]) ))) != 0);
+        __pyx_t_17 = ((*((__pyx_t_5numpy_int32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_mask.data + __pyx_t_20 * __pyx_v_mask.strides[0]) ) + __pyx_t_29 * __pyx_v_mask.strides[1]) ) + __pyx_t_28 * __pyx_v_mask.strides[2]) ))) != 0);
         if (__pyx_t_17) {
 
-          /* "_marching_cubes_lorensen_cy.pyx":644
+          /* "_bit_marching_cubes_lorensen_cy.pyx":692
  *                     volume_type |= 1<<6
  *                 if mask[i, j + 1, k + 1]:
  *                     volume_type |= 1<<7             # <<<<<<<<<<<<<<
  * 
- *                 cube[i, j, k] = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+ *                 CurVol = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
  */
           __pyx_v_volume_type = (__pyx_v_volume_type | 0x80);
 
-          /* "_marching_cubes_lorensen_cy.pyx":643
+          /* "_bit_marching_cubes_lorensen_cy.pyx":691
  *                 if mask[i + 1, j + 1, k + 1]:
  *                     volume_type |= 1<<6
  *                 if mask[i, j + 1, k + 1]:             # <<<<<<<<<<<<<<
@@ -20975,92 +22811,92 @@ static PyObject *__pyx_pf_27_marching_cubes_lorensen_cy_MarchingCubesLorensen(CY
  */
         }
 
-        /* "_marching_cubes_lorensen_cy.pyx":646
+        /* "_bit_marching_cubes_lorensen_cy.pyx":694
  *                     volume_type |= 1<<7
  * 
- *                 cube[i, j, k] = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]             # <<<<<<<<<<<<<<
+ *                 CurVol = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]             # <<<<<<<<<<<<<<
+ *                 Sum += CurVol
+ *                 fenwick_tree.update(i, j, k, CurVol)
+ */
+        if (unlikely(!__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("VOLUME_CASE_LOOKUP"); __PYX_ERR(0, 694, __pyx_L1_error) }
+        if (unlikely(!__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("VOLUME_LOOKUP"); __PYX_ERR(0, 694, __pyx_L1_error) }
+        __pyx_t_28 = __pyx_v_volume_type;
+        __pyx_t_22 = -1;
+        if (__pyx_t_28 < 0) {
+          __pyx_t_28 += __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP.shape[0];
+          if (unlikely(__pyx_t_28 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_28 >= __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_22 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_22);
+          __PYX_ERR(0, 694, __pyx_L1_error)
+        }
+        __pyx_t_29 = (*((int *) ( /* dim=0 */ (__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP.data + __pyx_t_28 * __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP.strides[0]) )));
+        __pyx_t_22 = -1;
+        if (__pyx_t_29 < 0) {
+          __pyx_t_29 += __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.shape[0];
+          if (unlikely(__pyx_t_29 < 0)) __pyx_t_22 = 0;
+        } else if (unlikely(__pyx_t_29 >= __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.shape[0])) __pyx_t_22 = 0;
+        if (unlikely(__pyx_t_22 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_22);
+          __PYX_ERR(0, 694, __pyx_L1_error)
+        }
+        __pyx_v_CurVol = (*((__pyx_t_5numpy_float32_t *) ( /* dim=0 */ (__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.data + __pyx_t_29 * __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.strides[0]) )));
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":695
+ * 
+ *                 CurVol = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+ *                 Sum += CurVol             # <<<<<<<<<<<<<<
+ *                 fenwick_tree.update(i, j, k, CurVol)
+ * 
+ */
+        __pyx_v_Sum = (__pyx_v_Sum + __pyx_v_CurVol);
+
+        /* "_bit_marching_cubes_lorensen_cy.pyx":696
+ *                 CurVol = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+ *                 Sum += CurVol
+ *                 fenwick_tree.update(i, j, k, CurVol)             # <<<<<<<<<<<<<<
  * 
  *                 lookup = GEOMETRY_LOOKUP[volume_type]
  */
-        if (unlikely(!__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("VOLUME_CASE_LOOKUP"); __PYX_ERR(0, 646, __pyx_L1_error) }
-        if (unlikely(!__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("VOLUME_LOOKUP"); __PYX_ERR(0, 646, __pyx_L1_error) }
-        __pyx_t_19 = __pyx_v_volume_type;
-        __pyx_t_22 = -1;
-        if (__pyx_t_19 < 0) {
-          __pyx_t_19 += __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP.shape[0];
-          if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_19 >= __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP.shape[0])) __pyx_t_22 = 0;
-        if (unlikely(__pyx_t_22 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 646, __pyx_L1_error)
-        }
-        __pyx_t_20 = (*((int *) ( /* dim=0 */ (__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP.data + __pyx_t_19 * __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP.strides[0]) )));
-        __pyx_t_22 = -1;
-        if (__pyx_t_20 < 0) {
-          __pyx_t_20 += __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.shape[0];
-          if (unlikely(__pyx_t_20 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_20 >= __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.shape[0])) __pyx_t_22 = 0;
-        if (unlikely(__pyx_t_22 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 646, __pyx_L1_error)
-        }
-        __pyx_t_21 = __pyx_v_i;
-        __pyx_t_23 = __pyx_v_j;
-        __pyx_t_24 = __pyx_v_k;
-        __pyx_t_22 = -1;
-        if (__pyx_t_21 < 0) {
-          __pyx_t_21 += __pyx_v_cube.shape[0];
-          if (unlikely(__pyx_t_21 < 0)) __pyx_t_22 = 0;
-        } else if (unlikely(__pyx_t_21 >= __pyx_v_cube.shape[0])) __pyx_t_22 = 0;
-        if (__pyx_t_23 < 0) {
-          __pyx_t_23 += __pyx_v_cube.shape[1];
-          if (unlikely(__pyx_t_23 < 0)) __pyx_t_22 = 1;
-        } else if (unlikely(__pyx_t_23 >= __pyx_v_cube.shape[1])) __pyx_t_22 = 1;
-        if (__pyx_t_24 < 0) {
-          __pyx_t_24 += __pyx_v_cube.shape[2];
-          if (unlikely(__pyx_t_24 < 0)) __pyx_t_22 = 2;
-        } else if (unlikely(__pyx_t_24 >= __pyx_v_cube.shape[2])) __pyx_t_22 = 2;
-        if (unlikely(__pyx_t_22 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_22);
-          __PYX_ERR(0, 646, __pyx_L1_error)
-        }
-        *((__pyx_t_5numpy_float32_t *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_cube.data + __pyx_t_21 * __pyx_v_cube.strides[0]) ) + __pyx_t_23 * __pyx_v_cube.strides[1]) ) + __pyx_t_24 * __pyx_v_cube.strides[2]) )) = (*((__pyx_t_5numpy_float32_t *) ( /* dim=0 */ (__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.data + __pyx_t_20 * __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP.strides[0]) )));
+        __pyx_t_1 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_fenwick_tree->__pyx_vtab)->update(__pyx_v_fenwick_tree, __pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_CurVol, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 696, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "_marching_cubes_lorensen_cy.pyx":648
- *                 cube[i, j, k] = VOLUME_CASE_LOOKUP[VOLUME_LOOKUP[volume_type]]
+        /* "_bit_marching_cubes_lorensen_cy.pyx":698
+ *                 fenwick_tree.update(i, j, k, CurVol)
  * 
  *                 lookup = GEOMETRY_LOOKUP[volume_type]             # <<<<<<<<<<<<<<
  *                 t = 0
  *                 while t < len(lookup):
  */
-        if (unlikely(!__pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("GEOMETRY_LOOKUP"); __PYX_ERR(0, 648, __pyx_L1_error) }
-        __pyx_t_28.data = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.data;
-        __pyx_t_28.memview = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.memview;
-        __PYX_INC_MEMVIEW(&__pyx_t_28, 1);
+        if (unlikely(!__pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.memview)) { __Pyx_RaiseUnboundLocalError("GEOMETRY_LOOKUP"); __PYX_ERR(0, 698, __pyx_L1_error) }
+        __pyx_t_30.data = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.data;
+        __pyx_t_30.memview = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_30, 1);
         {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_volume_type;
-        Py_ssize_t __pyx_tmp_shape = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.shape[0];
-    Py_ssize_t __pyx_tmp_stride = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.strides[0];
+        Py_ssize_t __pyx_tmp_shape = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.shape[0];
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.strides[0];
         if (__pyx_tmp_idx < 0)
             __pyx_tmp_idx += __pyx_tmp_shape;
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-            __PYX_ERR(0, 648, __pyx_L1_error)
+            __PYX_ERR(0, 698, __pyx_L1_error)
         }
-        __pyx_t_28.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_30.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_28.shape[0] = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.shape[1];
-__pyx_t_28.strides[0] = __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.strides[1];
-    __pyx_t_28.suboffsets[0] = -1;
+__pyx_t_30.shape[0] = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.shape[1];
+__pyx_t_30.strides[0] = __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP.strides[1];
+    __pyx_t_30.suboffsets[0] = -1;
 
 __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
-        __pyx_v_lookup = __pyx_t_28;
-        __pyx_t_28.memview = NULL;
-        __pyx_t_28.data = NULL;
+        __pyx_v_lookup = __pyx_t_30;
+        __pyx_t_30.memview = NULL;
+        __pyx_t_30.data = NULL;
 
-        /* "_marching_cubes_lorensen_cy.pyx":649
+        /* "_bit_marching_cubes_lorensen_cy.pyx":699
  * 
  *                 lookup = GEOMETRY_LOOKUP[volume_type]
  *                 t = 0             # <<<<<<<<<<<<<<
@@ -21069,7 +22905,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
  */
         __pyx_v_t = 0;
 
-        /* "_marching_cubes_lorensen_cy.pyx":650
+        /* "_bit_marching_cubes_lorensen_cy.pyx":700
  *                 lookup = GEOMETRY_LOOKUP[volume_type]
  *                 t = 0
  *                 while t < len(lookup):             # <<<<<<<<<<<<<<
@@ -21081,27 +22917,24 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
           __pyx_t_17 = (__pyx_v_t < __pyx_t_4);
           if (!__pyx_t_17) break;
 
-          /* "_marching_cubes_lorensen_cy.pyx":651
+          /* "_bit_marching_cubes_lorensen_cy.pyx":701
  *                 t = 0
  *                 while t < len(lookup):
  *                     if lookup[t] < 0:             # <<<<<<<<<<<<<<
  *                         break
  *                     edge0, edge1, edge2 = lookup[t : t + 3]
  */
-          __pyx_t_19 = __pyx_v_t;
+          __pyx_t_20 = __pyx_v_t;
           __pyx_t_22 = -1;
-          if (__pyx_t_19 < 0) {
-            __pyx_t_19 += __pyx_v_lookup.shape[0];
-            if (unlikely(__pyx_t_19 < 0)) __pyx_t_22 = 0;
-          } else if (unlikely(__pyx_t_19 >= __pyx_v_lookup.shape[0])) __pyx_t_22 = 0;
+          if (unlikely(__pyx_t_20 >= (size_t)__pyx_v_lookup.shape[0])) __pyx_t_22 = 0;
           if (unlikely(__pyx_t_22 != -1)) {
             __Pyx_RaiseBufferIndexError(__pyx_t_22);
-            __PYX_ERR(0, 651, __pyx_L1_error)
+            __PYX_ERR(0, 701, __pyx_L1_error)
           }
-          __pyx_t_17 = ((*((int *) ( /* dim=0 */ (__pyx_v_lookup.data + __pyx_t_19 * __pyx_v_lookup.strides[0]) ))) < 0);
+          __pyx_t_17 = ((*((int *) ( /* dim=0 */ (__pyx_v_lookup.data + __pyx_t_20 * __pyx_v_lookup.strides[0]) ))) < 0);
           if (__pyx_t_17) {
 
-            /* "_marching_cubes_lorensen_cy.pyx":652
+            /* "_bit_marching_cubes_lorensen_cy.pyx":702
  *                 while t < len(lookup):
  *                     if lookup[t] < 0:
  *                         break             # <<<<<<<<<<<<<<
@@ -21110,7 +22943,7 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
  */
             goto __pyx_L31_break;
 
-            /* "_marching_cubes_lorensen_cy.pyx":651
+            /* "_bit_marching_cubes_lorensen_cy.pyx":701
  *                 t = 0
  *                 while t < len(lookup):
  *                     if lookup[t] < 0:             # <<<<<<<<<<<<<<
@@ -21119,19 +22952,19 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
  */
           }
 
-          /* "_marching_cubes_lorensen_cy.pyx":653
+          /* "_bit_marching_cubes_lorensen_cy.pyx":703
  *                     if lookup[t] < 0:
  *                         break
  *                     edge0, edge1, edge2 = lookup[t : t + 3]             # <<<<<<<<<<<<<<
  *                     vertex_id0 = edge_to_vertex_id(i, j, k, N, M, edge0)
  *                     vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)
  */
-          __pyx_t_28.data = __pyx_v_lookup.data;
-          __pyx_t_28.memview = __pyx_v_lookup.memview;
-          __PYX_INC_MEMVIEW(&__pyx_t_28, 1);
+          __pyx_t_30.data = __pyx_v_lookup.data;
+          __pyx_t_30.memview = __pyx_v_lookup.memview;
+          __PYX_INC_MEMVIEW(&__pyx_t_30, 1);
           __pyx_t_22 = -1;
           if (unlikely(__pyx_memoryview_slice_memviewslice(
-    &__pyx_t_28,
+    &__pyx_t_30,
     __pyx_v_lookup.shape[0], __pyx_v_lookup.strides[0], __pyx_v_lookup.suboffsets[0],
     0,
     0,
@@ -21144,20 +22977,20 @@ __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 653, __pyx_L1_error)
+    __PYX_ERR(0, 703, __pyx_L1_error)
 }
 
-__pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 653, __pyx_L1_error)
+__pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_30, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 703, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __PYX_XCLEAR_MEMVIEW(&__pyx_t_28, 1);
-          __pyx_t_28.memview = NULL; __pyx_t_28.data = NULL;
+          __PYX_XCLEAR_MEMVIEW(&__pyx_t_30, 1);
+          __pyx_t_30.memview = NULL; __pyx_t_30.data = NULL;
           if ((likely(PyTuple_CheckExact(__pyx_t_1))) || (PyList_CheckExact(__pyx_t_1))) {
             PyObject* sequence = __pyx_t_1;
             Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
             if (unlikely(size != 3)) {
               if (size > 3) __Pyx_RaiseTooManyValuesError(3);
               else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-              __PYX_ERR(0, 653, __pyx_L1_error)
+              __PYX_ERR(0, 703, __pyx_L1_error)
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
             if (likely(PyTuple_CheckExact(sequence))) {
@@ -21173,105 +23006,105 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
             __Pyx_INCREF(__pyx_t_7);
             __Pyx_INCREF(__pyx_t_6);
             #else
-            __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 653, __pyx_L1_error)
+            __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 703, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_5);
-            __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 653, __pyx_L1_error)
+            __pyx_t_7 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 703, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_7);
-            __pyx_t_6 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 653, __pyx_L1_error)
+            __pyx_t_6 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 703, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
             #endif
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           } else {
             Py_ssize_t index = -1;
-            __pyx_t_29 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_29)) __PYX_ERR(0, 653, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_29);
+            __pyx_t_31 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_31)) __PYX_ERR(0, 703, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_31);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_30 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_29);
-            index = 0; __pyx_t_5 = __pyx_t_30(__pyx_t_29); if (unlikely(!__pyx_t_5)) goto __pyx_L33_unpacking_failed;
+            __pyx_t_32 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_31);
+            index = 0; __pyx_t_5 = __pyx_t_32(__pyx_t_31); if (unlikely(!__pyx_t_5)) goto __pyx_L33_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_5);
-            index = 1; __pyx_t_7 = __pyx_t_30(__pyx_t_29); if (unlikely(!__pyx_t_7)) goto __pyx_L33_unpacking_failed;
+            index = 1; __pyx_t_7 = __pyx_t_32(__pyx_t_31); if (unlikely(!__pyx_t_7)) goto __pyx_L33_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_7);
-            index = 2; __pyx_t_6 = __pyx_t_30(__pyx_t_29); if (unlikely(!__pyx_t_6)) goto __pyx_L33_unpacking_failed;
+            index = 2; __pyx_t_6 = __pyx_t_32(__pyx_t_31); if (unlikely(!__pyx_t_6)) goto __pyx_L33_unpacking_failed;
             __Pyx_GOTREF(__pyx_t_6);
-            if (__Pyx_IternextUnpackEndCheck(__pyx_t_30(__pyx_t_29), 3) < 0) __PYX_ERR(0, 653, __pyx_L1_error)
-            __pyx_t_30 = NULL;
-            __Pyx_DECREF(__pyx_t_29); __pyx_t_29 = 0;
+            if (__Pyx_IternextUnpackEndCheck(__pyx_t_32(__pyx_t_31), 3) < 0) __PYX_ERR(0, 703, __pyx_L1_error)
+            __pyx_t_32 = NULL;
+            __Pyx_DECREF(__pyx_t_31); __pyx_t_31 = 0;
             goto __pyx_L34_unpacking_done;
             __pyx_L33_unpacking_failed:;
-            __Pyx_DECREF(__pyx_t_29); __pyx_t_29 = 0;
-            __pyx_t_30 = NULL;
+            __Pyx_DECREF(__pyx_t_31); __pyx_t_31 = 0;
+            __pyx_t_32 = NULL;
             if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-            __PYX_ERR(0, 653, __pyx_L1_error)
+            __PYX_ERR(0, 703, __pyx_L1_error)
             __pyx_L34_unpacking_done:;
           }
-          __pyx_t_22 = __Pyx_PyInt_As_int(__pyx_t_5); if (unlikely((__pyx_t_22 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 653, __pyx_L1_error)
+          __pyx_t_22 = __Pyx_PyInt_As_int(__pyx_t_5); if (unlikely((__pyx_t_22 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 703, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __pyx_t_31 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_31 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 653, __pyx_L1_error)
+          __pyx_t_33 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_33 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 703, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __pyx_t_32 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_32 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 653, __pyx_L1_error)
+          __pyx_t_34 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_34 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 703, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_v_edge0 = __pyx_t_22;
-          __pyx_v_edge1 = __pyx_t_31;
-          __pyx_v_edge2 = __pyx_t_32;
+          __pyx_v_edge1 = __pyx_t_33;
+          __pyx_v_edge2 = __pyx_t_34;
 
-          /* "_marching_cubes_lorensen_cy.pyx":654
+          /* "_bit_marching_cubes_lorensen_cy.pyx":704
  *                         break
  *                     edge0, edge1, edge2 = lookup[t : t + 3]
  *                     vertex_id0 = edge_to_vertex_id(i, j, k, N, M, edge0)             # <<<<<<<<<<<<<<
  *                     vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)
  *                     vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)
  */
-          __pyx_t_32 = __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge0); if (unlikely(__pyx_t_32 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 654, __pyx_L1_error)
-          __pyx_v_vertex_id0 = __pyx_t_32;
+          __pyx_t_34 = __pyx_f_31_bit_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge0); if (unlikely(__pyx_t_34 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 704, __pyx_L1_error)
+          __pyx_v_vertex_id0 = __pyx_t_34;
 
-          /* "_marching_cubes_lorensen_cy.pyx":655
+          /* "_bit_marching_cubes_lorensen_cy.pyx":705
  *                     edge0, edge1, edge2 = lookup[t : t + 3]
  *                     vertex_id0 = edge_to_vertex_id(i, j, k, N, M, edge0)
  *                     vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)             # <<<<<<<<<<<<<<
  *                     vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)
  *                     triangle_ids.append([vertex_id0, vertex_id1, vertex_id2])
  */
-          __pyx_t_32 = __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge1); if (unlikely(__pyx_t_32 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 655, __pyx_L1_error)
-          __pyx_v_vertex_id1 = __pyx_t_32;
+          __pyx_t_34 = __pyx_f_31_bit_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge1); if (unlikely(__pyx_t_34 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 705, __pyx_L1_error)
+          __pyx_v_vertex_id1 = __pyx_t_34;
 
-          /* "_marching_cubes_lorensen_cy.pyx":656
+          /* "_bit_marching_cubes_lorensen_cy.pyx":706
  *                     vertex_id0 = edge_to_vertex_id(i, j, k, N, M, edge0)
  *                     vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)
  *                     vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)             # <<<<<<<<<<<<<<
  *                     triangle_ids.append([vertex_id0, vertex_id1, vertex_id2])
  *                     t += 3
  */
-          __pyx_t_32 = __pyx_f_27_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge2); if (unlikely(__pyx_t_32 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 656, __pyx_L1_error)
-          __pyx_v_vertex_id2 = __pyx_t_32;
+          __pyx_t_34 = __pyx_f_31_bit_marching_cubes_lorensen_cy_edge_to_vertex_id(__pyx_v_i, __pyx_v_j, __pyx_v_k, __pyx_v_N, __pyx_v_M, __pyx_v_edge2); if (unlikely(__pyx_t_34 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 706, __pyx_L1_error)
+          __pyx_v_vertex_id2 = __pyx_t_34;
 
-          /* "_marching_cubes_lorensen_cy.pyx":657
+          /* "_bit_marching_cubes_lorensen_cy.pyx":707
  *                     vertex_id1 = edge_to_vertex_id(i, j, k, N, M, edge1)
  *                     vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)
  *                     triangle_ids.append([vertex_id0, vertex_id1, vertex_id2])             # <<<<<<<<<<<<<<
  *                     t += 3
  * 
  */
-          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_vertex_id0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 657, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_vertex_id0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 707, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_vertex_id1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 657, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_vertex_id1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 707, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_vertex_id2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 657, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_vertex_id2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 707, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_5 = PyList_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 657, __pyx_L1_error)
+          __pyx_t_5 = PyList_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 707, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_GIVEREF(__pyx_t_1);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_1)) __PYX_ERR(0, 657, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_1)) __PYX_ERR(0, 707, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_6);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 1, __pyx_t_6)) __PYX_ERR(0, 657, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 1, __pyx_t_6)) __PYX_ERR(0, 707, __pyx_L1_error);
           __Pyx_GIVEREF(__pyx_t_7);
-          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 2, __pyx_t_7)) __PYX_ERR(0, 657, __pyx_L1_error);
+          if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 2, __pyx_t_7)) __PYX_ERR(0, 707, __pyx_L1_error);
           __pyx_t_1 = 0;
           __pyx_t_6 = 0;
           __pyx_t_7 = 0;
-          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_triangle_ids, __pyx_t_5); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 657, __pyx_L1_error)
+          __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_triangle_ids, __pyx_t_5); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 707, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-          /* "_marching_cubes_lorensen_cy.pyx":658
+          /* "_bit_marching_cubes_lorensen_cy.pyx":708
  *                     vertex_id2 = edge_to_vertex_id(i, j, k, N, M, edge2)
  *                     triangle_ids.append([vertex_id0, vertex_id1, vertex_id2])
  *                     t += 3             # <<<<<<<<<<<<<<
@@ -21286,7 +23119,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
     }
   }
 
-  /* "_marching_cubes_lorensen_cy.pyx":660
+  /* "_bit_marching_cubes_lorensen_cy.pyx":710
  *                     t += 3
  * 
  *     order_of_ids = {id: order for order, id in enumerate(vertex_ids)}             # <<<<<<<<<<<<<<
@@ -21294,7 +23127,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
  *         triangles.append([order_of_ids[c] for c in triangle_corners])
  */
   { /* enter inner scope */
-    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 660, __pyx_L37_error)
+    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 710, __pyx_L37_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_4 = 0;
     __pyx_t_7 = __pyx_v_vertex_ids; __Pyx_INCREF(__pyx_t_7);
@@ -21303,37 +23136,37 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
       {
         Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_7);
         #if !CYTHON_ASSUME_SAFE_MACROS
-        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 660, __pyx_L37_error)
+        if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 710, __pyx_L37_error)
         #endif
         if (__pyx_t_3 >= __pyx_temp) break;
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      __pyx_t_6 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_3); __Pyx_INCREF(__pyx_t_6); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 660, __pyx_L37_error)
+      __pyx_t_6 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_3); __Pyx_INCREF(__pyx_t_6); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 710, __pyx_L37_error)
       #else
-      __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 660, __pyx_L37_error)
+      __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 710, __pyx_L37_error)
       __Pyx_GOTREF(__pyx_t_6);
       #endif
-      __Pyx_XDECREF_SET(__pyx_7genexpr__pyx_v_id, __pyx_t_6);
+      __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_id, __pyx_t_6);
       __pyx_t_6 = 0;
-      __pyx_7genexpr__pyx_v_order = __pyx_t_4;
+      __pyx_8genexpr2__pyx_v_order = __pyx_t_4;
       __pyx_t_4 = (__pyx_t_4 + 1);
-      __pyx_t_6 = PyInt_FromSsize_t(__pyx_7genexpr__pyx_v_order); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 660, __pyx_L37_error)
+      __pyx_t_6 = PyInt_FromSsize_t(__pyx_8genexpr2__pyx_v_order); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 710, __pyx_L37_error)
       __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_7genexpr__pyx_v_id, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 660, __pyx_L37_error)
+      if (unlikely(PyDict_SetItem(__pyx_t_5, (PyObject*)__pyx_8genexpr2__pyx_v_id, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 710, __pyx_L37_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __Pyx_XDECREF(__pyx_7genexpr__pyx_v_id); __pyx_7genexpr__pyx_v_id = 0;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_id); __pyx_8genexpr2__pyx_v_id = 0;
     goto __pyx_L41_exit_scope;
     __pyx_L37_error:;
-    __Pyx_XDECREF(__pyx_7genexpr__pyx_v_id); __pyx_7genexpr__pyx_v_id = 0;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_id); __pyx_8genexpr2__pyx_v_id = 0;
     goto __pyx_L1_error;
     __pyx_L41_exit_scope:;
   } /* exit inner scope */
   __pyx_v_order_of_ids = ((PyObject*)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":661
+  /* "_bit_marching_cubes_lorensen_cy.pyx":711
  * 
  *     order_of_ids = {id: order for order, id in enumerate(vertex_ids)}
  *     for triangle_corners in triangle_ids:             # <<<<<<<<<<<<<<
@@ -21346,100 +23179,100 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_5);
       #if !CYTHON_ASSUME_SAFE_MACROS
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 661, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 711, __pyx_L1_error)
       #endif
       if (__pyx_t_4 >= __pyx_temp) break;
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 661, __pyx_L1_error)
+    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_4); __Pyx_INCREF(__pyx_t_7); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 711, __pyx_L1_error)
     #else
-    __pyx_t_7 = __Pyx_PySequence_ITEM(__pyx_t_5, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 661, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PySequence_ITEM(__pyx_t_5, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 711, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_triangle_corners, __pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "_marching_cubes_lorensen_cy.pyx":662
+    /* "_bit_marching_cubes_lorensen_cy.pyx":712
  *     order_of_ids = {id: order for order, id in enumerate(vertex_ids)}
  *     for triangle_corners in triangle_ids:
  *         triangles.append([order_of_ids[c] for c in triangle_corners])             # <<<<<<<<<<<<<<
  * 
- *     return vertices, triangles
+ *     return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum
  */
     { /* enter inner scope */
-      __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 662, __pyx_L46_error)
+      __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 712, __pyx_L46_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (likely(PyList_CheckExact(__pyx_v_triangle_corners)) || PyTuple_CheckExact(__pyx_v_triangle_corners)) {
         __pyx_t_6 = __pyx_v_triangle_corners; __Pyx_INCREF(__pyx_t_6);
         __pyx_t_3 = 0;
-        __pyx_t_33 = NULL;
+        __pyx_t_35 = NULL;
       } else {
-        __pyx_t_3 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_triangle_corners); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 662, __pyx_L46_error)
+        __pyx_t_3 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_triangle_corners); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 712, __pyx_L46_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_33 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_33)) __PYX_ERR(0, 662, __pyx_L46_error)
+        __pyx_t_35 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_35)) __PYX_ERR(0, 712, __pyx_L46_error)
       }
       for (;;) {
-        if (likely(!__pyx_t_33)) {
+        if (likely(!__pyx_t_35)) {
           if (likely(PyList_CheckExact(__pyx_t_6))) {
             {
               Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_6);
               #if !CYTHON_ASSUME_SAFE_MACROS
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 662, __pyx_L46_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 712, __pyx_L46_error)
               #endif
               if (__pyx_t_3 >= __pyx_temp) break;
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_1 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 662, __pyx_L46_error)
+            __pyx_t_1 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 712, __pyx_L46_error)
             #else
-            __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 662, __pyx_L46_error)
+            __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 712, __pyx_L46_error)
             __Pyx_GOTREF(__pyx_t_1);
             #endif
           } else {
             {
               Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_6);
               #if !CYTHON_ASSUME_SAFE_MACROS
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 662, __pyx_L46_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 712, __pyx_L46_error)
               #endif
               if (__pyx_t_3 >= __pyx_temp) break;
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 662, __pyx_L46_error)
+            __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_3); __Pyx_INCREF(__pyx_t_1); __pyx_t_3++; if (unlikely((0 < 0))) __PYX_ERR(0, 712, __pyx_L46_error)
             #else
-            __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 662, __pyx_L46_error)
+            __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 712, __pyx_L46_error)
             __Pyx_GOTREF(__pyx_t_1);
             #endif
           }
         } else {
-          __pyx_t_1 = __pyx_t_33(__pyx_t_6);
+          __pyx_t_1 = __pyx_t_35(__pyx_t_6);
           if (unlikely(!__pyx_t_1)) {
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 662, __pyx_L46_error)
+              else __PYX_ERR(0, 712, __pyx_L46_error)
             }
             break;
           }
           __Pyx_GOTREF(__pyx_t_1);
         }
-        __Pyx_XDECREF_SET(__pyx_8genexpr1__pyx_v_c, __pyx_t_1);
+        __Pyx_XDECREF_SET(__pyx_8genexpr3__pyx_v_c, __pyx_t_1);
         __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_order_of_ids, __pyx_8genexpr1__pyx_v_c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 662, __pyx_L46_error)
+        __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_order_of_ids, __pyx_8genexpr3__pyx_v_c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 712, __pyx_L46_error)
         __Pyx_GOTREF(__pyx_t_1);
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_7, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 662, __pyx_L46_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_7, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 712, __pyx_L46_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_XDECREF(__pyx_8genexpr1__pyx_v_c); __pyx_8genexpr1__pyx_v_c = 0;
+      __Pyx_XDECREF(__pyx_8genexpr3__pyx_v_c); __pyx_8genexpr3__pyx_v_c = 0;
       goto __pyx_L50_exit_scope;
       __pyx_L46_error:;
-      __Pyx_XDECREF(__pyx_8genexpr1__pyx_v_c); __pyx_8genexpr1__pyx_v_c = 0;
+      __Pyx_XDECREF(__pyx_8genexpr3__pyx_v_c); __pyx_8genexpr3__pyx_v_c = 0;
       goto __pyx_L1_error;
       __pyx_L50_exit_scope:;
     } /* exit inner scope */
-    __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_triangles, __pyx_t_7); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 662, __pyx_L1_error)
+    __pyx_t_27 = __Pyx_PyList_Append(__pyx_v_triangles, __pyx_t_7); if (unlikely(__pyx_t_27 == ((int)-1))) __PYX_ERR(0, 712, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "_marching_cubes_lorensen_cy.pyx":661
+    /* "_bit_marching_cubes_lorensen_cy.pyx":711
  * 
  *     order_of_ids = {id: order for order, id in enumerate(vertex_ids)}
  *     for triangle_corners in triangle_ids:             # <<<<<<<<<<<<<<
@@ -21449,30 +23282,41 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":664
+  /* "_bit_marching_cubes_lorensen_cy.pyx":714
  *         triangles.append([order_of_ids[c] for c in triangle_corners])
  * 
- *     return vertices, triangles             # <<<<<<<<<<<<<<
+ *     return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 664, __pyx_L1_error)
+  __pyx_t_26 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_fenwick_tree->__pyx_vtab)->getSum(__pyx_v_fenwick_tree, (__pyx_v_N - 1), (__pyx_v_M - 1), (__pyx_v_P - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 714, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_26); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_Sum); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 714, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 714, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_vertices);
   __Pyx_GIVEREF(__pyx_v_vertices);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_vertices)) __PYX_ERR(0, 664, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_vertices)) __PYX_ERR(0, 714, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_triangles);
   __Pyx_GIVEREF(__pyx_v_triangles);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_v_triangles)) __PYX_ERR(0, 664, __pyx_L1_error);
-  __pyx_r = __pyx_t_5;
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_triangles)) __PYX_ERR(0, 714, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_5);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_7);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_7)) __PYX_ERR(0, 714, __pyx_L1_error);
   __pyx_t_5 = 0;
+  __pyx_t_7 = 0;
+  __pyx_r = __pyx_t_6;
+  __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":588
+  /* "_bit_marching_cubes_lorensen_cy.pyx":635
  * 
  * 
- * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
+ * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
  * 
  *     # Initialize variables
  */
@@ -21483,24 +23327,175 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_28, 1, (PyObject *(*)(char *)) __
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_28, 1);
-  __Pyx_XDECREF(__pyx_t_29);
-  __Pyx_AddTraceback("_marching_cubes_lorensen_cy.MarchingCubesLorensen", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_30, 1);
+  __Pyx_XDECREF(__pyx_t_31);
+  __Pyx_AddTraceback("_bit_marching_cubes_lorensen_cy.MarchingCubesLorensen", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_vertices);
   __Pyx_XDECREF(__pyx_v_vertex_ids);
   __Pyx_XDECREF(__pyx_v_triangles);
   __Pyx_XDECREF(__pyx_v_triangle_ids);
+  __Pyx_XDECREF((PyObject *)__pyx_v_fenwick_tree);
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_lookup, 1);
   __Pyx_XDECREF(__pyx_v_order_of_ids);
   __Pyx_XDECREF(__pyx_v_triangle_corners);
-  __Pyx_XDECREF(__pyx_7genexpr__pyx_v_id);
-  __Pyx_XDECREF(__pyx_8genexpr1__pyx_v_c);
+  __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_id);
+  __Pyx_XDECREF(__pyx_8genexpr3__pyx_v_c);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
+static struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D __pyx_vtable_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
+
+static PyObject *__pyx_tp_new_31_bit_marching_cubes_lorensen_cy_FenwickTree3D(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *p;
+  PyObject *o;
+  #if CYTHON_COMPILING_IN_LIMITED_API
+  allocfunc alloc_func = (allocfunc)PyType_GetSlot(t, Py_tp_alloc);
+  o = alloc_func(t, 0);
+  #else
+  if (likely(!__Pyx_PyType_HasFeature(t, Py_TPFLAGS_IS_ABSTRACT))) {
+    o = (*t->tp_alloc)(t, 0);
+  } else {
+    o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
+  }
+  if (unlikely(!o)) return 0;
+  #endif
+  p = ((struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)o);
+  p->__pyx_vtab = __pyx_vtabptr_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
+  p->bit.data = NULL;
+  p->bit.memview = NULL;
+  if (unlikely(__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_1__cinit__(o, a, k) < 0)) goto bad;
+  return o;
+  bad:
+  Py_DECREF(o); o = 0;
+  return NULL;
+}
+
+static void __pyx_tp_dealloc_31_bit_marching_cubes_lorensen_cy_FenwickTree3D(PyObject *o) {
+  struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *p = (struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)o;
+  #if CYTHON_USE_TP_FINALIZE
+  if (unlikely((PY_VERSION_HEX >= 0x03080000 || __Pyx_PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE)) && __Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && (!PyType_IS_GC(Py_TYPE(o)) || !__Pyx_PyObject_GC_IsFinalized(o))) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) {
+      if (PyObject_CallFinalizerFromDealloc(o)) return;
+    }
+  }
+  #endif
+  __PYX_XCLEAR_MEMVIEW(&p->bit, 1);
+  p->bit.memview = NULL; p->bit.data = NULL;
+  #if CYTHON_USE_TYPE_SLOTS || CYTHON_COMPILING_IN_PYPY
+  (*Py_TYPE(o)->tp_free)(o);
+  #else
+  {
+    freefunc tp_free = (freefunc)PyType_GetSlot(Py_TYPE(o), Py_tp_free);
+    if (tp_free) tp_free(o);
+  }
+  #endif
+}
+
+static PyMethodDef __pyx_methods_31_bit_marching_cubes_lorensen_cy_FenwickTree3D[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {0, 0, 0, 0}
+};
+#if CYTHON_USE_TYPE_SPECS
+static PyType_Slot __pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_31_bit_marching_cubes_lorensen_cy_FenwickTree3D},
+  {Py_tp_methods, (void *)__pyx_methods_31_bit_marching_cubes_lorensen_cy_FenwickTree3D},
+  {Py_tp_new, (void *)__pyx_tp_new_31_bit_marching_cubes_lorensen_cy_FenwickTree3D},
+  {0, 0},
+};
+static PyType_Spec __pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D_spec = {
+  "_bit_marching_cubes_lorensen_cy.FenwickTree3D",
+  sizeof(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D),
+  0,
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
+  __pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D_slots,
+};
+#else
+
+static PyTypeObject __pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "_bit_marching_cubes_lorensen_cy.""FenwickTree3D", /*tp_name*/
+  sizeof(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, /*tp_dealloc*/
+  #if PY_VERSION_HEX < 0x030800b4
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4
+  0, /*tp_vectorcall_offset*/
+  #endif
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  __pyx_methods_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  #if !CYTHON_USE_TYPE_SPECS
+  0, /*tp_dictoffset*/
+  #endif
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  #if CYTHON_USE_TP_FINALIZE
+  0, /*tp_finalize*/
+  #else
+  NULL, /*tp_finalize*/
+  #endif
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b1 && (!CYTHON_COMPILING_IN_PYPY || PYPY_VERSION_NUM >= 0x07030800)
+  0, /*tp_vectorcall*/
+  #endif
+  #if __PYX_NEED_TP_PRINT_SLOT == 1
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030C0000
+  0, /*tp_watched*/
+  #endif
+  #if CYTHON_COMPILING_IN_PYPY && PY_VERSION_HEX >= 0x03090000 && PY_VERSION_HEX < 0x030a0000
+  0, /*tp_pypy_flags*/
+  #endif
+};
+#endif
 static struct __pyx_vtabstruct_array __pyx_vtable_array;
 
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k) {
@@ -21639,7 +23634,7 @@ static PyType_Slot __pyx_type___pyx_array_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_array_spec = {
-  "_marching_cubes_lorensen_cy.array",
+  "_bit_marching_cubes_lorensen_cy.array",
   sizeof(struct __pyx_array_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_SEQUENCE,
@@ -21685,7 +23680,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_marching_cubes_lorensen_cy.""array", /*tp_name*/
+  "_bit_marching_cubes_lorensen_cy.""array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -21845,7 +23840,7 @@ static PyType_Slot __pyx_type___pyx_MemviewEnum_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
-  "_marching_cubes_lorensen_cy.Enum",
+  "_bit_marching_cubes_lorensen_cy.Enum",
   sizeof(struct __pyx_MemviewEnum_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -21855,7 +23850,7 @@ static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_marching_cubes_lorensen_cy.""Enum", /*tp_name*/
+  "_bit_marching_cubes_lorensen_cy.""Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -22152,7 +24147,7 @@ static PyType_Slot __pyx_type___pyx_memoryview_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryview_spec = {
-  "_marching_cubes_lorensen_cy.memoryview",
+  "_bit_marching_cubes_lorensen_cy.memoryview",
   sizeof(struct __pyx_memoryview_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -22198,7 +24193,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_marching_cubes_lorensen_cy.""memoryview", /*tp_name*/
+  "_bit_marching_cubes_lorensen_cy.""memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -22350,7 +24345,7 @@ static PyType_Slot __pyx_type___pyx_memoryviewslice_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
-  "_marching_cubes_lorensen_cy._memoryviewslice",
+  "_bit_marching_cubes_lorensen_cy._memoryviewslice",
   sizeof(struct __pyx_memoryviewslice_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC|Py_TPFLAGS_SEQUENCE,
@@ -22360,7 +24355,7 @@ static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "_marching_cubes_lorensen_cy.""_memoryviewslice", /*tp_name*/
+  "_bit_marching_cubes_lorensen_cy.""_memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -22474,9 +24469,16 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_kp_s_Cannot_create_writable_memory_vi, __pyx_k_Cannot_create_writable_memory_vi, sizeof(__pyx_k_Cannot_create_writable_memory_vi), 0, 0, 1, 0},
     {&__pyx_kp_u_Cannot_index_with_type, __pyx_k_Cannot_index_with_type, sizeof(__pyx_k_Cannot_index_with_type), 0, 1, 0, 0},
     {&__pyx_kp_s_Cannot_transpose_memoryview_with, __pyx_k_Cannot_transpose_memoryview_with, sizeof(__pyx_k_Cannot_transpose_memoryview_with), 0, 0, 1, 0},
+    {&__pyx_n_s_CurVol, __pyx_k_CurVol, sizeof(__pyx_k_CurVol), 0, 0, 1, 1},
     {&__pyx_kp_s_Dimension_d_is_not_direct, __pyx_k_Dimension_d_is_not_direct, sizeof(__pyx_k_Dimension_d_is_not_direct), 0, 0, 1, 0},
     {&__pyx_n_s_Ellipsis, __pyx_k_Ellipsis, sizeof(__pyx_k_Ellipsis), 0, 0, 1, 1},
     {&__pyx_kp_s_Empty_shape_tuple_for_cython_arr, __pyx_k_Empty_shape_tuple_for_cython_arr, sizeof(__pyx_k_Empty_shape_tuple_for_cython_arr), 0, 0, 1, 0},
+    {&__pyx_n_s_FenwickTree3D, __pyx_k_FenwickTree3D, sizeof(__pyx_k_FenwickTree3D), 0, 0, 1, 1},
+    {&__pyx_n_s_FenwickTree3D___reduce_cython, __pyx_k_FenwickTree3D___reduce_cython, sizeof(__pyx_k_FenwickTree3D___reduce_cython), 0, 0, 1, 1},
+    {&__pyx_n_s_FenwickTree3D___setstate_cython, __pyx_k_FenwickTree3D___setstate_cython, sizeof(__pyx_k_FenwickTree3D___setstate_cython), 0, 0, 1, 1},
+    {&__pyx_n_s_FenwickTree3D_getSum, __pyx_k_FenwickTree3D_getSum, sizeof(__pyx_k_FenwickTree3D_getSum), 0, 0, 1, 1},
+    {&__pyx_n_s_FenwickTree3D_queryByRange, __pyx_k_FenwickTree3D_queryByRange, sizeof(__pyx_k_FenwickTree3D_queryByRange), 0, 0, 1, 1},
+    {&__pyx_n_s_FenwickTree3D_update, __pyx_k_FenwickTree3D_update, sizeof(__pyx_k_FenwickTree3D_update), 0, 0, 1, 1},
     {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
     {&__pyx_kp_s_Incompatible_checksums_0x_x_vs_0, __pyx_k_Incompatible_checksums_0x_x_vs_0, sizeof(__pyx_k_Incompatible_checksums_0x_x_vs_0), 0, 0, 1, 0},
     {&__pyx_n_s_IndexError, __pyx_k_IndexError, sizeof(__pyx_k_IndexError), 0, 0, 1, 1},
@@ -22496,13 +24498,14 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_Sequence, __pyx_k_Sequence, sizeof(__pyx_k_Sequence), 0, 0, 1, 1},
     {&__pyx_kp_s_Step_may_not_be_zero_axis_d, __pyx_k_Step_may_not_be_zero_axis_d, sizeof(__pyx_k_Step_may_not_be_zero_axis_d), 0, 0, 1, 0},
+    {&__pyx_n_s_Sum, __pyx_k_Sum, sizeof(__pyx_k_Sum), 0, 0, 1, 1},
     {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
     {&__pyx_kp_s_Unable_to_convert_item_to_object, __pyx_k_Unable_to_convert_item_to_object, sizeof(__pyx_k_Unable_to_convert_item_to_object), 0, 0, 1, 0},
     {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
     {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
     {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
-    {&__pyx_n_s__25, __pyx_k__25, sizeof(__pyx_k__25), 0, 0, 1, 1},
     {&__pyx_n_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 1},
+    {&__pyx_n_s__35, __pyx_k__35, sizeof(__pyx_k__35), 0, 0, 1, 1},
     {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
     {&__pyx_kp_u__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 1, 0, 0},
     {&__pyx_n_s_abc, __pyx_k_abc, sizeof(__pyx_k_abc), 0, 0, 1, 1},
@@ -22512,6 +24515,8 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_astype, __pyx_k_astype, sizeof(__pyx_k_astype), 0, 0, 1, 1},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
     {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
+    {&__pyx_kp_s_bit_marching_cubes_lorensen_cy, __pyx_k_bit_marching_cubes_lorensen_cy, sizeof(__pyx_k_bit_marching_cubes_lorensen_cy), 0, 0, 1, 0},
+    {&__pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_k_bit_marching_cubes_lorensen_cy_2, sizeof(__pyx_k_bit_marching_cubes_lorensen_cy_2), 0, 0, 1, 1},
     {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
     {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
     {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
@@ -22522,7 +24527,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_kp_s_contiguous_and_direct, __pyx_k_contiguous_and_direct, sizeof(__pyx_k_contiguous_and_direct), 0, 0, 1, 0},
     {&__pyx_kp_s_contiguous_and_indirect, __pyx_k_contiguous_and_indirect, sizeof(__pyx_k_contiguous_and_indirect), 0, 0, 1, 0},
     {&__pyx_n_s_count, __pyx_k_count, sizeof(__pyx_k_count), 0, 0, 1, 1},
-    {&__pyx_n_s_cube, __pyx_k_cube, sizeof(__pyx_k_cube), 0, 0, 1, 1},
     {&__pyx_n_s_delta, __pyx_k_delta, sizeof(__pyx_k_delta), 0, 0, 1, 1},
     {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
     {&__pyx_kp_u_disable, __pyx_k_disable, sizeof(__pyx_k_disable), 0, 1, 0, 0},
@@ -22534,12 +24538,14 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
     {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
     {&__pyx_n_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 1},
+    {&__pyx_n_s_fenwick_tree, __pyx_k_fenwick_tree, sizeof(__pyx_k_fenwick_tree), 0, 0, 1, 1},
     {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
     {&__pyx_n_s_float32, __pyx_k_float32, sizeof(__pyx_k_float32), 0, 0, 1, 1},
     {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
     {&__pyx_n_s_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 0, 1, 1},
     {&__pyx_n_u_fortran, __pyx_k_fortran, sizeof(__pyx_k_fortran), 0, 1, 0, 1},
     {&__pyx_kp_u_gc, __pyx_k_gc, sizeof(__pyx_k_gc), 0, 1, 0, 0},
+    {&__pyx_n_s_getSum, __pyx_k_getSum, sizeof(__pyx_k_getSum), 0, 0, 1, 1},
     {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
     {&__pyx_kp_u_got, __pyx_k_got, sizeof(__pyx_k_got), 0, 1, 0, 0},
     {&__pyx_kp_u_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 1, 0, 0},
@@ -22556,13 +24562,13 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_k, __pyx_k_k, sizeof(__pyx_k_k), 0, 0, 1, 1},
     {&__pyx_n_s_level, __pyx_k_level, sizeof(__pyx_k_level), 0, 0, 1, 1},
     {&__pyx_n_s_lookup, __pyx_k_lookup, sizeof(__pyx_k_lookup), 0, 0, 1, 1},
+    {&__pyx_n_s_m, __pyx_k_m, sizeof(__pyx_k_m), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-    {&__pyx_n_s_marching_cubes_lorensen_cy, __pyx_k_marching_cubes_lorensen_cy, sizeof(__pyx_k_marching_cubes_lorensen_cy), 0, 0, 1, 1},
-    {&__pyx_kp_s_marching_cubes_lorensen_cy_pyx, __pyx_k_marching_cubes_lorensen_cy_pyx, sizeof(__pyx_k_marching_cubes_lorensen_cy_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_mask, __pyx_k_mask, sizeof(__pyx_k_mask), 0, 0, 1, 1},
     {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
     {&__pyx_n_s_mesh, __pyx_k_mesh, sizeof(__pyx_k_mesh), 0, 0, 1, 1},
     {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
+    {&__pyx_n_s_n, __pyx_k_n, sizeof(__pyx_k_n), 0, 0, 1, 1},
     {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
     {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
     {&__pyx_n_s_ndim, __pyx_k_ndim, sizeof(__pyx_k_ndim), 0, 0, 1, 1},
@@ -22575,9 +24581,9 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
     {&__pyx_n_s_order, __pyx_k_order, sizeof(__pyx_k_order), 0, 0, 1, 1},
     {&__pyx_n_s_order_of_ids, __pyx_k_order_of_ids, sizeof(__pyx_k_order_of_ids), 0, 0, 1, 1},
+    {&__pyx_n_s_p, __pyx_k_p, sizeof(__pyx_k_p), 0, 0, 1, 1},
     {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
     {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
-    {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_result, __pyx_k_pyx_result, sizeof(__pyx_k_pyx_result), 0, 0, 1, 1},
@@ -22585,11 +24591,13 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_pyx_type, __pyx_k_pyx_type, sizeof(__pyx_k_pyx_type), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_unpickle_Enum, __pyx_k_pyx_unpickle_Enum, sizeof(__pyx_k_pyx_unpickle_Enum), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
+    {&__pyx_n_s_queryByRange, __pyx_k_queryByRange, sizeof(__pyx_k_queryByRange), 0, 0, 1, 1},
     {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
     {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
     {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
+    {&__pyx_n_s_self, __pyx_k_self, sizeof(__pyx_k_self), 0, 0, 1, 1},
     {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
     {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
     {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
@@ -22615,6 +24623,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
     {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
     {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
+    {&__pyx_n_s_val, __pyx_k_val, sizeof(__pyx_k_val), 0, 0, 1, 1},
     {&__pyx_n_s_version_info, __pyx_k_version_info, sizeof(__pyx_k_version_info), 0, 0, 1, 1},
     {&__pyx_n_s_vertex_id0, __pyx_k_vertex_id0, sizeof(__pyx_k_vertex_id0), 0, 0, 1, 1},
     {&__pyx_n_s_vertex_id1, __pyx_k_vertex_id1, sizeof(__pyx_k_vertex_id1), 0, 0, 1, 1},
@@ -22623,19 +24632,27 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_vertices, __pyx_k_vertices, sizeof(__pyx_k_vertices), 0, 0, 1, 1},
     {&__pyx_n_s_volume, __pyx_k_volume, sizeof(__pyx_k_volume), 0, 0, 1, 1},
     {&__pyx_n_s_volume_type, __pyx_k_volume_type, sizeof(__pyx_k_volume_type), 0, 0, 1, 1},
+    {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
+    {&__pyx_n_s_x1, __pyx_k_x1, sizeof(__pyx_k_x1), 0, 0, 1, 1},
+    {&__pyx_n_s_x2, __pyx_k_x2, sizeof(__pyx_k_x2), 0, 0, 1, 1},
+    {&__pyx_n_s_y, __pyx_k_y, sizeof(__pyx_k_y), 0, 0, 1, 1},
+    {&__pyx_n_s_y1, __pyx_k_y1, sizeof(__pyx_k_y1), 0, 0, 1, 1},
+    {&__pyx_n_s_y2, __pyx_k_y2, sizeof(__pyx_k_y2), 0, 0, 1, 1},
+    {&__pyx_n_s_z, __pyx_k_z, sizeof(__pyx_k_z), 0, 0, 1, 1},
+    {&__pyx_n_s_z1, __pyx_k_z1, sizeof(__pyx_k_z1), 0, 0, 1, 1},
+    {&__pyx_n_s_z2, __pyx_k_z2, sizeof(__pyx_k_z2), 0, 0, 1, 1},
     {0, 0, 0, 0, 0, 0, 0}
   };
   return __Pyx_InitStrings(__pyx_string_tab);
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 600, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 607, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 660, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 596, __pyx_L1_error)
+  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 710, __pyx_L1_error)
   __pyx_builtin___import__ = __Pyx_GetBuiltinName(__pyx_n_s_import); if (!__pyx_builtin___import__) __PYX_ERR(1, 100, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 141, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 156, __pyx_L1_error)
-  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 2, __pyx_L1_error)
   __pyx_builtin_AssertionError = __Pyx_GetBuiltinName(__pyx_n_s_AssertionError); if (!__pyx_builtin_AssertionError) __PYX_ERR(1, 373, __pyx_L1_error)
   __pyx_builtin_Ellipsis = __Pyx_GetBuiltinName(__pyx_n_s_Ellipsis); if (!__pyx_builtin_Ellipsis) __PYX_ERR(1, 408, __pyx_L1_error)
   __pyx_builtin_id = __Pyx_GetBuiltinName(__pyx_n_s_id); if (!__pyx_builtin_id) __PYX_ERR(1, 618, __pyx_L1_error)
@@ -22810,7 +24827,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__20);
   __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "_marching_cubes_lorensen_cy.pyx":9
+  /* "_bit_marching_cubes_lorensen_cy.pyx":9
  * 
  * # Define tiny winy number
  * cdef cnp.float64_t FLT_EPSILON = np.spacing(1.0)             # <<<<<<<<<<<<<<
@@ -22821,17 +24838,74 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
 
-  /* "_marching_cubes_lorensen_cy.pyx":588
+  /* "_bit_marching_cubes_lorensen_cy.pyx":598
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ * 
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+  __pyx_tuple__23 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_z, __pyx_n_s_val); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 598, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(5, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bit_marching_cubes_lorensen_cy, __pyx_n_s_update, 598, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 598, __pyx_L1_error)
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":613
+ *             x += x & -x
+ * 
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+  __pyx_tuple__25 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_z); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bit_marching_cubes_lorensen_cy, __pyx_n_s_getSum, 613, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 613, __pyx_L1_error)
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":630
+ *         return res
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):             # <<<<<<<<<<<<<<
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+ */
+  __pyx_tuple__27 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_x1, __pyx_n_s_y1, __pyx_n_s_z1, __pyx_n_s_x2, __pyx_n_s_y2, __pyx_n_s_z2); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 630, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(7, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bit_marching_cubes_lorensen_cy, __pyx_n_s_queryByRange, 630, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 630, __pyx_L1_error)
+
+  /* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):
+ */
+  __pyx_tuple__29 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__29);
+  __Pyx_GIVEREF(__pyx_tuple__29);
+  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(1, 1, __pyx_L1_error)
+
+  /* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ */
+  __pyx_tuple__31 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__31);
+  __Pyx_GIVEREF(__pyx_tuple__31);
+  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(1, 3, __pyx_L1_error)
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":635
  * 
  * 
- * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
+ * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
  * 
  *     # Initialize variables
  */
-  __pyx_tuple__23 = PyTuple_Pack(29, __pyx_n_s_volume, __pyx_n_s_mask, __pyx_n_s_cube, __pyx_n_s_level, __pyx_n_s_delta, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_t, __pyx_n_s_N, __pyx_n_s_M, __pyx_n_s_P, __pyx_n_s_vertices, __pyx_n_s_vertex_ids, __pyx_n_s_triangles, __pyx_n_s_triangle_ids, __pyx_n_s_volume_type, __pyx_n_s_vertex_id0, __pyx_n_s_vertex_id1, __pyx_n_s_vertex_id2, __pyx_n_s_edge0, __pyx_n_s_edge1, __pyx_n_s_edge2, __pyx_n_s_lookup, __pyx_n_s_order_of_ids, __pyx_n_s_triangle_corners, __pyx_n_s_order, __pyx_n_s_id, __pyx_n_s_c); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 588, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 29, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_marching_cubes_lorensen_cy_pyx, __pyx_n_s_MarchingCubesLorensen, 588, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 588, __pyx_L1_error)
+  __pyx_tuple__33 = PyTuple_Pack(31, __pyx_n_s_volume, __pyx_n_s_mask, __pyx_n_s_level, __pyx_n_s_Sum, __pyx_n_s_delta, __pyx_n_s_CurVol, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_t, __pyx_n_s_N, __pyx_n_s_M, __pyx_n_s_P, __pyx_n_s_vertices, __pyx_n_s_vertex_ids, __pyx_n_s_triangles, __pyx_n_s_triangle_ids, __pyx_n_s_volume_type, __pyx_n_s_vertex_id0, __pyx_n_s_vertex_id1, __pyx_n_s_vertex_id2, __pyx_n_s_edge0, __pyx_n_s_edge1, __pyx_n_s_edge2, __pyx_n_s_fenwick_tree, __pyx_n_s_lookup, __pyx_n_s_order_of_ids, __pyx_n_s_triangle_corners, __pyx_n_s_order, __pyx_n_s_id, __pyx_n_s_c); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 635, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__33);
+  __Pyx_GIVEREF(__pyx_tuple__33);
+  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 31, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_bit_marching_cubes_lorensen_cy, __pyx_n_s_MarchingCubesLorensen, 635, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -22842,6 +24916,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
 static CYTHON_SMALL_CODE int __Pyx_InitConstants(void) {
   if (__Pyx_CreateStringTabAndInitStrings() < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  __pyx_float_0_0 = PyFloat_FromDouble(0.0); if (unlikely(!__pyx_float_0_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_1_0 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_float_1_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -22954,6 +25029,37 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
+  __pyx_vtabptr_31_bit_marching_cubes_lorensen_cy_FenwickTree3D = &__pyx_vtable_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
+  __pyx_vtable_31_bit_marching_cubes_lorensen_cy_FenwickTree3D.update = (PyObject *(*)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, __pyx_t_5numpy_float32_t, int __pyx_skip_dispatch))__pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_update;
+  __pyx_vtable_31_bit_marching_cubes_lorensen_cy_FenwickTree3D.getSum = (__pyx_t_5numpy_float32_t (*)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, int __pyx_skip_dispatch))__pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_getSum;
+  __pyx_vtable_31_bit_marching_cubes_lorensen_cy_FenwickTree3D.queryByRange = (__pyx_t_5numpy_float32_t (*)(struct __pyx_obj_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *, int, int, int, int, int, int, int __pyx_skip_dispatch))__pyx_f_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_queryByRange;
+  #if CYTHON_USE_TYPE_SPECS
+  __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D_spec, NULL); if (unlikely(!__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D)) __PYX_ERR(0, 588, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D_spec, __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #else
+  __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D = &__pyx_type_31_bit_marching_cubes_lorensen_cy_FenwickTree3D;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  #endif
+  #if !CYTHON_USE_TYPE_SPECS
+  if (__Pyx_PyType_Ready(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #endif
+  #if PY_MAJOR_VERSION < 3
+  __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D->tp_print = 0;
+  #endif
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D->tp_dictoffset && __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  }
+  #endif
+  if (__Pyx_SetVtable(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, __pyx_vtabptr_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if (__Pyx_MergeVtables(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #endif
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FenwickTree3D, (PyObject *) __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #if !CYTHON_COMPILING_IN_LIMITED_API
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  #endif
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
   #if CYTHON_USE_TYPE_SPECS
@@ -23168,10 +25274,10 @@ static int __Pyx_modinit_function_import_code(void) {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec__marching_cubes_lorensen_cy(PyObject* module); /*proto*/
+static int __pyx_pymod_exec__bit_marching_cubes_lorensen_cy(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec__marching_cubes_lorensen_cy},
+  {Py_mod_exec, (void*)__pyx_pymod_exec__bit_marching_cubes_lorensen_cy},
   {0, NULL}
 };
 #endif
@@ -23184,7 +25290,7 @@ namespace {
   #endif
   {
       PyModuleDef_HEAD_INIT,
-      "_marching_cubes_lorensen_cy",
+      "_bit_marching_cubes_lorensen_cy",
       0, /* m_doc */
     #if CYTHON_PEP489_MULTI_PHASE_INIT
       0, /* m_size */
@@ -23232,11 +25338,11 @@ namespace {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC init_marching_cubes_lorensen_cy(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC init_marching_cubes_lorensen_cy(void)
+__Pyx_PyMODINIT_FUNC init_bit_marching_cubes_lorensen_cy(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC init_bit_marching_cubes_lorensen_cy(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit__marching_cubes_lorensen_cy(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit__marching_cubes_lorensen_cy(void)
+__Pyx_PyMODINIT_FUNC PyInit__bit_marching_cubes_lorensen_cy(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit__bit_marching_cubes_lorensen_cy(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -23317,7 +25423,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec__marching_cubes_lorensen_cy(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec__bit_marching_cubes_lorensen_cy(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -23599,7 +25705,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec__marching_cubes_lorensen_cy(PyObje
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module '_marching_cubes_lorensen_cy' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module '_bit_marching_cubes_lorensen_cy' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -23611,13 +25717,13 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec__marching_cubes_lorensen_cy(PyObje
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("_marching_cubes_lorensen_cy", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("_bit_marching_cubes_lorensen_cy", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   if (unlikely(!__pyx_m)) __PYX_ERR(0, 1, __pyx_L1_error)
   #elif CYTHON_USE_MODULE_STATE
   __pyx_t_1 = PyModule_Create(&__pyx_moduledef); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   {
     int add_module_result = PyState_AddModule(__pyx_t_1, &__pyx_moduledef);
-    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "_marching_cubes_lorensen_cy" pseudovariable */
+    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "_bit_marching_cubes_lorensen_cy" pseudovariable */
     if (unlikely((add_module_result < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     pystate_addmodule_run = 1;
   }
@@ -23641,7 +25747,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit__marching_cubes_lorensen_cy(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit__bit_marching_cubes_lorensen_cy(void)", 0);
   if (__Pyx_check_binary_version(__PYX_LIMITED_VERSION_HEX, __Pyx_get_runtime_version(), CYTHON_COMPILING_IN_LIMITED_API) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -23679,14 +25785,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main__marching_cubes_lorensen_cy) {
+  if (__pyx_module_is_main__bit_marching_cubes_lorensen_cy) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "_marching_cubes_lorensen_cy")) {
-      if (unlikely((PyDict_SetItemString(modules, "_marching_cubes_lorensen_cy", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "_bit_marching_cubes_lorensen_cy")) {
+      if (unlikely((PyDict_SetItemString(modules, "_bit_marching_cubes_lorensen_cy", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -24220,7 +26326,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":1
+  /* "_bit_marching_cubes_lorensen_cy.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as cnp
  * from stl import mesh
@@ -24230,7 +26336,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_7) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":3
+  /* "_bit_marching_cubes_lorensen_cy.pyx":3
  * import numpy as np
  * cimport numpy as cnp
  * from stl import mesh             # <<<<<<<<<<<<<<
@@ -24251,7 +26357,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":9
+  /* "_bit_marching_cubes_lorensen_cy.pyx":9
  * 
  * # Define tiny winy number
  * cdef cnp.float64_t FLT_EPSILON = np.spacing(1.0)             # <<<<<<<<<<<<<<
@@ -24268,36 +26374,36 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_9 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_27_marching_cubes_lorensen_cy_FLT_EPSILON = __pyx_t_9;
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_FLT_EPSILON = __pyx_t_9;
 
-  /* "_marching_cubes_lorensen_cy.pyx":11
+  /* "_bit_marching_cubes_lorensen_cy.pyx":11
  * cdef cnp.float64_t FLT_EPSILON = np.spacing(1.0)
  * 
  * cdef int DirectionX = 0             # <<<<<<<<<<<<<<
  * cdef int DirectionY = 1
  * cdef int DirectionZ = 2
  */
-  __pyx_v_27_marching_cubes_lorensen_cy_DirectionX = 0;
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionX = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":12
+  /* "_bit_marching_cubes_lorensen_cy.pyx":12
  * 
  * cdef int DirectionX = 0
  * cdef int DirectionY = 1             # <<<<<<<<<<<<<<
  * cdef int DirectionZ = 2
  * 
  */
-  __pyx_v_27_marching_cubes_lorensen_cy_DirectionY = 1;
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionY = 1;
 
-  /* "_marching_cubes_lorensen_cy.pyx":13
+  /* "_bit_marching_cubes_lorensen_cy.pyx":13
  * cdef int DirectionX = 0
  * cdef int DirectionY = 1
  * cdef int DirectionZ = 2             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_v_27_marching_cubes_lorensen_cy_DirectionZ = 2;
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_DirectionZ = 2;
 
-  /* "_marching_cubes_lorensen_cy.pyx":16
+  /* "_bit_marching_cubes_lorensen_cy.pyx":16
  * 
  * 
  * cdef int[:,:] EDGE_DELTA = np.array([             # <<<<<<<<<<<<<<
@@ -24310,7 +26416,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":17
+  /* "_bit_marching_cubes_lorensen_cy.pyx":17
  * 
  * cdef int[:,:] EDGE_DELTA = np.array([
  *     [0, 0, 0],[1, 0, 0],[0, 1, 0],[0, 0, 0],[0, 0, 1],[1, 0, 1],             # <<<<<<<<<<<<<<
@@ -24384,7 +26490,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_13, 2, __pyx_int_1)) __PYX_ERR(0, 17, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":18
+  /* "_bit_marching_cubes_lorensen_cy.pyx":18
  * cdef int[:,:] EDGE_DELTA = np.array([
  *     [0, 0, 0],[1, 0, 0],[0, 1, 0],[0, 0, 0],[0, 0, 1],[1, 0, 1],
  *     [0, 1, 1],[0, 0, 1],[0, 0, 0],[1, 0, 0],[1, 1, 0],[0, 1, 0],             # <<<<<<<<<<<<<<
@@ -24458,7 +26564,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_19, 2, __pyx_int_0)) __PYX_ERR(0, 18, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":16
+  /* "_bit_marching_cubes_lorensen_cy.pyx":16
  * 
  * 
  * cdef int[:,:] EDGE_DELTA = np.array([             # <<<<<<<<<<<<<<
@@ -24509,12 +26615,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
   __pyx_t_21 = __Pyx_PyObject_to_MemoryviewSlice_dsds_int(__pyx_t_19, PyBUF_WRITABLE); if (unlikely(!__pyx_t_21.memview)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA, 1);
-  __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DELTA = __pyx_t_21;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA, 1);
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DELTA = __pyx_t_21;
   __pyx_t_21.memview = NULL;
   __pyx_t_21.data = NULL;
 
-  /* "_marching_cubes_lorensen_cy.pyx":21
+  /* "_bit_marching_cubes_lorensen_cy.pyx":21
  * ])
  * 
  * cdef int[:] EDGE_DIRECTION = np.array([0,1,0,1,0,1,0,1,2,2,2,2])             # <<<<<<<<<<<<<<
@@ -24570,12 +26676,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
   __pyx_t_22 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_7, PyBUF_WRITABLE); if (unlikely(!__pyx_t_22.memview)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION, 1);
-  __pyx_v_27_marching_cubes_lorensen_cy_EDGE_DIRECTION = __pyx_t_22;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION, 1);
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_EDGE_DIRECTION = __pyx_t_22;
   __pyx_t_22.memview = NULL;
   __pyx_t_22.data = NULL;
 
-  /* "_marching_cubes_lorensen_cy.pyx":23
+  /* "_bit_marching_cubes_lorensen_cy.pyx":23
  * cdef int[:] EDGE_DIRECTION = np.array([0,1,0,1,0,1,0,1,2,2,2,2])
  * 
  * cdef int[:,:] GEOMETRY_LOOKUP = np.array([             # <<<<<<<<<<<<<<
@@ -24588,7 +26694,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_19);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":24
+  /* "_bit_marching_cubes_lorensen_cy.pyx":24
  * 
  * cdef int[:,:] GEOMETRY_LOOKUP = np.array([
  *         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 0 = 00000000             # <<<<<<<<<<<<<<
@@ -24634,7 +26740,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_7, 11, __pyx_int_neg_1)) __PYX_ERR(0, 24, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":25
+  /* "_bit_marching_cubes_lorensen_cy.pyx":25
  * cdef int[:,:] GEOMETRY_LOOKUP = np.array([
  *         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 0 = 00000000
  *         [0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 1 = 00000001             # <<<<<<<<<<<<<<
@@ -24680,7 +26786,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_20, 11, __pyx_int_neg_1)) __PYX_ERR(0, 25, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":26
+  /* "_bit_marching_cubes_lorensen_cy.pyx":26
  *         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 0 = 00000000
  *         [0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 1 = 00000001
  *         [0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 2 = 00000010             # <<<<<<<<<<<<<<
@@ -24726,7 +26832,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_18, 11, __pyx_int_neg_1)) __PYX_ERR(0, 26, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":27
+  /* "_bit_marching_cubes_lorensen_cy.pyx":27
  *         [0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 1 = 00000001
  *         [0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 2 = 00000010
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 3 = 00000011             # <<<<<<<<<<<<<<
@@ -24772,7 +26878,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_17, 11, __pyx_int_neg_1)) __PYX_ERR(0, 27, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":28
+  /* "_bit_marching_cubes_lorensen_cy.pyx":28
  *         [0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 2 = 00000010
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 3 = 00000011
  *         [1, 2, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 4 = 00000100             # <<<<<<<<<<<<<<
@@ -24818,7 +26924,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_16, 11, __pyx_int_neg_1)) __PYX_ERR(0, 28, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":29
+  /* "_bit_marching_cubes_lorensen_cy.pyx":29
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 3 = 00000011
  *         [1, 2, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 4 = 00000100
  *         [0, 8, 3, 1, 2, 10, -1, -1, -1, -1, -1, -1],  # 5 = 00000101             # <<<<<<<<<<<<<<
@@ -24864,7 +26970,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_15, 11, __pyx_int_neg_1)) __PYX_ERR(0, 29, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":30
+  /* "_bit_marching_cubes_lorensen_cy.pyx":30
  *         [1, 2, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 4 = 00000100
  *         [0, 8, 3, 1, 2, 10, -1, -1, -1, -1, -1, -1],  # 5 = 00000101
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 6 = 00000110             # <<<<<<<<<<<<<<
@@ -24910,7 +27016,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_14, 11, __pyx_int_neg_1)) __PYX_ERR(0, 30, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":31
+  /* "_bit_marching_cubes_lorensen_cy.pyx":31
  *         [0, 8, 3, 1, 2, 10, -1, -1, -1, -1, -1, -1],  # 5 = 00000101
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 6 = 00000110
  *         [8, 3, 10, 2, 3, 10, 10, 9, 8, -1, -1, -1],  # 7 = 00000111             # <<<<<<<<<<<<<<
@@ -24956,7 +27062,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_13, 11, __pyx_int_neg_1)) __PYX_ERR(0, 31, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":32
+  /* "_bit_marching_cubes_lorensen_cy.pyx":32
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 6 = 00000110
  *         [8, 3, 10, 2, 3, 10, 10, 9, 8, -1, -1, -1],  # 7 = 00000111
  *         [3, 11, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 8 = 00001000             # <<<<<<<<<<<<<<
@@ -25002,7 +27108,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_12, 11, __pyx_int_neg_1)) __PYX_ERR(0, 32, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":33
+  /* "_bit_marching_cubes_lorensen_cy.pyx":33
  *         [8, 3, 10, 2, 3, 10, 10, 9, 8, -1, -1, -1],  # 7 = 00000111
  *         [3, 11, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 8 = 00001000
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 9 = 00001001             # <<<<<<<<<<<<<<
@@ -25048,7 +27154,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_11, 11, __pyx_int_neg_1)) __PYX_ERR(0, 33, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":34
+  /* "_bit_marching_cubes_lorensen_cy.pyx":34
  *         [3, 11, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 8 = 00001000
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 9 = 00001001
  *         [1, 9, 0, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 10 = 00001010             # <<<<<<<<<<<<<<
@@ -25094,7 +27200,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 11, __pyx_int_neg_1)) __PYX_ERR(0, 34, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":35
+  /* "_bit_marching_cubes_lorensen_cy.pyx":35
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 9 = 00001001
  *         [1, 9, 0, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 10 = 00001010
  *         [1, 2, 9, 11, 2, 9, 9, 8, 11, -1, -1, -1],  # 11 = 00001011             # <<<<<<<<<<<<<<
@@ -25140,7 +27246,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_5, 11, __pyx_int_neg_1)) __PYX_ERR(0, 35, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":36
+  /* "_bit_marching_cubes_lorensen_cy.pyx":36
  *         [1, 9, 0, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 10 = 00001010
  *         [1, 2, 9, 11, 2, 9, 9, 8, 11, -1, -1, -1],  # 11 = 00001011
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 12 = 00001100             # <<<<<<<<<<<<<<
@@ -25186,7 +27292,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 11, __pyx_int_neg_1)) __PYX_ERR(0, 36, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":37
+  /* "_bit_marching_cubes_lorensen_cy.pyx":37
  *         [1, 2, 9, 11, 2, 9, 9, 8, 11, -1, -1, -1],  # 11 = 00001011
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 12 = 00001100
  *         [0, 1, 8, 10, 1, 8, 8, 11, 10, -1, -1, -1],  # 13 = 00001101             # <<<<<<<<<<<<<<
@@ -25232,7 +27338,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_23, 11, __pyx_int_neg_1)) __PYX_ERR(0, 37, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":38
+  /* "_bit_marching_cubes_lorensen_cy.pyx":38
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 12 = 00001100
  *         [0, 1, 8, 10, 1, 8, 8, 11, 10, -1, -1, -1],  # 13 = 00001101
  *         [9, 0, 11, 3, 0, 11, 11, 10, 9, -1, -1, -1],  # 14 = 00001110             # <<<<<<<<<<<<<<
@@ -25278,7 +27384,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_24, 11, __pyx_int_neg_1)) __PYX_ERR(0, 38, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":39
+  /* "_bit_marching_cubes_lorensen_cy.pyx":39
  *         [0, 1, 8, 10, 1, 8, 8, 11, 10, -1, -1, -1],  # 13 = 00001101
  *         [9, 0, 11, 3, 0, 11, 11, 10, 9, -1, -1, -1],  # 14 = 00001110
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 15 = 00001111             # <<<<<<<<<<<<<<
@@ -25324,7 +27430,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_25, 11, __pyx_int_neg_1)) __PYX_ERR(0, 39, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":40
+  /* "_bit_marching_cubes_lorensen_cy.pyx":40
  *         [9, 0, 11, 3, 0, 11, 11, 10, 9, -1, -1, -1],  # 14 = 00001110
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 15 = 00001111
  *         [4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 16 = 00010000             # <<<<<<<<<<<<<<
@@ -25370,7 +27476,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_26, 11, __pyx_int_neg_1)) __PYX_ERR(0, 40, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":41
+  /* "_bit_marching_cubes_lorensen_cy.pyx":41
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 15 = 00001111
  *         [4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 16 = 00010000
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 17 = 00010001             # <<<<<<<<<<<<<<
@@ -25416,7 +27522,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_27, 11, __pyx_int_neg_1)) __PYX_ERR(0, 41, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":42
+  /* "_bit_marching_cubes_lorensen_cy.pyx":42
  *         [4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 16 = 00010000
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 17 = 00010001
  *         [0, 1, 9, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 18 = 00010010             # <<<<<<<<<<<<<<
@@ -25462,7 +27568,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_28, 11, __pyx_int_neg_1)) __PYX_ERR(0, 42, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":43
+  /* "_bit_marching_cubes_lorensen_cy.pyx":43
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 17 = 00010001
  *         [0, 1, 9, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 18 = 00010010
  *         [1, 9, 7, 4, 9, 7, 7, 3, 1, -1, -1, -1],  # 19 = 00010011             # <<<<<<<<<<<<<<
@@ -25508,7 +27614,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_29, 11, __pyx_int_neg_1)) __PYX_ERR(0, 43, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":44
+  /* "_bit_marching_cubes_lorensen_cy.pyx":44
  *         [0, 1, 9, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 18 = 00010010
  *         [1, 9, 7, 4, 9, 7, 7, 3, 1, -1, -1, -1],  # 19 = 00010011
  *         [1, 2, 10, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 20 = 00010100             # <<<<<<<<<<<<<<
@@ -25554,7 +27660,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_30, 11, __pyx_int_neg_1)) __PYX_ERR(0, 44, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":45
+  /* "_bit_marching_cubes_lorensen_cy.pyx":45
  *         [1, 9, 7, 4, 9, 7, 7, 3, 1, -1, -1, -1],  # 19 = 00010011
  *         [1, 2, 10, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 20 = 00010100
  *         [1, 2, 10, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 21 = 00010101             # <<<<<<<<<<<<<<
@@ -25600,7 +27706,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_31, 11, __pyx_int_neg_1)) __PYX_ERR(0, 45, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":46
+  /* "_bit_marching_cubes_lorensen_cy.pyx":46
  *         [1, 2, 10, 8, 4, 7, -1, -1, -1, -1, -1, -1],  # 20 = 00010100
  *         [1, 2, 10, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 21 = 00010101
  *         [8, 4, 7, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 22 = 00010110             # <<<<<<<<<<<<<<
@@ -25646,7 +27752,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_32, 11, __pyx_int_neg_1)) __PYX_ERR(0, 46, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":47
+  /* "_bit_marching_cubes_lorensen_cy.pyx":47
  *         [1, 2, 10, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 21 = 00010101
  *         [8, 4, 7, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 22 = 00010110
  *         [3, 2, 10, 3, 10, 4, 3, 4, 7, 4, 10, 9],  # 23 = 00010111             # <<<<<<<<<<<<<<
@@ -25692,7 +27798,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_9);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_33, 11, __pyx_int_9)) __PYX_ERR(0, 47, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":48
+  /* "_bit_marching_cubes_lorensen_cy.pyx":48
  *         [8, 4, 7, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 22 = 00010110
  *         [3, 2, 10, 3, 10, 4, 3, 4, 7, 4, 10, 9],  # 23 = 00010111
  *         [8, 4, 7, 3, 11, 2, -1, -1, -1, -1, -1, -1],  # 24 = 00011000             # <<<<<<<<<<<<<<
@@ -25738,7 +27844,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_34, 11, __pyx_int_neg_1)) __PYX_ERR(0, 48, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":49
+  /* "_bit_marching_cubes_lorensen_cy.pyx":49
  *         [3, 2, 10, 3, 10, 4, 3, 4, 7, 4, 10, 9],  # 23 = 00010111
  *         [8, 4, 7, 3, 11, 2, -1, -1, -1, -1, -1, -1],  # 24 = 00011000
  *         [11, 7, 2, 4, 7, 2, 2, 0, 4, -1, -1, -1],  # 25 = 00011001             # <<<<<<<<<<<<<<
@@ -25784,7 +27890,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_35, 11, __pyx_int_neg_1)) __PYX_ERR(0, 49, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":50
+  /* "_bit_marching_cubes_lorensen_cy.pyx":50
  *         [8, 4, 7, 3, 11, 2, -1, -1, -1, -1, -1, -1],  # 24 = 00011000
  *         [11, 7, 2, 4, 7, 2, 2, 0, 4, -1, -1, -1],  # 25 = 00011001
  *         [8, 4, 7, 9, 0, 1, 11, 2, 3, -1, -1, -1],  # 26 = 00011010             # <<<<<<<<<<<<<<
@@ -25830,7 +27936,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_36, 11, __pyx_int_neg_1)) __PYX_ERR(0, 50, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":51
+  /* "_bit_marching_cubes_lorensen_cy.pyx":51
  *         [11, 7, 2, 4, 7, 2, 2, 0, 4, -1, -1, -1],  # 25 = 00011001
  *         [8, 4, 7, 9, 0, 1, 11, 2, 3, -1, -1, -1],  # 26 = 00011010
  *         [4, 7, 11, 9, 4, 2, 11, 4, 2, 9, 2, 1],  # 27 = 00011011             # <<<<<<<<<<<<<<
@@ -25876,7 +27982,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_37, 11, __pyx_int_1)) __PYX_ERR(0, 51, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":52
+  /* "_bit_marching_cubes_lorensen_cy.pyx":52
  *         [8, 4, 7, 9, 0, 1, 11, 2, 3, -1, -1, -1],  # 26 = 00011010
  *         [4, 7, 11, 9, 4, 2, 11, 4, 2, 9, 2, 1],  # 27 = 00011011
  *         [4, 7, 8, 1, 3, 10, 11, 10, 3, -1, -1, -1],  # 28 = 00011100             # <<<<<<<<<<<<<<
@@ -25922,7 +28028,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_38, 11, __pyx_int_neg_1)) __PYX_ERR(0, 52, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":53
+  /* "_bit_marching_cubes_lorensen_cy.pyx":53
  *         [4, 7, 11, 9, 4, 2, 11, 4, 2, 9, 2, 1],  # 27 = 00011011
  *         [4, 7, 8, 1, 3, 10, 11, 10, 3, -1, -1, -1],  # 28 = 00011100
  *         [10, 7, 11, 10, 0, 7, 10, 1, 0, 4, 7, 0],  # 29 = 00011101             # <<<<<<<<<<<<<<
@@ -25968,7 +28074,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_39, 11, __pyx_int_0)) __PYX_ERR(0, 53, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":54
+  /* "_bit_marching_cubes_lorensen_cy.pyx":54
  *         [4, 7, 8, 1, 3, 10, 11, 10, 3, -1, -1, -1],  # 28 = 00011100
  *         [10, 7, 11, 10, 0, 7, 10, 1, 0, 4, 7, 0],  # 29 = 00011101
  *         [4, 7, 8, 11, 0, 3, 0, 11, 9, 10, 9, 11],  # 30 = 00011110             # <<<<<<<<<<<<<<
@@ -26014,7 +28120,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_11);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_40, 11, __pyx_int_11)) __PYX_ERR(0, 54, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":55
+  /* "_bit_marching_cubes_lorensen_cy.pyx":55
  *         [10, 7, 11, 10, 0, 7, 10, 1, 0, 4, 7, 0],  # 29 = 00011101
  *         [4, 7, 8, 11, 0, 3, 0, 11, 9, 10, 9, 11],  # 30 = 00011110
  *         [11, 7, 9, 4, 7, 9, 9, 11, 10, -1, -1, -1],  # 31 = 00011111             # <<<<<<<<<<<<<<
@@ -26060,7 +28166,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_41, 11, __pyx_int_neg_1)) __PYX_ERR(0, 55, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":56
+  /* "_bit_marching_cubes_lorensen_cy.pyx":56
  *         [4, 7, 8, 11, 0, 3, 0, 11, 9, 10, 9, 11],  # 30 = 00011110
  *         [11, 7, 9, 4, 7, 9, 9, 11, 10, -1, -1, -1],  # 31 = 00011111
  *         [9, 5, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 32 = 00100000             # <<<<<<<<<<<<<<
@@ -26106,7 +28212,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_42, 11, __pyx_int_neg_1)) __PYX_ERR(0, 56, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":57
+  /* "_bit_marching_cubes_lorensen_cy.pyx":57
  *         [11, 7, 9, 4, 7, 9, 9, 11, 10, -1, -1, -1],  # 31 = 00011111
  *         [9, 5, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 32 = 00100000
  *         [9, 5, 4, 0, 8, 3, -1, -1, -1, -1, -1, -1],  # 33 = 00100001             # <<<<<<<<<<<<<<
@@ -26152,7 +28258,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_43, 11, __pyx_int_neg_1)) __PYX_ERR(0, 57, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":58
+  /* "_bit_marching_cubes_lorensen_cy.pyx":58
  *         [9, 5, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 32 = 00100000
  *         [9, 5, 4, 0, 8, 3, -1, -1, -1, -1, -1, -1],  # 33 = 00100001
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 34 = 00100010             # <<<<<<<<<<<<<<
@@ -26198,7 +28304,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_44, 11, __pyx_int_neg_1)) __PYX_ERR(0, 58, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":59
+  /* "_bit_marching_cubes_lorensen_cy.pyx":59
  *         [9, 5, 4, 0, 8, 3, -1, -1, -1, -1, -1, -1],  # 33 = 00100001
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 34 = 00100010
  *         [8, 4, 3, 5, 4, 3, 3, 1, 5, -1, -1, -1],  # 35 = 00100011             # <<<<<<<<<<<<<<
@@ -26244,7 +28350,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_45, 11, __pyx_int_neg_1)) __PYX_ERR(0, 59, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":60
+  /* "_bit_marching_cubes_lorensen_cy.pyx":60
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 34 = 00100010
  *         [8, 4, 3, 5, 4, 3, 3, 1, 5, -1, -1, -1],  # 35 = 00100011
  *         [1, 2, 10, 9, 5, 4, -1, -1, -1, -1, -1, -1],  # 36 = 00100100             # <<<<<<<<<<<<<<
@@ -26290,7 +28396,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_46, 11, __pyx_int_neg_1)) __PYX_ERR(0, 60, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":61
+  /* "_bit_marching_cubes_lorensen_cy.pyx":61
  *         [8, 4, 3, 5, 4, 3, 3, 1, 5, -1, -1, -1],  # 35 = 00100011
  *         [1, 2, 10, 9, 5, 4, -1, -1, -1, -1, -1, -1],  # 36 = 00100100
  *         [9, 5, 4, 10, 1, 2, 8, 3, 0, -1, -1, -1],  # 37 = 00100101             # <<<<<<<<<<<<<<
@@ -26336,7 +28442,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_47, 11, __pyx_int_neg_1)) __PYX_ERR(0, 61, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":62
+  /* "_bit_marching_cubes_lorensen_cy.pyx":62
  *         [1, 2, 10, 9, 5, 4, -1, -1, -1, -1, -1, -1],  # 36 = 00100100
  *         [9, 5, 4, 10, 1, 2, 8, 3, 0, -1, -1, -1],  # 37 = 00100101
  *         [2, 10, 4, 5, 10, 4, 4, 0, 2, -1, -1, -1],  # 38 = 00100110             # <<<<<<<<<<<<<<
@@ -26382,7 +28488,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_48, 11, __pyx_int_neg_1)) __PYX_ERR(0, 62, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":63
+  /* "_bit_marching_cubes_lorensen_cy.pyx":63
  *         [9, 5, 4, 10, 1, 2, 8, 3, 0, -1, -1, -1],  # 37 = 00100101
  *         [2, 10, 4, 5, 10, 4, 4, 0, 2, -1, -1, -1],  # 38 = 00100110
  *         [3, 2, 10, 8, 3, 10, 8, 10, 5, 8, 5, 4],  # 39 = 00100111             # <<<<<<<<<<<<<<
@@ -26428,7 +28534,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_49, 11, __pyx_int_4)) __PYX_ERR(0, 63, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":64
+  /* "_bit_marching_cubes_lorensen_cy.pyx":64
  *         [2, 10, 4, 5, 10, 4, 4, 0, 2, -1, -1, -1],  # 38 = 00100110
  *         [3, 2, 10, 8, 3, 10, 8, 10, 5, 8, 5, 4],  # 39 = 00100111
  *         [9, 5, 4, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 40 = 00101000             # <<<<<<<<<<<<<<
@@ -26474,7 +28580,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_50, 11, __pyx_int_neg_1)) __PYX_ERR(0, 64, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":65
+  /* "_bit_marching_cubes_lorensen_cy.pyx":65
  *         [3, 2, 10, 8, 3, 10, 8, 10, 5, 8, 5, 4],  # 39 = 00100111
  *         [9, 5, 4, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 40 = 00101000
  *         [5, 4, 9, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 41 = 00101001             # <<<<<<<<<<<<<<
@@ -26520,7 +28626,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_51, 11, __pyx_int_neg_1)) __PYX_ERR(0, 65, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":66
+  /* "_bit_marching_cubes_lorensen_cy.pyx":66
  *         [9, 5, 4, 2, 3, 11, -1, -1, -1, -1, -1, -1],  # 40 = 00101000
  *         [5, 4, 9, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 41 = 00101001
  *         [2, 3, 11, 4, 1, 5, 1, 4, 0, -1, -1, -1],  # 42 = 00101010             # <<<<<<<<<<<<<<
@@ -26566,7 +28672,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_52, 11, __pyx_int_neg_1)) __PYX_ERR(0, 66, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":67
+  /* "_bit_marching_cubes_lorensen_cy.pyx":67
  *         [5, 4, 9, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 41 = 00101001
  *         [2, 3, 11, 4, 1, 5, 1, 4, 0, -1, -1, -1],  # 42 = 00101010
  *         [11, 2, 1, 11, 1, 4, 11, 4, 8, 5, 4, 1],  # 43 = 00101011             # <<<<<<<<<<<<<<
@@ -26612,7 +28718,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_53, 11, __pyx_int_1)) __PYX_ERR(0, 67, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":68
+  /* "_bit_marching_cubes_lorensen_cy.pyx":68
  *         [2, 3, 11, 4, 1, 5, 1, 4, 0, -1, -1, -1],  # 42 = 00101010
  *         [11, 2, 1, 11, 1, 4, 11, 4, 8, 5, 4, 1],  # 43 = 00101011
  *         [9, 5, 4, 11, 1, 3, 1, 11, 10, -1, -1, -1],  # 44 = 00101100             # <<<<<<<<<<<<<<
@@ -26658,7 +28764,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_54, 11, __pyx_int_neg_1)) __PYX_ERR(0, 68, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":69
+  /* "_bit_marching_cubes_lorensen_cy.pyx":69
  *         [11, 2, 1, 11, 1, 4, 11, 4, 8, 5, 4, 1],  # 43 = 00101011
  *         [9, 5, 4, 11, 1, 3, 1, 11, 10, -1, -1, -1],  # 44 = 00101100
  *         [5, 4, 9, 8, 0, 10, 1, 0, 10, 11, 10, 8],  # 45 = 00101101             # <<<<<<<<<<<<<<
@@ -26704,7 +28810,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_8);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_55, 11, __pyx_int_8)) __PYX_ERR(0, 69, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":70
+  /* "_bit_marching_cubes_lorensen_cy.pyx":70
  *         [9, 5, 4, 11, 1, 3, 1, 11, 10, -1, -1, -1],  # 44 = 00101100
  *         [5, 4, 9, 8, 0, 10, 1, 0, 10, 11, 10, 8],  # 45 = 00101101
  *         [5, 4, 0, 5, 0, 11, 5, 11, 10, 11, 0, 3],  # 46 = 00101110             # <<<<<<<<<<<<<<
@@ -26750,7 +28856,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_3);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_56, 11, __pyx_int_3)) __PYX_ERR(0, 70, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":71
+  /* "_bit_marching_cubes_lorensen_cy.pyx":71
  *         [5, 4, 9, 8, 0, 10, 1, 0, 10, 11, 10, 8],  # 45 = 00101101
  *         [5, 4, 0, 5, 0, 11, 5, 11, 10, 11, 0, 3],  # 46 = 00101110
  *         [8, 4, 10, 5, 4, 10, 10, 8, 11, -1, -1, -1],  # 47 = 00101111             # <<<<<<<<<<<<<<
@@ -26796,7 +28902,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_57, 11, __pyx_int_neg_1)) __PYX_ERR(0, 71, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":72
+  /* "_bit_marching_cubes_lorensen_cy.pyx":72
  *         [5, 4, 0, 5, 0, 11, 5, 11, 10, 11, 0, 3],  # 46 = 00101110
  *         [8, 4, 10, 5, 4, 10, 10, 8, 11, -1, -1, -1],  # 47 = 00101111
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 48 = 00110000             # <<<<<<<<<<<<<<
@@ -26842,7 +28948,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_58, 11, __pyx_int_neg_1)) __PYX_ERR(0, 72, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":73
+  /* "_bit_marching_cubes_lorensen_cy.pyx":73
  *         [8, 4, 10, 5, 4, 10, 10, 8, 11, -1, -1, -1],  # 47 = 00101111
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 48 = 00110000
  *         [9, 0, 5, 3, 0, 5, 5, 7, 3, -1, -1, -1],  # 49 = 00110001             # <<<<<<<<<<<<<<
@@ -26888,7 +28994,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_59, 11, __pyx_int_neg_1)) __PYX_ERR(0, 73, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":74
+  /* "_bit_marching_cubes_lorensen_cy.pyx":74
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 48 = 00110000
  *         [9, 0, 5, 3, 0, 5, 5, 7, 3, -1, -1, -1],  # 49 = 00110001
  *         [0, 8, 1, 7, 8, 1, 1, 5, 7, -1, -1, -1],  # 50 = 00110010             # <<<<<<<<<<<<<<
@@ -26934,7 +29040,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_60, 11, __pyx_int_neg_1)) __PYX_ERR(0, 74, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":75
+  /* "_bit_marching_cubes_lorensen_cy.pyx":75
  *         [9, 0, 5, 3, 0, 5, 5, 7, 3, -1, -1, -1],  # 49 = 00110001
  *         [0, 8, 1, 7, 8, 1, 1, 5, 7, -1, -1, -1],  # 50 = 00110010
  *         [1, 5, 3, 3, 5, 7, -1, -1, -1, -1, -1, -1],  # 51 = 00110011             # <<<<<<<<<<<<<<
@@ -26980,7 +29086,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_61, 11, __pyx_int_neg_1)) __PYX_ERR(0, 75, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":76
+  /* "_bit_marching_cubes_lorensen_cy.pyx":76
  *         [0, 8, 1, 7, 8, 1, 1, 5, 7, -1, -1, -1],  # 50 = 00110010
  *         [1, 5, 3, 3, 5, 7, -1, -1, -1, -1, -1, -1],  # 51 = 00110011
  *         [10, 1, 2, 8, 5, 7, 5, 8, 9, -1, -1, -1],  # 52 = 00110100             # <<<<<<<<<<<<<<
@@ -27026,7 +29132,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_62, 11, __pyx_int_neg_1)) __PYX_ERR(0, 76, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":77
+  /* "_bit_marching_cubes_lorensen_cy.pyx":77
  *         [1, 5, 3, 3, 5, 7, -1, -1, -1, -1, -1, -1],  # 51 = 00110011
  *         [10, 1, 2, 8, 5, 7, 5, 8, 9, -1, -1, -1],  # 52 = 00110100
  *         [1, 2, 10, 9, 0, 5, 3, 0, 5, 3, 5, 7],  # 53 = 00110101             # <<<<<<<<<<<<<<
@@ -27072,7 +29178,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_63, 11, __pyx_int_7)) __PYX_ERR(0, 77, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":78
+  /* "_bit_marching_cubes_lorensen_cy.pyx":78
  *         [10, 1, 2, 8, 5, 7, 5, 8, 9, -1, -1, -1],  # 52 = 00110100
  *         [1, 2, 10, 9, 0, 5, 3, 0, 5, 3, 5, 7],  # 53 = 00110101
  *         [8, 0, 2, 8, 2, 5, 8, 5, 7, 10, 5, 2],  # 54 = 00110110             # <<<<<<<<<<<<<<
@@ -27118,7 +29224,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_64, 11, __pyx_int_2)) __PYX_ERR(0, 78, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":79
+  /* "_bit_marching_cubes_lorensen_cy.pyx":79
  *         [1, 2, 10, 9, 0, 5, 3, 0, 5, 3, 5, 7],  # 53 = 00110101
  *         [8, 0, 2, 8, 2, 5, 8, 5, 7, 10, 5, 2],  # 54 = 00110110
  *         [2, 10, 3, 5, 10, 3, 3, 5, 7, -1, -1, -1],  # 55 = 00110111             # <<<<<<<<<<<<<<
@@ -27164,7 +29270,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_65, 11, __pyx_int_neg_1)) __PYX_ERR(0, 79, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":80
+  /* "_bit_marching_cubes_lorensen_cy.pyx":80
  *         [8, 0, 2, 8, 2, 5, 8, 5, 7, 10, 5, 2],  # 54 = 00110110
  *         [2, 10, 3, 5, 10, 3, 3, 5, 7, -1, -1, -1],  # 55 = 00110111
  *         [2, 3, 11, 5, 7, 9, 8, 9, 7, -1, -1, -1],  # 56 = 00111000             # <<<<<<<<<<<<<<
@@ -27210,7 +29316,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_66, 11, __pyx_int_neg_1)) __PYX_ERR(0, 80, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":81
+  /* "_bit_marching_cubes_lorensen_cy.pyx":81
  *         [2, 10, 3, 5, 10, 3, 3, 5, 7, -1, -1, -1],  # 55 = 00110111
  *         [2, 3, 11, 5, 7, 9, 8, 9, 7, -1, -1, -1],  # 56 = 00111000
  *         [0, 9, 5, 0, 5, 11, 0, 11, 2, 11, 5, 7],  # 57 = 00111001             # <<<<<<<<<<<<<<
@@ -27256,7 +29362,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_67, 11, __pyx_int_7)) __PYX_ERR(0, 81, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":82
+  /* "_bit_marching_cubes_lorensen_cy.pyx":82
  *         [2, 3, 11, 5, 7, 9, 8, 9, 7, -1, -1, -1],  # 56 = 00111000
  *         [0, 9, 5, 0, 5, 11, 0, 11, 2, 11, 5, 7],  # 57 = 00111001
  *         [11, 2, 3, 8, 0, 7, 1, 0, 7, 5, 7, 1],  # 58 = 00111010             # <<<<<<<<<<<<<<
@@ -27302,7 +29408,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_68, 11, __pyx_int_1)) __PYX_ERR(0, 82, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":83
+  /* "_bit_marching_cubes_lorensen_cy.pyx":83
  *         [0, 9, 5, 0, 5, 11, 0, 11, 2, 11, 5, 7],  # 57 = 00111001
  *         [11, 2, 3, 8, 0, 7, 1, 0, 7, 5, 7, 1],  # 58 = 00111010
  *         [1, 2, 7, 11, 2, 7, 7, 1, 5, -1, -1, -1],  # 59 = 00111011             # <<<<<<<<<<<<<<
@@ -27348,7 +29454,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_69, 11, __pyx_int_neg_1)) __PYX_ERR(0, 83, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":84
+  /* "_bit_marching_cubes_lorensen_cy.pyx":84
  *         [11, 2, 3, 8, 0, 7, 1, 0, 7, 5, 7, 1],  # 58 = 00111010
  *         [1, 2, 7, 11, 2, 7, 7, 1, 5, -1, -1, -1],  # 59 = 00111011
  *         [7, 9, 5, 9, 7, 8, 10, 1, 11, 3, 11, 1],  # 60 = 00111100             # <<<<<<<<<<<<<<
@@ -27394,7 +29500,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_70, 11, __pyx_int_1)) __PYX_ERR(0, 84, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":85
+  /* "_bit_marching_cubes_lorensen_cy.pyx":85
  *         [1, 2, 7, 11, 2, 7, 7, 1, 5, -1, -1, -1],  # 59 = 00111011
  *         [7, 9, 5, 9, 7, 8, 10, 1, 11, 3, 11, 1],  # 60 = 00111100
  *         [9, 1, 0, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 61 = 00111101             # <<<<<<<<<<<<<<
@@ -27440,7 +29546,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_71, 11, __pyx_int_neg_1)) __PYX_ERR(0, 85, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":86
+  /* "_bit_marching_cubes_lorensen_cy.pyx":86
  *         [7, 9, 5, 9, 7, 8, 10, 1, 11, 3, 11, 1],  # 60 = 00111100
  *         [9, 1, 0, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 61 = 00111101
  *         [0, 3, 8, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 62 = 00111110             # <<<<<<<<<<<<<<
@@ -27486,7 +29592,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_72, 11, __pyx_int_neg_1)) __PYX_ERR(0, 86, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":87
+  /* "_bit_marching_cubes_lorensen_cy.pyx":87
  *         [9, 1, 0, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 61 = 00111101
  *         [0, 3, 8, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 62 = 00111110
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 63 = 00111111             # <<<<<<<<<<<<<<
@@ -27532,7 +29638,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_73, 11, __pyx_int_neg_1)) __PYX_ERR(0, 87, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":88
+  /* "_bit_marching_cubes_lorensen_cy.pyx":88
  *         [0, 3, 8, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 62 = 00111110
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 63 = 00111111
  *         [10, 6, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 64 = 01000000             # <<<<<<<<<<<<<<
@@ -27578,7 +29684,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_74, 11, __pyx_int_neg_1)) __PYX_ERR(0, 88, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":89
+  /* "_bit_marching_cubes_lorensen_cy.pyx":89
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 63 = 00111111
  *         [10, 6, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 64 = 01000000
  *         [0, 8, 3, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 65 = 01000001             # <<<<<<<<<<<<<<
@@ -27624,7 +29730,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_75, 11, __pyx_int_neg_1)) __PYX_ERR(0, 89, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":90
+  /* "_bit_marching_cubes_lorensen_cy.pyx":90
  *         [10, 6, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 64 = 01000000
  *         [0, 8, 3, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 65 = 01000001
  *         [9, 0, 1, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 66 = 01000010             # <<<<<<<<<<<<<<
@@ -27670,7 +29776,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_76, 11, __pyx_int_neg_1)) __PYX_ERR(0, 90, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":91
+  /* "_bit_marching_cubes_lorensen_cy.pyx":91
  *         [0, 8, 3, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 65 = 01000001
  *         [9, 0, 1, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 66 = 01000010
  *         [6, 5, 10, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 67 = 01000011             # <<<<<<<<<<<<<<
@@ -27716,7 +29822,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_77, 11, __pyx_int_neg_1)) __PYX_ERR(0, 91, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":92
+  /* "_bit_marching_cubes_lorensen_cy.pyx":92
  *         [9, 0, 1, 5, 10, 6, -1, -1, -1, -1, -1, -1],  # 66 = 01000010
  *         [6, 5, 10, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 67 = 01000011
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 68 = 01000100             # <<<<<<<<<<<<<<
@@ -27762,7 +29868,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_78, 11, __pyx_int_neg_1)) __PYX_ERR(0, 92, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":93
+  /* "_bit_marching_cubes_lorensen_cy.pyx":93
  *         [6, 5, 10, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 67 = 01000011
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 68 = 01000100
  *         [3, 0, 8, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 69 = 01000101             # <<<<<<<<<<<<<<
@@ -27808,7 +29914,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_79, 11, __pyx_int_neg_1)) __PYX_ERR(0, 93, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":94
+  /* "_bit_marching_cubes_lorensen_cy.pyx":94
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 68 = 01000100
  *         [3, 0, 8, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 69 = 01000101
  *         [9, 5, 0, 6, 5, 0, 0, 2, 6, -1, -1, -1],  # 70 = 01000110             # <<<<<<<<<<<<<<
@@ -27854,7 +29960,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_80, 11, __pyx_int_neg_1)) __PYX_ERR(0, 94, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":95
+  /* "_bit_marching_cubes_lorensen_cy.pyx":95
  *         [3, 0, 8, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 69 = 01000101
  *         [9, 5, 0, 6, 5, 0, 0, 2, 6, -1, -1, -1],  # 70 = 01000110
  *         [5, 9, 8, 5, 8, 2, 5, 2, 6, 3, 2, 8],  # 71 = 01000111             # <<<<<<<<<<<<<<
@@ -27900,7 +30006,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_8);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_81, 11, __pyx_int_8)) __PYX_ERR(0, 95, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":96
+  /* "_bit_marching_cubes_lorensen_cy.pyx":96
  *         [9, 5, 0, 6, 5, 0, 0, 2, 6, -1, -1, -1],  # 70 = 01000110
  *         [5, 9, 8, 5, 8, 2, 5, 2, 6, 3, 2, 8],  # 71 = 01000111
  *         [2, 3, 11, 10, 6, 5, -1, -1, -1, -1, -1, -1],  # 72 = 01001000             # <<<<<<<<<<<<<<
@@ -27946,7 +30052,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_82, 11, __pyx_int_neg_1)) __PYX_ERR(0, 96, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":97
+  /* "_bit_marching_cubes_lorensen_cy.pyx":97
  *         [5, 9, 8, 5, 8, 2, 5, 2, 6, 3, 2, 8],  # 71 = 01000111
  *         [2, 3, 11, 10, 6, 5, -1, -1, -1, -1, -1, -1],  # 72 = 01001000
  *         [10, 6, 5, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 73 = 01001001             # <<<<<<<<<<<<<<
@@ -27992,7 +30098,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_83, 11, __pyx_int_neg_1)) __PYX_ERR(0, 97, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":98
+  /* "_bit_marching_cubes_lorensen_cy.pyx":98
  *         [2, 3, 11, 10, 6, 5, -1, -1, -1, -1, -1, -1],  # 72 = 01001000
  *         [10, 6, 5, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 73 = 01001001
  *         [10, 6, 5, 11, 2, 3, 9, 0, 1, -1, -1, -1],  # 74 = 01001010             # <<<<<<<<<<<<<<
@@ -28038,7 +30144,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_84, 11, __pyx_int_neg_1)) __PYX_ERR(0, 98, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":99
+  /* "_bit_marching_cubes_lorensen_cy.pyx":99
  *         [10, 6, 5, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 73 = 01001001
  *         [10, 6, 5, 11, 2, 3, 9, 0, 1, -1, -1, -1],  # 74 = 01001010
  *         [6, 5, 10, 9, 2, 1, 2, 9, 11, 8, 11, 9],  # 75 = 01001011             # <<<<<<<<<<<<<<
@@ -28084,7 +30190,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_9);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_85, 11, __pyx_int_9)) __PYX_ERR(0, 99, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":100
+  /* "_bit_marching_cubes_lorensen_cy.pyx":100
  *         [10, 6, 5, 11, 2, 3, 9, 0, 1, -1, -1, -1],  # 74 = 01001010
  *         [6, 5, 10, 9, 2, 1, 2, 9, 11, 8, 11, 9],  # 75 = 01001011
  *         [3, 11, 5, 6, 11, 5, 5, 1, 3, -1, -1, -1],  # 76 = 01001100             # <<<<<<<<<<<<<<
@@ -28130,7 +30236,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_86, 11, __pyx_int_neg_1)) __PYX_ERR(0, 100, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":101
+  /* "_bit_marching_cubes_lorensen_cy.pyx":101
  *         [6, 5, 10, 9, 2, 1, 2, 9, 11, 8, 11, 9],  # 75 = 01001011
  *         [3, 11, 5, 6, 11, 5, 5, 1, 3, -1, -1, -1],  # 76 = 01001100
  *         [0, 8, 11, 0, 11, 5, 0, 5, 1, 5, 11, 6],  # 77 = 01001101             # <<<<<<<<<<<<<<
@@ -28176,7 +30282,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_6);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_87, 11, __pyx_int_6)) __PYX_ERR(0, 101, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":102
+  /* "_bit_marching_cubes_lorensen_cy.pyx":102
  *         [3, 11, 5, 6, 11, 5, 5, 1, 3, -1, -1, -1],  # 76 = 01001100
  *         [0, 8, 11, 0, 11, 5, 0, 5, 1, 5, 11, 6],  # 77 = 01001101
  *         [11, 6, 5, 3, 11, 5, 3, 5, 9, 3, 9, 0],  # 78 = 01001110             # <<<<<<<<<<<<<<
@@ -28222,7 +30328,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_88, 11, __pyx_int_0)) __PYX_ERR(0, 102, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":103
+  /* "_bit_marching_cubes_lorensen_cy.pyx":103
  *         [0, 8, 11, 0, 11, 5, 0, 5, 1, 5, 11, 6],  # 77 = 01001101
  *         [11, 6, 5, 3, 11, 5, 3, 5, 9, 3, 9, 0],  # 78 = 01001110
  *         [9, 5, 11, 6, 5, 11, 11, 9, 8, -1, -1, -1],  # 79 = 01001111             # <<<<<<<<<<<<<<
@@ -28268,7 +30374,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_89, 11, __pyx_int_neg_1)) __PYX_ERR(0, 103, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":104
+  /* "_bit_marching_cubes_lorensen_cy.pyx":104
  *         [11, 6, 5, 3, 11, 5, 3, 5, 9, 3, 9, 0],  # 78 = 01001110
  *         [9, 5, 11, 6, 5, 11, 11, 9, 8, -1, -1, -1],  # 79 = 01001111
  *         [5, 10, 6, 4, 7, 8, -1, -1, -1, -1, -1, -1],  # 80 = 01010000             # <<<<<<<<<<<<<<
@@ -28314,7 +30420,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_90, 11, __pyx_int_neg_1)) __PYX_ERR(0, 104, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":105
+  /* "_bit_marching_cubes_lorensen_cy.pyx":105
  *         [9, 5, 11, 6, 5, 11, 11, 9, 8, -1, -1, -1],  # 79 = 01001111
  *         [5, 10, 6, 4, 7, 8, -1, -1, -1, -1, -1, -1],  # 80 = 01010000
  *         [10, 6, 5, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 81 = 01010001             # <<<<<<<<<<<<<<
@@ -28360,7 +30466,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_91, 11, __pyx_int_neg_1)) __PYX_ERR(0, 105, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":106
+  /* "_bit_marching_cubes_lorensen_cy.pyx":106
  *         [5, 10, 6, 4, 7, 8, -1, -1, -1, -1, -1, -1],  # 80 = 01010000
  *         [10, 6, 5, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 81 = 01010001
  *         [0, 1, 9, 6, 5, 10, 4, 7, 8, -1, -1, -1],  # 82 = 01010010             # <<<<<<<<<<<<<<
@@ -28406,7 +30512,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_92, 11, __pyx_int_neg_1)) __PYX_ERR(0, 106, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":107
+  /* "_bit_marching_cubes_lorensen_cy.pyx":107
  *         [10, 6, 5, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 81 = 01010001
  *         [0, 1, 9, 6, 5, 10, 4, 7, 8, -1, -1, -1],  # 82 = 01010010
  *         [10, 6, 5, 9, 4, 1, 7, 4, 1, 3, 1, 7],  # 83 = 01010011             # <<<<<<<<<<<<<<
@@ -28452,7 +30558,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_93, 11, __pyx_int_7)) __PYX_ERR(0, 107, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":108
+  /* "_bit_marching_cubes_lorensen_cy.pyx":108
  *         [0, 1, 9, 6, 5, 10, 4, 7, 8, -1, -1, -1],  # 82 = 01010010
  *         [10, 6, 5, 9, 4, 1, 7, 4, 1, 3, 1, 7],  # 83 = 01010011
  *         [8, 4, 7, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 84 = 01010100             # <<<<<<<<<<<<<<
@@ -28498,7 +30604,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_94, 11, __pyx_int_neg_1)) __PYX_ERR(0, 108, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":109
+  /* "_bit_marching_cubes_lorensen_cy.pyx":109
  *         [10, 6, 5, 9, 4, 1, 7, 4, 1, 3, 1, 7],  # 83 = 01010011
  *         [8, 4, 7, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 84 = 01010100
  *         [2, 1, 6, 5, 1, 6, 3, 0, 7, 4, 0, 7],  # 85 = 01010101             # <<<<<<<<<<<<<<
@@ -28544,7 +30650,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_95, 11, __pyx_int_7)) __PYX_ERR(0, 109, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":110
+  /* "_bit_marching_cubes_lorensen_cy.pyx":110
  *         [8, 4, 7, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 84 = 01010100
  *         [2, 1, 6, 5, 1, 6, 3, 0, 7, 4, 0, 7],  # 85 = 01010101
  *         [4, 7, 8, 9, 5, 0, 6, 5, 0, 6, 0, 2],  # 86 = 01010110             # <<<<<<<<<<<<<<
@@ -28590,7 +30696,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_96, 11, __pyx_int_2)) __PYX_ERR(0, 110, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":111
+  /* "_bit_marching_cubes_lorensen_cy.pyx":111
  *         [2, 1, 6, 5, 1, 6, 3, 0, 7, 4, 0, 7],  # 85 = 01010101
  *         [4, 7, 8, 9, 5, 0, 6, 5, 0, 6, 0, 2],  # 86 = 01010110
  *         [4, 5, 9, 2, 7, 3, 7, 2, 6, -1, -1, -1],  # 87 = 01010111             # <<<<<<<<<<<<<<
@@ -28636,7 +30742,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_97, 11, __pyx_int_neg_1)) __PYX_ERR(0, 111, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":112
+  /* "_bit_marching_cubes_lorensen_cy.pyx":112
  *         [4, 7, 8, 9, 5, 0, 6, 5, 0, 6, 0, 2],  # 86 = 01010110
  *         [4, 5, 9, 2, 7, 3, 7, 2, 6, -1, -1, -1],  # 87 = 01010111
  *         [2, 3, 11, 4, 7, 8, 6, 5, 10, -1, -1, -1],  # 88 = 01011000             # <<<<<<<<<<<<<<
@@ -28682,7 +30788,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_98, 11, __pyx_int_neg_1)) __PYX_ERR(0, 112, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":113
+  /* "_bit_marching_cubes_lorensen_cy.pyx":113
  *         [4, 5, 9, 2, 7, 3, 7, 2, 6, -1, -1, -1],  # 87 = 01010111
  *         [2, 3, 11, 4, 7, 8, 6, 5, 10, -1, -1, -1],  # 88 = 01011000
  *         [6, 5, 10, 7, 11, 4, 2, 4, 11, 4, 2, 0],  # 89 = 01011001             # <<<<<<<<<<<<<<
@@ -28728,7 +30834,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_99, 11, __pyx_int_0)) __PYX_ERR(0, 113, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":114
+  /* "_bit_marching_cubes_lorensen_cy.pyx":114
  *         [2, 3, 11, 4, 7, 8, 6, 5, 10, -1, -1, -1],  # 88 = 01011000
  *         [6, 5, 10, 7, 11, 4, 2, 4, 11, 4, 2, 0],  # 89 = 01011001
  *         [8, 4, 7, 2, 3, 11, 9, 0, 1, 10, 6, 5],  # 90 = 01011010             # <<<<<<<<<<<<<<
@@ -28774,7 +30880,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_100, 11, __pyx_int_5)) __PYX_ERR(0, 114, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":115
+  /* "_bit_marching_cubes_lorensen_cy.pyx":115
  *         [6, 5, 10, 7, 11, 4, 2, 4, 11, 4, 2, 0],  # 89 = 01011001
  *         [8, 4, 7, 2, 3, 11, 9, 0, 1, 10, 6, 5],  # 90 = 01011010
  *         [10, 2, 1, 11, 6, 7, 9, 4, 5, -1, -1, -1],  # 91 = 01011011             # <<<<<<<<<<<<<<
@@ -28820,7 +30926,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_101, 11, __pyx_int_neg_1)) __PYX_ERR(0, 115, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":116
+  /* "_bit_marching_cubes_lorensen_cy.pyx":116
  *         [8, 4, 7, 2, 3, 11, 9, 0, 1, 10, 6, 5],  # 90 = 01011010
  *         [10, 2, 1, 11, 6, 7, 9, 4, 5, -1, -1, -1],  # 91 = 01011011
  *         [8, 4, 7, 11, 6, 3, 5, 6, 3, 1, 3, 5],  # 92 = 01011100             # <<<<<<<<<<<<<<
@@ -28866,7 +30972,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_102, 11, __pyx_int_5)) __PYX_ERR(0, 116, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":117
+  /* "_bit_marching_cubes_lorensen_cy.pyx":117
  *         [10, 2, 1, 11, 6, 7, 9, 4, 5, -1, -1, -1],  # 91 = 01011011
  *         [8, 4, 7, 11, 6, 3, 5, 6, 3, 1, 3, 5],  # 92 = 01011100
  *         [6, 7, 11, 0, 5, 1, 5, 0, 4, -1, -1, -1],  # 93 = 01011101             # <<<<<<<<<<<<<<
@@ -28912,7 +31018,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_103, 11, __pyx_int_neg_1)) __PYX_ERR(0, 117, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":118
+  /* "_bit_marching_cubes_lorensen_cy.pyx":118
  *         [8, 4, 7, 11, 6, 3, 5, 6, 3, 1, 3, 5],  # 92 = 01011100
  *         [6, 7, 11, 0, 5, 1, 5, 0, 4, -1, -1, -1],  # 93 = 01011101
  *         [8, 0, 3, 9, 4, 5, 11, 6, 7, -1, -1, -1],  # 94 = 01011110             # <<<<<<<<<<<<<<
@@ -28958,7 +31064,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_104, 11, __pyx_int_neg_1)) __PYX_ERR(0, 118, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":119
+  /* "_bit_marching_cubes_lorensen_cy.pyx":119
  *         [6, 7, 11, 0, 5, 1, 5, 0, 4, -1, -1, -1],  # 93 = 01011101
  *         [8, 0, 3, 9, 4, 5, 11, 6, 7, -1, -1, -1],  # 94 = 01011110
  *         [5, 9, 4, 11, 6, 7, -1, -1, -1, -1, -1, -1],  # 95 = 01011111             # <<<<<<<<<<<<<<
@@ -29004,7 +31110,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_105, 11, __pyx_int_neg_1)) __PYX_ERR(0, 119, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":120
+  /* "_bit_marching_cubes_lorensen_cy.pyx":120
  *         [8, 0, 3, 9, 4, 5, 11, 6, 7, -1, -1, -1],  # 94 = 01011110
  *         [5, 9, 4, 11, 6, 7, -1, -1, -1, -1, -1, -1],  # 95 = 01011111
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 96 = 01100000             # <<<<<<<<<<<<<<
@@ -29050,7 +31156,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_106, 11, __pyx_int_neg_1)) __PYX_ERR(0, 120, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":121
+  /* "_bit_marching_cubes_lorensen_cy.pyx":121
  *         [5, 9, 4, 11, 6, 7, -1, -1, -1, -1, -1, -1],  # 95 = 01011111
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 96 = 01100000
  *         [3, 0, 8, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 97 = 01100001             # <<<<<<<<<<<<<<
@@ -29096,7 +31202,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_107, 11, __pyx_int_neg_1)) __PYX_ERR(0, 121, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":122
+  /* "_bit_marching_cubes_lorensen_cy.pyx":122
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 96 = 01100000
  *         [3, 0, 8, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 97 = 01100001
  *         [0, 1, 6, 10, 1, 6, 6, 4, 0, -1, -1, -1],  # 98 = 01100010             # <<<<<<<<<<<<<<
@@ -29142,7 +31248,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_108, 11, __pyx_int_neg_1)) __PYX_ERR(0, 122, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":123
+  /* "_bit_marching_cubes_lorensen_cy.pyx":123
  *         [3, 0, 8, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 97 = 01100001
  *         [0, 1, 6, 10, 1, 6, 6, 4, 0, -1, -1, -1],  # 98 = 01100010
  *         [8, 3, 1, 8, 1, 6, 8, 6, 4, 6, 1, 10],  # 99 = 01100011             # <<<<<<<<<<<<<<
@@ -29188,7 +31294,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_109, 11, __pyx_int_10)) __PYX_ERR(0, 123, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":124
+  /* "_bit_marching_cubes_lorensen_cy.pyx":124
  *         [0, 1, 6, 10, 1, 6, 6, 4, 0, -1, -1, -1],  # 98 = 01100010
  *         [8, 3, 1, 8, 1, 6, 8, 6, 4, 6, 1, 10],  # 99 = 01100011
  *         [1, 9, 2, 4, 9, 2, 2, 6, 4, -1, -1, -1],  # 100 = 01100100             # <<<<<<<<<<<<<<
@@ -29234,7 +31340,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_110, 11, __pyx_int_neg_1)) __PYX_ERR(0, 124, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":125
+  /* "_bit_marching_cubes_lorensen_cy.pyx":125
  *         [8, 3, 1, 8, 1, 6, 8, 6, 4, 6, 1, 10],  # 99 = 01100011
  *         [1, 9, 2, 4, 9, 2, 2, 6, 4, -1, -1, -1],  # 100 = 01100100
  *         [8, 3, 0, 2, 9, 1, 9, 2, 4, 6, 4, 2],  # 101 = 01100101             # <<<<<<<<<<<<<<
@@ -29280,7 +31386,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_111, 11, __pyx_int_2)) __PYX_ERR(0, 125, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":126
+  /* "_bit_marching_cubes_lorensen_cy.pyx":126
  *         [1, 9, 2, 4, 9, 2, 2, 6, 4, -1, -1, -1],  # 100 = 01100100
  *         [8, 3, 0, 2, 9, 1, 9, 2, 4, 6, 4, 2],  # 101 = 01100101
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 102 = 01100110             # <<<<<<<<<<<<<<
@@ -29326,7 +31432,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_112, 11, __pyx_int_neg_1)) __PYX_ERR(0, 126, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":127
+  /* "_bit_marching_cubes_lorensen_cy.pyx":127
  *         [8, 3, 0, 2, 9, 1, 9, 2, 4, 6, 4, 2],  # 101 = 01100101
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 102 = 01100110
  *         [8, 3, 4, 2, 3, 4, 4, 2, 6, -1, -1, -1],  # 103 = 01100111             # <<<<<<<<<<<<<<
@@ -29372,7 +31478,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_113, 11, __pyx_int_neg_1)) __PYX_ERR(0, 127, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":128
+  /* "_bit_marching_cubes_lorensen_cy.pyx":128
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 102 = 01100110
  *         [8, 3, 4, 2, 3, 4, 4, 2, 6, -1, -1, -1],  # 103 = 01100111
  *         [11, 2, 3, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 104 = 01101000             # <<<<<<<<<<<<<<
@@ -29418,7 +31524,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_114, 11, __pyx_int_neg_1)) __PYX_ERR(0, 128, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":129
+  /* "_bit_marching_cubes_lorensen_cy.pyx":129
  *         [8, 3, 4, 2, 3, 4, 4, 2, 6, -1, -1, -1],  # 103 = 01100111
  *         [11, 2, 3, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 104 = 01101000
  *         [0, 8, 2, 11, 8, 2, 9, 4, 10, 6, 4, 10],  # 105 = 01101001             # <<<<<<<<<<<<<<
@@ -29464,7 +31570,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_115, 11, __pyx_int_10)) __PYX_ERR(0, 129, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":130
+  /* "_bit_marching_cubes_lorensen_cy.pyx":130
  *         [11, 2, 3, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 104 = 01101000
  *         [0, 8, 2, 11, 8, 2, 9, 4, 10, 6, 4, 10],  # 105 = 01101001
  *         [2, 3, 11, 0, 1, 6, 10, 1, 6, 0, 6, 4],  # 106 = 01101010             # <<<<<<<<<<<<<<
@@ -29510,7 +31616,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_116, 11, __pyx_int_4)) __PYX_ERR(0, 130, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":131
+  /* "_bit_marching_cubes_lorensen_cy.pyx":131
  *         [0, 8, 2, 11, 8, 2, 9, 4, 10, 6, 4, 10],  # 105 = 01101001
  *         [2, 3, 11, 0, 1, 6, 10, 1, 6, 0, 6, 4],  # 106 = 01101010
  *         [10, 2, 1, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 107 = 01101011             # <<<<<<<<<<<<<<
@@ -29556,7 +31662,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_117, 11, __pyx_int_neg_1)) __PYX_ERR(0, 131, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":132
+  /* "_bit_marching_cubes_lorensen_cy.pyx":132
  *         [2, 3, 11, 0, 1, 6, 10, 1, 6, 0, 6, 4],  # 106 = 01101010
  *         [10, 2, 1, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 107 = 01101011
  *         [1, 4, 9, 1, 11, 4, 1, 3, 11, 6, 4, 11],  # 108 = 01101100             # <<<<<<<<<<<<<<
@@ -29602,7 +31708,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_11);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_118, 11, __pyx_int_11)) __PYX_ERR(0, 132, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":133
+  /* "_bit_marching_cubes_lorensen_cy.pyx":133
  *         [10, 2, 1, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 107 = 01101011
  *         [1, 4, 9, 1, 11, 4, 1, 3, 11, 6, 4, 11],  # 108 = 01101100
  *         [1, 0, 9, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 109 = 01101101             # <<<<<<<<<<<<<<
@@ -29648,7 +31754,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_119, 11, __pyx_int_neg_1)) __PYX_ERR(0, 133, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":134
+  /* "_bit_marching_cubes_lorensen_cy.pyx":134
  *         [1, 4, 9, 1, 11, 4, 1, 3, 11, 6, 4, 11],  # 108 = 01101100
  *         [1, 0, 9, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 109 = 01101101
  *         [3, 11, 0, 6, 11, 0, 0, 6, 4, -1, -1, -1],  # 110 = 01101110             # <<<<<<<<<<<<<<
@@ -29694,7 +31800,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_120, 11, __pyx_int_neg_1)) __PYX_ERR(0, 134, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":135
+  /* "_bit_marching_cubes_lorensen_cy.pyx":135
  *         [1, 0, 9, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 109 = 01101101
  *         [3, 11, 0, 6, 11, 0, 0, 6, 4, -1, -1, -1],  # 110 = 01101110
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 111 = 01101111             # <<<<<<<<<<<<<<
@@ -29740,7 +31846,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_121, 11, __pyx_int_neg_1)) __PYX_ERR(0, 135, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":136
+  /* "_bit_marching_cubes_lorensen_cy.pyx":136
  *         [3, 11, 0, 6, 11, 0, 0, 6, 4, -1, -1, -1],  # 110 = 01101110
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 111 = 01101111
  *         [10, 6, 8, 7, 6, 8, 8, 9, 10, -1, -1, -1],  # 112 = 01110000             # <<<<<<<<<<<<<<
@@ -29786,7 +31892,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_122, 11, __pyx_int_neg_1)) __PYX_ERR(0, 136, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":137
+  /* "_bit_marching_cubes_lorensen_cy.pyx":137
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 111 = 01101111
  *         [10, 6, 8, 7, 6, 8, 8, 9, 10, -1, -1, -1],  # 112 = 01110000
  *         [0, 7, 3, 0, 10, 7, 0, 9, 10, 6, 7, 10],  # 113 = 01110001             # <<<<<<<<<<<<<<
@@ -29832,7 +31938,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_123, 11, __pyx_int_10)) __PYX_ERR(0, 137, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":138
+  /* "_bit_marching_cubes_lorensen_cy.pyx":138
  *         [10, 6, 8, 7, 6, 8, 8, 9, 10, -1, -1, -1],  # 112 = 01110000
  *         [0, 7, 3, 0, 10, 7, 0, 9, 10, 6, 7, 10],  # 113 = 01110001
  *         [1, 10, 6, 0, 1, 7, 6, 1, 7, 0, 7, 8],  # 114 = 01110010             # <<<<<<<<<<<<<<
@@ -29878,7 +31984,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_8);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_124, 11, __pyx_int_8)) __PYX_ERR(0, 138, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":139
+  /* "_bit_marching_cubes_lorensen_cy.pyx":139
  *         [0, 7, 3, 0, 10, 7, 0, 9, 10, 6, 7, 10],  # 113 = 01110001
  *         [1, 10, 6, 0, 1, 7, 6, 1, 7, 0, 7, 8],  # 114 = 01110010
  *         [10, 6, 1, 7, 6, 1, 1, 7, 3, -1, -1, -1],  # 115 = 01110011             # <<<<<<<<<<<<<<
@@ -29924,7 +32030,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_125, 11, __pyx_int_neg_1)) __PYX_ERR(0, 139, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":140
+  /* "_bit_marching_cubes_lorensen_cy.pyx":140
  *         [1, 10, 6, 0, 1, 7, 6, 1, 7, 0, 7, 8],  # 114 = 01110010
  *         [10, 6, 1, 7, 6, 1, 1, 7, 3, -1, -1, -1],  # 115 = 01110011
  *         [9, 1, 2, 9, 2, 7, 9, 7, 8, 7, 2, 6],  # 116 = 01110100             # <<<<<<<<<<<<<<
@@ -29970,7 +32076,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_6);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_126, 11, __pyx_int_6)) __PYX_ERR(0, 140, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":141
+  /* "_bit_marching_cubes_lorensen_cy.pyx":141
  *         [10, 6, 1, 7, 6, 1, 1, 7, 3, -1, -1, -1],  # 115 = 01110011
  *         [9, 1, 2, 9, 2, 7, 9, 7, 8, 7, 2, 6],  # 116 = 01110100
  *         [9, 1, 0, 7, 3, 6, 2, 6, 3, -1, -1, -1],  # 117 = 01110101             # <<<<<<<<<<<<<<
@@ -30016,7 +32122,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_127, 11, __pyx_int_neg_1)) __PYX_ERR(0, 141, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":142
+  /* "_bit_marching_cubes_lorensen_cy.pyx":142
  *         [9, 1, 2, 9, 2, 7, 9, 7, 8, 7, 2, 6],  # 116 = 01110100
  *         [9, 1, 0, 7, 3, 6, 2, 6, 3, -1, -1, -1],  # 117 = 01110101
  *         [0, 8, 6, 7, 8, 6, 6, 0, 2, -1, -1, -1],  # 118 = 01110110             # <<<<<<<<<<<<<<
@@ -30062,7 +32168,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_128, 11, __pyx_int_neg_1)) __PYX_ERR(0, 142, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":143
+  /* "_bit_marching_cubes_lorensen_cy.pyx":143
  *         [9, 1, 0, 7, 3, 6, 2, 6, 3, -1, -1, -1],  # 117 = 01110101
  *         [0, 8, 6, 7, 8, 6, 6, 0, 2, -1, -1, -1],  # 118 = 01110110
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 119 = 01110111             # <<<<<<<<<<<<<<
@@ -30108,7 +32214,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_129, 11, __pyx_int_neg_1)) __PYX_ERR(0, 143, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":144
+  /* "_bit_marching_cubes_lorensen_cy.pyx":144
  *         [0, 8, 6, 7, 8, 6, 6, 0, 2, -1, -1, -1],  # 118 = 01110110
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 119 = 01110111
  *         [11, 2, 3, 10, 6, 8, 7, 6, 8, 10, 8, 9],  # 120 = 01111000             # <<<<<<<<<<<<<<
@@ -30154,7 +32260,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_9);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_130, 11, __pyx_int_9)) __PYX_ERR(0, 144, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":145
+  /* "_bit_marching_cubes_lorensen_cy.pyx":145
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 119 = 01110111
  *         [11, 2, 3, 10, 6, 8, 7, 6, 8, 10, 8, 9],  # 120 = 01111000
  *         [11, 6, 7, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 121 = 01111001             # <<<<<<<<<<<<<<
@@ -30200,7 +32306,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_131, 11, __pyx_int_neg_1)) __PYX_ERR(0, 145, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":146
+  /* "_bit_marching_cubes_lorensen_cy.pyx":146
  *         [11, 2, 3, 10, 6, 8, 7, 6, 8, 10, 8, 9],  # 120 = 01111000
  *         [11, 6, 7, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 121 = 01111001
  *         [6, 7, 11, 0, 3, 8, 2, 1, 10, -1, -1, -1],  # 122 = 01111010             # <<<<<<<<<<<<<<
@@ -30246,7 +32352,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_132, 11, __pyx_int_neg_1)) __PYX_ERR(0, 146, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":147
+  /* "_bit_marching_cubes_lorensen_cy.pyx":147
  *         [11, 6, 7, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 121 = 01111001
  *         [6, 7, 11, 0, 3, 8, 2, 1, 10, -1, -1, -1],  # 122 = 01111010
  *         [2, 1, 10, 7, 11, 6, -1, -1, -1, -1, -1, -1],  # 123 = 01111011             # <<<<<<<<<<<<<<
@@ -30292,7 +32398,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_133, 11, __pyx_int_neg_1)) __PYX_ERR(0, 147, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":148
+  /* "_bit_marching_cubes_lorensen_cy.pyx":148
  *         [6, 7, 11, 0, 3, 8, 2, 1, 10, -1, -1, -1],  # 122 = 01111010
  *         [2, 1, 10, 7, 11, 6, -1, -1, -1, -1, -1, -1],  # 123 = 01111011
  *         [6, 7, 11, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 124 = 01111100             # <<<<<<<<<<<<<<
@@ -30338,7 +32444,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_134, 11, __pyx_int_neg_1)) __PYX_ERR(0, 148, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":149
+  /* "_bit_marching_cubes_lorensen_cy.pyx":149
  *         [2, 1, 10, 7, 11, 6, -1, -1, -1, -1, -1, -1],  # 123 = 01111011
  *         [6, 7, 11, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 124 = 01111100
  *         [9, 1, 0, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 125 = 01111101             # <<<<<<<<<<<<<<
@@ -30384,7 +32490,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_135, 11, __pyx_int_neg_1)) __PYX_ERR(0, 149, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":150
+  /* "_bit_marching_cubes_lorensen_cy.pyx":150
  *         [6, 7, 11, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 124 = 01111100
  *         [9, 1, 0, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 125 = 01111101
  *         [8, 0, 3, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 126 = 01111110             # <<<<<<<<<<<<<<
@@ -30430,7 +32536,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_136, 11, __pyx_int_neg_1)) __PYX_ERR(0, 150, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":151
+  /* "_bit_marching_cubes_lorensen_cy.pyx":151
  *         [9, 1, 0, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 125 = 01111101
  *         [8, 0, 3, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 126 = 01111110
  *         [7, 11, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 127 = 01111111             # <<<<<<<<<<<<<<
@@ -30476,7 +32582,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_137, 11, __pyx_int_neg_1)) __PYX_ERR(0, 151, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":152
+  /* "_bit_marching_cubes_lorensen_cy.pyx":152
  *         [8, 0, 3, 6, 7, 11, -1, -1, -1, -1, -1, -1],  # 126 = 01111110
  *         [7, 11, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 127 = 01111111
  *         [7, 6, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 128 = 10000000             # <<<<<<<<<<<<<<
@@ -30522,7 +32628,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_138, 11, __pyx_int_neg_1)) __PYX_ERR(0, 152, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":153
+  /* "_bit_marching_cubes_lorensen_cy.pyx":153
  *         [7, 11, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 127 = 01111111
  *         [7, 6, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 128 = 10000000
  *         [3, 0, 8, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 129 = 10000001             # <<<<<<<<<<<<<<
@@ -30568,7 +32674,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_139, 11, __pyx_int_neg_1)) __PYX_ERR(0, 153, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":154
+  /* "_bit_marching_cubes_lorensen_cy.pyx":154
  *         [7, 6, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 128 = 10000000
  *         [3, 0, 8, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 129 = 10000001
  *         [0, 1, 9, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 130 = 10000010             # <<<<<<<<<<<<<<
@@ -30614,7 +32720,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_140, 11, __pyx_int_neg_1)) __PYX_ERR(0, 154, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":155
+  /* "_bit_marching_cubes_lorensen_cy.pyx":155
  *         [3, 0, 8, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 129 = 10000001
  *         [0, 1, 9, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 130 = 10000010
  *         [11, 7, 6, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 131 = 10000011             # <<<<<<<<<<<<<<
@@ -30660,7 +32766,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_141, 11, __pyx_int_neg_1)) __PYX_ERR(0, 155, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":156
+  /* "_bit_marching_cubes_lorensen_cy.pyx":156
  *         [0, 1, 9, 11, 7, 6, -1, -1, -1, -1, -1, -1],  # 130 = 10000010
  *         [11, 7, 6, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 131 = 10000011
  *         [10, 1, 2, 6, 11, 7, -1, -1, -1, -1, -1, -1],  # 132 = 10000100             # <<<<<<<<<<<<<<
@@ -30706,7 +32812,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_142, 11, __pyx_int_neg_1)) __PYX_ERR(0, 156, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":157
+  /* "_bit_marching_cubes_lorensen_cy.pyx":157
  *         [11, 7, 6, 9, 1, 8, 3, 1, 8, -1, -1, -1],  # 131 = 10000011
  *         [10, 1, 2, 6, 11, 7, -1, -1, -1, -1, -1, -1],  # 132 = 10000100
  *         [11, 7, 6, 8, 3, 0, 10, 1, 2, -1, -1, -1],  # 133 = 10000101             # <<<<<<<<<<<<<<
@@ -30752,7 +32858,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_143, 11, __pyx_int_neg_1)) __PYX_ERR(0, 157, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":158
+  /* "_bit_marching_cubes_lorensen_cy.pyx":158
  *         [10, 1, 2, 6, 11, 7, -1, -1, -1, -1, -1, -1],  # 132 = 10000100
  *         [11, 7, 6, 8, 3, 0, 10, 1, 2, -1, -1, -1],  # 133 = 10000101
  *         [7, 6, 11, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 134 = 10000110             # <<<<<<<<<<<<<<
@@ -30798,7 +32904,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_144, 11, __pyx_int_neg_1)) __PYX_ERR(0, 158, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":159
+  /* "_bit_marching_cubes_lorensen_cy.pyx":159
  *         [11, 7, 6, 8, 3, 0, 10, 1, 2, -1, -1, -1],  # 133 = 10000101
  *         [7, 6, 11, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 134 = 10000110
  *         [7, 6, 11, 10, 2, 8, 3, 2, 8, 9, 8, 10],  # 135 = 10000111             # <<<<<<<<<<<<<<
@@ -30844,7 +32950,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_145, 11, __pyx_int_10)) __PYX_ERR(0, 159, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":160
+  /* "_bit_marching_cubes_lorensen_cy.pyx":160
  *         [7, 6, 11, 9, 0, 10, 2, 0, 10, -1, -1, -1],  # 134 = 10000110
  *         [7, 6, 11, 10, 2, 8, 3, 2, 8, 9, 8, 10],  # 135 = 10000111
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 136 = 10001000             # <<<<<<<<<<<<<<
@@ -30890,7 +32996,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_146, 11, __pyx_int_neg_1)) __PYX_ERR(0, 160, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":161
+  /* "_bit_marching_cubes_lorensen_cy.pyx":161
  *         [7, 6, 11, 10, 2, 8, 3, 2, 8, 9, 8, 10],  # 135 = 10000111
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 136 = 10001000
  *         [0, 8, 6, 7, 8, 6, 6, 2, 0, -1, -1, -1],  # 137 = 10001001             # <<<<<<<<<<<<<<
@@ -30936,7 +33042,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_147, 11, __pyx_int_neg_1)) __PYX_ERR(0, 161, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":162
+  /* "_bit_marching_cubes_lorensen_cy.pyx":162
  *         [2, 3, 6, 7, 3, 6, -1, -1, -1, -1, -1, -1],  # 136 = 10001000
  *         [0, 8, 6, 7, 8, 6, 6, 2, 0, -1, -1, -1],  # 137 = 10001001
  *         [0, 1, 9, 6, 3, 7, 3, 6, 2, -1, -1, -1],  # 138 = 10001010             # <<<<<<<<<<<<<<
@@ -30982,7 +33088,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_148, 11, __pyx_int_neg_1)) __PYX_ERR(0, 162, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":163
+  /* "_bit_marching_cubes_lorensen_cy.pyx":163
  *         [0, 8, 6, 7, 8, 6, 6, 2, 0, -1, -1, -1],  # 137 = 10001001
  *         [0, 1, 9, 6, 3, 7, 3, 6, 2, -1, -1, -1],  # 138 = 10001010
  *         [9, 2, 1, 9, 7, 2, 9, 8, 7, 7, 6, 2],  # 139 = 10001011             # <<<<<<<<<<<<<<
@@ -31028,7 +33134,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_149, 11, __pyx_int_2)) __PYX_ERR(0, 163, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":164
+  /* "_bit_marching_cubes_lorensen_cy.pyx":164
  *         [0, 1, 9, 6, 3, 7, 3, 6, 2, -1, -1, -1],  # 138 = 10001010
  *         [9, 2, 1, 9, 7, 2, 9, 8, 7, 7, 6, 2],  # 139 = 10001011
  *         [10, 6, 1, 7, 6, 1, 1, 3, 7, -1, -1, -1],  # 140 = 10001100             # <<<<<<<<<<<<<<
@@ -31074,7 +33180,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_150, 11, __pyx_int_neg_1)) __PYX_ERR(0, 164, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":165
+  /* "_bit_marching_cubes_lorensen_cy.pyx":165
  *         [9, 2, 1, 9, 7, 2, 9, 8, 7, 7, 6, 2],  # 139 = 10001011
  *         [10, 6, 1, 7, 6, 1, 1, 3, 7, -1, -1, -1],  # 140 = 10001100
  *         [1, 6, 10, 0, 1, 7, 6, 1, 7, 0, 8, 7],  # 141 = 10001101             # <<<<<<<<<<<<<<
@@ -31120,7 +33226,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_151, 11, __pyx_int_7)) __PYX_ERR(0, 165, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":166
+  /* "_bit_marching_cubes_lorensen_cy.pyx":166
  *         [10, 6, 1, 7, 6, 1, 1, 3, 7, -1, -1, -1],  # 140 = 10001100
  *         [1, 6, 10, 0, 1, 7, 6, 1, 7, 0, 8, 7],  # 141 = 10001101
  *         [0, 3, 7, 0, 7, 10, 0, 10, 9, 6, 10, 7],  # 142 = 10001110             # <<<<<<<<<<<<<<
@@ -31166,7 +33272,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_152, 11, __pyx_int_7)) __PYX_ERR(0, 166, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":167
+  /* "_bit_marching_cubes_lorensen_cy.pyx":167
  *         [1, 6, 10, 0, 1, 7, 6, 1, 7, 0, 8, 7],  # 141 = 10001101
  *         [0, 3, 7, 0, 7, 10, 0, 10, 9, 6, 10, 7],  # 142 = 10001110
  *         [10, 6, 8, 7, 6, 8, 8, 10, 9, -1, -1, -1],  # 143 = 10001111             # <<<<<<<<<<<<<<
@@ -31212,7 +33318,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_153, 11, __pyx_int_neg_1)) __PYX_ERR(0, 167, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":168
+  /* "_bit_marching_cubes_lorensen_cy.pyx":168
  *         [0, 3, 7, 0, 7, 10, 0, 10, 9, 6, 10, 7],  # 142 = 10001110
  *         [10, 6, 8, 7, 6, 8, 8, 10, 9, -1, -1, -1],  # 143 = 10001111
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 144 = 10010000             # <<<<<<<<<<<<<<
@@ -31258,7 +33364,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_154, 11, __pyx_int_neg_1)) __PYX_ERR(0, 168, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":169
+  /* "_bit_marching_cubes_lorensen_cy.pyx":169
  *         [10, 6, 8, 7, 6, 8, 8, 10, 9, -1, -1, -1],  # 143 = 10001111
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 144 = 10010000
  *         [3, 11, 0, 6, 11, 0, 0, 4, 6, -1, -1, -1],  # 145 = 10010001             # <<<<<<<<<<<<<<
@@ -31304,7 +33410,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_155, 11, __pyx_int_neg_1)) __PYX_ERR(0, 169, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":170
+  /* "_bit_marching_cubes_lorensen_cy.pyx":170
  *         [8, 4, 11, 6, 4, 11, -1, -1, -1, -1, -1, -1],  # 144 = 10010000
  *         [3, 11, 0, 6, 11, 0, 0, 4, 6, -1, -1, -1],  # 145 = 10010001
  *         [9, 0, 1, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 146 = 10010010             # <<<<<<<<<<<<<<
@@ -31350,7 +33456,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_156, 11, __pyx_int_neg_1)) __PYX_ERR(0, 170, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":171
+  /* "_bit_marching_cubes_lorensen_cy.pyx":171
  *         [3, 11, 0, 6, 11, 0, 0, 4, 6, -1, -1, -1],  # 145 = 10010001
  *         [9, 0, 1, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 146 = 10010010
  *         [1, 9, 4, 1, 4, 11, 1, 11, 3, 6, 11, 4],  # 147 = 10010011             # <<<<<<<<<<<<<<
@@ -31396,7 +33502,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_157, 11, __pyx_int_4)) __PYX_ERR(0, 171, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":172
+  /* "_bit_marching_cubes_lorensen_cy.pyx":172
  *         [9, 0, 1, 11, 6, 8, 4, 6, 8, -1, -1, -1],  # 146 = 10010010
  *         [1, 9, 4, 1, 4, 11, 1, 11, 3, 6, 11, 4],  # 147 = 10010011
  *         [1, 2, 10, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 148 = 10010100             # <<<<<<<<<<<<<<
@@ -31442,7 +33548,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_158, 11, __pyx_int_neg_1)) __PYX_ERR(0, 172, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":173
+  /* "_bit_marching_cubes_lorensen_cy.pyx":173
  *         [1, 9, 4, 1, 4, 11, 1, 11, 3, 6, 11, 4],  # 147 = 10010011
  *         [1, 2, 10, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 148 = 10010100
  *         [10, 1, 2, 0, 3, 6, 11, 3, 6, 4, 6, 0],  # 149 = 10010101             # <<<<<<<<<<<<<<
@@ -31488,7 +33594,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_159, 11, __pyx_int_0)) __PYX_ERR(0, 173, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":174
+  /* "_bit_marching_cubes_lorensen_cy.pyx":174
  *         [1, 2, 10, 8, 4, 11, 6, 4, 11, -1, -1, -1],  # 148 = 10010100
  *         [10, 1, 2, 0, 3, 6, 11, 3, 6, 4, 6, 0],  # 149 = 10010101
  *         [9, 0, 10, 2, 10, 0, 6, 8, 4, 8, 6, 11],  # 150 = 10010110             # <<<<<<<<<<<<<<
@@ -31534,7 +33640,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_11);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_160, 11, __pyx_int_11)) __PYX_ERR(0, 174, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":175
+  /* "_bit_marching_cubes_lorensen_cy.pyx":175
  *         [10, 1, 2, 0, 3, 6, 11, 3, 6, 4, 6, 0],  # 149 = 10010101
  *         [9, 0, 10, 2, 10, 0, 6, 8, 4, 8, 6, 11],  # 150 = 10010110
  *         [3, 2, 11, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 151 = 10010111             # <<<<<<<<<<<<<<
@@ -31580,7 +33686,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_161, 11, __pyx_int_neg_1)) __PYX_ERR(0, 175, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":176
+  /* "_bit_marching_cubes_lorensen_cy.pyx":176
  *         [9, 0, 10, 2, 10, 0, 6, 8, 4, 8, 6, 11],  # 150 = 10010110
  *         [3, 2, 11, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 151 = 10010111
  *         [8, 3, 4, 2, 3, 4, 4, 6, 2, -1, -1, -1],  # 152 = 10011000             # <<<<<<<<<<<<<<
@@ -31626,7 +33732,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_162, 11, __pyx_int_neg_1)) __PYX_ERR(0, 176, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":177
+  /* "_bit_marching_cubes_lorensen_cy.pyx":177
  *         [3, 2, 11, 9, 4, 10, 6, 4, 10, -1, -1, -1],  # 151 = 10010111
  *         [8, 3, 4, 2, 3, 4, 4, 6, 2, -1, -1, -1],  # 152 = 10011000
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 153 = 10011001             # <<<<<<<<<<<<<<
@@ -31672,7 +33778,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_163, 11, __pyx_int_neg_1)) __PYX_ERR(0, 177, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":178
+  /* "_bit_marching_cubes_lorensen_cy.pyx":178
  *         [8, 3, 4, 2, 3, 4, 4, 6, 2, -1, -1, -1],  # 152 = 10011000
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 153 = 10011001
  *         [0, 1, 9, 3, 8, 2, 4, 2, 8, 2, 4, 6],  # 154 = 10011010             # <<<<<<<<<<<<<<
@@ -31718,7 +33824,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_6);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_164, 11, __pyx_int_6)) __PYX_ERR(0, 178, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":179
+  /* "_bit_marching_cubes_lorensen_cy.pyx":179
  *         [2, 0, 6, 4, 0, 6, -1, -1, -1, -1, -1, -1],  # 153 = 10011001
  *         [0, 1, 9, 3, 8, 2, 4, 2, 8, 2, 4, 6],  # 154 = 10011010
  *         [1, 9, 2, 4, 9, 2, 2, 4, 6, -1, -1, -1],  # 155 = 10011011             # <<<<<<<<<<<<<<
@@ -31764,7 +33870,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_165, 11, __pyx_int_neg_1)) __PYX_ERR(0, 179, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":180
+  /* "_bit_marching_cubes_lorensen_cy.pyx":180
  *         [0, 1, 9, 3, 8, 2, 4, 2, 8, 2, 4, 6],  # 154 = 10011010
  *         [1, 9, 2, 4, 9, 2, 2, 4, 6, -1, -1, -1],  # 155 = 10011011
  *         [8, 1, 3, 8, 6, 1, 8, 4, 6, 6, 10, 1],  # 156 = 10011100             # <<<<<<<<<<<<<<
@@ -31810,7 +33916,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_166, 11, __pyx_int_1)) __PYX_ERR(0, 180, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":181
+  /* "_bit_marching_cubes_lorensen_cy.pyx":181
  *         [1, 9, 2, 4, 9, 2, 2, 4, 6, -1, -1, -1],  # 155 = 10011011
  *         [8, 1, 3, 8, 6, 1, 8, 4, 6, 6, 10, 1],  # 156 = 10011100
  *         [0, 1, 6, 10, 1, 6, 6, 0, 4, -1, -1, -1],  # 157 = 10011101             # <<<<<<<<<<<<<<
@@ -31856,7 +33962,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_167, 11, __pyx_int_neg_1)) __PYX_ERR(0, 181, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":182
+  /* "_bit_marching_cubes_lorensen_cy.pyx":182
  *         [8, 1, 3, 8, 6, 1, 8, 4, 6, 6, 10, 1],  # 156 = 10011100
  *         [0, 1, 6, 10, 1, 6, 6, 0, 4, -1, -1, -1],  # 157 = 10011101
  *         [8, 0, 3, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 158 = 10011110             # <<<<<<<<<<<<<<
@@ -31902,7 +34008,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_168, 11, __pyx_int_neg_1)) __PYX_ERR(0, 182, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":183
+  /* "_bit_marching_cubes_lorensen_cy.pyx":183
  *         [0, 1, 6, 10, 1, 6, 6, 0, 4, -1, -1, -1],  # 157 = 10011101
  *         [8, 0, 3, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 158 = 10011110
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 159 = 10011111             # <<<<<<<<<<<<<<
@@ -31948,7 +34054,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_169, 11, __pyx_int_neg_1)) __PYX_ERR(0, 183, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":184
+  /* "_bit_marching_cubes_lorensen_cy.pyx":184
  *         [8, 0, 3, 10, 6, 9, 4, 6, 9, -1, -1, -1],  # 158 = 10011110
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 159 = 10011111
  *         [4, 9, 5, 7, 6, 11, -1, -1, -1, -1, -1, -1],  # 160 = 10100000             # <<<<<<<<<<<<<<
@@ -31994,7 +34100,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_170, 11, __pyx_int_neg_1)) __PYX_ERR(0, 184, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":185
+  /* "_bit_marching_cubes_lorensen_cy.pyx":185
  *         [10, 9, 6, 4, 9, 6, -1, -1, -1, -1, -1, -1],  # 159 = 10011111
  *         [4, 9, 5, 7, 6, 11, -1, -1, -1, -1, -1, -1],  # 160 = 10100000
  *         [3, 0, 8, 5, 4, 9, 7, 6, 11, -1, -1, -1],  # 161 = 10100001             # <<<<<<<<<<<<<<
@@ -32040,7 +34146,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_171, 11, __pyx_int_neg_1)) __PYX_ERR(0, 185, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":186
+  /* "_bit_marching_cubes_lorensen_cy.pyx":186
  *         [4, 9, 5, 7, 6, 11, -1, -1, -1, -1, -1, -1],  # 160 = 10100000
  *         [3, 0, 8, 5, 4, 9, 7, 6, 11, -1, -1, -1],  # 161 = 10100001
  *         [11, 7, 6, 1, 5, 0, 4, 0, 5, -1, -1, -1],  # 162 = 10100010             # <<<<<<<<<<<<<<
@@ -32086,7 +34192,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_172, 11, __pyx_int_neg_1)) __PYX_ERR(0, 186, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":187
+  /* "_bit_marching_cubes_lorensen_cy.pyx":187
  *         [3, 0, 8, 5, 4, 9, 7, 6, 11, -1, -1, -1],  # 161 = 10100001
  *         [11, 7, 6, 1, 5, 0, 4, 0, 5, -1, -1, -1],  # 162 = 10100010
  *         [7, 6, 11, 8, 4, 3, 5, 4, 3, 5, 3, 1],  # 163 = 10100011             # <<<<<<<<<<<<<<
@@ -32132,7 +34238,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_173, 11, __pyx_int_1)) __PYX_ERR(0, 187, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":188
+  /* "_bit_marching_cubes_lorensen_cy.pyx":188
  *         [11, 7, 6, 1, 5, 0, 4, 0, 5, -1, -1, -1],  # 162 = 10100010
  *         [7, 6, 11, 8, 4, 3, 5, 4, 3, 5, 3, 1],  # 163 = 10100011
  *         [1, 2, 10, 7, 6, 11, 5, 4, 9, -1, -1, -1],  # 164 = 10100100             # <<<<<<<<<<<<<<
@@ -32178,7 +34284,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_174, 11, __pyx_int_neg_1)) __PYX_ERR(0, 188, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":189
+  /* "_bit_marching_cubes_lorensen_cy.pyx":189
  *         [7, 6, 11, 8, 4, 3, 5, 4, 3, 5, 3, 1],  # 163 = 10100011
  *         [1, 2, 10, 7, 6, 11, 5, 4, 9, -1, -1, -1],  # 164 = 10100100
  *         [11, 7, 6, 1, 2, 10, 8, 3, 0, 9, 5, 4],  # 165 = 10100101             # <<<<<<<<<<<<<<
@@ -32224,7 +34330,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_175, 11, __pyx_int_4)) __PYX_ERR(0, 189, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":190
+  /* "_bit_marching_cubes_lorensen_cy.pyx":190
  *         [1, 2, 10, 7, 6, 11, 5, 4, 9, -1, -1, -1],  # 164 = 10100100
  *         [11, 7, 6, 1, 2, 10, 8, 3, 0, 9, 5, 4],  # 165 = 10100101
  *         [11, 7, 6, 4, 10, 5, 10, 4, 2, 0, 2, 4],  # 166 = 10100110             # <<<<<<<<<<<<<<
@@ -32270,7 +34376,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_176, 11, __pyx_int_4)) __PYX_ERR(0, 190, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":191
+  /* "_bit_marching_cubes_lorensen_cy.pyx":191
  *         [11, 7, 6, 1, 2, 10, 8, 3, 0, 9, 5, 4],  # 165 = 10100101
  *         [11, 7, 6, 4, 10, 5, 10, 4, 2, 0, 2, 4],  # 166 = 10100110
  *         [11, 3, 2, 8, 7, 4, 10, 5, 6, -1, -1, -1],  # 167 = 10100111             # <<<<<<<<<<<<<<
@@ -32316,7 +34422,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_177, 11, __pyx_int_neg_1)) __PYX_ERR(0, 191, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":192
+  /* "_bit_marching_cubes_lorensen_cy.pyx":192
  *         [11, 7, 6, 4, 10, 5, 10, 4, 2, 0, 2, 4],  # 166 = 10100110
  *         [11, 3, 2, 8, 7, 4, 10, 5, 6, -1, -1, -1],  # 167 = 10100111
  *         [9, 5, 4, 3, 7, 2, 6, 2, 7, -1, -1, -1],  # 168 = 10101000             # <<<<<<<<<<<<<<
@@ -32362,7 +34468,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_178, 11, __pyx_int_neg_1)) __PYX_ERR(0, 192, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":193
+  /* "_bit_marching_cubes_lorensen_cy.pyx":193
  *         [11, 3, 2, 8, 7, 4, 10, 5, 6, -1, -1, -1],  # 167 = 10100111
  *         [9, 5, 4, 3, 7, 2, 6, 2, 7, -1, -1, -1],  # 168 = 10101000
  *         [9, 5, 4, 8, 7, 0, 6, 7, 0, 2, 0, 6],  # 169 = 10101001             # <<<<<<<<<<<<<<
@@ -32408,7 +34514,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_6);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_179, 11, __pyx_int_6)) __PYX_ERR(0, 193, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":194
+  /* "_bit_marching_cubes_lorensen_cy.pyx":194
  *         [9, 5, 4, 3, 7, 2, 6, 2, 7, -1, -1, -1],  # 168 = 10101000
  *         [9, 5, 4, 8, 7, 0, 6, 7, 0, 2, 0, 6],  # 169 = 10101001
  *         [7, 2, 3, 2, 7, 6, 0, 1, 4, 5, 4, 1],  # 170 = 10101010             # <<<<<<<<<<<<<<
@@ -32454,7 +34560,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_180, 11, __pyx_int_1)) __PYX_ERR(0, 194, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":195
+  /* "_bit_marching_cubes_lorensen_cy.pyx":195
  *         [9, 5, 4, 8, 7, 0, 6, 7, 0, 2, 0, 6],  # 169 = 10101001
  *         [7, 2, 3, 2, 7, 6, 0, 1, 4, 5, 4, 1],  # 170 = 10101010
  *         [7, 4, 8, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 171 = 10101011             # <<<<<<<<<<<<<<
@@ -32500,7 +34606,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_181, 11, __pyx_int_neg_1)) __PYX_ERR(0, 195, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":196
+  /* "_bit_marching_cubes_lorensen_cy.pyx":196
  *         [7, 2, 3, 2, 7, 6, 0, 1, 4, 5, 4, 1],  # 170 = 10101010
  *         [7, 4, 8, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 171 = 10101011
  *         [5, 4, 9, 10, 6, 1, 7, 6, 1, 7, 1, 3],  # 172 = 10101100             # <<<<<<<<<<<<<<
@@ -32546,7 +34652,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_3);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_182, 11, __pyx_int_3)) __PYX_ERR(0, 196, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":197
+  /* "_bit_marching_cubes_lorensen_cy.pyx":197
  *         [7, 4, 8, 1, 2, 5, 6, 2, 5, -1, -1, -1],  # 171 = 10101011
  *         [5, 4, 9, 10, 6, 1, 7, 6, 1, 7, 1, 3],  # 172 = 10101100
  *         [9, 1, 0, 10, 5, 6, 8, 7, 4, -1, -1, -1],  # 173 = 10101101             # <<<<<<<<<<<<<<
@@ -32592,7 +34698,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_183, 11, __pyx_int_neg_1)) __PYX_ERR(0, 197, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":198
+  /* "_bit_marching_cubes_lorensen_cy.pyx":198
  *         [5, 4, 9, 10, 6, 1, 7, 6, 1, 7, 1, 3],  # 172 = 10101100
  *         [9, 1, 0, 10, 5, 6, 8, 7, 4, -1, -1, -1],  # 173 = 10101101
  *         [5, 6, 10, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 174 = 10101110             # <<<<<<<<<<<<<<
@@ -32638,7 +34744,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_184, 11, __pyx_int_neg_1)) __PYX_ERR(0, 198, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":199
+  /* "_bit_marching_cubes_lorensen_cy.pyx":199
  *         [9, 1, 0, 10, 5, 6, 8, 7, 4, -1, -1, -1],  # 173 = 10101101
  *         [5, 6, 10, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 174 = 10101110
  *         [6, 10, 5, 8, 7, 4, -1, -1, -1, -1, -1, -1],  # 175 = 10101111             # <<<<<<<<<<<<<<
@@ -32684,7 +34790,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_185, 11, __pyx_int_neg_1)) __PYX_ERR(0, 199, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":200
+  /* "_bit_marching_cubes_lorensen_cy.pyx":200
  *         [5, 6, 10, 3, 0, 7, 4, 0, 7, -1, -1, -1],  # 174 = 10101110
  *         [6, 10, 5, 8, 7, 4, -1, -1, -1, -1, -1, -1],  # 175 = 10101111
  *         [9, 5, 11, 6, 5, 11, 11, 8, 9, -1, -1, -1],  # 176 = 10110000             # <<<<<<<<<<<<<<
@@ -32730,7 +34836,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_186, 11, __pyx_int_neg_1)) __PYX_ERR(0, 200, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":201
+  /* "_bit_marching_cubes_lorensen_cy.pyx":201
  *         [6, 10, 5, 8, 7, 4, -1, -1, -1, -1, -1, -1],  # 175 = 10101111
  *         [9, 5, 11, 6, 5, 11, 11, 8, 9, -1, -1, -1],  # 176 = 10110000
  *         [11, 5, 6, 3, 5, 11, 3, 9, 5, 3, 0, 9],  # 177 = 10110001             # <<<<<<<<<<<<<<
@@ -32776,7 +34882,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_9);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_187, 11, __pyx_int_9)) __PYX_ERR(0, 201, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":202
+  /* "_bit_marching_cubes_lorensen_cy.pyx":202
  *         [9, 5, 11, 6, 5, 11, 11, 8, 9, -1, -1, -1],  # 176 = 10110000
  *         [11, 5, 6, 3, 5, 11, 3, 9, 5, 3, 0, 9],  # 177 = 10110001
  *         [0, 11, 8, 0, 5, 11, 0, 1, 5, 5, 6, 11],  # 178 = 10110010             # <<<<<<<<<<<<<<
@@ -32822,7 +34928,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_11);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_188, 11, __pyx_int_11)) __PYX_ERR(0, 202, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":203
+  /* "_bit_marching_cubes_lorensen_cy.pyx":203
  *         [11, 5, 6, 3, 5, 11, 3, 9, 5, 3, 0, 9],  # 177 = 10110001
  *         [0, 11, 8, 0, 5, 11, 0, 1, 5, 5, 6, 11],  # 178 = 10110010
  *         [3, 11, 5, 6, 11, 5, 5, 3, 1, -1, -1, -1],  # 179 = 10110011             # <<<<<<<<<<<<<<
@@ -32868,7 +34974,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_189, 11, __pyx_int_neg_1)) __PYX_ERR(0, 203, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":204
+  /* "_bit_marching_cubes_lorensen_cy.pyx":204
  *         [0, 11, 8, 0, 5, 11, 0, 1, 5, 5, 6, 11],  # 178 = 10110010
  *         [3, 11, 5, 6, 11, 5, 5, 3, 1, -1, -1, -1],  # 179 = 10110011
  *         [10, 1, 2, 5, 6, 9, 11, 9, 6, 9, 11, 8],  # 180 = 10110100             # <<<<<<<<<<<<<<
@@ -32914,7 +35020,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_8);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_190, 11, __pyx_int_8)) __PYX_ERR(0, 204, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":205
+  /* "_bit_marching_cubes_lorensen_cy.pyx":205
  *         [3, 11, 5, 6, 11, 5, 5, 3, 1, -1, -1, -1],  # 179 = 10110011
  *         [10, 1, 2, 5, 6, 9, 11, 9, 6, 9, 11, 8],  # 180 = 10110100
  *         [5, 6, 10, 3, 2, 11, 1, 0, 9, -1, -1, -1],  # 181 = 10110101             # <<<<<<<<<<<<<<
@@ -32960,7 +35066,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_191, 11, __pyx_int_neg_1)) __PYX_ERR(0, 205, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":206
+  /* "_bit_marching_cubes_lorensen_cy.pyx":206
  *         [10, 1, 2, 5, 6, 9, 11, 9, 6, 9, 11, 8],  # 180 = 10110100
  *         [5, 6, 10, 3, 2, 11, 1, 0, 9, -1, -1, -1],  # 181 = 10110101
  *         [5, 6, 10, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 182 = 10110110             # <<<<<<<<<<<<<<
@@ -33006,7 +35112,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_192, 11, __pyx_int_neg_1)) __PYX_ERR(0, 206, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":207
+  /* "_bit_marching_cubes_lorensen_cy.pyx":207
  *         [5, 6, 10, 3, 2, 11, 1, 0, 9, -1, -1, -1],  # 181 = 10110101
  *         [5, 6, 10, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 182 = 10110110
  *         [11, 3, 2, 5, 6, 10, -1, -1, -1, -1, -1, -1],  # 183 = 10110111             # <<<<<<<<<<<<<<
@@ -33052,7 +35158,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_193, 11, __pyx_int_neg_1)) __PYX_ERR(0, 207, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":208
+  /* "_bit_marching_cubes_lorensen_cy.pyx":208
  *         [5, 6, 10, 8, 0, 11, 2, 0, 11, -1, -1, -1],  # 182 = 10110110
  *         [11, 3, 2, 5, 6, 10, -1, -1, -1, -1, -1, -1],  # 183 = 10110111
  *         [5, 8, 9, 5, 2, 8, 5, 6, 2, 3, 8, 2],  # 184 = 10111000             # <<<<<<<<<<<<<<
@@ -33098,7 +35204,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_194, 11, __pyx_int_2)) __PYX_ERR(0, 208, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":209
+  /* "_bit_marching_cubes_lorensen_cy.pyx":209
  *         [11, 3, 2, 5, 6, 10, -1, -1, -1, -1, -1, -1],  # 183 = 10110111
  *         [5, 8, 9, 5, 2, 8, 5, 6, 2, 3, 8, 2],  # 184 = 10111000
  *         [9, 5, 0, 6, 5, 0, 0, 6, 2, -1, -1, -1],  # 185 = 10111001             # <<<<<<<<<<<<<<
@@ -33144,7 +35250,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_195, 11, __pyx_int_neg_1)) __PYX_ERR(0, 209, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":210
+  /* "_bit_marching_cubes_lorensen_cy.pyx":210
  *         [5, 8, 9, 5, 2, 8, 5, 6, 2, 3, 8, 2],  # 184 = 10111000
  *         [9, 5, 0, 6, 5, 0, 0, 6, 2, -1, -1, -1],  # 185 = 10111001
  *         [8, 0, 3, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 186 = 10111010             # <<<<<<<<<<<<<<
@@ -33190,7 +35296,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_196, 11, __pyx_int_neg_1)) __PYX_ERR(0, 210, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":211
+  /* "_bit_marching_cubes_lorensen_cy.pyx":211
  *         [9, 5, 0, 6, 5, 0, 0, 6, 2, -1, -1, -1],  # 185 = 10111001
  *         [8, 0, 3, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 186 = 10111010
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 187 = 10111011             # <<<<<<<<<<<<<<
@@ -33236,7 +35342,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_197, 11, __pyx_int_neg_1)) __PYX_ERR(0, 211, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":212
+  /* "_bit_marching_cubes_lorensen_cy.pyx":212
  *         [8, 0, 3, 2, 6, 1, 5, 6, 1, -1, -1, -1],  # 186 = 10111010
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 187 = 10111011
  *         [10, 5, 6, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 188 = 10111100             # <<<<<<<<<<<<<<
@@ -33282,7 +35388,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_198, 11, __pyx_int_neg_1)) __PYX_ERR(0, 212, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":213
+  /* "_bit_marching_cubes_lorensen_cy.pyx":213
  *         [1, 5, 2, 6, 5, 2, -1, -1, -1, -1, -1, -1],  # 187 = 10111011
  *         [10, 5, 6, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 188 = 10111100
  *         [1, 0, 9, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 189 = 10111101             # <<<<<<<<<<<<<<
@@ -33328,7 +35434,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_199, 11, __pyx_int_neg_1)) __PYX_ERR(0, 213, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":214
+  /* "_bit_marching_cubes_lorensen_cy.pyx":214
  *         [10, 5, 6, 8, 3, 9, 1, 3, 9, -1, -1, -1],  # 188 = 10111100
  *         [1, 0, 9, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 189 = 10111101
  *         [3, 8, 0, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 190 = 10111110             # <<<<<<<<<<<<<<
@@ -33374,7 +35480,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_200, 11, __pyx_int_neg_1)) __PYX_ERR(0, 214, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":215
+  /* "_bit_marching_cubes_lorensen_cy.pyx":215
  *         [1, 0, 9, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 189 = 10111101
  *         [3, 8, 0, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 190 = 10111110
  *         [10, 5, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 191 = 10111111             # <<<<<<<<<<<<<<
@@ -33420,7 +35526,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_201, 11, __pyx_int_neg_1)) __PYX_ERR(0, 215, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":216
+  /* "_bit_marching_cubes_lorensen_cy.pyx":216
  *         [3, 8, 0, 6, 10, 5, -1, -1, -1, -1, -1, -1],  # 190 = 10111110
  *         [10, 5, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 191 = 10111111
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 192 = 11000000             # <<<<<<<<<<<<<<
@@ -33466,7 +35572,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_202, 11, __pyx_int_neg_1)) __PYX_ERR(0, 216, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":217
+  /* "_bit_marching_cubes_lorensen_cy.pyx":217
  *         [10, 5, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 191 = 10111111
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 192 = 11000000
  *         [8, 3, 0, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 193 = 11000001             # <<<<<<<<<<<<<<
@@ -33512,7 +35618,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_203, 11, __pyx_int_neg_1)) __PYX_ERR(0, 217, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":218
+  /* "_bit_marching_cubes_lorensen_cy.pyx":218
  *         [11, 10, 7, 5, 10, 7, -1, -1, -1, -1, -1, -1],  # 192 = 11000000
  *         [8, 3, 0, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 193 = 11000001
  *         [0, 1, 9, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 194 = 11000010             # <<<<<<<<<<<<<<
@@ -33558,7 +35664,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_204, 11, __pyx_int_neg_1)) __PYX_ERR(0, 218, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":219
+  /* "_bit_marching_cubes_lorensen_cy.pyx":219
  *         [8, 3, 0, 10, 5, 11, 7, 5, 11, -1, -1, -1],  # 193 = 11000001
  *         [0, 1, 9, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 194 = 11000010
  *         [10, 5, 11, 7, 5, 11, 8, 9, 3, 1, 9, 3],  # 195 = 11000011             # <<<<<<<<<<<<<<
@@ -33604,7 +35710,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_3);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_205, 11, __pyx_int_3)) __PYX_ERR(0, 219, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":220
+  /* "_bit_marching_cubes_lorensen_cy.pyx":220
  *         [0, 1, 9, 11, 7, 10, 5, 7, 10, -1, -1, -1],  # 194 = 11000010
  *         [10, 5, 11, 7, 5, 11, 8, 9, 3, 1, 9, 3],  # 195 = 11000011
  *         [1, 2, 7, 11, 2, 7, 7, 5, 1, -1, -1, -1],  # 196 = 11000100             # <<<<<<<<<<<<<<
@@ -33650,7 +35756,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_206, 11, __pyx_int_neg_1)) __PYX_ERR(0, 220, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":221
+  /* "_bit_marching_cubes_lorensen_cy.pyx":221
  *         [10, 5, 11, 7, 5, 11, 8, 9, 3, 1, 9, 3],  # 195 = 11000011
  *         [1, 2, 7, 11, 2, 7, 7, 5, 1, -1, -1, -1],  # 196 = 11000100
  *         [3, 0, 8, 1, 2, 7, 11, 2, 7, 1, 7, 5],  # 197 = 11000101             # <<<<<<<<<<<<<<
@@ -33696,7 +35802,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_207, 11, __pyx_int_5)) __PYX_ERR(0, 221, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":222
+  /* "_bit_marching_cubes_lorensen_cy.pyx":222
  *         [1, 2, 7, 11, 2, 7, 7, 5, 1, -1, -1, -1],  # 196 = 11000100
  *         [3, 0, 8, 1, 2, 7, 11, 2, 7, 1, 7, 5],  # 197 = 11000101
  *         [0, 5, 9, 0, 11, 5, 0, 2, 11, 11, 7, 5],  # 198 = 11000110             # <<<<<<<<<<<<<<
@@ -33742,7 +35848,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_208, 11, __pyx_int_5)) __PYX_ERR(0, 222, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":223
+  /* "_bit_marching_cubes_lorensen_cy.pyx":223
  *         [3, 0, 8, 1, 2, 7, 11, 2, 7, 1, 7, 5],  # 197 = 11000101
  *         [0, 5, 9, 0, 11, 5, 0, 2, 11, 11, 7, 5],  # 198 = 11000110
  *         [11, 3, 2, 9, 7, 5, 7, 9, 8, -1, -1, -1],  # 199 = 11000111             # <<<<<<<<<<<<<<
@@ -33788,7 +35894,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_209, 11, __pyx_int_neg_1)) __PYX_ERR(0, 223, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":224
+  /* "_bit_marching_cubes_lorensen_cy.pyx":224
  *         [0, 5, 9, 0, 11, 5, 0, 2, 11, 11, 7, 5],  # 198 = 11000110
  *         [11, 3, 2, 9, 7, 5, 7, 9, 8, -1, -1, -1],  # 199 = 11000111
  *         [2, 10, 3, 5, 10, 3, 3, 7, 5, -1, -1, -1],  # 200 = 11001000             # <<<<<<<<<<<<<<
@@ -33834,7 +35940,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_210, 11, __pyx_int_neg_1)) __PYX_ERR(0, 224, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":225
+  /* "_bit_marching_cubes_lorensen_cy.pyx":225
  *         [11, 3, 2, 9, 7, 5, 7, 9, 8, -1, -1, -1],  # 199 = 11000111
  *         [2, 10, 3, 5, 10, 3, 3, 7, 5, -1, -1, -1],  # 200 = 11001000
  *         [8, 2, 0, 8, 5, 2, 8, 7, 5, 10, 2, 5],  # 201 = 11001001             # <<<<<<<<<<<<<<
@@ -33880,7 +35986,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_211, 11, __pyx_int_5)) __PYX_ERR(0, 225, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":226
+  /* "_bit_marching_cubes_lorensen_cy.pyx":226
  *         [2, 10, 3, 5, 10, 3, 3, 7, 5, -1, -1, -1],  # 200 = 11001000
  *         [8, 2, 0, 8, 5, 2, 8, 7, 5, 10, 2, 5],  # 201 = 11001001
  *         [9, 0, 1, 10, 2, 5, 3, 2, 5, 7, 5, 3],  # 202 = 11001010             # <<<<<<<<<<<<<<
@@ -33926,7 +36032,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_3);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_212, 11, __pyx_int_3)) __PYX_ERR(0, 226, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":227
+  /* "_bit_marching_cubes_lorensen_cy.pyx":227
  *         [8, 2, 0, 8, 5, 2, 8, 7, 5, 10, 2, 5],  # 201 = 11001001
  *         [9, 0, 1, 10, 2, 5, 3, 2, 5, 7, 5, 3],  # 202 = 11001010
  *         [2, 1, 10, 7, 5, 8, 9, 8, 5, -1, -1, -1],  # 203 = 11001011             # <<<<<<<<<<<<<<
@@ -33972,7 +36078,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_213, 11, __pyx_int_neg_1)) __PYX_ERR(0, 227, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":228
+  /* "_bit_marching_cubes_lorensen_cy.pyx":228
  *         [9, 0, 1, 10, 2, 5, 3, 2, 5, 7, 5, 3],  # 202 = 11001010
  *         [2, 1, 10, 7, 5, 8, 9, 8, 5, -1, -1, -1],  # 203 = 11001011
  *         [1, 3, 5, 3, 7, 5, -1, -1, -1, -1, -1, -1],  # 204 = 11001100             # <<<<<<<<<<<<<<
@@ -34018,7 +36124,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_214, 11, __pyx_int_neg_1)) __PYX_ERR(0, 228, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":229
+  /* "_bit_marching_cubes_lorensen_cy.pyx":229
  *         [2, 1, 10, 7, 5, 8, 9, 8, 5, -1, -1, -1],  # 203 = 11001011
  *         [1, 3, 5, 3, 7, 5, -1, -1, -1, -1, -1, -1],  # 204 = 11001100
  *         [0, 8, 1, 7, 8, 1, 1, 7, 5, -1, -1, -1],  # 205 = 11001101             # <<<<<<<<<<<<<<
@@ -34064,7 +36170,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_215, 11, __pyx_int_neg_1)) __PYX_ERR(0, 229, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":230
+  /* "_bit_marching_cubes_lorensen_cy.pyx":230
  *         [1, 3, 5, 3, 7, 5, -1, -1, -1, -1, -1, -1],  # 204 = 11001100
  *         [0, 8, 1, 7, 8, 1, 1, 7, 5, -1, -1, -1],  # 205 = 11001101
  *         [9, 0, 5, 3, 0, 5, 5, 3, 7, -1, -1, -1],  # 206 = 11001110             # <<<<<<<<<<<<<<
@@ -34110,7 +36216,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_216, 11, __pyx_int_neg_1)) __PYX_ERR(0, 230, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":231
+  /* "_bit_marching_cubes_lorensen_cy.pyx":231
  *         [0, 8, 1, 7, 8, 1, 1, 7, 5, -1, -1, -1],  # 205 = 11001101
  *         [9, 0, 5, 3, 0, 5, 5, 3, 7, -1, -1, -1],  # 206 = 11001110
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 207 = 11001111             # <<<<<<<<<<<<<<
@@ -34156,7 +36262,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_217, 11, __pyx_int_neg_1)) __PYX_ERR(0, 231, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":232
+  /* "_bit_marching_cubes_lorensen_cy.pyx":232
  *         [9, 0, 5, 3, 0, 5, 5, 3, 7, -1, -1, -1],  # 206 = 11001110
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 207 = 11001111
  *         [8, 4, 10, 5, 4, 10, 10, 11, 8, -1, -1, -1],  # 208 = 11010000             # <<<<<<<<<<<<<<
@@ -34202,7 +36308,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_218, 11, __pyx_int_neg_1)) __PYX_ERR(0, 232, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":233
+  /* "_bit_marching_cubes_lorensen_cy.pyx":233
  *         [9, 8, 5, 7, 8, 5, -1, -1, -1, -1, -1, -1],  # 207 = 11001111
  *         [8, 4, 10, 5, 4, 10, 10, 11, 8, -1, -1, -1],  # 208 = 11010000
  *         [5, 0, 4, 5, 11, 0, 5, 10, 11, 11, 3, 0],  # 209 = 11010001             # <<<<<<<<<<<<<<
@@ -34248,7 +36354,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_0);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_219, 11, __pyx_int_0)) __PYX_ERR(0, 233, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":234
+  /* "_bit_marching_cubes_lorensen_cy.pyx":234
  *         [8, 4, 10, 5, 4, 10, 10, 11, 8, -1, -1, -1],  # 208 = 11010000
  *         [5, 0, 4, 5, 11, 0, 5, 10, 11, 11, 3, 0],  # 209 = 11010001
  *         [9, 0, 1, 8, 4, 10, 5, 4, 10, 8, 10, 11],  # 210 = 11010010             # <<<<<<<<<<<<<<
@@ -34294,7 +36400,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_11);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_220, 11, __pyx_int_11)) __PYX_ERR(0, 234, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":235
+  /* "_bit_marching_cubes_lorensen_cy.pyx":235
  *         [5, 0, 4, 5, 11, 0, 5, 10, 11, 11, 3, 0],  # 209 = 11010001
  *         [9, 0, 1, 8, 4, 10, 5, 4, 10, 8, 10, 11],  # 210 = 11010010
  *         [4, 5, 9, 3, 1, 11, 10, 11, 1, -1, -1, -1],  # 211 = 11010011             # <<<<<<<<<<<<<<
@@ -34340,7 +36446,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_221, 11, __pyx_int_neg_1)) __PYX_ERR(0, 235, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":236
+  /* "_bit_marching_cubes_lorensen_cy.pyx":236
  *         [9, 0, 1, 8, 4, 10, 5, 4, 10, 8, 10, 11],  # 210 = 11010010
  *         [4, 5, 9, 3, 1, 11, 10, 11, 1, -1, -1, -1],  # 211 = 11010011
  *         [11, 1, 2, 11, 4, 1, 11, 8, 4, 5, 1, 4],  # 212 = 11010100             # <<<<<<<<<<<<<<
@@ -34386,7 +36492,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_4);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_222, 11, __pyx_int_4)) __PYX_ERR(0, 236, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":237
+  /* "_bit_marching_cubes_lorensen_cy.pyx":237
  *         [4, 5, 9, 3, 1, 11, 10, 11, 1, -1, -1, -1],  # 211 = 11010011
  *         [11, 1, 2, 11, 4, 1, 11, 8, 4, 5, 1, 4],  # 212 = 11010100
  *         [11, 3, 2, 5, 1, 4, 0, 4, 1, -1, -1, -1],  # 213 = 11010101             # <<<<<<<<<<<<<<
@@ -34432,7 +36538,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_223, 11, __pyx_int_neg_1)) __PYX_ERR(0, 237, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":238
+  /* "_bit_marching_cubes_lorensen_cy.pyx":238
  *         [11, 1, 2, 11, 4, 1, 11, 8, 4, 5, 1, 4],  # 212 = 11010100
  *         [11, 3, 2, 5, 1, 4, 0, 4, 1, -1, -1, -1],  # 213 = 11010101
  *         [9, 4, 5, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 214 = 11010110             # <<<<<<<<<<<<<<
@@ -34478,7 +36584,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_224, 11, __pyx_int_neg_1)) __PYX_ERR(0, 238, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":239
+  /* "_bit_marching_cubes_lorensen_cy.pyx":239
  *         [11, 3, 2, 5, 1, 4, 0, 4, 1, -1, -1, -1],  # 213 = 11010101
  *         [9, 4, 5, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 214 = 11010110
  *         [4, 5, 9, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 215 = 11010111             # <<<<<<<<<<<<<<
@@ -34524,7 +36630,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_225, 11, __pyx_int_neg_1)) __PYX_ERR(0, 239, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":240
+  /* "_bit_marching_cubes_lorensen_cy.pyx":240
  *         [9, 4, 5, 0, 2, 8, 11, 2, 8, -1, -1, -1],  # 214 = 11010110
  *         [4, 5, 9, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 215 = 11010111
  *         [3, 10, 2, 8, 10, 3, 8, 5, 10, 8, 4, 5],  # 216 = 11011000             # <<<<<<<<<<<<<<
@@ -34570,7 +36676,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_5);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_226, 11, __pyx_int_5)) __PYX_ERR(0, 240, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":241
+  /* "_bit_marching_cubes_lorensen_cy.pyx":241
  *         [4, 5, 9, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 215 = 11010111
  *         [3, 10, 2, 8, 10, 3, 8, 5, 10, 8, 4, 5],  # 216 = 11011000
  *         [2, 10, 4, 5, 10, 4, 4, 2, 0, -1, -1, -1],  # 217 = 11011001             # <<<<<<<<<<<<<<
@@ -34616,7 +36722,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_227, 11, __pyx_int_neg_1)) __PYX_ERR(0, 241, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":242
+  /* "_bit_marching_cubes_lorensen_cy.pyx":242
  *         [3, 10, 2, 8, 10, 3, 8, 5, 10, 8, 4, 5],  # 216 = 11011000
  *         [2, 10, 4, 5, 10, 4, 4, 2, 0, -1, -1, -1],  # 217 = 11011001
  *         [4, 5, 9, 2, 1, 10, 0, 3, 8, -1, -1, -1],  # 218 = 11011010             # <<<<<<<<<<<<<<
@@ -34662,7 +36768,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_228, 11, __pyx_int_neg_1)) __PYX_ERR(0, 242, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":243
+  /* "_bit_marching_cubes_lorensen_cy.pyx":243
  *         [2, 10, 4, 5, 10, 4, 4, 2, 0, -1, -1, -1],  # 217 = 11011001
  *         [4, 5, 9, 2, 1, 10, 0, 3, 8, -1, -1, -1],  # 218 = 11011010
  *         [10, 2, 1, 4, 5, 9, -1, -1, -1, -1, -1, -1],  # 219 = 11011011             # <<<<<<<<<<<<<<
@@ -34708,7 +36814,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_229, 11, __pyx_int_neg_1)) __PYX_ERR(0, 243, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":244
+  /* "_bit_marching_cubes_lorensen_cy.pyx":244
  *         [4, 5, 9, 2, 1, 10, 0, 3, 8, -1, -1, -1],  # 218 = 11011010
  *         [10, 2, 1, 4, 5, 9, -1, -1, -1, -1, -1, -1],  # 219 = 11011011
  *         [8, 4, 3, 5, 4, 3, 3, 5, 1, -1, -1, -1],  # 220 = 11011100             # <<<<<<<<<<<<<<
@@ -34754,7 +36860,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_230, 11, __pyx_int_neg_1)) __PYX_ERR(0, 244, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":245
+  /* "_bit_marching_cubes_lorensen_cy.pyx":245
  *         [10, 2, 1, 4, 5, 9, -1, -1, -1, -1, -1, -1],  # 219 = 11011011
  *         [8, 4, 3, 5, 4, 3, 3, 5, 1, -1, -1, -1],  # 220 = 11011100
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 221 = 11011101             # <<<<<<<<<<<<<<
@@ -34800,7 +36906,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_231, 11, __pyx_int_neg_1)) __PYX_ERR(0, 245, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":246
+  /* "_bit_marching_cubes_lorensen_cy.pyx":246
  *         [8, 4, 3, 5, 4, 3, 3, 5, 1, -1, -1, -1],  # 220 = 11011100
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 221 = 11011101
  *         [4, 5, 9, 3, 8, 0, -1, -1, -1, -1, -1, -1],  # 222 = 11011110             # <<<<<<<<<<<<<<
@@ -34846,7 +36952,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_232, 11, __pyx_int_neg_1)) __PYX_ERR(0, 246, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":247
+  /* "_bit_marching_cubes_lorensen_cy.pyx":247
  *         [0, 4, 1, 5, 4, 1, -1, -1, -1, -1, -1, -1],  # 221 = 11011101
  *         [4, 5, 9, 3, 8, 0, -1, -1, -1, -1, -1, -1],  # 222 = 11011110
  *         [9, 4, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 223 = 11011111             # <<<<<<<<<<<<<<
@@ -34892,7 +36998,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_233, 11, __pyx_int_neg_1)) __PYX_ERR(0, 247, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":248
+  /* "_bit_marching_cubes_lorensen_cy.pyx":248
  *         [4, 5, 9, 3, 8, 0, -1, -1, -1, -1, -1, -1],  # 222 = 11011110
  *         [9, 4, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 223 = 11011111
  *         [11, 7, 9, 4, 7, 9, 9, 10, 11, -1, -1, -1],  # 224 = 11100000             # <<<<<<<<<<<<<<
@@ -34938,7 +37044,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_234, 11, __pyx_int_neg_1)) __PYX_ERR(0, 248, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":249
+  /* "_bit_marching_cubes_lorensen_cy.pyx":249
  *         [9, 4, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 223 = 11011111
  *         [11, 7, 9, 4, 7, 9, 9, 10, 11, -1, -1, -1],  # 224 = 11100000
  *         [8, 3, 0, 7, 4, 11, 9, 11, 4, 11, 9, 10],  # 225 = 11100001             # <<<<<<<<<<<<<<
@@ -34984,7 +37090,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_235, 11, __pyx_int_10)) __PYX_ERR(0, 249, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":250
+  /* "_bit_marching_cubes_lorensen_cy.pyx":250
  *         [11, 7, 9, 4, 7, 9, 9, 10, 11, -1, -1, -1],  # 224 = 11100000
  *         [8, 3, 0, 7, 4, 11, 9, 11, 4, 11, 9, 10],  # 225 = 11100001
  *         [10, 11, 7, 10, 7, 0, 10, 0, 1, 4, 0, 7],  # 226 = 11100010             # <<<<<<<<<<<<<<
@@ -35030,7 +37136,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_7);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_236, 11, __pyx_int_7)) __PYX_ERR(0, 250, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":251
+  /* "_bit_marching_cubes_lorensen_cy.pyx":251
  *         [8, 3, 0, 7, 4, 11, 9, 11, 4, 11, 9, 10],  # 225 = 11100001
  *         [10, 11, 7, 10, 7, 0, 10, 0, 1, 4, 0, 7],  # 226 = 11100010
  *         [8, 7, 4, 10, 3, 1, 3, 10, 11, -1, -1, -1],  # 227 = 11100011             # <<<<<<<<<<<<<<
@@ -35076,7 +37182,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_237, 11, __pyx_int_neg_1)) __PYX_ERR(0, 251, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":252
+  /* "_bit_marching_cubes_lorensen_cy.pyx":252
  *         [10, 11, 7, 10, 7, 0, 10, 0, 1, 4, 0, 7],  # 226 = 11100010
  *         [8, 7, 4, 10, 3, 1, 3, 10, 11, -1, -1, -1],  # 227 = 11100011
  *         [4, 11, 7, 9, 4, 2, 11, 4, 2, 9, 1, 2],  # 228 = 11100100             # <<<<<<<<<<<<<<
@@ -35122,7 +37228,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_2);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_238, 11, __pyx_int_2)) __PYX_ERR(0, 252, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":253
+  /* "_bit_marching_cubes_lorensen_cy.pyx":253
  *         [8, 7, 4, 10, 3, 1, 3, 10, 11, -1, -1, -1],  # 227 = 11100011
  *         [4, 11, 7, 9, 4, 2, 11, 4, 2, 9, 1, 2],  # 228 = 11100100
  *         [7, 4, 8, 1, 0, 9, 3, 2, 11, -1, -1, -1],  # 229 = 11100101             # <<<<<<<<<<<<<<
@@ -35168,7 +37274,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_239, 11, __pyx_int_neg_1)) __PYX_ERR(0, 253, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":254
+  /* "_bit_marching_cubes_lorensen_cy.pyx":254
  *         [4, 11, 7, 9, 4, 2, 11, 4, 2, 9, 1, 2],  # 228 = 11100100
  *         [7, 4, 8, 1, 0, 9, 3, 2, 11, -1, -1, -1],  # 229 = 11100101
  *         [11, 7, 2, 4, 7, 2, 2, 4, 0, -1, -1, -1],  # 230 = 11100110             # <<<<<<<<<<<<<<
@@ -35214,7 +37320,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_240, 11, __pyx_int_neg_1)) __PYX_ERR(0, 254, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":255
+  /* "_bit_marching_cubes_lorensen_cy.pyx":255
  *         [7, 4, 8, 1, 0, 9, 3, 2, 11, -1, -1, -1],  # 229 = 11100101
  *         [11, 7, 2, 4, 7, 2, 2, 4, 0, -1, -1, -1],  # 230 = 11100110
  *         [7, 4, 8, 2, 11, 3, -1, -1, -1, -1, -1, -1],  # 231 = 11100111             # <<<<<<<<<<<<<<
@@ -35260,7 +37366,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_241, 11, __pyx_int_neg_1)) __PYX_ERR(0, 255, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":256
+  /* "_bit_marching_cubes_lorensen_cy.pyx":256
  *         [11, 7, 2, 4, 7, 2, 2, 4, 0, -1, -1, -1],  # 230 = 11100110
  *         [7, 4, 8, 2, 11, 3, -1, -1, -1, -1, -1, -1],  # 231 = 11100111
  *         [3, 10, 2, 3, 4, 10, 3, 7, 4, 4, 9, 10],  # 232 = 11101000             # <<<<<<<<<<<<<<
@@ -35306,7 +37412,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_10);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_242, 11, __pyx_int_10)) __PYX_ERR(0, 256, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":257
+  /* "_bit_marching_cubes_lorensen_cy.pyx":257
  *         [7, 4, 8, 2, 11, 3, -1, -1, -1, -1, -1, -1],  # 231 = 11100111
  *         [3, 10, 2, 3, 4, 10, 3, 7, 4, 4, 9, 10],  # 232 = 11101000
  *         [7, 4, 8, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 233 = 11101001             # <<<<<<<<<<<<<<
@@ -35352,7 +37458,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_243, 11, __pyx_int_neg_1)) __PYX_ERR(0, 257, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":258
+  /* "_bit_marching_cubes_lorensen_cy.pyx":258
  *         [3, 10, 2, 3, 4, 10, 3, 7, 4, 4, 9, 10],  # 232 = 11101000
  *         [7, 4, 8, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 233 = 11101001
  *         [10, 2, 1, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 234 = 11101010             # <<<<<<<<<<<<<<
@@ -35398,7 +37504,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_244, 11, __pyx_int_neg_1)) __PYX_ERR(0, 258, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":259
+  /* "_bit_marching_cubes_lorensen_cy.pyx":259
  *         [7, 4, 8, 0, 2, 9, 10, 2, 9, -1, -1, -1],  # 233 = 11101001
  *         [10, 2, 1, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 234 = 11101010
  *         [10, 2, 1, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 235 = 11101011             # <<<<<<<<<<<<<<
@@ -35444,7 +37550,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_245, 11, __pyx_int_neg_1)) __PYX_ERR(0, 259, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":260
+  /* "_bit_marching_cubes_lorensen_cy.pyx":260
  *         [10, 2, 1, 0, 4, 3, 7, 4, 3, -1, -1, -1],  # 234 = 11101010
  *         [10, 2, 1, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 235 = 11101011
  *         [1, 9, 7, 4, 9, 7, 7, 1, 3, -1, -1, -1],  # 236 = 11101100             # <<<<<<<<<<<<<<
@@ -35490,7 +37596,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_246, 11, __pyx_int_neg_1)) __PYX_ERR(0, 260, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":261
+  /* "_bit_marching_cubes_lorensen_cy.pyx":261
  *         [10, 2, 1, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 235 = 11101011
  *         [1, 9, 7, 4, 9, 7, 7, 1, 3, -1, -1, -1],  # 236 = 11101100
  *         [9, 1, 0, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 237 = 11101101             # <<<<<<<<<<<<<<
@@ -35536,7 +37642,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_247, 11, __pyx_int_neg_1)) __PYX_ERR(0, 261, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":262
+  /* "_bit_marching_cubes_lorensen_cy.pyx":262
  *         [1, 9, 7, 4, 9, 7, 7, 1, 3, -1, -1, -1],  # 236 = 11101100
  *         [9, 1, 0, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 237 = 11101101
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 238 = 11101110             # <<<<<<<<<<<<<<
@@ -35582,7 +37688,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_248, 11, __pyx_int_neg_1)) __PYX_ERR(0, 262, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":263
+  /* "_bit_marching_cubes_lorensen_cy.pyx":263
  *         [9, 1, 0, 7, 4, 8, -1, -1, -1, -1, -1, -1],  # 237 = 11101101
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 238 = 11101110
  *         [4, 8, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 239 = 11101111             # <<<<<<<<<<<<<<
@@ -35628,7 +37734,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_249, 11, __pyx_int_neg_1)) __PYX_ERR(0, 263, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":264
+  /* "_bit_marching_cubes_lorensen_cy.pyx":264
  *         [3, 0, 7, 4, 0, 7, -1, -1, -1, -1, -1, -1],  # 238 = 11101110
  *         [4, 8, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 239 = 11101111
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 240 = 11110000             # <<<<<<<<<<<<<<
@@ -35674,7 +37780,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_250, 11, __pyx_int_neg_1)) __PYX_ERR(0, 264, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":265
+  /* "_bit_marching_cubes_lorensen_cy.pyx":265
  *         [4, 8, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 239 = 11101111
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 240 = 11110000
  *         [9, 0, 11, 3, 0, 11, 11, 9, 10, -1, -1, -1],  # 241 = 11110001             # <<<<<<<<<<<<<<
@@ -35720,7 +37826,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_251, 11, __pyx_int_neg_1)) __PYX_ERR(0, 265, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":266
+  /* "_bit_marching_cubes_lorensen_cy.pyx":266
  *         [8, 9, 11, 10, 9, 11, -1, -1, -1, -1, -1, -1],  # 240 = 11110000
  *         [9, 0, 11, 3, 0, 11, 11, 9, 10, -1, -1, -1],  # 241 = 11110001
  *         [0, 1, 8, 10, 1, 8, 8, 10, 11, -1, -1, -1],  # 242 = 11110010             # <<<<<<<<<<<<<<
@@ -35766,7 +37872,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_252, 11, __pyx_int_neg_1)) __PYX_ERR(0, 266, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":267
+  /* "_bit_marching_cubes_lorensen_cy.pyx":267
  *         [9, 0, 11, 3, 0, 11, 11, 9, 10, -1, -1, -1],  # 241 = 11110001
  *         [0, 1, 8, 10, 1, 8, 8, 10, 11, -1, -1, -1],  # 242 = 11110010
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 243 = 11110011             # <<<<<<<<<<<<<<
@@ -35812,7 +37918,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_253, 11, __pyx_int_neg_1)) __PYX_ERR(0, 267, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":268
+  /* "_bit_marching_cubes_lorensen_cy.pyx":268
  *         [0, 1, 8, 10, 1, 8, 8, 10, 11, -1, -1, -1],  # 242 = 11110010
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 243 = 11110011
  *         [1, 2, 9, 11, 2, 9, 9, 11, 8, -1, -1, -1],  # 244 = 11110100             # <<<<<<<<<<<<<<
@@ -35858,7 +37964,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_254, 11, __pyx_int_neg_1)) __PYX_ERR(0, 268, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":269
+  /* "_bit_marching_cubes_lorensen_cy.pyx":269
  *         [10, 1, 11, 3, 1, 11, -1, -1, -1, -1, -1, -1],  # 243 = 11110011
  *         [1, 2, 9, 11, 2, 9, 9, 11, 8, -1, -1, -1],  # 244 = 11110100
  *         [0, 9, 1, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 245 = 11110101             # <<<<<<<<<<<<<<
@@ -35904,7 +38010,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_255, 11, __pyx_int_neg_1)) __PYX_ERR(0, 269, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":270
+  /* "_bit_marching_cubes_lorensen_cy.pyx":270
  *         [1, 2, 9, 11, 2, 9, 9, 11, 8, -1, -1, -1],  # 244 = 11110100
  *         [0, 9, 1, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 245 = 11110101
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 246 = 11110110             # <<<<<<<<<<<<<<
@@ -35950,7 +38056,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_256, 11, __pyx_int_neg_1)) __PYX_ERR(0, 270, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":271
+  /* "_bit_marching_cubes_lorensen_cy.pyx":271
  *         [0, 9, 1, 11, 3, 2, -1, -1, -1, -1, -1, -1],  # 245 = 11110101
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 246 = 11110110
  *         [3, 2, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 247 = 11110111             # <<<<<<<<<<<<<<
@@ -35996,7 +38102,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_257, 11, __pyx_int_neg_1)) __PYX_ERR(0, 271, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":272
+  /* "_bit_marching_cubes_lorensen_cy.pyx":272
  *         [0, 2, 8, 11, 2, 8, -1, -1, -1, -1, -1, -1],  # 246 = 11110110
  *         [3, 2, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 247 = 11110111
  *         [8, 3, 10, 2, 3, 10, 10, 8, 9, -1, -1, -1],  # 248 = 11111000             # <<<<<<<<<<<<<<
@@ -36042,7 +38148,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_258, 11, __pyx_int_neg_1)) __PYX_ERR(0, 272, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":273
+  /* "_bit_marching_cubes_lorensen_cy.pyx":273
  *         [3, 2, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 247 = 11110111
  *         [8, 3, 10, 2, 3, 10, 10, 8, 9, -1, -1, -1],  # 248 = 11111000
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 249 = 11111001             # <<<<<<<<<<<<<<
@@ -36088,7 +38194,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_259, 11, __pyx_int_neg_1)) __PYX_ERR(0, 273, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":274
+  /* "_bit_marching_cubes_lorensen_cy.pyx":274
  *         [8, 3, 10, 2, 3, 10, 10, 8, 9, -1, -1, -1],  # 248 = 11111000
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 249 = 11111001
  *         [3, 8, 0, 10, 2, 1, -1, -1, -1, -1, -1, -1],  # 250 = 11111010             # <<<<<<<<<<<<<<
@@ -36134,7 +38240,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_260, 11, __pyx_int_neg_1)) __PYX_ERR(0, 274, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":275
+  /* "_bit_marching_cubes_lorensen_cy.pyx":275
  *         [9, 10, 0, 2, 10, 0, -1, -1, -1, -1, -1, -1],  # 249 = 11111001
  *         [3, 8, 0, 10, 2, 1, -1, -1, -1, -1, -1, -1],  # 250 = 11111010
  *         [1, 10, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 251 = 11111011             # <<<<<<<<<<<<<<
@@ -36180,7 +38286,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_261, 11, __pyx_int_neg_1)) __PYX_ERR(0, 275, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":276
+  /* "_bit_marching_cubes_lorensen_cy.pyx":276
  *         [3, 8, 0, 10, 2, 1, -1, -1, -1, -1, -1, -1],  # 250 = 11111010
  *         [1, 10, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 251 = 11111011
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 252 = 11111100             # <<<<<<<<<<<<<<
@@ -36226,7 +38332,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_262, 11, __pyx_int_neg_1)) __PYX_ERR(0, 276, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":277
+  /* "_bit_marching_cubes_lorensen_cy.pyx":277
  *         [1, 10, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 251 = 11111011
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 252 = 11111100
  *         [0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 253 = 11111101             # <<<<<<<<<<<<<<
@@ -36272,7 +38378,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_263, 11, __pyx_int_neg_1)) __PYX_ERR(0, 277, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":278
+  /* "_bit_marching_cubes_lorensen_cy.pyx":278
  *         [8, 3, 9, 1, 3, 9, -1, -1, -1, -1, -1, -1],  # 252 = 11111100
  *         [0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 253 = 11111101
  *         [0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 254 = 11111110             # <<<<<<<<<<<<<<
@@ -36318,7 +38424,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_264, 11, __pyx_int_neg_1)) __PYX_ERR(0, 278, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":279
+  /* "_bit_marching_cubes_lorensen_cy.pyx":279
  *         [0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 253 = 11111101
  *         [0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 254 = 11111110
  *         [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],  # 255 = 11111111             # <<<<<<<<<<<<<<
@@ -36364,7 +38470,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_int_neg_1);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_265, 11, __pyx_int_neg_1)) __PYX_ERR(0, 279, __pyx_L1_error);
 
-  /* "_marching_cubes_lorensen_cy.pyx":23
+  /* "_bit_marching_cubes_lorensen_cy.pyx":23
  * cdef int[:] EDGE_DIRECTION = np.array([0,1,0,1,0,1,0,1,2,2,2,2])
  * 
  * cdef int[:,:] GEOMETRY_LOOKUP = np.array([             # <<<<<<<<<<<<<<
@@ -37147,17 +39253,17 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_266); __pyx_t_266 = 0;
   __pyx_t_21 = __Pyx_PyObject_to_MemoryviewSlice_dsds_int(__pyx_t_265, PyBUF_WRITABLE); if (unlikely(!__pyx_t_21.memview)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_265); __pyx_t_265 = 0;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP, 1);
-  __pyx_v_27_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP = __pyx_t_21;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP, 1);
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_GEOMETRY_LOOKUP = __pyx_t_21;
   __pyx_t_21.memview = NULL;
   __pyx_t_21.data = NULL;
 
-  /* "_marching_cubes_lorensen_cy.pyx":282
+  /* "_bit_marching_cubes_lorensen_cy.pyx":282
  * ])
  * 
  * cdef cnp.float32_t [:] VOLUME_CASE_LOOKUP = np.array([             # <<<<<<<<<<<<<<
  *     0,
- *     1,       # case 1 # all false
+ *     1,         # case 1
  */
   __Pyx_GetModuleGlobalName(__pyx_t_265, __pyx_n_s_np); if (unlikely(!__pyx_t_265)) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_265);
@@ -37165,292 +39271,292 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_266);
   __Pyx_DECREF(__pyx_t_265); __pyx_t_265 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":285
+  /* "_bit_marching_cubes_lorensen_cy.pyx":285
  *     0,
- *     1,       # case 1 # all false
- *     1/48,    # case 2             # <<<<<<<<<<<<<<
- *     1/8,     # case 3
- *     1/24,    # case 4
+ *     1,         # case 1
+ *     1/48,      # case 2             # <<<<<<<<<<<<<<
+ *     1/8,       # case 3
+ *     1/24,      # case 4
  */
   __pyx_t_265 = PyFloat_FromDouble((1.0 / 48.0)); if (unlikely(!__pyx_t_265)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_265);
 
-  /* "_marching_cubes_lorensen_cy.pyx":286
- *     1,       # case 1 # all false
- *     1/48,    # case 2
- *     1/8,     # case 3             # <<<<<<<<<<<<<<
- *     1/24,    # case 4
- *     1/24,    # case 5
+  /* "_bit_marching_cubes_lorensen_cy.pyx":286
+ *     1,         # case 1
+ *     1/48,      # case 2
+ *     1/8,       # case 3             # <<<<<<<<<<<<<<
+ *     1/24,      # case 4
+ *     1/24,      # case 5
  */
   __pyx_t_19 = PyFloat_FromDouble((1.0 / 8.0)); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_19);
 
-  /* "_marching_cubes_lorensen_cy.pyx":287
- *     1/48,    # case 2
- *     1/8,     # case 3
- *     1/24,    # case 4             # <<<<<<<<<<<<<<
- *     1/24,    # case 5
- *     17/48,   # case 6
+  /* "_bit_marching_cubes_lorensen_cy.pyx":287
+ *     1/48,      # case 2
+ *     1/8,       # case 3
+ *     1/24,      # case 4             # <<<<<<<<<<<<<<
+ *     1/24,      # case 5
+ *     17/48,     # case 6
  */
   __pyx_t_264 = PyFloat_FromDouble((1.0 / 24.0)); if (unlikely(!__pyx_t_264)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_264);
 
-  /* "_marching_cubes_lorensen_cy.pyx":288
- *     1/8,     # case 3
- *     1/24,    # case 4
- *     1/24,    # case 5             # <<<<<<<<<<<<<<
- *     17/48,   # case 6
- *     7/48,    # case 7
+  /* "_bit_marching_cubes_lorensen_cy.pyx":288
+ *     1/8,       # case 3
+ *     1/24,      # case 4
+ *     1/24,      # case 5             # <<<<<<<<<<<<<<
+ *     17/48,     # case 6
+ *     7/48,      # case 7
  */
   __pyx_t_263 = PyFloat_FromDouble((1.0 / 24.0)); if (unlikely(!__pyx_t_263)) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_263);
 
-  /* "_marching_cubes_lorensen_cy.pyx":289
- *     1/24,    # case 4
- *     1/24,    # case 5
- *     17/48,   # case 6             # <<<<<<<<<<<<<<
- *     7/48,    # case 7
- *     1/16,    # case 8
+  /* "_bit_marching_cubes_lorensen_cy.pyx":289
+ *     1/24,      # case 4
+ *     1/24,      # case 5
+ *     17/48,     # case 6             # <<<<<<<<<<<<<<
+ *     7/48,      # case 7
+ *     1/16,      # case 8
  */
   __pyx_t_262 = PyFloat_FromDouble((17.0 / 48.0)); if (unlikely(!__pyx_t_262)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_262);
 
-  /* "_marching_cubes_lorensen_cy.pyx":290
- *     1/24,    # case 5
- *     17/48,   # case 6
- *     7/48,    # case 7             # <<<<<<<<<<<<<<
- *     1/16,    # case 8
- *     1/2,     # case 9
+  /* "_bit_marching_cubes_lorensen_cy.pyx":290
+ *     1/24,      # case 5
+ *     17/48,     # case 6
+ *     7/48,      # case 7             # <<<<<<<<<<<<<<
+ *     1/16,      # case 8
+ *     1/2,       # case 9
  */
   __pyx_t_261 = PyFloat_FromDouble((7.0 / 48.0)); if (unlikely(!__pyx_t_261)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_261);
 
-  /* "_marching_cubes_lorensen_cy.pyx":291
- *     17/48,   # case 6
- *     7/48,    # case 7
- *     1/16,    # case 8             # <<<<<<<<<<<<<<
- *     1/2,     # case 9
- *     1/2,     # case 10
+  /* "_bit_marching_cubes_lorensen_cy.pyx":291
+ *     17/48,     # case 6
+ *     7/48,      # case 7
+ *     1/16,      # case 8             # <<<<<<<<<<<<<<
+ *     1/2,       # case 9
+ *     1/2,       # case 10
  */
   __pyx_t_260 = PyFloat_FromDouble((1.0 / 16.0)); if (unlikely(!__pyx_t_260)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_260);
 
-  /* "_marching_cubes_lorensen_cy.pyx":292
- *     7/48,    # case 7
- *     1/16,    # case 8
- *     1/2,     # case 9             # <<<<<<<<<<<<<<
- *     1/2,     # case 10
- *     1/4,     # case 11
+  /* "_bit_marching_cubes_lorensen_cy.pyx":292
+ *     7/48,      # case 7
+ *     1/16,      # case 8
+ *     1/2,       # case 9             # <<<<<<<<<<<<<<
+ *     1/2,       # case 10
+ *     1/4,       # case 11
  */
   __pyx_t_259 = PyFloat_FromDouble((1.0 / 2.0)); if (unlikely(!__pyx_t_259)) __PYX_ERR(0, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_259);
 
-  /* "_marching_cubes_lorensen_cy.pyx":293
- *     1/16,    # case 8
- *     1/2,     # case 9
- *     1/2,     # case 10             # <<<<<<<<<<<<<<
- *     1/4,     # case 11
- *     (7 + 8**(1/2))/24, # case 12
+  /* "_bit_marching_cubes_lorensen_cy.pyx":293
+ *     1/16,      # case 8
+ *     1/2,       # case 9
+ *     1/2,       # case 10             # <<<<<<<<<<<<<<
+ *     1/4,       # case 11
+ *     1/2,       # case 12
  */
   __pyx_t_258 = PyFloat_FromDouble((1.0 / 2.0)); if (unlikely(!__pyx_t_258)) __PYX_ERR(0, 293, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_258);
 
-  /* "_marching_cubes_lorensen_cy.pyx":294
- *     1/2,     # case 9
- *     1/2,     # case 10
- *     1/4,     # case 11             # <<<<<<<<<<<<<<
- *     (7 + 8**(1/2))/24, # case 12
- *     139/144, # case 13
+  /* "_bit_marching_cubes_lorensen_cy.pyx":294
+ *     1/2,       # case 9
+ *     1/2,       # case 10
+ *     1/4,       # case 11             # <<<<<<<<<<<<<<
+ *     1/2,       # case 12
+ *     139/144,   # case 13
  */
   __pyx_t_257 = PyFloat_FromDouble((1.0 / 4.0)); if (unlikely(!__pyx_t_257)) __PYX_ERR(0, 294, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_257);
 
-  /* "_marching_cubes_lorensen_cy.pyx":295
- *     1/2,     # case 10
- *     1/4,     # case 11
- *     (7 + 8**(1/2))/24, # case 12             # <<<<<<<<<<<<<<
- *     139/144, # case 13
- *     1/12,    # case 14
+  /* "_bit_marching_cubes_lorensen_cy.pyx":295
+ *     1/2,       # case 10
+ *     1/4,       # case 11
+ *     1/2,       # case 12             # <<<<<<<<<<<<<<
+ *     139/144,   # case 13
+ *     1/12,      # case 14
  */
-  __pyx_t_256 = PyFloat_FromDouble(((7.0 + pow(8.0, (1.0 / 2.0))) / 24.0)); if (unlikely(!__pyx_t_256)) __PYX_ERR(0, 295, __pyx_L1_error)
+  __pyx_t_256 = PyFloat_FromDouble((1.0 / 2.0)); if (unlikely(!__pyx_t_256)) __PYX_ERR(0, 295, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_256);
 
-  /* "_marching_cubes_lorensen_cy.pyx":296
- *     1/4,     # case 11
- *     (7 + 8**(1/2))/24, # case 12
- *     139/144, # case 13             # <<<<<<<<<<<<<<
- *     1/12,    # case 14
- *     5/12,    # case 15
+  /* "_bit_marching_cubes_lorensen_cy.pyx":296
+ *     1/4,       # case 11
+ *     1/2,       # case 12
+ *     139/144,   # case 13             # <<<<<<<<<<<<<<
+ *     1/12,      # case 14
+ *     5/12,      # case 15
  */
   __pyx_t_255 = PyFloat_FromDouble((139.0 / 144.0)); if (unlikely(!__pyx_t_255)) __PYX_ERR(0, 296, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_255);
 
-  /* "_marching_cubes_lorensen_cy.pyx":297
- *     (7 + 8**(1/2))/24, # case 12
- *     139/144, # case 13
- *     1/12,    # case 14             # <<<<<<<<<<<<<<
- *     5/12,    # case 15
- *     1-1,     # case 16 # all true --> base case
+  /* "_bit_marching_cubes_lorensen_cy.pyx":297
+ *     1/2,       # case 12
+ *     139/144,   # case 13
+ *     1/12,      # case 14             # <<<<<<<<<<<<<<
+ *     5/12,      # case 15
+ *     1-1,       # case 16
  */
   __pyx_t_254 = PyFloat_FromDouble((1.0 / 12.0)); if (unlikely(!__pyx_t_254)) __PYX_ERR(0, 297, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_254);
 
-  /* "_marching_cubes_lorensen_cy.pyx":298
- *     139/144, # case 13
- *     1/12,    # case 14
- *     5/12,    # case 15             # <<<<<<<<<<<<<<
- *     1-1,     # case 16 # all true --> base case
- *     1-1/48,  # case 17
+  /* "_bit_marching_cubes_lorensen_cy.pyx":298
+ *     139/144,   # case 13
+ *     1/12,      # case 14
+ *     5/12,      # case 15             # <<<<<<<<<<<<<<
+ *     1-1,       # case 16
+ *     1-1/48,    # case 17
  */
   __pyx_t_253 = PyFloat_FromDouble((5.0 / 12.0)); if (unlikely(!__pyx_t_253)) __PYX_ERR(0, 298, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_253);
 
-  /* "_marching_cubes_lorensen_cy.pyx":300
- *     5/12,    # case 15
- *     1-1,     # case 16 # all true --> base case
- *     1-1/48,  # case 17             # <<<<<<<<<<<<<<
- *     1-1/8,   # case 18
- *     1-1/24,  # case 19
+  /* "_bit_marching_cubes_lorensen_cy.pyx":300
+ *     5/12,      # case 15
+ *     1-1,       # case 16
+ *     1-1/48,    # case 17             # <<<<<<<<<<<<<<
+ *     1-1/8,     # case 18
+ *     1-1/24,    # case 19
  */
   __pyx_t_252 = PyFloat_FromDouble((1.0 - (1.0 / 48.0))); if (unlikely(!__pyx_t_252)) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_252);
 
-  /* "_marching_cubes_lorensen_cy.pyx":301
- *     1-1,     # case 16 # all true --> base case
- *     1-1/48,  # case 17
- *     1-1/8,   # case 18             # <<<<<<<<<<<<<<
- *     1-1/24,  # case 19
- *     1-1/24,  # case 20
+  /* "_bit_marching_cubes_lorensen_cy.pyx":301
+ *     1-1,       # case 16
+ *     1-1/48,    # case 17
+ *     1-1/8,     # case 18             # <<<<<<<<<<<<<<
+ *     1-1/24,    # case 19
+ *     1-1/24,    # case 20
  */
   __pyx_t_251 = PyFloat_FromDouble((1.0 - (1.0 / 8.0))); if (unlikely(!__pyx_t_251)) __PYX_ERR(0, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_251);
 
-  /* "_marching_cubes_lorensen_cy.pyx":302
- *     1-1/48,  # case 17
- *     1-1/8,   # case 18
- *     1-1/24,  # case 19             # <<<<<<<<<<<<<<
- *     1-1/24,  # case 20
- *     1-17/48, # case 21
+  /* "_bit_marching_cubes_lorensen_cy.pyx":302
+ *     1-1/48,    # case 17
+ *     1-1/8,     # case 18
+ *     1-1/24,    # case 19             # <<<<<<<<<<<<<<
+ *     1-1/24,    # case 20
+ *     1-17/48,   # case 21
  */
   __pyx_t_250 = PyFloat_FromDouble((1.0 - (1.0 / 24.0))); if (unlikely(!__pyx_t_250)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_250);
 
-  /* "_marching_cubes_lorensen_cy.pyx":303
- *     1-1/8,   # case 18
- *     1-1/24,  # case 19
- *     1-1/24,  # case 20             # <<<<<<<<<<<<<<
- *     1-17/48, # case 21
- *     1-7/48,  # case 22
+  /* "_bit_marching_cubes_lorensen_cy.pyx":303
+ *     1-1/8,     # case 18
+ *     1-1/24,    # case 19
+ *     1-1/24,    # case 20             # <<<<<<<<<<<<<<
+ *     1-17/48,   # case 21
+ *     1-7/48,    # case 22
  */
   __pyx_t_249 = PyFloat_FromDouble((1.0 - (1.0 / 24.0))); if (unlikely(!__pyx_t_249)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_249);
 
-  /* "_marching_cubes_lorensen_cy.pyx":304
- *     1-1/24,  # case 19
- *     1-1/24,  # case 20
- *     1-17/48, # case 21             # <<<<<<<<<<<<<<
- *     1-7/48,  # case 22
- *     1-1/16,  # case 23
+  /* "_bit_marching_cubes_lorensen_cy.pyx":304
+ *     1-1/24,    # case 19
+ *     1-1/24,    # case 20
+ *     1-17/48,   # case 21             # <<<<<<<<<<<<<<
+ *     1-7/48,    # case 22
+ *     1-1/16,    # case 23
  */
   __pyx_t_248 = PyFloat_FromDouble((1.0 - (17.0 / 48.0))); if (unlikely(!__pyx_t_248)) __PYX_ERR(0, 304, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_248);
 
-  /* "_marching_cubes_lorensen_cy.pyx":305
- *     1-1/24,  # case 20
- *     1-17/48, # case 21
- *     1-7/48,  # case 22             # <<<<<<<<<<<<<<
- *     1-1/16,  # case 23
- *     1-1/2,   # case 24
+  /* "_bit_marching_cubes_lorensen_cy.pyx":305
+ *     1-1/24,    # case 20
+ *     1-17/48,   # case 21
+ *     1-7/48,    # case 22             # <<<<<<<<<<<<<<
+ *     1-1/16,    # case 23
+ *     1-1/2,     # case 24
  */
   __pyx_t_247 = PyFloat_FromDouble((1.0 - (7.0 / 48.0))); if (unlikely(!__pyx_t_247)) __PYX_ERR(0, 305, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_247);
 
-  /* "_marching_cubes_lorensen_cy.pyx":306
- *     1-17/48, # case 21
- *     1-7/48,  # case 22
- *     1-1/16,  # case 23             # <<<<<<<<<<<<<<
- *     1-1/2,   # case 24
- *     1-1/2,   # case 25
+  /* "_bit_marching_cubes_lorensen_cy.pyx":306
+ *     1-17/48,   # case 21
+ *     1-7/48,    # case 22
+ *     1-1/16,    # case 23             # <<<<<<<<<<<<<<
+ *     1-1/2,     # case 24
+ *     1-1/2,     # case 25
  */
   __pyx_t_246 = PyFloat_FromDouble((1.0 - (1.0 / 16.0))); if (unlikely(!__pyx_t_246)) __PYX_ERR(0, 306, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_246);
 
-  /* "_marching_cubes_lorensen_cy.pyx":307
- *     1-7/48,  # case 22
- *     1-1/16,  # case 23
- *     1-1/2,   # case 24             # <<<<<<<<<<<<<<
- *     1-1/2,   # case 25
- *     1-1/4,   # case 26
+  /* "_bit_marching_cubes_lorensen_cy.pyx":307
+ *     1-7/48,    # case 22
+ *     1-1/16,    # case 23
+ *     1-1/2,     # case 24             # <<<<<<<<<<<<<<
+ *     1-1/2,     # case 25
+ *     1-1/4,     # case 26
  */
   __pyx_t_245 = PyFloat_FromDouble((1.0 - (1.0 / 2.0))); if (unlikely(!__pyx_t_245)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_245);
 
-  /* "_marching_cubes_lorensen_cy.pyx":308
- *     1-1/16,  # case 23
- *     1-1/2,   # case 24
- *     1-1/2,   # case 25             # <<<<<<<<<<<<<<
- *     1-1/4,   # case 26
- *     1 - ((7 + 8**(1/2))/24), # case 27
+  /* "_bit_marching_cubes_lorensen_cy.pyx":308
+ *     1-1/16,    # case 23
+ *     1-1/2,     # case 24
+ *     1-1/2,     # case 25             # <<<<<<<<<<<<<<
+ *     1-1/4,     # case 26
+ *     1 - 1/2,   # case 27
  */
   __pyx_t_244 = PyFloat_FromDouble((1.0 - (1.0 / 2.0))); if (unlikely(!__pyx_t_244)) __PYX_ERR(0, 308, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_244);
 
-  /* "_marching_cubes_lorensen_cy.pyx":309
- *     1-1/2,   # case 24
- *     1-1/2,   # case 25
- *     1-1/4,   # case 26             # <<<<<<<<<<<<<<
- *     1 - ((7 + 8**(1/2))/24), # case 27
+  /* "_bit_marching_cubes_lorensen_cy.pyx":309
+ *     1-1/2,     # case 24
+ *     1-1/2,     # case 25
+ *     1-1/4,     # case 26             # <<<<<<<<<<<<<<
+ *     1 - 1/2,   # case 27
  *     1-139/144, # case 28
  */
   __pyx_t_243 = PyFloat_FromDouble((1.0 - (1.0 / 4.0))); if (unlikely(!__pyx_t_243)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_243);
 
-  /* "_marching_cubes_lorensen_cy.pyx":310
- *     1-1/2,   # case 25
- *     1-1/4,   # case 26
- *     1 - ((7 + 8**(1/2))/24), # case 27             # <<<<<<<<<<<<<<
+  /* "_bit_marching_cubes_lorensen_cy.pyx":310
+ *     1-1/2,     # case 25
+ *     1-1/4,     # case 26
+ *     1 - 1/2,   # case 27             # <<<<<<<<<<<<<<
  *     1-139/144, # case 28
- *     1-1/12,  # case 29
+ *     1-1/12,    # case 29
  */
-  __pyx_t_242 = PyFloat_FromDouble((1.0 - ((7.0 + pow(8.0, (1.0 / 2.0))) / 24.0))); if (unlikely(!__pyx_t_242)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_242 = PyFloat_FromDouble((1.0 - (1.0 / 2.0))); if (unlikely(!__pyx_t_242)) __PYX_ERR(0, 310, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_242);
 
-  /* "_marching_cubes_lorensen_cy.pyx":311
- *     1-1/4,   # case 26
- *     1 - ((7 + 8**(1/2))/24), # case 27
+  /* "_bit_marching_cubes_lorensen_cy.pyx":311
+ *     1-1/4,     # case 26
+ *     1 - 1/2,   # case 27
  *     1-139/144, # case 28             # <<<<<<<<<<<<<<
- *     1-1/12,  # case 29
- *     1-5/12,  # case 30
+ *     1-1/12,    # case 29
+ *     1-5/12,    # case 30
  */
   __pyx_t_241 = PyFloat_FromDouble((1.0 - (139.0 / 144.0))); if (unlikely(!__pyx_t_241)) __PYX_ERR(0, 311, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_241);
 
-  /* "_marching_cubes_lorensen_cy.pyx":312
- *     1 - ((7 + 8**(1/2))/24), # case 27
+  /* "_bit_marching_cubes_lorensen_cy.pyx":312
+ *     1 - 1/2,   # case 27
  *     1-139/144, # case 28
- *     1-1/12,  # case 29             # <<<<<<<<<<<<<<
- *     1-5/12,  # case 30
+ *     1-1/12,    # case 29             # <<<<<<<<<<<<<<
+ *     1-5/12,    # case 30
  * ]).astype(np.float32)
  */
   __pyx_t_240 = PyFloat_FromDouble((1.0 - (1.0 / 12.0))); if (unlikely(!__pyx_t_240)) __PYX_ERR(0, 312, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_240);
 
-  /* "_marching_cubes_lorensen_cy.pyx":313
+  /* "_bit_marching_cubes_lorensen_cy.pyx":313
  *     1-139/144, # case 28
- *     1-1/12,  # case 29
- *     1-5/12,  # case 30             # <<<<<<<<<<<<<<
+ *     1-1/12,    # case 29
+ *     1-5/12,    # case 30             # <<<<<<<<<<<<<<
  * ]).astype(np.float32)
  * 
  */
   __pyx_t_239 = PyFloat_FromDouble((1.0 - (5.0 / 12.0))); if (unlikely(!__pyx_t_239)) __PYX_ERR(0, 313, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_239);
 
-  /* "_marching_cubes_lorensen_cy.pyx":282
+  /* "_bit_marching_cubes_lorensen_cy.pyx":282
  * ])
  * 
  * cdef cnp.float32_t [:] VOLUME_CASE_LOOKUP = np.array([             # <<<<<<<<<<<<<<
  *     0,
- *     1,       # case 1 # all false
+ *     1,         # case 1
  */
   __pyx_t_238 = PyList_New(31); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_238);
@@ -37552,9 +39658,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_266); __pyx_t_266 = 0;
   __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":314
- *     1-1/12,  # case 29
- *     1-5/12,  # case 30
+  /* "_bit_marching_cubes_lorensen_cy.pyx":314
+ *     1-1/12,    # case 29
+ *     1-5/12,    # case 30
  * ]).astype(np.float32)             # <<<<<<<<<<<<<<
  * 
  * cdef int [:] VOLUME_LOOKUP = np.array([
@@ -37573,12 +39679,12 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_266); __pyx_t_266 = 0;
   __pyx_t_267 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn___pyx_t_5numpy_float32_t(__pyx_t_239, PyBUF_WRITABLE); if (unlikely(!__pyx_t_267.memview)) __PYX_ERR(0, 314, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_239); __pyx_t_239 = 0;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP, 1);
-  __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP = __pyx_t_267;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP, 1);
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_CASE_LOOKUP = __pyx_t_267;
   __pyx_t_267.memview = NULL;
   __pyx_t_267.data = NULL;
 
-  /* "_marching_cubes_lorensen_cy.pyx":316
+  /* "_bit_marching_cubes_lorensen_cy.pyx":316
  * ]).astype(np.float32)
  * 
  * cdef int [:] VOLUME_LOOKUP = np.array([             # <<<<<<<<<<<<<<
@@ -38366,24 +40472,84 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_239); __pyx_t_239 = 0;
   __pyx_t_22 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_238, PyBUF_WRITABLE); if (unlikely(!__pyx_t_22.memview)) __PYX_ERR(0, 316, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP, 1);
-  __pyx_v_27_marching_cubes_lorensen_cy_VOLUME_LOOKUP = __pyx_t_22;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP, 1);
+  __pyx_v_31_bit_marching_cubes_lorensen_cy_VOLUME_LOOKUP = __pyx_t_22;
   __pyx_t_22.memview = NULL;
   __pyx_t_22.data = NULL;
 
-  /* "_marching_cubes_lorensen_cy.pyx":588
+  /* "_bit_marching_cubes_lorensen_cy.pyx":598
+ *         self.bit = np.array([[[0.0] * (p + 1) for _ in range(m + 1)] for _ in range(n + 1)]).astype(np.float32)
+ * 
+ *     cpdef update(self, int x, int y, int z, cnp.float32_t val):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_3update, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FenwickTree3D_update, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 598, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_238);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, __pyx_n_s_update, __pyx_t_238) < 0) __PYX_ERR(0, 598, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
+  PyType_Modified(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":613
+ *             x += x & -x
+ * 
+ *     cpdef cnp.float32_t getSum(self, int x, int y, int z):             # <<<<<<<<<<<<<<
+ *         cdef int x1, y1, z1
+ *         x += 1
+ */
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_5getSum, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FenwickTree3D_getSum, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_238);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, __pyx_n_s_getSum, __pyx_t_238) < 0) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
+  PyType_Modified(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":630
+ *         return res
+ * 
+ *     cpdef cnp.float32_t queryByRange(self, int x1, int y1, int z1, int x2, int y2, int z2):             # <<<<<<<<<<<<<<
+ *         return self.getSum(x2, y2, z2) - self.getSum(x2, y2, z1 - 1) - self.getSum(x2, y1 - 1, z2) + self.getSum(x2, y1 - 1, z1 - 1) \
+ *         - self.getSum(x1 - 1, y2, z2) + self.getSum(x1 - 1, y2, z1 - 1) + self.getSum(x1 - 1, y1 - 1, z2) - self.getSum(x1 - 1, y1 - 1, z1 - 1)
+ */
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_7queryByRange, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FenwickTree3D_queryByRange, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 630, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_238);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D, __pyx_n_s_queryByRange, __pyx_t_238) < 0) __PYX_ERR(0, 630, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
+  PyType_Modified(__pyx_ptype_31_bit_marching_cubes_lorensen_cy_FenwickTree3D);
+
+  /* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):
+ */
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_9__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FenwickTree3D___reduce_cython, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__30)); if (unlikely(!__pyx_t_238)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_238);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_238) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
+
+  /* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
+ */
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_13FenwickTree3D_11__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FenwickTree3D___setstate_cython, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_238)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_238);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_238) < 0) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
+
+  /* "_bit_marching_cubes_lorensen_cy.pyx":635
  * 
  * 
- * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t [:, :, :] cube not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
+ * def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [:, :, :] mask not None, cnp.float32_t level):             # <<<<<<<<<<<<<<
  * 
  *     # Initialize variables
  */
-  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_27_marching_cubes_lorensen_cy_1MarchingCubesLorensen, 0, __pyx_n_s_MarchingCubesLorensen, NULL, __pyx_n_s_marching_cubes_lorensen_cy, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 588, __pyx_L1_error)
+  __pyx_t_238 = __Pyx_CyFunction_New(&__pyx_mdef_31_bit_marching_cubes_lorensen_cy_1MarchingCubesLorensen, 0, __pyx_n_s_MarchingCubesLorensen, NULL, __pyx_n_s_bit_marching_cubes_lorensen_cy_2, __pyx_d, ((PyObject *)__pyx_codeobj__34)); if (unlikely(!__pyx_t_238)) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_238);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MarchingCubesLorensen, __pyx_t_238) < 0) __PYX_ERR(0, 588, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MarchingCubesLorensen, __pyx_t_238) < 0) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_238); __pyx_t_238 = 0;
 
-  /* "_marching_cubes_lorensen_cy.pyx":1
+  /* "_bit_marching_cubes_lorensen_cy.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as cnp
  * from stl import mesh
@@ -38660,7 +40826,7 @@ if (!__Pyx_RefNanny) {
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_267, 1);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init _marching_cubes_lorensen_cy", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init _bit_marching_cubes_lorensen_cy", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
@@ -38674,7 +40840,7 @@ if (!__Pyx_RefNanny) {
     }
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init _marching_cubes_lorensen_cy");
+    PyErr_SetString(PyExc_ImportError, "init _bit_marching_cubes_lorensen_cy");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -44281,6 +46447,28 @@ __pyx_fail:
     return result;
 }
 
+/* CIntFromPyVerify */
+  #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
+#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
+    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
+#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
+    {\
+        func_type value = func_value;\
+        if (sizeof(target_type) < sizeof(func_type)) {\
+            if (unlikely(value != (func_type) (target_type) value)) {\
+                func_type zero = 0;\
+                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
+                    return (target_type) -1;\
+                if (is_unsigned && unlikely(value < zero))\
+                    goto raise_neg_overflow;\
+                else\
+                    goto raise_overflow;\
+            }\
+        }\
+        return (target_type) value;\
+    }
+
 /* ObjectToMemviewSlice */
   static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dsdsds_nn___pyx_t_5numpy_float32_t(PyObject *obj, int writable_flag) {
     __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -44326,28 +46514,6 @@ __pyx_fail:
     result.data = NULL;
     return result;
 }
-
-/* CIntFromPyVerify */
-  #define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 0)
-#define __PYX_VERIFY_RETURN_INT_EXC(target_type, func_type, func_value)\
-    __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, 1)
-#define __PYX__VERIFY_RETURN_INT(target_type, func_type, func_value, exc)\
-    {\
-        func_type value = func_value;\
-        if (sizeof(target_type) < sizeof(func_type)) {\
-            if (unlikely(value != (func_type) (target_type) value)) {\
-                func_type zero = 0;\
-                if (exc && unlikely(value == (func_type)-1 && PyErr_Occurred()))\
-                    return (target_type) -1;\
-                if (is_unsigned && unlikely(value < zero))\
-                    goto raise_neg_overflow;\
-                else\
-                    goto raise_overflow;\
-            }\
-        }\
-        return (target_type) value;\
-    }
 
 /* MemviewDtypeToObject */
   static CYTHON_INLINE PyObject *__pyx_memview_get_int(const char *itemp) {
@@ -45545,6 +47711,343 @@ raise_neg_overflow:
     return (long) -1;
 }
 
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_int(unsigned int value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(unsigned int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(unsigned int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(unsigned int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(unsigned int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        return _PyLong_FromByteArray(bytes, sizeof(unsigned int),
+                                     little, !is_unsigned);
+#else
+        PyObject *from_bytes, *result = NULL;
+        PyObject *py_bytes = NULL, *arg_tuple = NULL, *kwds = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(unsigned int));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        arg_tuple = PyTuple_Pack(2, py_bytes, order_str);
+        if (!arg_tuple) goto limited_bad;
+        if (!is_unsigned) {
+            kwds = PyDict_New();
+            if (!kwds) goto limited_bad;
+            if (PyDict_SetItemString(kwds, "signed", __Pyx_NewRef(Py_True))) goto limited_bad;
+        }
+        result = PyObject_Call(from_bytes, arg_tuple, kwds);
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(arg_tuple);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
+}
+
+/* CIntFromPy */
+  static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const unsigned int neg_one = (unsigned int) -1, const_zero = (unsigned int) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if ((sizeof(unsigned int) < sizeof(long))) {
+            __PYX_VERIFY_RETURN_INT(unsigned int, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (unsigned int) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+            if (unlikely(__Pyx_PyLong_IsNeg(x))) {
+                goto raise_neg_overflow;
+            } else if (__Pyx_PyLong_IsCompact(x)) {
+                __PYX_VERIFY_RETURN_INT(unsigned int, __Pyx_compact_upylong, __Pyx_PyLong_CompactValueUnsigned(x))
+            } else {
+                const digit* digits = __Pyx_PyLong_Digits(x);
+                assert(__Pyx_PyLong_DigitCount(x) > 1);
+                switch (__Pyx_PyLong_DigitCount(x)) {
+                    case 2:
+                        if ((8 * sizeof(unsigned int) > 1 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) >= 2 * PyLong_SHIFT)) {
+                                return (unsigned int) (((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            }
+                        }
+                        break;
+                    case 3:
+                        if ((8 * sizeof(unsigned int) > 2 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) >= 3 * PyLong_SHIFT)) {
+                                return (unsigned int) (((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            }
+                        }
+                        break;
+                    case 4:
+                        if ((8 * sizeof(unsigned int) > 3 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) >= 4 * PyLong_SHIFT)) {
+                                return (unsigned int) (((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0]));
+                            }
+                        }
+                        break;
+                }
+            }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX < 0x030C00A7
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+#else
+            {
+                int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                if (unlikely(result < 0))
+                    return (unsigned int) -1;
+                if (unlikely(result == 1))
+                    goto raise_neg_overflow;
+            }
+#endif
+            if ((sizeof(unsigned int) <= sizeof(unsigned long))) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned long, PyLong_AsUnsignedLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if ((sizeof(unsigned int) <= sizeof(unsigned PY_LONG_LONG))) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+#endif
+            }
+        } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+            if (__Pyx_PyLong_IsCompact(x)) {
+                __PYX_VERIFY_RETURN_INT(unsigned int, __Pyx_compact_pylong, __Pyx_PyLong_CompactValue(x))
+            } else {
+                const digit* digits = __Pyx_PyLong_Digits(x);
+                assert(__Pyx_PyLong_DigitCount(x) > 1);
+                switch (__Pyx_PyLong_SignedDigitCount(x)) {
+                    case -2:
+                        if ((8 * sizeof(unsigned int) - 1 > 1 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT)) {
+                                return (unsigned int) (((unsigned int)-1)*(((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                    case 2:
+                        if ((8 * sizeof(unsigned int) > 1 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT)) {
+                                return (unsigned int) ((((((unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                    case -3:
+                        if ((8 * sizeof(unsigned int) - 1 > 2 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT)) {
+                                return (unsigned int) (((unsigned int)-1)*(((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                    case 3:
+                        if ((8 * sizeof(unsigned int) > 2 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT)) {
+                                return (unsigned int) ((((((((unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                    case -4:
+                        if ((8 * sizeof(unsigned int) - 1 > 3 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT)) {
+                                return (unsigned int) (((unsigned int)-1)*(((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                    case 4:
+                        if ((8 * sizeof(unsigned int) > 3 * PyLong_SHIFT)) {
+                            if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                                __PYX_VERIFY_RETURN_INT(unsigned int, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                            } else if ((8 * sizeof(unsigned int) - 1 > 4 * PyLong_SHIFT)) {
+                                return (unsigned int) ((((((((((unsigned int)digits[3]) << PyLong_SHIFT) | (unsigned int)digits[2]) << PyLong_SHIFT) | (unsigned int)digits[1]) << PyLong_SHIFT) | (unsigned int)digits[0])));
+                            }
+                        }
+                        break;
+                }
+            }
+#endif
+            if ((sizeof(unsigned int) <= sizeof(long))) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, long, PyLong_AsLong(x))
+#ifdef HAVE_LONG_LONG
+            } else if ((sizeof(unsigned int) <= sizeof(PY_LONG_LONG))) {
+                __PYX_VERIFY_RETURN_INT_EXC(unsigned int, PY_LONG_LONG, PyLong_AsLongLong(x))
+#endif
+            }
+        }
+        {
+            unsigned int val;
+            PyObject *v = __Pyx_PyNumber_IntOrLong(x);
+#if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+#endif
+            if (likely(v)) {
+                int ret = -1;
+#if PY_VERSION_HEX < 0x030d0000 && !(CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API) || defined(_PyLong_AsByteArray)
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                           bytes, sizeof(val),
+                                           is_little, !is_unsigned);
+#else
+                PyObject *stepval = NULL, *mask = NULL, *shift = NULL;
+                int bits, remaining_bits, is_negative = 0;
+                long idigit;
+                int chunk_size = (sizeof(long) < 8) ? 30 : 62;
+                if (unlikely(!PyLong_CheckExact(v))) {
+                    PyObject *tmp = v;
+                    v = PyNumber_Long(v);
+                    assert(PyLong_CheckExact(v));
+                    Py_DECREF(tmp);
+                    if (unlikely(!v)) return (unsigned int) -1;
+                }
+#if CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030B0000
+                if (Py_SIZE(x) == 0)
+                    return (unsigned int) 0;
+                is_negative = Py_SIZE(x) < 0;
+#else
+                {
+                    int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+                    if (unlikely(result < 0))
+                        return (unsigned int) -1;
+                    is_negative = result == 1;
+                }
+#endif
+                if (is_unsigned && unlikely(is_negative)) {
+                    goto raise_neg_overflow;
+                } else if (is_negative) {
+                    stepval = PyNumber_Invert(v);
+                    if (unlikely(!stepval))
+                        return (unsigned int) -1;
+                } else {
+                    stepval = __Pyx_NewRef(v);
+                }
+                val = (unsigned int) 0;
+                mask = PyLong_FromLong((1L << chunk_size) - 1); if (unlikely(!mask)) goto done;
+                shift = PyLong_FromLong(chunk_size); if (unlikely(!shift)) goto done;
+                for (bits = 0; bits < (int) sizeof(unsigned int) * 8 - chunk_size; bits += chunk_size) {
+                    PyObject *tmp, *digit;
+                    digit = PyNumber_And(stepval, mask);
+                    if (unlikely(!digit)) goto done;
+                    idigit = PyLong_AsLong(digit);
+                    Py_DECREF(digit);
+                    if (unlikely(idigit < 0)) goto done;
+                    tmp = PyNumber_Rshift(stepval, shift);
+                    if (unlikely(!tmp)) goto done;
+                    Py_DECREF(stepval); stepval = tmp;
+                    val |= ((unsigned int) idigit) << bits;
+                    #if CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030B0000
+                    if (Py_SIZE(stepval) == 0)
+                        goto unpacking_done;
+                    #endif
+                }
+                idigit = PyLong_AsLong(stepval);
+                if (unlikely(idigit < 0)) goto done;
+                remaining_bits = ((int) sizeof(unsigned int) * 8) - bits - (is_unsigned ? 0 : 1);
+                if (unlikely(idigit >= (1L << remaining_bits)))
+                    goto raise_overflow;
+                val |= ((unsigned int) idigit) << bits;
+            #if CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030B0000
+            unpacking_done:
+            #endif
+                if (!is_unsigned) {
+                    if (unlikely(val & (((unsigned int) 1) << (sizeof(unsigned int) * 8 - 1))))
+                        goto raise_overflow;
+                    if (is_negative)
+                        val = ~val;
+                }
+                ret = 0;
+            done:
+                Py_XDECREF(shift);
+                Py_XDECREF(mask);
+                Py_XDECREF(stepval);
+#endif
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+            return (unsigned int) -1;
+        }
+    } else {
+        unsigned int val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (unsigned int) -1;
+        val = __Pyx_PyInt_As_unsigned_int(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to unsigned int");
+    return (unsigned int) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to unsigned int");
+    return (unsigned int) -1;
+}
+
 /* CIntFromPy */
   static CYTHON_INLINE char __Pyx_PyInt_As_char(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -45828,7 +48331,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__25);
+        name = __Pyx_NewRef(__pyx_n_s__35);
     }
     return name;
 }
