@@ -281,36 +281,36 @@ cdef int[:,:] GEOMETRY_LOOKUP = np.array([
 
 cdef cnp.float32_t [:] VOLUME_CASE_LOOKUP = np.array([
     0,
-    1,       # case 1 # all false
-    1/48,    # case 2
-    1/8,     # case 3
-    1/24,    # case 4
-    1/24,    # case 5
-    17/48,   # case 6
-    7/48,    # case 7
-    1/16,    # case 8
-    1/2,     # case 9
-    1/2,     # case 10
-    1/4,     # case 11
-    (7 + 8**(1/2))/24, # case 12
-    139/144, # case 13
-    1/12,    # case 14
-    5/12,    # case 15
-    1-1,     # case 16 # all true --> base case
-    1-1/48,  # case 17
-    1-1/8,   # case 18
-    1-1/24,  # case 19
-    1-1/24,  # case 20
-    1-17/48, # case 21
-    1-7/48,  # case 22
-    1-1/16,  # case 23
-    1-1/2,   # case 24
-    1-1/2,   # case 25
-    1-1/4,   # case 26
-    1 - ((7 + 8**(1/2))/24), # case 27
+    1,         # case 1 
+    1/48,      # case 2
+    1/8,       # case 3
+    1/24,      # case 4
+    1/24,      # case 5
+    17/48,     # case 6
+    7/48,      # case 7
+    1/16,      # case 8
+    1/2,       # case 9
+    1/2,       # case 10
+    1/4,       # case 11
+    1/2,       # case 12
+    139/144,   # case 13
+    1/12,      # case 14
+    5/12,      # case 15
+    1-1,       # case 16 
+    1-1/48,    # case 17
+    1-1/8,     # case 18
+    1-1/24,    # case 19
+    1-1/24,    # case 20
+    1-17/48,   # case 21
+    1-7/48,    # case 22
+    1-1/16,    # case 23
+    1-1/2,     # case 24
+    1-1/2,     # case 25
+    1-1/4,     # case 26
+    1 - 1/2,   # case 27
     1-139/144, # case 28
-    1-1/12,  # case 29
-    1-5/12,  # case 30
+    1-1/12,    # case 29
+    1-5/12,    # case 30
 ]).astype(np.float32)
 
 cdef int [:] VOLUME_LOOKUP = np.array([
