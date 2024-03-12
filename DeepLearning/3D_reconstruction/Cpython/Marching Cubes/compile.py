@@ -4,7 +4,7 @@ from stl import mesh
 import _bit_marching_cubes_lorensen_cy
 import time
 
-path = "D:\Documents\GitHub\VascuIAR\DeepLearning\data\VnRawData\VHSCDD_sep_labels\VHSCDD_020_label\ct_020_label_5.nii.gz"
+path = "D:\Documents\GitHub\VascuIAR\DeepLearning\data\VnRawData\VHSCDD_sep_labels\VHSCDD_020_label\ct_020_label_12.nii.gz"
 raw = sitk.ReadImage(path, sitk.sitkFloat32)
 volume = sitk.GetArrayFromImage(raw)
 
@@ -14,7 +14,7 @@ mask = np.asarray(volume >= level, dtype="bool").astype(int)
 
 
 start_time = time.time()
-verts, faces, vol_, sum_ = _bit_marching_cubes_lorensen_cy.MarchingCubesLorensen(volume, mask, level)
+verts, faces, fenwick, sum_ = _bit_marching_cubes_lorensen_cy.MarchingCubesLorensen(volume, mask, level)
 end_time = time.time()
 
 # verts = np.array(verts)
@@ -27,5 +27,5 @@ end_time = time.time()
 # obj_3d.save('coronary.stl')
 
 print(end_time - start_time)
-print(vol_)
+print(fenwick.getSum(volume.shape[0] - 1, volume.shape[1] - 1, volume.shape[2] - 1))
 print(sum_)

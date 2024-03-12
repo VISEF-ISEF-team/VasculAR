@@ -711,7 +711,7 @@ def MarchingCubesLorensen(cnp.float32_t [:, :, :] volume not None, cnp.int32_t [
     for triangle_corners in triangle_ids:
         triangles.append([order_of_ids[c] for c in triangle_corners])
     
-    return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum
+    return vertices, triangles, fenwick_tree, Sum
     
     
 

@@ -12,14 +12,14 @@ import vedo
 from DetailCutting import ShowDetails
 import sys
 
-specified_data = sys.argv[1]
-
 class AutomaticReconstruction():
     def __init__(self, path_stl, path_volume_rendering, input_analysis, info_patient_dict):
         self.path = path_stl
         self.path_volume_rendering = path_volume_rendering
         self.files = [f for f in os.listdir(self.path) if f.endswith('.stl')]
         self.meshes = []
+        self.volume = []
+        self.vol_txt = []
         self.buttons = []
         self.textures = [
             'main_texture_1.jpg',  
@@ -51,11 +51,11 @@ class AutomaticReconstruction():
         self.info_patient_dict = info_patient_dict
         self.analysis()
         self.show_info_patient()
+        self.show_mesh()
 
 
     def load_mesh(self, filename, texture):
         mesh = load(filename)
-        mesh.smooth(niter=100)
         mesh.texture('textures/' + texture)
         return mesh
     
@@ -88,6 +88,8 @@ class AutomaticReconstruction():
         Ngày chụp: {self.info_patient_dict["Acquisition Date"]}
         """
         self.info = Text2D(self.info_patient, pos=('top-right'), font='C:/Windows/Fonts/Arial.ttf', s=0.5, c='#00EA94')
+         
+        
 
     def show_mesh(self):
         self.plt = Plotter()
@@ -111,6 +113,8 @@ class AutomaticReconstruction():
                 print(self.path + self.files[i])
                 mesh = self.load_mesh(self.path + self.files[i], self.textures[i])
                 self.meshes.append(mesh)
+                self.volume.append(mesh.volume())
+                self.vol_txt.append(Text2D(f'Thể tích: {self.volume[i]}', pos=(0.2, 0.4 - i * 0.05), s=0.5, font='C:/Windows/Fonts/Arial.ttf', c='w'))
 
                 # Define a function to toggle the alpha of a given mesh
                 def toggle_alpha(mesh, i):
@@ -155,9 +159,13 @@ class AutomaticReconstruction():
                     angle=0.3,
                 )
                 
-                self.buttons.append(button)       
-    
-        self.plt.show(self.meshes, self.txt, self.info, bg='black')
+                self.buttons.append(button)    
+                
+        length = 200
+        width = 200
+        height = 200
+        bbox = Box(pos=(-345, -350, 208), length=length, width=width, height=height, alpha=0.2)
+        self.plt.show(self.meshes, self.vol_txt, self.txt, self.info, bbox, bg='black')
         self.plt.interactive().close()
     
     def view_2(self):
@@ -201,8 +209,8 @@ class AutomaticReconstruction():
     
     
 isinstance = AutomaticReconstruction(
-    path_stl=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{specified_data}_label/',
-    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_020_image/ct_{specified_data}_image.nii.gz',
+    path_stl=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_001_label/',
+    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_020_image/ct_020_image.nii.gz',
     input_analysis = {
         'Tổng quan': 'Phân tích tổng quan',
         'Tĩnh mạch chủ': 'Phân tích tĩnh mạch chủ',
@@ -227,7 +235,6 @@ isinstance = AutomaticReconstruction(
         "Acquisition Date": "20231019"
     }
 )
-isinstance.show_mesh()
 
 
 

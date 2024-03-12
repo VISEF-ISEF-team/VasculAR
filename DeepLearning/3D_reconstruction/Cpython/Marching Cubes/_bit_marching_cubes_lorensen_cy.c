@@ -23197,7 +23197,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_30, 1, (PyObject *(*)(char *)) __
  *     for triangle_corners in triangle_ids:
  *         triangles.append([order_of_ids[c] for c in triangle_corners])             # <<<<<<<<<<<<<<
  * 
- *     return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum
+ *     return vertices, triangles, fenwick_tree, Sum
  */
     { /* enter inner scope */
       __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 712, __pyx_L46_error)
@@ -23285,32 +23285,29 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_30, 1, (PyObject *(*)(char *)) __
   /* "_bit_marching_cubes_lorensen_cy.pyx":714
  *         triangles.append([order_of_ids[c] for c in triangle_corners])
  * 
- *     return vertices, triangles, fenwick_tree.getSum(N-1, M-1, P-1), Sum             # <<<<<<<<<<<<<<
+ *     return vertices, triangles, fenwick_tree, Sum             # <<<<<<<<<<<<<<
  * 
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_26 = ((struct __pyx_vtabstruct_31_bit_marching_cubes_lorensen_cy_FenwickTree3D *)__pyx_v_fenwick_tree->__pyx_vtab)->getSum(__pyx_v_fenwick_tree, (__pyx_v_N - 1), (__pyx_v_M - 1), (__pyx_v_P - 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 714, __pyx_L1_error)
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_t_26); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_Sum); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_Sum); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 714, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = PyTuple_New(4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 714, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_vertices);
   __Pyx_GIVEREF(__pyx_v_vertices);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_vertices)) __PYX_ERR(0, 714, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_v_vertices)) __PYX_ERR(0, 714, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_triangles);
   __Pyx_GIVEREF(__pyx_v_triangles);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_triangles)) __PYX_ERR(0, 714, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_v_triangles)) __PYX_ERR(0, 714, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_v_fenwick_tree);
+  __Pyx_GIVEREF((PyObject *)__pyx_v_fenwick_tree);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, ((PyObject *)__pyx_v_fenwick_tree))) __PYX_ERR(0, 714, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_7)) __PYX_ERR(0, 714, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_5)) __PYX_ERR(0, 714, __pyx_L1_error);
   __pyx_t_5 = 0;
+  __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
-  __pyx_r = __pyx_t_6;
-  __pyx_t_6 = 0;
   goto __pyx_L0;
 
   /* "_bit_marching_cubes_lorensen_cy.pyx":635
