@@ -2373,7 +2373,7 @@ class Tools:
                     activation_command = f"source {venv_activate_script}"
                     start_command = "x-terminal-emulator -e"
 
-                command = f"{activation_command} && {start_command} python automatic_reconstruction.py {self.master.specified_data}"
+                command = f"{activation_command} && {start_command} python automatic_reconstruction_2.py {self.master.specified_data}"
                 subprocess.run(command, shell=True)
             
             self.reconstruction_frame = customtkinter.CTkFrame(master=self.tabview_2_tab_2, fg_color=self.master.third_color)
