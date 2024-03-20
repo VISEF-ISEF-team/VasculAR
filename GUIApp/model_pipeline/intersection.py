@@ -1,0 +1,4 @@
+from triple_view_intersection import triple_view_intersection
+
+
+triple_view_intersection()

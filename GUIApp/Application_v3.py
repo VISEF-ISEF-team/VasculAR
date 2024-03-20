@@ -2108,8 +2108,8 @@ class Tools:
                     self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start", width=50, command=start_seg_callback)
                     self.start_seg_btn.grid(column=0, row=2, padx=(10,0), pady=(0,10), sticky='w')
                     
-                    self.models = ["VAS", "Unet Attention", "U-Resnet", "Unet"]
-                    self.model_picker_default = customtkinter.StringVar(value="VAS")
+                    self.models = ["Triple View R-Net", "U-Net Attention", "ResUNet", "U-Net"]
+                    self.model_picker_default = customtkinter.StringVar(value="Triple View R-Net")
                     self.model_picker = customtkinter.CTkComboBox(self.start_seg_frame, values=self.models, variable=self.model_picker_default)
                     self.model_picker.grid(column=0, row=1, sticky='ew', padx=10, pady=10)
                     
@@ -2364,6 +2364,8 @@ class Tools:
             regions()
             
         def Reconstruction():
+            print(self.master.specified_data)
+            
             def start_reconstruction():
                 venv_activate_script = os.path.join('D:/Documents/GitHub/VascuIAR/.venv/Scripts', 'activate')
                 if sys.platform.startswith('win'):
@@ -2380,7 +2382,6 @@ class Tools:
             self.reconstruction_frame.pack()
             self.btn_reconstruction = customtkinter.CTkButton(master=self.reconstruction_frame, text="3D reconstruction", command=start_reconstruction)
             self.btn_reconstruction.pack()
-            
         
         create_tabs()
         Segmentation()
