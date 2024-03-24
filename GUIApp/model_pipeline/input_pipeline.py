@@ -127,7 +127,7 @@ def old_pipeline(model_path, img_path: str, save_path: str, view: str = None, ba
         predictions = []
 
         for x in dataset:
-            pred = model.predict(x, verbose=0).argmax(axis=-1)
+            pred = model.predict(x, verbose=1).argmax(axis=-1)
             predictions.extend(pred)
 
         end_time = time.time()
@@ -199,9 +199,9 @@ def pipeline_for_1view(frozen_path, img_path, save_path, view="axial", batch_siz
 
 if __name__ == "__main__":
     # model_path = "C:\\Users\\Acer\\OneDrive\\Documents\\Model Data\\axial_dice-loss_model_normal.h5"
-    model_path = "./Optimized Model and Graph/axial_focal_5.h5"
+    model_path = "./Optimized Model and Graph/axial_focal.h5"
     save_path = "./output/axial_predict_5.nii"
-    img_path = "./VHSCDD images/VHSCDD_020_image/"
+    img_path = "D:\\Documents\\GitHub\\VascuIAR\\DeepLearning\\data\\VnRawData\\VHSCDD_raw_data\\VHSCDD_020_image\\"
     # frozen_path = "E:\\ISEF\\VHSCDD\\frozen_graph\\optimized\\axial_dice-loss_optimized_frozen_graph.pb"
     # frozen_path = "./Optimized Model and Graph/coronal_frozen_graph.pb"
     old_pipeline(model_path, img_path, save_path, view="axial")

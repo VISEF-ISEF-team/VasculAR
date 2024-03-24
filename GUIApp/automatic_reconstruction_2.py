@@ -196,7 +196,7 @@ class AutomaticReconstruction():
         self.whole_mesh = load(self.path + 'whole.stl')
         self.whole_volume = self.whole_mesh.volume()
         self.whole_area = self.whole_mesh.area()
-        self.volume_main_display = Text2D(f'Thể tích nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.96), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
+        self.volume_main_display = Text2D(f'Thể tích nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.97), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
         self.area_main_display = Text2D(f'Diện tích bề mặt: {self.convert_area(self.whole_area)} cm2', pos=(0.02,0.93), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
         self.segment_display = Text2D(pos=(0.02,0.90), c=self.color_6, s=0.8, font=self.MAINFONT)
         self.sphere_txt = Text2D(pos=(0.82, 0.15), c=self.screen_color, s=0.8, font=self.MAINFONT)
@@ -209,9 +209,9 @@ class AutomaticReconstruction():
         Các chức năng khác: đổi màu từng bộ phận, cắt bộ phận, khoanh 
         vùng dị tật tim tự động với bounding box 3D.
         """
-        self.function_description = Text2D(func_des, pos=(0, 0.8), s=0.76, c=self.color_6, font=self.MAINFONT)
+        self.function_description = Text2D(func_des, pos=(0, 0.8), s=0.8, c=self.color_6, font=self.MAINFONT)
         
-        self.title = Text2D('VasculAR - Tái tạo và hậu phân tích tim 3D', s=1.25, c=self.color_6, font=self.TITLE_FONT)
+        self.title = Text2D('VasculAR - Tái tạo và hậu phân tích tim 3D', s=1.28, c=self.color_6, font=self.TITLE_FONT)
         self.bbox_button = self.plt.at(26).add_button(
             self.toggle_bbox,
             pos=(0.16, 0.1),                                                                  
@@ -338,14 +338,14 @@ class AutomaticReconstruction():
         
     def spline(self, evt, num):
         self.plt_splining = SplinePlotter(self.cur_object)
-        self.plt_splining.show()
+        self.plt_splining.show(bg=self.color_5)
         if self.plt_splining.line:
             print("Npts =", len(self.plt_splining.cpoints), "NSpline =", self.plt_splining.line.npoints)
         
     def slicing(self, evt, num):
         self.plt_slicing = FreeHandCutPlotter(self.cur_object)
         self.plt_slicing.add_hover_legend()
-        self.plt_slicing.start(bg2='w')
+        self.plt_slicing.start(bg=self.color_5)
     
     def reset_meshes(self, evt, num):
         self.plt.at(1).clear().add(self.meshes, self.bbox, self.volume_main_display, self.area_main_display, self.info)
@@ -542,6 +542,6 @@ class AutomaticReconstruction():
 # specified_data = 1
 isinstance = AutomaticReconstruction(
     path=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{specified_data}_label/',
-    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_0{specified_data}_image/ct_0{specified_data}_image.nii.gz',
+    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_{specified_data}_image/ct_{specified_data}_image.nii.gz',
     input_analysis = '',
 )
