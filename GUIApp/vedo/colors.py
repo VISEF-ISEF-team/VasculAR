@@ -5,12 +5,7 @@ import sys
 import time
 
 import numpy as np
-
-try:
-    import vedo.vtkclasses as vtk
-except ImportError:
-    import vtkmodules.all as vtk
-
+import vedo.vtkclasses as vtki
 import vedo
 
 __docformat__ = "google"
@@ -29,14 +24,11 @@ __all__ = [
     "color_map",
     "build_palette",
     "build_lut",
-    "getColor",  # deprecated will disappear
-    "colorMap",  # deprecated
-    "buildLUT",  # deprecated
 ]
 
 
 try:
-    import matplotlib.cm as _cm_mpl
+    import matplotlib
     _has_matplotlib = True
     cmaps = {}
 except ModuleNotFoundError:
@@ -581,6 +573,18 @@ cmaps_names = (
 # default color palettes when using an index
 palettes = (
     (
+       [1.        , 0.75686275, 0.02745098], # yellow5
+       [0.99215686, 0.49411765, 0.07843137], # orange5
+       [0.8627451 , 0.20784314, 0.27058824], # red5
+       [0.83921569, 0.2       , 0.51764706], # pink5
+       [0.1254902 , 0.78823529, 0.59215686], # teal5
+       [0.15686275, 0.65490196, 0.27058824], # green5
+       [0.09019608, 0.63529412, 0.72156863], # cyan5
+       [0.05098039, 0.43137255, 0.99215686], # blue5
+       [0.4       , 0.0627451 , 0.94901961], # indigo5
+       [0.67843137, 0.70980392, 0.74117647], # gray5
+    ),
+    (
         (1.0, 0.832, 0.000),  # gold
         (0.960, 0.509, 0.188),
         (0.901, 0.098, 0.194),
@@ -713,11 +717,6 @@ def _is_sequence(arg):
     return False
 
 
-def getColor(rgb=None, hsv=None):
-    """Deprecated. Use `get_color()`"""
-    return get_color(rgb, hsv)
-
-
 def get_color(rgb=None, hsv=None):
     """
     Convert a color or list of colors to (r,g,b) format from many different input formats.
@@ -778,9 +777,9 @@ def get_color(rgb=None, hsv=None):
             if c.lower() in color_nicks:
                 c = color_nicks[c.lower()]
             else:
-                vedo.logger.warning(
-                    f"Unknown color nickname {c}\nAvailable abbreviations: {color_nicks}"
-                )
+                # vedo.logger.warning(
+                #     f"Unknown color nickname {c}\nAvailable abbreviations: {color_nicks}"
+                # )
                 return (0.5, 0.5, 0.5)
 
         if c.lower() in colors:  # matplotlib name color
@@ -797,7 +796,7 @@ def get_color(rgb=None, hsv=None):
             return tuple(rgbh)
 
         else:  # vtk name color
-            namedColors = vtk.vtkNamedColors()
+            namedColors = vtki.new("NamedColors")
             rgba = [0, 0, 0, 0]
             namedColors.GetColor(c, rgba)
             return (rgba[0] / 255.0, rgba[1] / 255.0, rgba[2] / 255.0)
@@ -824,7 +823,7 @@ def get_color_name(c):
 
 def hsv2rgb(hsv):
     """Convert HSV to RGB color."""
-    ma = vtk.vtkMath()
+    ma = vtki.new("Math")
     rgb = [0, 0, 0]
     ma.HSVToRGB(hsv, rgb)
     return rgb
@@ -832,7 +831,7 @@ def hsv2rgb(hsv):
 
 def rgb2hsv(rgb):
     """Convert RGB to HSV color."""
-    ma = vtk.vtkMath()
+    ma = vtki.new("Math")
     hsv = [0, 0, 0]
     ma.RGBToHSV(get_color(rgb), hsv)
     return hsv
@@ -851,12 +850,6 @@ def hex2rgb(hx):
     return (rgb255[0] / 255.0, rgb255[1] / 255.0, rgb255[2] / 255.0)
 
 
-def colorMap(value, name="jet", vmin=None, vmax=None):
-    """Deprecated, use `color_map()`"""
-    print("Deprecated call to colorMap(), use color_map() instead")
-    return color_map(value, name, vmin, vmax)
-
-
 def color_map(value, name="jet", vmin=None, vmax=None):
     """
     Map a real value in range [vmin, vmax] to a (r,g,b) color scale.
@@ -864,9 +857,9 @@ def color_map(value, name="jet", vmin=None, vmax=None):
     Return the (r,g,b) color, or a list of (r,g,b) colors.
 
     Arguments:
-        value : *(float, list)*
+        value : (float, list)
             scalar value to transform into a color
-        name : *(str, matplotlib.colors.LinearSegmentedColormap)*
+        name : (str, matplotlib.colors.LinearSegmentedColormap)
             color map name
 
     Very frequently used color maps are:
@@ -881,10 +874,10 @@ def color_map(value, name="jet", vmin=None, vmax=None):
 
     Example:
         ```python
+        import matplotlib
         from vedo import color_map
-        import matplotlib.cm as cm
-        print( color_map(0.2, cm.flag, 0, 1) )
-        # (1.0, 0.809016994374948, 0.6173258487801733)
+        rgb = color_map(0.2, matplotlib.colormaps["jet"], 0, 1)
+        print("rgb =", rgb)  # [0.0, 0.3, 1.0]
         ```
 
     Examples:
@@ -910,12 +903,15 @@ def color_map(value, name="jet", vmin=None, vmax=None):
         if vmax is None:
             vedo.logger.warning("in color_map() you must specify vmax! Assume 1.")
             vmax = 1
-        values = [(value - vmin) / (vmax - vmin)]
+        if vmax == vmin:
+            values = [value - vmin]
+        else:
+            values = [(value - vmin) / (vmax - vmin)]
 
     if _has_matplotlib:
         # matplotlib is available, use it! ###########################
         if isinstance(name, str):
-            mp = _cm_mpl.get_cmap(name=name)
+            mp = matplotlib.colormaps[name]
         else:
             mp = name  # assume matplotlib.colors.LinearSegmentedColormap
         result = mp(values)[:, [0, 1, 2]]
@@ -982,34 +978,6 @@ def build_palette(color1, color2, n, hsv=True):
     return np.array(cols)
 
 
-def buildLUT(
-    colorlist,
-    vmin=None,
-    vmax=None,
-    belowColor=None,
-    aboveColor=None,
-    nanColor=None,
-    belowAlpha=1,
-    aboveAlpha=1,
-    nanAlpha=1,
-    interpolate=False,
-):
-    """Deprecated. Please use `build_lut()`"""
-    print("Deprecated call to buildLUT(). Please use build_lut() instead")
-    return build_lut(
-        colorlist,
-        vmin,
-        vmax,
-        belowColor,
-        aboveColor,
-        nanColor,
-        belowAlpha,
-        aboveAlpha,
-        nanAlpha,
-        interpolate,
-    )
-
-
 def build_lut(
     colorlist,
     vmin=None,
@@ -1054,9 +1022,10 @@ def build_lut(
 
             ![](https://vedo.embl.es/images/basic/mesh_lut.png)
     """
-    ctf = vtk.vtkColorTransferFunction()
+    ctf = vtki.new("ColorTransferFunction")
     ctf.SetColorSpaceToRGB()
     ctf.SetScaleToLinear()
+
     alpha_x, alpha_vals = [], []
     for sc in colorlist:
         if len(sc) >= 3:
@@ -1069,8 +1038,12 @@ def build_lut(
         alpha_x.append(scalar)
         alpha_vals.append(alf)
 
-    lut = vtk.vtkLookupTable()
-    lut.SetNumberOfTableValues(256)
+    ncols = 8 * len(colorlist)
+    if not interpolate:
+        ncols = len(colorlist)
+
+    lut = vtki.new("LookupTable")
+    lut.SetNumberOfTableValues(ncols)
 
     x0, x1 = ctf.GetRange()  # range of the introduced values
     if vmin is not None:
@@ -1089,23 +1062,22 @@ def build_lut(
     if nan_color is not None:
         lut.SetNanColor(list(get_color(nan_color)) + [nan_alpha])
 
-    rgba = (1, 1, 1, 1)
-    for i in range(256):
-        p = i / 255
-        x = (1 - p) * x0 + p * x1
-        if interpolate:
+    if interpolate:
+        for i in range(ncols):
+            p = i / (ncols-1)
+            x = (1 - p) * x0 + p * x1
             alf = np.interp(x, alpha_x, alpha_vals)
             rgba = list(ctf.GetColor(x)) + [alf]
-        else:
-            for c in colorlist:
-                if x <= c[0]:
-                    if len(c) == 3:
-                        alf = c[2]
-                    else:
-                        alf = 1
-                    rgba = list(get_color(c[1])) + [alf]
-                    break
-        lut.SetTableValue(i, rgba)
+            lut.SetTableValue(i, rgba)
+    else:
+        for i in range(ncols):
+            if len(colorlist[i]) > 2: 
+                alpha = colorlist[i][2]
+            else:
+                alpha = 1.0
+            # print("colorlist entry:", colorlist[i])
+            rgba = list(get_color(colorlist[i][1])) + [alpha]
+            lut.SetTableValue(i, rgba)
 
     lut.Build()
     return lut
@@ -1124,8 +1096,10 @@ def printc(
     dim=False,
     invert=False,
     box="",
+    link="",
     end="\n",
     flush=True,
+    return_string=False,
 ):
     """
     Print to terminal in color (any color!).
@@ -1151,8 +1125,13 @@ def printc(
             invert background and forward colors [False]
         box : (bool)
             print a box with specified text character ['']
+        link : (str)
+            print a clickable url link (works on Linux)
+            (must press Ctrl+click to open the link)
         flush : (bool)
             flush buffer after printing [True]
+        return_string : (bool)
+            return the string without printing it [False]
         end : (str)
             the end character to be printed [newline]
 
@@ -1171,8 +1150,11 @@ def printc(
     """
 
     if not vedo.settings.enable_print_color or not _terminal_has_colors:
-        print(*strings, end=end, flush=flush)
-        return
+        if return_string:
+            return ''.join(strings)
+        else:
+            print(*strings, end=end, flush=flush)
+            return
 
     try:  # -------------------------------------------------------------
 
@@ -1267,9 +1249,20 @@ def printc(
         else:
 
             out = special + cseq + txt + reset
-            sys.stdout.write(out + end)
 
-    except:  # ------------------------------------------------------------- fallback
+            if link:
+                # embed a link in the terminal
+                out = f"\x1b]8;;{link}\x1b\\{out}\x1b]8;;\x1b\\"
+
+            if return_string:
+                return out + end
+            else:
+                sys.stdout.write(out + end)
+
+    except:  # --------------------------------------------------- fallback
+
+        if return_string:
+            return ''.join(strings)
 
         try:
             print(*strings, end=end)
@@ -1286,7 +1279,7 @@ def printd(*strings, q=False):
     Print debug information about the environment where the printd() is called.
     Local variables are printed out with their current values.
 
-    Use `q` to quit (exit) python session after the printd call.
+    Use `q` to quit (exit) the python session after the printd call.
     """
     from inspect import currentframe, getframeinfo
 

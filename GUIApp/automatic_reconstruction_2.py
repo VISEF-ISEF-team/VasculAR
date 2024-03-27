@@ -7,18 +7,21 @@ from vedo.applications import FreeHandCutPlotter
 from _bit_marching_cubes_lewiner import *
 from stl import mesh
 from skimage.transform import resize
+import sys
+import json
+import subprocess
+from tqdm import tqdm
 
 vedo.settings.use_parallel_projection = True 
 specified_data = sys.argv[1]
 
 class AutomaticReconstruction():
-    def __init__(self, path, path_volume_rendering, input_analysis, info_patient_dict):
+    def __init__(self, path, path_volume_rendering, input_analysis):
         
         # Paramters
         self.path = path
         self.path_volume_rendering = path_volume_rendering
         self.input_analysis = input_analysis
-        self.info_patient_dict = info_patient_dict
         
         # Default
         self.file_names = [
@@ -29,12 +32,12 @@ class AutomaticReconstruction():
         ]
         
         self.raw_names = [
-            f'ct_0{specified_data}_label_10.nii', f'ct_0{specified_data}_label_11.nii',
-            f'ct_0{specified_data}_label_12.nii', f'ct_0{specified_data}_label_2.nii',
-            f'ct_0{specified_data}_label_3.nii', f'ct_0{specified_data}_label_4.nii',
-            f'ct_0{specified_data}_label_5.nii', f'ct_0{specified_data}_label_6.nii',
-            f'ct_0{specified_data}_label_7.nii', f'ct_0{specified_data}_label_8.nii',
-            f'ct_0{specified_data}_label_9.nii'
+            f'ct_{specified_data}_label_10.nii.gz', f'ct_{specified_data}_label_11.nii.gz',
+            f'ct_{specified_data}_label_12.nii.gz', f'ct_{specified_data}_label_2.nii.gz',
+            f'ct_{specified_data}_label_3.nii.gz', f'ct_{specified_data}_label_4.nii.gz',
+            f'ct_{specified_data}_label_5.nii.gz', f'ct_{specified_data}_label_6.nii.gz',
+            f'ct_{specified_data}_label_7.nii.gz', f'ct_{specified_data}_label_8.nii.gz',
+            f'ct_{specified_data}_label_9.nii.gz'
         ]
 
         self.classes = [
@@ -48,7 +51,7 @@ class AutomaticReconstruction():
             'Thành cơ tim', 
             'Cung động mạch chủ', 
             'Động mạch phổi', 
-            'Động mạch chủ trên',
+            'Động mạch chủ dưới',
         ]
 
         self.mapping = {
@@ -90,6 +93,7 @@ class AutomaticReconstruction():
         self.pixel_spacing = 0.0858
         self.scaling_factor = 200/600 * (1/15)
         self.MAINFONT = 'C:/Windows/Fonts/Arial.ttf' 
+        self.TITLE_FONT = 'c:/USERS/ADMIN/APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/HELVETICA-NEUE-CONDENSED-BOLD.TTF'
         self.cur_volume = 0
         self.cur_area = 0
         self.color_dark = ''
@@ -98,22 +102,40 @@ class AutomaticReconstruction():
         self.cur_object = None
         self.cur_object_id = None
         self.enable_sphere = False
+        
+        # colors
+        self.color_1 = '#242424'
+        self.color_2 = '#3b3b3b'
+        self.color_3 = '#565b5e'
+        self.color_4 = '#565b5e'
+        self.color_5 = '#111111'
+        self.color_6 = '#ffffff'
+        self.color_btn = '#1f6aa5'
+        self.screen_color = '#00EA94'
+        self.green_color = '#097d52'
+        self.yellow_color = '#cee603'
+        self.red_color = '#601124'
     
         # Functions
+        self.load_patient_info()
         self.plotter_control(sy, sx, dx)
         self.reconstruction()
         self.initialize()
         self.show_mesh()
         self.slider()
-        self.plt.at(26).show(self.title)
+        self.plt.at(26).show(self.title, self.function_description)
         self.plt.at(1).show(self.meshes, self.bbox, self.volume_main_display, self.area_main_display, self.info, self.sphere_txt)
         self.plt.interactive().close()
         
+    def load_patient_info(self):
+        with open(f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_{specified_data}_image/dict_info.json', 'r') as file:
+            self.info_patient_dict = json.load(file)
+        
     def reconstruction(self):
-        for i in range(0,10,1):
+        for i in range(0,11,1):
             img_raw = sitk.ReadImage(self.path + self.raw_names[i], sitk.sitkFloat32)
             img = sitk.GetArrayFromImage(img_raw)
-            img = resize(img, (200, 200, 200), anti_aliasing=False)
+            img = resize(img, (150, 150, 150), anti_aliasing=False)
 
             vertices, faces, normals, values = marching_cubes(img)
             obj = mesh.Mesh(np.zeros(faces.shape[0], dtype=mesh.Mesh.dtype))
@@ -124,41 +146,41 @@ class AutomaticReconstruction():
     
     def plotter_control(self, sy, sx, dx):
         self.shape = [
-            dict(bottomleft=(0,0),              topright=(1,1), bg='k7'),           # the full empty window -> 0
-            dict(bottomleft=(dx*2+sx*2.5,0.01), topright=(1-dx,1-dx), bg='w'),      # the display window -> 1
+            dict(bottomleft=(0,0),              topright=(1,1), bg=self.color_1),           # the full empty window -> 0
+            dict(bottomleft=(dx*2+sx*2.5,0.01), topright=(1-dx,1-dx), bg=self.color_5),      # the display window -> 1
             
-            dict(bottomleft=(dx,dx),         topright=(dx+sx*0.5,sy*0.8), bg='w'),   # 2
-            dict(bottomleft=(dx,sy*1.1*0.8), topright=(dx+sx*0.5,sy*0.8*2), bg='w'), # 3
-            dict(bottomleft=(dx,sy*2.1*0.8), topright=(dx+sx*0.5,sy*0.8*3), bg='w'), # 4
-            dict(bottomleft=(dx,sy*3.1*0.8), topright=(dx+sx*0.5,sy*0.8*4), bg='w'), # 5
-            dict(bottomleft=(dx,sy*4.1*0.8), topright=(dx+sx*0.5,sy*0.8*5), bg='w'), # 6
-            dict(bottomleft=(dx,sy*5.1*0.8), topright=(dx+sx*0.5,sy*0.8*6), bg='w'), # 7
+            dict(bottomleft=(dx,dx),         topright=(dx+sx*0.5,sy*0.8), bg=self.color_5),   # 2
+            dict(bottomleft=(dx,sy*1.1*0.8), topright=(dx+sx*0.5,sy*0.8*2), bg=self.color_5), # 3
+            dict(bottomleft=(dx,sy*2.1*0.8), topright=(dx+sx*0.5,sy*0.8*3), bg=self.color_5), # 4
+            dict(bottomleft=(dx,sy*3.1*0.8), topright=(dx+sx*0.5,sy*0.8*4), bg=self.color_5), # 5
+            dict(bottomleft=(dx,sy*4.1*0.8), topright=(dx+sx*0.5,sy*0.8*5), bg=self.color_5), # 6
+            dict(bottomleft=(dx,sy*5.1*0.8), topright=(dx+sx*0.5,sy*0.8*6), bg=self.color_5), # 7
             
-            dict(bottomleft=(dx+sx*1.26,dx),         topright=(dx+sx*1.75,sy*0.8), bg='w'),    # 8
-            dict(bottomleft=(dx+sx*1.26,sy*1.1*0.8), topright=(dx+sx*1.75,sy*2*0.8), bg='w'),  # 9
-            dict(bottomleft=(dx+sx*1.26,sy*2.1*0.8), topright=(dx+sx*1.75,sy*3*0.8), bg='w'),  # 10
-            dict(bottomleft=(dx+sx*1.26,sy*3.1*0.8), topright=(dx+sx*1.75,sy*4*0.8), bg='w'),  # 11
-            dict(bottomleft=(dx+sx*1.26,sy*4.1*0.8), topright=(dx+sx*1.75,sy*5*0.8), bg='w'),  # 12
-            dict(bottomleft=(dx+sx*1.26,sy*5.1*0.8), topright=(dx+sx*1.75,sy*6*0.8), bg='w'),  # 13
+            dict(bottomleft=(dx+sx*1.26,dx),         topright=(dx+sx*1.75,sy*0.8), bg=self.color_5),    # 8
+            dict(bottomleft=(dx+sx*1.26,sy*1.1*0.8), topright=(dx+sx*1.75,sy*2*0.8), bg=self.color_5),  # 9
+            dict(bottomleft=(dx+sx*1.26,sy*2.1*0.8), topright=(dx+sx*1.75,sy*3*0.8), bg=self.color_5),  # 10
+            dict(bottomleft=(dx+sx*1.26,sy*3.1*0.8), topright=(dx+sx*1.75,sy*4*0.8), bg=self.color_5),  # 11
+            dict(bottomleft=(dx+sx*1.26,sy*4.1*0.8), topright=(dx+sx*1.75,sy*5*0.8), bg=self.color_5),  # 12
+            dict(bottomleft=(dx+sx*1.26,sy*5.1*0.8), topright=(dx+sx*1.75,sy*6*0.8), bg=self.color_5),  # 13
             
-            dict(bottomleft=(dx+sx*0.505,dx),         topright=(dx+sx*1.25,sy*0.8), bg='k7'),   # 14 
-            dict(bottomleft=(dx+sx*0.505,sy*1.1*0.8), topright=(dx+sx*1.25,sy*0.8*2), bg='k7'), # 15
-            dict(bottomleft=(dx+sx*0.505,sy*2.1*0.8), topright=(dx+sx*1.25,sy*0.8*3), bg='k7'), # 16
-            dict(bottomleft=(dx+sx*0.505,sy*3.1*0.8), topright=(dx+sx*1.25,sy*0.8*4), bg='k7'), # 17
-            dict(bottomleft=(dx+sx*0.505,sy*4.1*0.8), topright=(dx+sx*1.25,sy*0.8*5), bg='k7'), # 18 
-            dict(bottomleft=(dx+sx*0.505,sy*5.1*0.8), topright=(dx+sx*1.25,sy*0.8*6), bg='k7'), # 19
+            dict(bottomleft=(dx+sx*0.505,dx),         topright=(dx+sx*1.25,sy*0.8), bg=self.color_2),   # 14 
+            dict(bottomleft=(dx+sx*0.505,sy*1.1*0.8), topright=(dx+sx*1.25,sy*0.8*2), bg=self.color_2), # 15
+            dict(bottomleft=(dx+sx*0.505,sy*2.1*0.8), topright=(dx+sx*1.25,sy*0.8*3), bg=self.color_2), # 16
+            dict(bottomleft=(dx+sx*0.505,sy*3.1*0.8), topright=(dx+sx*1.25,sy*0.8*4), bg=self.color_2), # 17
+            dict(bottomleft=(dx+sx*0.505,sy*4.1*0.8), topright=(dx+sx*1.25,sy*0.8*5), bg=self.color_2), # 18 
+            dict(bottomleft=(dx+sx*0.505,sy*5.1*0.8), topright=(dx+sx*1.25,sy*0.8*6), bg=self.color_2), # 19
             
-            dict(bottomleft=(dx+sx*1.755,dx),         topright=(dx+sx*2.52,sy*0.8), bg='k7'),   # 20
-            dict(bottomleft=(dx+sx*1.755,sy*1.1*0.8), topright=(dx+sx*2.52,sy*2*0.8), bg='k7'), # 21
-            dict(bottomleft=(dx+sx*1.755,sy*2.1*0.8), topright=(dx+sx*2.52,sy*3*0.8), bg='k7'), # 22
-            dict(bottomleft=(dx+sx*1.755,sy*3.1*0.8), topright=(dx+sx*2.52,sy*4*0.8), bg='k7'), # 23
-            dict(bottomleft=(dx+sx*1.755,sy*4.1*0.8), topright=(dx+sx*2.52,sy*5*0.8), bg='k7'), # 24
-            dict(bottomleft=(dx+sx*1.755,sy*5.1*0.8), topright=(dx+sx*2.52,sy*6*0.8), bg='k7'), # 25
+            dict(bottomleft=(dx+sx*1.755,dx),         topright=(dx+sx*2.52,sy*0.8), bg=self.color_2),   # 20
+            dict(bottomleft=(dx+sx*1.755,sy*1.1*0.8), topright=(dx+sx*2.52,sy*2*0.8), bg=self.color_2), # 21
+            dict(bottomleft=(dx+sx*1.755,sy*2.1*0.8), topright=(dx+sx*2.52,sy*3*0.8), bg=self.color_2), # 22
+            dict(bottomleft=(dx+sx*1.755,sy*3.1*0.8), topright=(dx+sx*2.52,sy*4*0.8), bg=self.color_2), # 23
+            dict(bottomleft=(dx+sx*1.755,sy*4.1*0.8), topright=(dx+sx*2.52,sy*5*0.8), bg=self.color_2), # 24
+            dict(bottomleft=(dx+sx*1.755,sy*5.1*0.8), topright=(dx+sx*2.52,sy*6*0.8), bg=self.color_2), # 25
             
-            dict(bottomleft=(dx,sy*0.8*6.1), topright=(dx+sx*2.52, 1-dx), bg='k7'), # 26
+            dict(bottomleft=(dx,sy*0.8*6.1), topright=(dx+sx*2.52, 1-dx), bg=self.color_1), # 26
         ]
     
-        self.plt = Plotter(shape=self.shape, sharecam=False, size=(1950, 1000))
+        self.plt = Plotter(shape=self.shape, sharecam=False, size=(2000, 1000))
         self.plt.add_callback("RightButtonPress", self.change_object)
         self.plt.add_callback("MiddleButtonPress", self.add_object)
      
@@ -174,18 +196,28 @@ class AutomaticReconstruction():
         self.whole_mesh = load(self.path + 'whole.stl')
         self.whole_volume = self.whole_mesh.volume()
         self.whole_area = self.whole_mesh.area()
-        self.volume_main_display = Text2D(f'Thể tích nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.99), c='r', bg='y', s=0.8, font=self.MAINFONT)
-        self.area_main_display = Text2D(f'Diện tích bề mặt: {self.convert_area(self.whole_area)} cm2', pos=(0.02,0.96), c='r', bg='y', s=0.8, font=self.MAINFONT)
-        self.segment_display = Text2D(pos=(0.02,0.92), c='black', s=0.8, font=self.MAINFONT)
-        self.sphere_txt = Text2D(pos=(0.82, 0.15), c='#00EA94', s=0.8, font=self.MAINFONT)
+        self.volume_main_display = Text2D(f'Thể tích nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.97), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
+        self.area_main_display = Text2D(f'Diện tích bề mặt: {self.convert_area(self.whole_area)} cm2', pos=(0.02,0.93), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
+        self.segment_display = Text2D(pos=(0.02,0.90), c=self.color_6, s=0.8, font=self.MAINFONT)
+        self.sphere_txt = Text2D(pos=(0.82, 0.15), c=self.screen_color, s=0.8, font=self.MAINFONT)
+        func_des = """
+        Các chức năng năng phân tích hậu tái tạo 3D cho phép đo lường
+        định tính thể tích các buồng tim, đường kính động mạch vành 
+        (xác định tắc nghẽn động mạch), độ dày thành cơ tim (tứ chứng 
+        fallot) với độ chính xác cao.
+                                           
+        Các chức năng khác: đổi màu từng bộ phận, cắt bộ phận, khoanh 
+        vùng dị tật tim tự động với bounding box 3D.
+        """
+        self.function_description = Text2D(func_des, pos=(0, 0.8), s=0.8, c=self.color_6, font=self.MAINFONT)
         
-        self.title = Text2D('VasculAR 3D Advanced Display & Analyis', c='black', font=self.MAINFONT)
+        self.title = Text2D('VasculAR - Tái tạo và hậu phân tích tim 3D', s=1.28, c=self.color_6, font=self.TITLE_FONT)
         self.bbox_button = self.plt.at(26).add_button(
             self.toggle_bbox,
             pos=(0.16, 0.1),                                                                  
             states=['Disable Bounding Box', 'Enable Bounding Box'],                    
             c=["w", "w"],                                                                             
-            bc=["dv", "#0d6efd"],                                                                       
+            bc=[self.green_color, self.color_btn],                                                                       
             font=self.MAINFONT,                                                       
             size=15,                                                                                   
             bold=True,                                                                                                       
@@ -196,7 +228,7 @@ class AutomaticReconstruction():
             pos=(0.42, 0.1),                                                                  
             states=['Isosurface', 'Isosurface'],
             c=["w", "w"], 
-            bc=["#0d6efd", "dv"],  
+            bc=[self.color_btn, self.green_color],  
             font=self.MAINFONT,  
             size=15,     
             bold=True,
@@ -206,7 +238,7 @@ class AutomaticReconstruction():
             pos=(0.6, 0.1),                                                                  
             states=['Reset 3D', 'Reset 3D'],
             c=["w", "w"], 
-            bc=["#0d6efd", "dv"],  
+            bc=[self.color_btn, self.green_color],  
             font=self.MAINFONT,  
             size=15,     
             bold=True,
@@ -217,7 +249,7 @@ class AutomaticReconstruction():
             pos=(0.76, 0.1),                                                                  
             states=['Slicing', 'Slicing'],
             c=["w", "w"], 
-            bc=["#0d6efd", "dv"],  
+            bc=[self.color_btn, self.green_color],  
             font=self.MAINFONT,  
             size=15,     
             bold=True,
@@ -228,7 +260,7 @@ class AutomaticReconstruction():
             pos=(0.9, 0.1),     
             states=['Splining', 'Splining'],
             c=["w", "w"], 
-            bc=["#0d6efd", "dv"],  
+            bc=[self.color_btn, self.green_color],  
             font=self.MAINFONT,  
             size=15,     
             bold=True,
@@ -236,10 +268,10 @@ class AutomaticReconstruction():
         
         self.sphere_button = self.plt.at(25).add_button(
             self.start_hovering,
-            pos=(0.4, 0.6),     
-            states=['Inner Check On', 'Inner Check On'],
+            pos=(0.4, 0.7),     
+            states=['Hình cầu mở', 'Hình cầu mở'],
             c=["w", "w"], 
-            bc=["#0d6efd", "#0d6efd"],  
+            bc=[self.color_btn, self.color_btn],  
             font=self.MAINFONT,  
             size=15,     
             bold=True,
@@ -247,11 +279,22 @@ class AutomaticReconstruction():
         
         self.sphere_button = self.plt.at(25).add_button(
             self.end_hovering,
-            pos=(0.4, 0.3),     
-            states=['Inner Check Off', 'Inner Check Off'],
+            pos=(0.4, 0.4),     
+            states=['Hình cầu mở', 'Hình cầu tắt'],
             c=["w", "w"], 
-            bc=["#0d6efd", "#0d6efd"],  
+            bc=[self.color_btn, self.color_btn],  
             font=self.MAINFONT,  
+            size=15,     
+            bold=True,
+        )
+        
+        self.sync_database = self.plt.at(1).add_button(
+            self.syncing_database,
+            pos=(0.5,0.95),
+            states=['Cập nhật cơ sở dữ liệu đám mây', 'Cập nhật cơ sở dữ liệu đám mây'],
+            c=["w", "w"], 
+            bc=[self.red_color, self.color_btn],  
+            font=self.TITLE_FONT,  
             size=15,     
             bold=True,
         )
@@ -264,7 +307,8 @@ class AutomaticReconstruction():
             Bộ phận chụp: {self.info_patient_dict["Body Part Examined"]}
             Ngày chụp: {self.info_patient_dict["Acquisition Date"]}
         """
-        self.info = Text2D(self.info_patient, pos=('top-right'), font=self.MAINFONT, s=0.7, c='black')
+        self.info = Text2D(self.info_patient, pos=('top-right'), font=self.MAINFONT, s=0.7, c=self.screen_color)
+        
         
     def start_hovering(self, evt, num):
         if (self.enable_sphere == True): return
@@ -294,14 +338,14 @@ class AutomaticReconstruction():
         
     def spline(self, evt, num):
         self.plt_splining = SplinePlotter(self.cur_object)
-        self.plt_splining.show()
+        self.plt_splining.show(bg=self.color_5)
         if self.plt_splining.line:
             print("Npts =", len(self.plt_splining.cpoints), "NSpline =", self.plt_splining.line.npoints)
         
     def slicing(self, evt, num):
         self.plt_slicing = FreeHandCutPlotter(self.cur_object)
         self.plt_slicing.add_hover_legend()
-        self.plt_slicing.start(bg2='w')
+        self.plt_slicing.start(bg=self.color_5)
     
     def reset_meshes(self, evt, num):
         self.plt.at(1).clear().add(self.meshes, self.bbox, self.volume_main_display, self.area_main_display, self.info)
@@ -402,21 +446,21 @@ class AutomaticReconstruction():
         bu.switch()   
     
     def show_mesh(self):
-        for index in range(2,13):
+        for index in tqdm(range(2,13)):
             idx = index-2
             self.meshes.append(self.load_mesh(idx))
             self.vola.append([self.convert_vol(self.meshes[idx].volume()), self.convert_area(self.meshes[idx].area())])
             
-            self.name = Text2D(f'{idx+1}. {self.classes[idx]}', s=0.7, pos=(0.05, 1), font=self.MAINFONT, c='black', bg='blue')
-            self.vol_txt.append(Text2D(f'Thể tích: {self.vola[idx][0]} ml', s=0.7, pos=(0.05, 0.5), font=self.MAINFONT, c='black'))
-            self.area_txt.append(Text2D(f'Diện tích: {self.vola[idx][1]} cm2', s=0.7, pos=(0.05, 0.3), font=self.MAINFONT, c='black'))
+            self.name = Text2D(f'{idx+1}. {self.classes[idx]}', s=0.78, pos=(0.05, 0.9), font=self.TITLE_FONT, c=self.color_6, bg=self.color_4)
+            self.vol_txt.append(Text2D(f'Thể tích: {self.vola[idx][0]} ml', s=0.7, pos=(0.05, 0.5), font=self.MAINFONT, c=self.color_6))
+            self.area_txt.append(Text2D(f'Diện tích: {self.vola[idx][1]} cm2', s=0.7, pos=(0.05, 0.3), font=self.MAINFONT, c=self.color_6))
             
             button = self.plt.at(1).add_button(
                 lambda obj, ename, idx=idx: self.buttonfunc(idx, self.buttons[idx]),
                 pos=(0.05, 0.4 - idx * 0.035),                                                                  
                 states=[f'{str(idx+1)}. view', f'{str(idx+1)}. close'],                    
                 c=["w", "w"],                                                                             
-                bc=["#0d6efd", "dv"],                                                                       
+                bc=[self.color_btn, self.screen_color],                                                                       
                 font=self.MAINFONT,                                                       
                 size=15,                                                                                   
                 bold=True,
@@ -427,6 +471,19 @@ class AutomaticReconstruction():
             self.plt.at(index).show(self.meshes[idx])
             self.plt.at(index + 12).show(self.name, self.vol_txt[idx], self.area_txt[idx])
             
+            
+    def syncing_database(self, evt, num):
+        print(specified_data)
+        venv_activate_script = os.path.join('D:/Documents/GitHub/VascuIAR/.venv/Scripts', 'activate')
+        if sys.platform.startswith('win'):
+            activation_command = f"call {venv_activate_script}"
+            start_command = "start"
+        else:
+            activation_command = f"source {venv_activate_script}"
+            start_command = "x-terminal-emulator -e"
+
+        command = f"{activation_command} && {start_command} python stl_to_cloud.py {specified_data}"
+        subprocess.run(command, shell=True)
             
     def isosurface(self, obj, num):
         plt2 = Plotter()
@@ -482,17 +539,9 @@ class AutomaticReconstruction():
         )
         
     
-specified_data = 20
+# specified_data = 1
 isinstance = AutomaticReconstruction(
-    path=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_0{specified_data}_label/',
-    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_0{specified_data}_image/ct_0{specified_data}_image.nii.gz',
+    path=f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_sep_labels/VHSCDD_{specified_data}_label/',
+    path_volume_rendering= f'D:/Documents/GitHub/VascuIAR/DeepLearning/data/VnRawData/VHSCDD_raw_data/VHSCDD_{specified_data}_image/ct_{specified_data}_image.nii.gz',
     input_analysis = '',
-    info_patient_dict = {
-        "Organization": "Benh vien Cho Ray",
-        "Patient's name": "An danh",
-        "Modality": "MRI",
-        "Patient ID": "0000097031",
-        "Body Part Examined": "CHEST_TO_PELVIS",
-        "Acquisition Date": "20231019"
-    }
 )

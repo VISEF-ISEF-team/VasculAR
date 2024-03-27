@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-try:
-    import vedo.vtkclasses as vtk
-except ImportError:
-    import vtkmodules.all as vtk
+import vedo.vtkclasses as vtki
 
 import vedo
 from vedo.colors import printc
@@ -32,7 +29,7 @@ Example:
 ![](https://user-images.githubusercontent.com/32848391/53026243-d2d31900-3462-11e9-9dde-518218c241b6.jpg)
 
 .. note::
-    Find many more examples in directory    
+    Find many more examples in directory
     [vedo/examples/dolfin](https://github.com/marcomusy/vedo/blob/master/examples/other/dolfin).
 """
 
@@ -211,19 +208,11 @@ def plot(*inputobj, **options):
             - c, - isoline color
             - lw, (float) - isoline width
             - z, (float) - add to the isoline z coordinate to make them more visible
-        streamlines : (dict)
-            dictionary of streamlines properties
-            - probes, (list, None) - custom list of points to use as seeds
-            - tol, (float) - tolerance to reduce the number of seed points used in mesh
-            - lw, (float) - line width of the streamline
-            - direction, (str) - direction of integration ('forward', 'backward' or 'both')
-            - max_propagation, (float) - max propagation of the streamline
-            - scalar_range, (list) - scalar range of coloring
-        warpZfactor : (float)
+        warp_zfactor : (float)
             elevate z-axis by scalar value (useful for 2D geometries)
-        warpYfactor : (float)
+        warp_yfactor : (float)
             elevate z-axis by scalar value (useful for 1D geometries)
-        scaleMeshFactors : (list)
+        scale_mesh_factors : (list)
             rescale mesh by these factors [1,1,1]
         new : (bool)
             spawn a new instance of Plotter class, pops up a new window
@@ -349,14 +338,13 @@ def plot(*inputobj, **options):
     vmax = options.pop("vmax", None)
     cmap = options.pop("cmap", None)
     scale = options.pop("scale", 1)
-    scaleMeshFactors = options.pop("scaleMeshFactors", [1, 1, 1])
+    scale_mesh_factors = options.pop("scale_mesh_factors", [1, 1, 1])
     shading = options.pop("shading", "phong")
     text = options.pop("text", None)
     style = options.pop("style", "vtk")
     isolns = options.pop("isolines", {})
-    streamlines = options.pop("streamlines", {})
-    warpZfactor = options.pop("warpZfactor", None)
-    warpYfactor = options.pop("warpYfactor", None)
+    warp_zfactor = options.pop("warp_zfactor", None)
+    warp_yfactor = options.pop("warp_yfactor", None)
     lighting = options.pop("lighting", None)
     exterior = options.pop("exterior", False)
     returnActorsNoShow = options.pop("returnActorsNoShow", False)
@@ -369,15 +357,15 @@ def plot(*inputobj, **options):
     if vedo.plotter_instance:
         if xtitle != "x":
             aet = vedo.plotter_instance.axes_instances
-            if len(aet) > at and isinstance(aet[at], vtk.vtkCubeAxesActor):
+            if len(aet) > at and isinstance(aet[at], vtki.get_class("CubeAxesActor")):
                 aet[at].SetXTitle(xtitle)
         if ytitle != "y":
             aet = vedo.plotter_instance.axes_instances
-            if len(aet) > at and isinstance(aet[at], vtk.vtkCubeAxesActor):
+            if len(aet) > at and isinstance(aet[at], vtki.get_class("CubeAxesActor")):
                 aet[at].SetYTitle(ytitle)
         if ztitle != "z":
             aet = vedo.plotter_instance.axes_instances
-            if len(aet) > at and isinstance(aet[at], vtk.vtkCubeAxesActor):
+            if len(aet) > at and isinstance(aet[at], vtki.get_class("CubeAxesActor")):
                 aet[at].SetZTitle(ztitle)
 
     # change some default to emulate standard behaviours
@@ -446,69 +434,70 @@ def plot(*inputobj, **options):
 
     if mesh and ("mesh" in mode or "color" in mode or "displace" in mode):
 
-        actor = MeshActor(u, mesh, exterior=exterior)
+        msh = IMesh(u, mesh, exterior=exterior)
 
-        actor.wireframe(wire)
-        actor.scale(scaleMeshFactors)
+        msh.wireframe(wire)
+        msh.scale(scale_mesh_factors)
         if lighting:
-            actor.lighting(lighting)
+            msh.lighting(lighting)
         if ttime:
-            actor.z(ttime)
+            msh.z(ttime)
         if legend:
-            actor.legend(legend)
+            msh.legend(legend)
         if c:
-            actor.color(c)
+            msh.color(c)
         if lc:
-            actor.linecolor(lc)
+            msh.linecolor(lc)
         if alpha:
             alpha = min(alpha, 1)
-            actor.alpha(alpha * alpha)
+            msh.alpha(alpha * alpha)
         if lw:
-            actor.linewidth(lw)
+            msh.linewidth(lw)
             if wire and alpha:
                 lw1 = min(lw, 1)
-                actor.alpha(alpha * lw1)
+                msh.alpha(alpha * lw1)
         if ps:
-            actor.point_size(ps)
+            msh.point_size(ps)
         if shading:
             if shading == "phong":
-                actor.phong()
+                msh.phong()
             elif shading == "flat":
-                actor.flat()
+                msh.flat()
             elif shading[0] == "g":
-                actor.gouraud()
+                msh.phong()
 
         if "displace" in mode:
-            actor.move(u)
+            msh.move(u)
 
-        if cmap and (actor.u_values is not None) and len(actor.u_values)>0 and c is None:
-            if actor.u_values.ndim > 1:
-                actor.cmap(cmap, utils.mag(actor.u_values), vmin=vmin, vmax=vmax)
+        if cmap and (msh.u_values is not None) and len(msh.u_values)>0 and c is None:
+            if msh.u_values.ndim > 1:
+                msh.cmap(cmap, utils.mag(msh.u_values), vmin=vmin, vmax=vmax)
             else:
-                actor.cmap(cmap, actor.u_values, vmin=vmin, vmax=vmax)
+                msh.cmap(cmap, msh.u_values, vmin=vmin, vmax=vmax)
 
-        if warpYfactor:
-            scals = actor.pointdata[0]
+        if warp_yfactor:
+            scals = msh.pointdata[0]
             if len(scals) > 0:
-                pts_act = actor.points()
-                pts_act[:, 1] = scals * warpYfactor * scaleMeshFactors[1]
-        if warpZfactor:
-            scals = actor.pointdata[0]
+                pts_act = msh.vertices
+                pts_act[:, 1] = scals * warp_yfactor * scale_mesh_factors[1]
+        if warp_zfactor:
+            scals = msh.pointdata[0]
             if len(scals) > 0:
-                pts_act = actor.points()
-                pts_act[:, 2] = scals * warpZfactor * scaleMeshFactors[2]
-        if warpYfactor or warpZfactor:
-            actor.points(pts_act)
+                pts_act = msh.vertices
+                pts_act[:, 2] = scals * warp_zfactor * scale_mesh_factors[2]
+        if warp_yfactor or warp_zfactor:
+            # msh.points(pts_act)
+            msh.vertices = pts_act
             if vmin is not None and vmax is not None:
-                actor.mapper().SetScalarRange(vmin, vmax)
+                msh.mapper.SetScalarRange(vmin, vmax)
 
         if scbar and c is None:
             if "3d" in scbar:
-                actor.add_scalarbar3d()
+                msh.add_scalarbar3d()
             elif "h" in scbar:
-                actor.add_scalarbar(horizontal=True)
+                msh.add_scalarbar(horizontal=True)
             else:
-                actor.add_scalarbar(horizontal=False)
+                msh.add_scalarbar(horizontal=False)
 
         if len(isolns) > 0:
             ison = isolns.pop("n", 10)
@@ -516,30 +505,25 @@ def plot(*inputobj, **options):
             isoalpha = isolns.pop("alpha", 1)
             isolw = isolns.pop("lw", 1)
 
-            isos = actor.isolines(n=ison).color(isocol).lw(isolw).alpha(isoalpha)
+            isos = msh.isolines(n=ison).color(isocol).lw(isolw).alpha(isoalpha)
 
             isoz = isolns.pop("z", None)
             if isoz is not None:  # kind of hack to make isolines visible on flat meshes
                 d = isoz
             else:
-                d = actor.diagonal_size() / 400
-            isos.z(actor.z() + d)
+                d = msh.diagonal_size() / 400
+            isos.z(msh.z() + d)
             actors.append(isos)
 
-        actors.append(actor)
+        actors.append(msh)
 
-    #################################################################
-    if "streamline" in mode:
-        mode = mode.replace("streamline", "")
-        str_act = MeshStreamLines(u, **streamlines)
-        actors.append(str_act)
 
     #################################################################
     if "arrow" in mode or "line" in mode:
         if "arrow" in mode:
-            arrs = MeshArrows(u, scale=scale)
+            arrs = create_arrows(u, scale=scale)
         else:
-            arrs = MeshLines(u, scale=scale)
+            arrs = create_lines(u, scale=scale)
 
         if arrs:
             if legend and "mesh" not in mode:
@@ -552,17 +536,12 @@ def plot(*inputobj, **options):
             actors.append(arrs)
 
     #################################################################
-    if "tensor" in mode:
-        pass  # todo
-
-    #################################################################
     for ob in inputobj:
         inputtype = str(type(ob))
         if "vedo" in inputtype:
             actors.append(ob)
 
     if text:
-        # textact = Text2D(text, font=font)
         actors.append(text)
 
     if "at" in options and "interactive" not in options:
@@ -570,13 +549,6 @@ def plot(*inputobj, **options):
             N = vedo.plotter_instance.shape[0] * vedo.plotter_instance.shape[1]
             if options["at"] == N - 1:
                 options["interactive"] = True
-
-    # if vedo.plotter_instance:
-    #     for a2 in vedo.collectable_actors:
-    #         if isinstance(a2, vtk.vtkCornerAnnotation):
-    #             if 0 in a2.rendered_at: # remove old message
-    #                 vedo.plotter_instance.remove(a2)
-    #                 break
 
     if len(actors) == 0:
         print('Warning: no objects to show, check mode in plot(mode="...")')
@@ -588,11 +560,11 @@ def plot(*inputobj, **options):
 
 
 ###################################################################################
-class MeshActor(Mesh):
-    """MeshActor for dolfin support."""
+class IMesh(Mesh):
+    """Interface Mesh representation for dolfin."""
 
     def __init__(self, *inputobj, **options):
-        """MeshActor, a `vedo.Mesh` derived object for dolfin support."""
+        """A `vedo.Mesh` derived object for dolfin support."""
 
         c = options.pop("c", None)
         alpha = options.pop("alpha", 1)
@@ -618,35 +590,20 @@ class MeshActor(Mesh):
         cells = meshc.cells()
 
         if cells.shape[1] == 4:
-            # something wrong in this as it cannot reproduce the tet cell..
-            # from vedo.tetmesh import _buildtetugrid
-            # cells[:,[2, 0]] = cells[:,[0, 2]]
-            # cells[:,[1, 0]] = cells[:,[0, 1]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,[0, 2, 1, 3]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,[0, 2, 1, 3]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,  [0, 1, 3, 2]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,[1, 0, 2, 3]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,[2, 0, 1, 3]]
-            # cells[:,[0, 1, 2, 3]] = cells[:,[2, 0, 1, 3]]
-            # print(cells[0])
-            # print(coords[cells[0]])
-            # poly = utils.geometry(_buildtetugrid(coords, cells))
-            # poly = utils.geometry(vedo.TetMesh([coords, cells]).inputdata())
+            poly = vtki.vtkPolyData()
 
-            poly = vtk.vtkPolyData()
-
-            source_points = vtk.vtkPoints()
+            source_points = vtki.vtkPoints()
             source_points.SetData(utils.numpy2vtk(coords, dtype=np.float32))
             poly.SetPoints(source_points)
 
-            source_polygons = vtk.vtkCellArray()
+            source_polygons = vtki.vtkCellArray()
             for f in cells:
                 # do not use vtkTetra() because it fails
                 # with dolfin faces orientation
-                ele0 = vtk.vtkTriangle()
-                ele1 = vtk.vtkTriangle()
-                ele2 = vtk.vtkTriangle()
-                ele3 = vtk.vtkTriangle()
+                ele0 = vtki.vtkTriangle()
+                ele1 = vtki.vtkTriangle()
+                ele2 = vtki.vtkTriangle()
+                ele3 = vtki.vtkTriangle()
 
                 f0, f1, f2, f3 = f
                 pid0 = ele0.GetPointIds()
@@ -680,7 +637,8 @@ class MeshActor(Mesh):
         else:
             poly = utils.buildPolyData(coords, cells)
 
-        Mesh.__init__(self, poly, c=c, alpha=alpha)
+        super().__init__(poly, c, alpha)
+
         if compute_normals:
             self.compute_normals()
 
@@ -688,7 +646,8 @@ class MeshActor(Mesh):
         self.u = u  # holds a dolfin function_data
         # holds the actual values of u on the mesh
         self.u_values = _compute_uvalues(u, mesh)
-
+    
+    #####################################
     def move(self, u=None, deltas=None):
         """Move mesh according to solution `u` or from calculated vertex displacements `deltas`."""
         if u is None:
@@ -715,50 +674,11 @@ class MeshActor(Mesh):
         movedpts = coords + deltas
         if movedpts.shape[1] == 2:  # 2d
             movedpts = np.c_[movedpts, np.zeros(movedpts.shape[0])]
-        self.polydata(False).GetPoints().SetData(utils.numpy2vtk(movedpts, dtype=np.float32))
-        self.polydata(False).GetPoints().Modified()
+        self.dataset.GetPoints().SetData(utils.numpy2vtk(movedpts, dtype=np.float32))
+        self.dataset.GetPoints().Modified()
 
-
-def MeshPoints(*inputobj, **options):
-    """Build a point object of type `Mesh` for a list of points."""
-    r = options.pop("r", 5)
-    c = options.pop("c", "gray")
-    alpha = options.pop("alpha", 1)
-
-    mesh, u = _inputsort(inputobj)
-    if not mesh:
-        return None
-
-    if hasattr(mesh, "coordinates"):
-        plist = mesh.coordinates()
-    else:
-        plist = mesh.geometry.points
-
-    u_values = _compute_uvalues(u, mesh)
-
-    if len(plist[0]) == 2:  # coords are 2d.. not good..
-        plist = np.insert(plist, 2, 0, axis=1)  # make it 3d
-    if len(plist[0]) == 1:  # coords are 1d.. not good..
-        plist = np.insert(plist, 1, 0, axis=1)  # make it 3d
-        plist = np.insert(plist, 2, 0, axis=1)
-
-    actor = shapes.Points(plist, r=r, c=c, alpha=alpha)
-
-    actor.mesh = mesh
-    if u:
-        actor.u = u
-        if len(u_values.shape) == 2:
-            if u_values.shape[1] in [2, 3]:  # u_values is 2D or 3D
-                actor.u_values = u_values
-                dispsizes = utils.mag(u_values)
-        else:  # u_values is 1D
-            dispsizes = u_values
-        actor.pointdata["u_values"] = dispsizes
-        actor.pointdata.select("u_values")
-    return actor
-
-
-def MeshLines(*inputobj, **options):
+###################################################################################
+def create_lines(*inputobj, **options):
     """
     Build the line segments between two lists of points `start_points` and `end_points`.
     `start_points` can be also passed in the form `[[point1, point2], ...]`.
@@ -793,18 +713,18 @@ def MeshLines(*inputobj, **options):
         start_points = np.insert(start_points, 2, 0, axis=1)  # make it 3d
         end_points = np.insert(end_points, 2, 0, axis=1)  # make it 3d
 
-    actor = shapes.Lines(start_points, end_points, scale=scale, lw=lw, c=c, alpha=alpha)
+    lines = shapes.Lines(start_points, end_points, scale=scale, lw=lw, c=c, alpha=alpha)
 
-    actor.mesh = mesh
-    actor.u = u
-    actor.u_values = u_values
-    return actor
+    lines.mesh = mesh
+    lines.u = u
+    lines.u_values = u_values
+    return lines
 
-
-def MeshArrows(*inputobj, **options):
+###################################################################################
+def create_arrows(*inputobj, **options):
     """Build arrows representing displacements."""
     s = options.pop("s", None)
-    c = options.pop("c", "gray")
+    c = options.pop("c", "k3")
     scale = options.pop("scale", 1)
     alpha = options.pop("alpha", 1)
     res = options.pop("res", 12)
@@ -829,74 +749,8 @@ def MeshArrows(*inputobj, **options):
         start_points = np.insert(start_points, 2, 0, axis=1)  # make it 3d
         end_points = np.insert(end_points, 2, 0, axis=1)  # make it 3d
 
-    actor = shapes.Arrows(start_points, end_points, s=s, alpha=alpha, res=res)
-    actor.color(c)
-    actor.mesh = mesh
-    actor.u = u
-    actor.u_values = u_values
-    return actor
-
-
-def MeshStreamLines(*inputobj, **options):
-    """Build a streamplot."""
-    from vedo.shapes import StreamLines
-
-    print("Building streamlines...")
-
-    tol = options.pop("tol", 0.02)
-    lw = options.pop("lw", 2)
-    direction = options.pop("direction", "forward")
-    max_propagation = options.pop("max_propagation", None)
-    scalar_range = options.pop("scalar_range", None)
-    probes = options.pop("probes", None)
-
-    tubes = options.pop("tubes", {})  # todo
-    maxRadiusFactor = options.pop("maxRadiusFactor", 1)
-    varyRadius = options.pop("varyRadius", 1)
-
-    mesh, u = _inputsort(inputobj)
-    if not mesh:
-        return None
-
-    u_values = _compute_uvalues(u, mesh)
-    if not utils.is_sequence(u_values[0]):
-        vedo.logger.error("cannot show Arrows for 1D scalar values")
-        raise RuntimeError()
-    if u_values.shape[1] == 2:  # u_values is 2D
-        u_values = np.insert(u_values, 2, 0, axis=1)  # make it 3d
-
-    meshact = MeshActor(u)
-    meshact.pointdata["u_values"] = u_values
-    meshact.pointdata.select("u_values")
-
-    if utils.is_sequence(probes):
-        pass  # it's already it
-    elif tol:
-        print("decimating mesh points to use them as seeds...")
-        probes = meshact.clone().subsample(tol).points()
-    else:
-        probes = meshact.points()
-    if len(probes) > 500:
-        printc("Probing domain with n =", len(probes), "points")
-        printc(" ..this may take time (or choose a larger tol value)")
-
-    if lw:
-        tubes = {}
-    else:
-        tubes["varyRadius"] = varyRadius
-        tubes["maxRadiusFactor"] = maxRadiusFactor
-
-    str_lns = StreamLines(
-        meshact,
-        probes,
-        direction=direction,
-        max_propagation=max_propagation,
-        tubes=tubes,
-        scalar_range=scalar_range,
-        active_vectors="u_values",
-    )
-
-    if lw:
-        str_lns.lw(lw)
-
-    return str_lns
+    obj = shapes.Arrows(start_points, end_points, s=s, alpha=alpha, c=c, res=res)
+    obj.mesh = mesh
+    obj.u = u
+    obj.u_values = u_values
+    return obj
