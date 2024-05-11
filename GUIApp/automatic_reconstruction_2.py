@@ -40,7 +40,7 @@ class AutomaticReconstruction():
             f'ct_{specified_data}_label_9.nii.gz'
         ]
 
-        self.classes = [
+        self.classes_vn = [
             'Tĩnh mạch chủ', 
             'Tiểu nhĩ', 
             'Động mạch vành', 
@@ -52,6 +52,20 @@ class AutomaticReconstruction():
             'Cung động mạch chủ', 
             'Động mạch phổi', 
             'Động mạch chủ dưới',
+        ]
+        
+        self.classes = [
+            'Vena Cava', 
+            'Auricle', 
+            'Coronary Artery', 
+            'Left Ventricle', 
+            'Right Ventricle', 
+            'Left Atrium', 
+            'Right Atrium', 
+            'Myocardium', 
+            'Ascending Aorta', 
+            'Pulmonary Trunk', 
+            'Descending Aorta',
         ]
 
         self.mapping = {
@@ -180,7 +194,7 @@ class AutomaticReconstruction():
             dict(bottomleft=(dx,sy*0.8*6.1), topright=(dx+sx*2.52, 1-dx), bg=self.color_1), # 26
         ]
     
-        self.plt = Plotter(shape=self.shape, sharecam=False, size=(2000, 1000))
+        self.plt = Plotter(shape=self.shape, sharecam=False, size=(2000, 1200))
         self.plt.add_callback("RightButtonPress", self.change_object)
         self.plt.add_callback("MiddleButtonPress", self.add_object)
      
@@ -196,22 +210,24 @@ class AutomaticReconstruction():
         self.whole_mesh = load(self.path + 'whole.stl')
         self.whole_volume = self.whole_mesh.volume()
         self.whole_area = self.whole_mesh.area()
-        self.volume_main_display = Text2D(f'Thể tích nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.97), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
+        self.volume_main_display = Text2D(f'Volume nguyên khối: {self.convert_vol(self.whole_volume)} ml', pos=(0.02, 0.97), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
         self.area_main_display = Text2D(f'Diện tích bề mặt: {self.convert_area(self.whole_area)} cm2', pos=(0.02,0.93), c=self.color_6, bg=self.screen_color, s=0.8, font=self.MAINFONT)
         self.segment_display = Text2D(pos=(0.02,0.90), c=self.color_6, s=0.8, font=self.MAINFONT)
         self.sphere_txt = Text2D(pos=(0.82, 0.15), c=self.screen_color, s=0.8, font=self.MAINFONT)
-        func_des = """
-        Các chức năng năng phân tích hậu tái tạo 3D cho phép đo lường
-        định tính thể tích các buồng tim, đường kính động mạch vành 
-        (xác định tắc nghẽn động mạch), độ dày thành cơ tim (tứ chứng 
-        fallot) với độ chính xác cao.
-                                           
-        Các chức năng khác: đổi màu từng bộ phận, cắt bộ phận, khoanh 
-        vùng dị tật tim tự động với bounding box 3D.
+        func_des = """        
+            The 3D post-reconstruction analysis functions allow for
+            measurements of cardiac volumes, coronary artery diameters 
+            (to identify artery stenosis), wall thickness of myocardium 
+            (for tetralogy of Fallot) with high accuracy.
+
+            Other functions include: 
+            - Color mapping of individual components, 
+            - Slicing & dissecting of cardiac structures
+            - Localization of anomalies with 3D bounding box.
         """
-        self.function_description = Text2D(func_des, pos=(0, 0.8), s=0.8, c=self.color_6, font=self.MAINFONT)
+        self.function_description = Text2D(func_des, pos=(0, 0.9), s=0.8, c=self.color_6, font=self.MAINFONT)
         
-        self.title = Text2D('VasculAR - Tái tạo và hậu phân tích tim 3D', s=1.28, c=self.color_6, font=self.TITLE_FONT)
+        self.title = Text2D('VasculAR - 3D Reconstruction & Post-analysis', s=1.28, c=self.color_6, font=self.TITLE_FONT)
         self.bbox_button = self.plt.at(26).add_button(
             self.toggle_bbox,
             pos=(0.16, 0.1),                                                                  
@@ -269,7 +285,7 @@ class AutomaticReconstruction():
         self.sphere_button = self.plt.at(25).add_button(
             self.start_hovering,
             pos=(0.4, 0.7),     
-            states=['Hình cầu mở', 'Hình cầu mở'],
+            states=['Sphere on', 'Sphere on'],
             c=["w", "w"], 
             bc=[self.color_btn, self.color_btn],  
             font=self.MAINFONT,  
@@ -280,7 +296,7 @@ class AutomaticReconstruction():
         self.sphere_button = self.plt.at(25).add_button(
             self.end_hovering,
             pos=(0.4, 0.4),     
-            states=['Hình cầu mở', 'Hình cầu tắt'],
+            states=['Sphere off', 'Sphere off'],
             c=["w", "w"], 
             bc=[self.color_btn, self.color_btn],  
             font=self.MAINFONT,  
@@ -291,7 +307,7 @@ class AutomaticReconstruction():
         self.sync_database = self.plt.at(1).add_button(
             self.syncing_database,
             pos=(0.5,0.95),
-            states=['Cập nhật cơ sở dữ liệu đám mây', 'Cập nhật cơ sở dữ liệu đám mây'],
+            states=['Cloud Database Synchronization', 'Cloud Database Synchronization'],
             c=["w", "w"], 
             bc=[self.red_color, self.color_btn],  
             font=self.TITLE_FONT,  
@@ -300,12 +316,12 @@ class AutomaticReconstruction():
         )
         
         self.info_patient = f"""
-            Đơn vị tổ chức: {self.info_patient_dict['Organization']}
-            Tên bệnh nhân: {self.info_patient_dict["Patient's name"]}
-            Phương thức chụp: {self.info_patient_dict["Modality"]}
-            ID bệnh nhân: {self.info_patient_dict['Patient ID']}
-            Bộ phận chụp: {self.info_patient_dict["Body Part Examined"]}
-            Ngày chụp: {self.info_patient_dict["Acquisition Date"]}
+            Organization: {self.info_patient_dict['Organization']}
+            Patient's name: Anonymous,
+            Modality: {self.info_patient_dict["Modality"]}
+            ID Patient: Anonymous,
+            Examined part: {self.info_patient_dict["Body Part Examined"]}
+            Date: {self.info_patient_dict["Acquisition Date"]}
         """
         self.info = Text2D(self.info_patient, pos=('top-right'), font=self.MAINFONT, s=0.7, c=self.screen_color)
         
@@ -333,7 +349,7 @@ class AutomaticReconstruction():
         sph = fit_sphere(pts).alpha(0.1).pickable(False)
         pts.name = "mypoints"
         sph.name = "mysphere"
-        self.sphere_txt.text(f'Diameter: {self.convert_dis(sph.radius)*2} ml \nRadius: {self.convert_dis(sph.radius)} ml \nResidue: {self.convert_dis(sph.residue)}')
+        self.sphere_txt.text(f'Diameter: {self.convert_dis(sph.radius)*2} mm \nRadius: {self.convert_dis(sph.radius)} mm \nResidue: {self.convert_dis(sph.residue)}')
         self.plt.at(1).remove("mypoints", "mysphere").add(pts, sph).render()
         
     def spline(self, evt, num):
@@ -358,9 +374,9 @@ class AutomaticReconstruction():
         self.cur_volume = self.vola[self.cur_object_id][0]
         self.cur_area = self.vola[self.cur_object_id][1]
         
-        self.segment_display.text(f'Bộ phận: {self.classes[self.cur_object_id]}')
-        self.volume_main_display.text(f'Thể tích: {round(self.cur_volume,3)} ml')
-        self.area_main_display.text(f'Diện tích: {round(self.cur_area,3)} cm2')
+        self.segment_display.text(f'Region: {self.classes[self.cur_object_id]}')
+        self.volume_main_display.text(f'Volume: {round(self.cur_volume,3)} ml')
+        self.area_main_display.text(f'Surface area: {round(self.cur_area,3)} cm2')
         self.plt.at(1).clear().add(evt.object, self.bbox, self.segment_display, self.volume_main_display, self.area_main_display, self.info)
         self.temp = self.plt.at(1).add_callback("LeftButtonPress", self.select_vertices)
         self.plt.at(1).add_callback("KeyPress", self.control_direction)
@@ -381,8 +397,8 @@ class AutomaticReconstruction():
         self.cur_area += self.vola[index_object][1]
         
         self.segment_display.text('')
-        self.volume_main_display.text(f'Tổng thể tích: {round(self.cur_volume,3)} ml')
-        self.area_main_display.text(f'Tổng diện tích: {round(self.cur_area,3)} cm2')
+        self.volume_main_display.text(f'Total Volume: {round(self.cur_volume,3)} ml')
+        self.area_main_display.text(f'Total Surface Area: {round(self.cur_area,3)} cm2')
         self.plt.at(1).add(evt.object, self.bbox, self.segment_display, self.volume_main_display, self.area_main_display, self.info)
         
     def distort(self, direction):
@@ -393,8 +409,8 @@ class AutomaticReconstruction():
             vel -= 0.05
                 
         self.cur_object = Mesh([distorted_vertices, self.cur_object.cells])
-        self.volume_main_display.text(f'Thể tích: {self.convert_vol(self.cur_object.volume())} ml')
-        self.area_main_display.text(f'Diện tích: {self.convert_area(self.cur_object.area())} cm2')
+        self.volume_main_display.text(f'Volume: {self.convert_vol(self.cur_object.volume())} ml')
+        self.area_main_display.text(f'Surface area: {self.convert_area(self.cur_object.area())} cm2')
         self.plt.at(1).clear().add(self.cur_object.texture(f'textures/{self.textures[self.cur_object_id]}'), self.bbox, self.volume_main_display, self.area_main_display, self.info)
         
         
@@ -452,8 +468,8 @@ class AutomaticReconstruction():
             self.vola.append([self.convert_vol(self.meshes[idx].volume()), self.convert_area(self.meshes[idx].area())])
             
             self.name = Text2D(f'{idx+1}. {self.classes[idx]}', s=0.78, pos=(0.05, 0.9), font=self.TITLE_FONT, c=self.color_6, bg=self.color_4)
-            self.vol_txt.append(Text2D(f'Thể tích: {self.vola[idx][0]} ml', s=0.7, pos=(0.05, 0.5), font=self.MAINFONT, c=self.color_6))
-            self.area_txt.append(Text2D(f'Diện tích: {self.vola[idx][1]} cm2', s=0.7, pos=(0.05, 0.3), font=self.MAINFONT, c=self.color_6))
+            self.vol_txt.append(Text2D(f'Volume: {self.vola[idx][0]} ml', s=0.7, pos=(0.05, 0.5), font=self.MAINFONT, c=self.color_6))
+            self.area_txt.append(Text2D(f'Surface area: {self.vola[idx][1]} cm2', s=0.7, pos=(0.05, 0.3), font=self.MAINFONT, c=self.color_6))
             
             button = self.plt.at(1).add_button(
                 lambda obj, ename, idx=idx: self.buttonfunc(idx, self.buttons[idx]),
@@ -516,7 +532,7 @@ class AutomaticReconstruction():
             scrange[1] - 0.02 * delta,
             value=isovalue,
             pos=2,
-            title="Tái Tạo cấu trúc 3D Nguyên Khối",
+            title="Isosurface non-region-based reconstruction",
             font= self.MAINFONT,
             show_value=True,
             delayed=False,

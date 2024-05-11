@@ -2108,8 +2108,8 @@ class Tools:
                     self.start_seg_btn = customtkinter.CTkButton(self.start_seg_frame, text="Start", width=50, command=start_seg_callback)
                     self.start_seg_btn.grid(column=0, row=2, padx=(10,0), pady=(0,10), sticky='w')
                     
-                    self.models = ["Triple View R-Net", "U-Net Attention", "ResUNet", "U-Net"]
-                    self.model_picker_default = customtkinter.StringVar(value="Triple View R-Net")
+                    self.models = ["RotCAtt-TransUNet++", "TransUNet", "Triple View R-Net", "UNet++", "UNetR", "TransNorm", "U-Net Attention", "ResUNet", "U-Net"]
+                    self.model_picker_default = customtkinter.StringVar(value="RotCAtt-TransUNet++")
                     self.model_picker = customtkinter.CTkComboBox(self.start_seg_frame, values=self.models, variable=self.model_picker_default)
                     self.model_picker.grid(column=0, row=1, sticky='ew', padx=10, pady=10)
                     
@@ -2167,8 +2167,8 @@ class Tools:
                     self.regions_frame_header = self.title_toolbox(frame=self.regions_frame, title="Regions Control")
                         
                 def widgets():
-                    self.region_list_vn = ['Phông nền', 'Tĩnh mạch chủ', 'Tiểu nhĩ', 'Động mạch vành', 'Tâm thất trái', 'Tâm thất phải', 'Tâm nhĩ trái', 'Tâm nhĩ phải', 'Màng cơ tim', 'Cung động mạch', 'Động mạch phổi', 'Động mạch chủ trên'] 
-                    self.region_list_en = ['Background', 'Vena cava', 'Auricle', 'Coronary Artery', 'Left ventricle', 'Right ventricle', 'left atrium', 'right atrium', 'Myocardium', 'Aortic Arch', 'Pulmonary trunk', 'Coronary Artery']
+                    self.region_list_vn = ['Phông nền', 'Tĩnh mạch chủ', 'Tiểu nhĩ', 'Động mạch vành', 'Tâm thất trái', 'Tâm thất phải', 'Tâm nhĩ trái', 'Tâm nhĩ phải', 'Màng cơ tim', 'Động mạch chủ dưới', 'Động mạch phổi', 'Động mạch chủ trên'] 
+                    self.region_list_en = ['Background', 'Vena cava', 'Auricle', 'Coronary Artery', 'Left Ventricle', 'Right Ventricle', 'Left Atrium', 'Right atrium', 'Myocardium', 'Descending aorta', 'Pulmonary trunk', 'Ascending aorta']
                     # icon
                     eye_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye.png"),size=(20, 20))
                     eye_hide_icon = customtkinter.CTkImage(dark_image=Image.open("imgs/eye_hide.png"),size=(20, 20))
@@ -2202,8 +2202,7 @@ class Tools:
                                 self.eye_class11.configure(image=eye_hide_icon)
                             elif class_name=="class12":
                                 self.eye_class12.configure(image=eye_hide_icon)
-                            
-                        
+
                         else:
                             self.master.class_data[class_name]['visible'] = True
                             if class_name=="class1":
@@ -2242,7 +2241,7 @@ class Tools:
                     self.fill_class1.grid(row=1, column=1)
                     self.annotate_class1 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class1.grid(row=1, column=2)
-                    self.btn_class1 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[0], fg_color=self.master.second_color)
+                    self.btn_class1 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[0], fg_color=self.master.second_color)
                     self.btn_class1.grid(row=1, column=3) 
                     
                     # class2
@@ -2252,7 +2251,7 @@ class Tools:
                     self.fill_class2.grid(row=1, column=7)
                     self.annotate_class2 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class2.grid(row=1, column=8)
-                    self.btn_class2 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[1], fg_color=self.master.second_color)
+                    self.btn_class2 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[1], fg_color=self.master.second_color)
                     self.btn_class2.grid(row=1, column=9) 
                     
                     # class3
@@ -2262,7 +2261,7 @@ class Tools:
                     self.fill_class3.grid(row=2, column=1)
                     self.annotate_class3 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class3.grid(row=2, column=2)
-                    self.btn_class3 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[2], fg_color=self.master.second_color)
+                    self.btn_class3 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[2], fg_color=self.master.second_color)
                     self.btn_class3.grid(row=2, column=3) 
                     
                     # class4
@@ -2272,7 +2271,7 @@ class Tools:
                     self.fill_class4.grid(row=2, column=7)
                     self.annotate_class4 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class4.grid(row=2, column=8)
-                    self.btn_class4 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[3], fg_color=self.master.second_color)
+                    self.btn_class4 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[3], fg_color=self.master.second_color)
                     self.btn_class4.grid(row=2, column=9)
                     
                     # class5
@@ -2282,7 +2281,7 @@ class Tools:
                     self.fill_class5.grid(row=3, column=1)
                     self.annotate_class5 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class5.grid(row=3, column=2)
-                    self.btn_class5 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[4], fg_color=self.master.second_color)
+                    self.btn_class5 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[4], fg_color=self.master.second_color)
                     self.btn_class5.grid(row=3, column=3)
                     
                     # class6
@@ -2292,7 +2291,7 @@ class Tools:
                     self.fill_class6.grid(row=3, column=7)
                     self.annotate_class6 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class6.grid(row=3, column=8)
-                    self.btn_class6 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[5], fg_color=self.master.second_color)
+                    self.btn_class6 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[5], fg_color=self.master.second_color)
                     self.btn_class6.grid(row=3, column=9)
                     
                     # class7
@@ -2302,7 +2301,7 @@ class Tools:
                     self.fill_class7.grid(row=4, column=1)
                     self.annotate_class7 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class7.grid(row=4, column=2)
-                    self.btn_class7 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[6], fg_color=self.master.second_color)
+                    self.btn_class7 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[6], fg_color=self.master.second_color)
                     self.btn_class7.grid(row=4, column=3)
                     
                     # class8
@@ -2312,7 +2311,7 @@ class Tools:
                     self.fill_class8.grid(row=4, column=7)
                     self.annotate_class8 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class8.grid(row=4, column=8)
-                    self.btn_class8 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[7], fg_color=self.master.second_color)
+                    self.btn_class8 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[7], fg_color=self.master.second_color)
                     self.btn_class8.grid(row=4, column=9)
                     
                     # class9
@@ -2322,7 +2321,7 @@ class Tools:
                     self.fill_class9.grid(row=5, column=1)
                     self.annotate_class9 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class9.grid(row=5, column=2)
-                    self.btn_class9 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[8], fg_color=self.master.second_color)
+                    self.btn_class9 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[8], fg_color=self.master.second_color)
                     self.btn_class9.grid(row=5, column=3)
                     
                     # class10
@@ -2332,7 +2331,7 @@ class Tools:
                     self.fill_class10.grid(row=5, column=7)
                     self.annotate_class10 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class10.grid(row=5, column=8)
-                    self.btn_class10 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[9], fg_color=self.master.second_color)
+                    self.btn_class10 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[9], fg_color=self.master.second_color)
                     self.btn_class10.grid(row=5, column=9)
                     
                     # class11
@@ -2342,7 +2341,7 @@ class Tools:
                     self.fill_class11.grid(row=6, column=1)
                     self.annotate_class11 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class11.grid(row=6, column=2)
-                    self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[10], fg_color=self.master.second_color)
+                    self.btn_class11 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[10], fg_color=self.master.second_color)
                     self.btn_class11.grid(row=6, column=3)
 
                     # class12
@@ -2352,7 +2351,7 @@ class Tools:
                     self.fill_class12.grid(row=6, column=7)
                     self.annotate_class12 = customtkinter.CTkButton(master=self.regions_frame, text="", image=annotate_icon, width=30, height=30)
                     self.annotate_class12.grid(row=6, column=8)
-                    self.btn_class12 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_vn[11], fg_color=self.master.second_color)
+                    self.btn_class12 = customtkinter.CTkButton(master=self.regions_frame, text=self.region_list_en[11], fg_color=self.master.second_color)
                     self.btn_class12.grid(row=6, column=9)
                                
                 frame()
